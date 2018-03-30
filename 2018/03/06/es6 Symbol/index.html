@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="es6," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: ECMAScript 6 入门 Symbol 部分  概述es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。es6 引入一种新的原始数据类型 Symbol，表示独一无二的值 因此基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object">
+<meta name="keywords" content="es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 Symbol">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/03/06/es6 Symbol/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: ECMAScript 6 入门 Symbol 部分  概述es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。es6 引入一种新的原始数据类型 Symbol，表示独一无二的值 因此基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-06T03:47:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 Symbol">
+<meta name="twitter:description" content="参考: ECMAScript 6 入门 Symbol 部分  概述es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。es6 引入一种新的原始数据类型 Symbol，表示独一无二的值 因此基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/03/06/es6 Symbol/"/>
+
+
+
+
+
+  <title>es6 Symbol | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/es6 Symbol/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">es6 Symbol</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T11:01:07+08:00">
+                2018-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ECMAScript 6 入门 Symbol 部分</a></p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。<strong>es6 引入一种新的原始数据类型 Symbol，表示独一无二的值</strong></p>
+<p>因此<strong>基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object</strong></p>
+<a id="more"></a>
+<p>Symbol 值通过 <strong>Symbol 函数生成，注意 </strong>Symbol 函数不能使用 new 命令，否则会报错，因为生成的 Symbol 是一个基本数据类型的值，不是对象** 由于 Symbol 值不是对象，因此不能添加属性，可以理解他是一种类似于字符串的数据类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>()</span><br><span class="line"><span class="keyword">typeof</span> s <span class="comment">// "symbol"</span></span><br><span class="line">s.toString() <span class="comment">// "Symbol()"</span></span><br></pre></td></tr></table></figure>
+<p>Symbol 函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述，主要是为了在控制台显示或者转为字符串时比较容易区分</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>)</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'bar'</span>)</span><br><span class="line"></span><br><span class="line">s1 <span class="comment">// Symbol(foo)</span></span><br><span class="line">s2 <span class="comment">// Symbol(bar)</span></span><br><span class="line"></span><br><span class="line">s1 === s2 <span class="comment">// false 每一个属性值都是不相同的</span></span><br><span class="line"></span><br><span class="line">s1.toString() <span class="comment">// "Symbol(foo)"</span></span><br><span class="line">s2.toString() <span class="comment">// "Symbol(bar)"</span></span><br></pre></td></tr></table></figure>
+<p>Symbol 值不能和其他类型的值进行计算，Symbol 值可以转化为字符串和布尔值，但是不能转为数值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>()</span><br><span class="line"></span><br><span class="line">s.toString() <span class="comment">// "Symbol()"</span></span><br><span class="line"><span class="built_in">String</span>(s) <span class="comment">// "Symbol()"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Boolean</span>(s) <span class="comment">// true</span></span><br><span class="line">!s <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Number</span>(s) <span class="comment">// TypeError: Cannot convert a Symbol value to a number</span></span><br><span class="line">s + <span class="string">'test'</span> <span class="comment">// TypeError 不能和其他类型值进行计算</span></span><br></pre></td></tr></table></figure>
+<h2 id="作为属性名的-Symbol"><a href="#作为属性名的-Symbol" class="headerlink" title="作为属性名的 Symbol"></a>作为属性名的 Symbol</h2><p>由于每一个属性值都是不相等，因此 Symbol 值可以作为标识符，用于对象的属性名，保证不出现同名的属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> mySymbol = <span class="built_in">Symbol</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一种写法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;</span><br><span class="line">a[mySymbol] = <span class="string">'Hello'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种写法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  [mySymbol]: <span class="string">'Hello'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种方法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;</span><br><span class="line"><span class="comment">// 这里将对象的属性名指定为一个 Symbol 而不是常规的字符串</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(a, mySymbol, &#123;</span><br><span class="line">  value: <span class="string">"Hello"</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">a[mySymbol] <span class="comment">// "Hello"</span></span><br></pre></td></tr></table></figure>
+<p><strong>Symbol 值作为对象属性名的时候，不能用点运算符</strong> 因为点运算符后面总是字符串，不会读取 mySymbol 作为标志名所指代的 Symbol 值，导致 a 的属性名实际是一个字符串，而不是一个 Symbol 值。同样在<strong>对象的内部，使用 Symbol 值定义属性的时候， Symbol 值必须放在 方括号中</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  <span class="comment">// 如果 s 不放在方括号中，该属性的键名就是字符串 s，而不是 s 代表的 Symbol 值</span></span><br><span class="line">  [s]: <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;...&#125;</span><br><span class="line">  <span class="comment">// 等同于 [s](arg) &#123;...&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj[s](<span class="number">123</span>)</span><br></pre></td></tr></table></figure>
+<p>Symbol 值作为属性名时，该属性在类外部是可以访问的，但是<strong>不会出现在 for … in、for … of 循环中，也不会被 Object.keys()、Object.getOwnPropertyNames() 返回，但是有个 Object.getOwnPropertySymbols() 方法可以获取指定对象的所有 Symbol 属性名</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="built_in">Symbol</span>(<span class="string">'a'</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="built_in">Symbol</span>(<span class="string">'b'</span>)</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  [a]: <span class="string">'a'</span>,</span><br><span class="line">  [b]: <span class="string">'b'</span>,</span><br><span class="line">  c: <span class="string">'c'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(key) <span class="comment">// 'c' 不会返回 Symbol 属性名</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.keys(obj) <span class="comment">// ['c'] 数组不会返回 Symbol 属性名</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyNames(obj) <span class="comment">// ['c'] 数组不会返回 Symbol 属性名</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertySymbols(obj) <span class="comment">//[Symbol(a), Symbol(b)]</span></span><br></pre></td></tr></table></figure>
+<p>Symbol 类型还可以<strong>用来定义一组常量，保证这组常量的值都是不相等的</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">log.levels = &#123;</span><br><span class="line">  DEBUG: <span class="built_in">Symbol</span>(<span class="string">"debug"</span>),</span><br><span class="line">  INFO: <span class="built_in">Symbol</span>(<span class="string">"info"</span>),</span><br><span class="line">  WARN: <span class="built_in">Symbol</span>(<span class="string">"warn"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(log.levels.DEBUG, <span class="string">'debug message'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(log.levels.INFO, <span class="string">'info message'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="内置方法"><a href="#内置方法" class="headerlink" title="内置方法"></a>内置方法</h2><p>其他内置方法见 <a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ECMAScript 6 入门 Symbol 部分</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/es6/" rel="tag"># es6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/06/浏览器回流和重回/" rel="next" title="浏览器回流和重绘">
+                <i class="fa fa-chevron-left"></i> 浏览器回流和重绘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/06/es6 Set Map/" rel="prev" title="es6 Set Map">
+                es6 Set Map <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作为属性名的-Symbol"><span class="nav-number">2.</span> <span class="nav-text">作为属性名的 Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内置方法"><span class="nav-number">3.</span> <span class="nav-text">内置方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

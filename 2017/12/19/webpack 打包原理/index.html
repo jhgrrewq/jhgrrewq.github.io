@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack 打包原理">
+<meta property="og:url" content="http://jhgrrewq.github.io/2017/12/19/webpack 打包原理/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack 打包原理">
+<meta name="twitter:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2017/12/19/webpack 打包原理/"/>
+
+
+
+
+
+  <title>webpack 打包原理 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/19/webpack 打包原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webpack 打包原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T10:57:27+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- markdownlint-disable MD010 -->
+<h2 id="webpack-核心概念"><a href="#webpack-核心概念" class="headerlink" title="webpack 核心概念"></a>webpack 核心概念</h2><ul>
+<li><strong>entry</strong> 一个可执行模块或库的入口文件（可以有多个入口）</li>
+<li><strong>chunk</strong> 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk</li>
+<li><strong>loader</strong> 文件转换器，如将 es6 转为 es5， scss 转为 css</li>
+<li><strong>plugin</strong> 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功能</li>
+</ul>
+<h2 id="webpack-构建流程"><a href="#webpack-构建流程" class="headerlink" title="webpack 构建流程"></a>webpack 构建流程</h2><p>从启动 webpack 构建到输出结果是一个串行过程：</p>
+<ul>
+<li><strong>解析 webpack 配置参数（初始化参数）：</strong> 从配置文件和 shell 语句中读取并合并参数，得到最终的参数</li>
+<li><strong>开始编译：</strong> 用上一步得到的参数初始化 Compile 对象，<strong>加载注册所有配置的插件</strong>（好让插件监听 webpack 构建生命周期的事件节点，做出对应反应），执行对象的 run 方法开始执行编译</li>
+<li><strong>编译模块：</strong> 从配置的 entry 入口文件出发，调用所有配置的 loader 对模块构建 AST 语法树，再找出该模块依赖的模块递归下去，在解析模块递归过程中根据文件类型和 loader 配置找到合适的 loader 对模块进行转换</li>
+<li><strong>完成编译模块：</strong> 根据入口和模块间的依赖关系，组装成一个个包含多个模块的 chunk， 再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
+<li><strong>输出完成：</strong> 在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
+</ul>
+<p>在以上过程中，webpack 会在特定时间点广播特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 webpack 提供的 api 改变 webpack 的运行结果</p>
+<h2 id="webpack-打包原理"><a href="#webpack-打包原理" class="headerlink" title="webpack 打包原理"></a>webpack 打包原理</h2><p>通过 webpack 打包构建一个简单的应用，透过这个简单的例子来看一下 webpack 打包的代码，了解 webpack 打包的原理</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./hello.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="string">"hello world"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ./index.js</span></span><br><span class="line"><span class="keyword">var</span> text = <span class="built_in">require</span>(<span class="string">'./hello'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(text)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ./index.html</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"ie=edge"</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script src=<span class="string">"./bundle.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure>
+<p>index.html 中的 bundle.js 并不存在, 通过 webpack ./index.js bundle.js 生成打包文件 bundle.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/******/</span> (<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123; <span class="comment">// webpackBootstrap</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// The module cache 模块缓存对象</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// The require function</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// Check if module is in cache</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 检查 module 是否在 cache中</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(installedModules[moduleId])</span><br><span class="line"><span class="comment">/******/</span> 			<span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// Create a new module (and put it into the cache)</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 新建一个 module 并放入 cache 中</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line"><span class="comment">/******/</span> 			exports: &#123;&#125;,</span><br><span class="line"><span class="comment">/******/</span> 			id: moduleId,</span><br><span class="line"><span class="comment">/******/</span> 			loaded: <span class="literal">false</span></span><br><span class="line"><span class="comment">/******/</span> 		&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// Execute the module function</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 执行 module 函数</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// webpack 为文件包裹了工厂方法 function(module, module.exports, __webpack_require__) &#123;&#125;</span></span><br><span class="line"><span class="comment">/******/</span> 		modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// Flag the module as loaded</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 标记 module 已经加载</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="built_in">module</span>.loaded = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// Return the exports of the module</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 返回 module 的导出模块</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line"><span class="comment">/******/</span> 	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// expose the modules object (__webpack_modules__)</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 暴露 modules 对象 (__webpack_modules__)</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.m = modules;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// expose the module cache</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 暴露 modules 缓存</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.c = installedModules;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// __webpack_public_path__</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 设置 webpack 公共路径 __webpack_public_path__</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.p = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// Load entry module and return exports</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 读取入口模块 并返回 exports 导出</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="keyword">return</span> __webpack_require__(<span class="number">0</span>);</span><br><span class="line"><span class="comment">/******/</span> &#125;)</span><br><span class="line"><span class="comment">/************************************************************************/</span>    <span class="comment">// webpackBootstrap 传入的参数是一个数组</span></span><br><span class="line"><span class="comment">/******/</span> ([</span><br><span class="line"><span class="comment">/* 0 */</span>  <span class="comment">// index.js 的工厂方法</span></span><br><span class="line"><span class="comment">/***/</span> (<span class="function"><span class="keyword">function</span>(<span class="params">module, exports, __webpack_require__</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> text = __webpack_require__(<span class="number">1</span>)</span><br><span class="line">	<span class="built_in">console</span>.log(text)</span><br><span class="line"></span><br><span class="line"><span class="comment">/***/</span> &#125;),</span><br><span class="line"><span class="comment">/* 1 */</span> <span class="comment">// hello.js 的工厂方法</span></span><br><span class="line"><span class="comment">/***/</span> (<span class="function"><span class="keyword">function</span>(<span class="params">module, exports</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">module</span>.exports = <span class="string">"hello world"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/***/</span> &#125;)</span><br><span class="line"><span class="comment">/******/</span> ]);</span><br></pre></td></tr></table></figure>
+<p>分析上述 webpackBootstrap 立即执行函数 发现:</p>
+<h3 id="1-webpack-自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs-则需要自己为每个模块写工厂函数define-callback-）-然后将它们放入一个-modules-数组中，-并取数组的下标作为-modulesId"><a href="#1-webpack-自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs-则需要自己为每个模块写工厂函数define-callback-）-然后将它们放入一个-modules-数组中，-并取数组的下标作为-modulesId" class="headerlink" title="1 webpack 自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs 则需要自己为每个模块写工厂函数define([], callback)）, 然后将它们放入一个 modules 数组中， 并取数组的下标作为 modulesId"></a>1 webpack 自动将每个模块文件<strong>包裹在一个工厂函数</strong>中，并传入默认参数（requirejs 则需要自己为每个模块写工厂函数define([], callback)）, 然后将它们放入一个 modules 数组中， 并取数组的下标作为 modulesId</h3><h3 id="2-将-modules-传入一个立即执行函数中，立即执行函数中包含一个-installModules-对象用于缓存已经加载的模块和一个模块加载函数，-最后加载入口模块并返回。"><a href="#2-将-modules-传入一个立即执行函数中，立即执行函数中包含一个-installModules-对象用于缓存已经加载的模块和一个模块加载函数，-最后加载入口模块并返回。" class="headerlink" title="2 将 modules 传入一个立即执行函数中，立即执行函数中包含一个 installModules 对象用于缓存已经加载的模块和一个模块加载函数， 最后加载入口模块并返回。"></a>2 将 modules 传入一个立即执行函数中，立即执行函数中包含<strong>一个 installModules 对象用于缓存已经加载的模块</strong>和<strong>一个模块加载函数</strong>， <strong>最后加载入口模块并返回</strong>。</h3><p><em>每个模块 webpack 只加载一次，加载过的模块存在在 installModules 中，重复加载的模块下次加载时直接从 installModules 读取</em>。</p>
+<h3 id="3-模块加载函数（webpack-require）加载模块，首先判断-installedModules-是否已经加载，加载过了就直接返回-module-exports，没有加载过该模块就通过-modules-moduleId-call-module-exports-module-module-exports-webpack-require-执行模块并将-module-exports-返回。"><a href="#3-模块加载函数（webpack-require）加载模块，首先判断-installedModules-是否已经加载，加载过了就直接返回-module-exports，没有加载过该模块就通过-modules-moduleId-call-module-exports-module-module-exports-webpack-require-执行模块并将-module-exports-返回。" class="headerlink" title="3 模块加载函数（webpack_require）加载模块，首先判断 installedModules 是否已经加载，加载过了就直接返回 module.exports，没有加载过该模块就通过 modules[moduleId].call(module.exports, module, module.exports, __webpack__require__) 执行模块并将 module.exports 返回。"></a>3 模块加载函数（<strong>webpack_require</strong>）加载模块，首先判断 installedModules 是否已经加载，加载过了就直接返回 module.exports，没有加载过该模块就通过 <code>modules[moduleId].call(module.exports, module, module.exports, __webpack__require__)</code> 执行模块并将 module.exports 返回。</h3><p><code>modules[moduleId].call(module.exports, module, module.exports, __webpack__require__)</code> 保证模块加载时 this 指向 module.exports, 并传入默认参数</p>
+<p>模块加载函数 <code>__webpack_require__</code> 提供的功能和 require 是一样的，声明对其他模块的依赖并获得该模块的 exports。不同之处在于 <code>__webpack_require__</code> 不需要提供模块的相对路径或者其他形式的 ID, 直接传入该模块在 modules 数组中的下标即可。 数组 modules 的下标和真实模块的实现是一一对应的，也省去了模块标识符的解析过程。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/19/requireJS + backbone + jquery 单页面项目/" rel="next" title="requireJS + backbone + jquery 单页面项目">
+                <i class="fa fa-chevron-left"></i> requireJS + backbone + jquery 单页面项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/19/webpack 优化/" rel="prev" title="webpack 优化">
+                webpack 优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-核心概念"><span class="nav-number">1.</span> <span class="nav-text">webpack 核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-构建流程"><span class="nav-number">2.</span> <span class="nav-text">webpack 构建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-打包原理"><span class="nav-number">3.</span> <span class="nav-text">webpack 打包原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-webpack-自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs-则需要自己为每个模块写工厂函数define-callback-）-然后将它们放入一个-modules-数组中，-并取数组的下标作为-modulesId"><span class="nav-number">3.1.</span> <span class="nav-text">1 webpack 自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs 则需要自己为每个模块写工厂函数define([], callback)）, 然后将它们放入一个 modules 数组中， 并取数组的下标作为 modulesId</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-将-modules-传入一个立即执行函数中，立即执行函数中包含一个-installModules-对象用于缓存已经加载的模块和一个模块加载函数，-最后加载入口模块并返回。"><span class="nav-number">3.2.</span> <span class="nav-text">2 将 modules 传入一个立即执行函数中，立即执行函数中包含一个 installModules 对象用于缓存已经加载的模块和一个模块加载函数， 最后加载入口模块并返回。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-模块加载函数（webpack-require）加载模块，首先判断-installedModules-是否已经加载，加载过了就直接返回-module-exports，没有加载过该模块就通过-modules-moduleId-call-module-exports-module-module-exports-webpack-require-执行模块并将-module-exports-返回。"><span class="nav-number">3.3.</span> <span class="nav-text">3 模块加载函数（webpack_require）加载模块，首先判断 installedModules 是否已经加载，加载过了就直接返回 module.exports，没有加载过该模块就通过 modules[moduleId].call(module.exports, module, module.exports, __webpack__require__) 执行模块并将 module.exports 返回。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

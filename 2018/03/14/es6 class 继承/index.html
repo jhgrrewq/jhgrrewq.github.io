@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="es6," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: ECMAScript 6 入门 class 继承部分   概述es5 原型继承是采用 父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链">
+<meta name="keywords" content="es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6 class 继承">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/03/14/es6 class 继承/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: ECMAScript 6 入门 class 继承部分   概述es5 原型继承是采用 父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6 class 继承">
+<meta name="twitter:description" content="参考: ECMAScript 6 入门 class 继承部分   概述es5 原型继承是采用 父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/03/14/es6 class 继承/"/>
+
+
+
+
+
+  <title>es6 class 继承 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/14/es6 class 继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">es6 class 继承</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T10:08:23+08:00">
+                2018-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/class-extends" target="_blank" rel="noopener">ECMAScript 6 入门 class 继承部分</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 原型继承是采用 <strong>父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链</strong></p>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line">Parent.prototype.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name, gender</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 对象使用属性和方法会先从自身查找，没有再从原型链上找。如果没有下面这一句，所有对象实例都会共享父类的引用类型的属性（如数组、对象）</span></span><br><span class="line">  Parent.call(<span class="keyword">this</span>, name)</span><br><span class="line">  <span class="keyword">this</span>.gender = gender</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用中间构造函数修复原型链</span></span><br><span class="line"><span class="comment">// new F() 的 __proto__ 指向 F.prototype（Parent.prototype）</span></span><br><span class="line"><span class="comment">// 原本 Child.prototype.constructor === Child, 现在 Child.prototype 重写了代以 F 的实例对象，因此原来 Parent 实例对象的属性方法都存在 Child.prototype 中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">F.prototype = Parent.prototype</span><br><span class="line">Child.prototype = <span class="keyword">new</span> F()</span><br><span class="line">Child.prototype.constructor = Child</span><br><span class="line"></span><br><span class="line"><span class="comment">// 因为 Child.prototype 进行了重写，因此想要挂载子类原型的属性和方法需要放在使用中间构造函数修复原型链之后</span></span><br><span class="line">Child.prototype.printGender = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.gender)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以将上述中间构造函数封装成一个函数进行调用或者使用 Object.create() 代替</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将上述中间构造函数封装成一个函数进行调用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherits</span>(<span class="params">Child, Parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  F.prototype = Parent.prototype</span><br><span class="line">  Child.prototype = <span class="keyword">new</span> F()</span><br><span class="line">  Child.prototype.constructor = Child</span><br><span class="line">&#125;</span><br><span class="line">inherits(Child, Parent)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 Object.create()</span></span><br><span class="line">Child.prototype = <span class="built_in">Object</span>.create(Parent.prototype)</span><br><span class="line"><span class="comment">// 内部实现是</span></span><br><span class="line"><span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125; <span class="comment">// 定义一个隐形构造函数</span></span><br><span class="line">  F.protytype = o</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F() <span class="comment">// 返回一个新对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>es5 继承是<strong>先创建子类实例对象 this，再将父类的方法属性添加到 this 上（Parent.call(this, props)）</strong></p>
+<p>es6 继承是<strong>先创造父类的实例对象 this(因此要先调用 super 方法),再通过子类构造函数修改 this</strong></p>
+<ul>
+<li><strong>通过 extends 关键字继承父类</strong></li>
+<li><strong>super 关键字表示父类构造函数，用来新建父类的 this 对象</strong></li>
+<li><strong>子类必须在 constructor 中调用 super 方法</strong>，否则创建实例报错（因为子类没有自己的 this 对象，而是继承父类的 this 并进行加工，如果不调用 super 方法，子类拿不到 this 对象）</li>
+<li><strong>子类必须在调用 super 方法才能使用 this</strong>。 子类实例是基于父类实例（this）的加工, 只有调用 super 方法才能返回父类实例（this）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line">  print() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name, gender) &#123;</span><br><span class="line">    <span class="keyword">super</span>(name) <span class="comment">// 相当于调用父类 constructor(name)</span></span><br><span class="line">    <span class="keyword">this</span>.gender = gender</span><br><span class="line">  &#125;</span><br><span class="line">  printGender() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.gender)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为 constructor 属性本身是默认存在的，而 es6 规定子类 constructor 中必须先调用 super 方法获得父类实例 this</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;&#125;</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(...arg) &#123;</span><br><span class="line">    <span class="keyword">super</span>(...arg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(...arg) &#123;</span><br><span class="line">    <span class="comment">// 子类构造函数中必须先调用 super 方法才能使用 this</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>) <span class="comment">// Uncaught ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor</span></span><br><span class="line">    <span class="keyword">super</span>(...arg)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>es6 父类的静态方法也会被子类继承</strong>, 这与 es5 不同，因为 es5 使用构造函数和原型继承时，父类的静态方法属性是直接挂在父类构造函数上，子类构造函数上没有定义</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> print() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'a'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;&#125;</span><br><span class="line">B.print() <span class="comment">// 'a'</span></span><br></pre></td></tr></table></figure>
+<h2 id="Object-getPrototypeOf"><a href="#Object-getPrototypeOf" class="headerlink" title="Object.getPrototypeOf()"></a>Object.getPrototypeOf()</h2><p>Object.getPrototypeOf() 可以从子类中获取父类，该方法可以用来判断一个类是否继承了另一个类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf(Child) === Parent <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>比较一下判断 instanceof 和 typeof</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line"><span class="keyword">let</span> arr = []</span><br><span class="line"><span class="keyword">let</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="comment">// typeof 用来判断基本类型数据，无法判断引用类型数据</span></span><br><span class="line"><span class="keyword">typeof</span> num <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> obj <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> num <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> fn  <span class="comment">// 'object'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// instanceof 用来判断引用类型数据实例</span></span><br><span class="line">obj <span class="keyword">instanceof</span> <span class="built_in">Object</span> <span class="comment">// true</span></span><br><span class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span> <span class="comment">// true</span></span><br><span class="line">fn <span class="keyword">instanceof</span> <span class="built_in">Function</span> <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 对象的隐式原型 __proto__ 指向创建它的构造函数的显式原型 prototype</span></span><br><span class="line"><span class="comment">// instanceof 判断对象是否是某个构造函数的实例，是从对象的隐式原型 __proto__ 沿着原型链往上找，同时沿着构造函数的原型 prototype 往下找，看最终是能否找到同一个引用</span></span><br><span class="line">c <span class="keyword">instanceof</span> Child <span class="comment">// true</span></span><br><span class="line">c <span class="keyword">instanceof</span> Parent <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的判断引用类型数据的方法 利用 Object.prototype.toString 方法</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(obj) <span class="comment">// "[object Object]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(arr) <span class="comment">// "[object Array]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(fn) <span class="comment">// "[object Function]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(Child) <span class="comment">// "[object Function]" 构造函数就是函数</span></span><br></pre></td></tr></table></figure>
+<h2 id="super-关键字-（可当做函数使用，也可当做对象使用）"><a href="#super-关键字-（可当做函数使用，也可当做对象使用）" class="headerlink" title="super 关键字 （可当做函数使用，也可当做对象使用）"></a>super 关键字 （可当做函数使用，也可当做对象使用）</h2><h3 id="super-当做函数使用"><a href="#super-当做函数使用" class="headerlink" title="super 当做函数使用"></a>super 当做函数使用</h3><p>super 当做函数使用，代表父类的构造函数。es6 规定，<strong>子类的构造函数必须执行一次 super 方法，并且 super 方法只能在子类构造函数中调用，在其他地方调用会报错</strong></p>
+<p>super 虽然代表了父类的构造函数，但是返回的是子类的实例，也就是说 <strong>super 内部的 this 指向的是子类</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 调用后 super 内部 this 指向子类 Child</span></span><br><span class="line">    <span class="comment">// 相当于调用 Parent.prototype.constructor.call(this)</span></span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  m() &#123;</span><br><span class="line">    <span class="comment">// super 方法只能在子类构造函数中调用</span></span><br><span class="line">    <span class="keyword">super</span>() <span class="comment">// Uncaught SyntaxError: 'super' keyword unexpected here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="super-作为对象使用"><a href="#super-作为对象使用" class="headerlink" title="super 作为对象使用"></a>super 作为对象使用</h3><p>super 作为对象时，<strong>在普通方法中，指向父类的原型对象 （定义在父类实例上的方法和属性，是无法通过 super 调用的，因为这是 super 指向父类的原型对象，父类原型对象上是没有父类实例上的方法和属性的），在静态方法中，指向父类</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name <span class="comment">// 定义在父类实例上的属性方法</span></span><br><span class="line">  &#125;</span><br><span class="line">  print() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'print'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 定义在父类原型上的属性方法</span></span><br><span class="line">Parent.prototype.test = <span class="string">'test'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">super</span>(name)</span><br><span class="line">    <span class="comment">// super.print() 处于普通方法中，这里 super 当对象使用，指向 Parent.prototype, super.print() 相当于 Parent.prototype.print()</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">super</span>.print()) <span class="comment">// 'print'</span></span><br><span class="line">  &#125;</span><br><span class="line">  p() &#123;</span><br><span class="line">    <span class="comment">// 定义在父类实例上的属性方法通过 super 调用无法拿到</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">super</span>.name) <span class="comment">// undefined</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">super</span>.test) <span class="comment">// 'test'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Child(<span class="string">'jack'</span>)</span><br><span class="line">c.p()</span><br></pre></td></tr></table></figure>
+<p>es6 规定，<strong>通过 super 调用父类的方法时，方法内部的 this 指向子类</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.x = <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">  print() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.x = <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">  p() &#123;</span><br><span class="line">    <span class="comment">// super.print() 调用等同于 Parent.prototype.print() ，内部的 this 指向子类 Child，因此输出 this.x 是 2</span></span><br><span class="line">    <span class="keyword">super</span>.print()</span><br><span class="line">  &#125;</span><br><span class="line">  newP() &#123;</span><br><span class="line">    <span class="comment">// 因为 this 指向子类，通过 super 对某个属性赋值，这时候 super 是 this</span></span><br><span class="line">    <span class="keyword">super</span>.x = <span class="number">3</span> <span class="comment">// 等同 this.x = 3</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">super</span>.x) <span class="comment">// super.x 等同 A.prototype.x 原型上当然没有，因此是 undefined</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Child(<span class="string">'jack'</span>)</span><br><span class="line">c.p()</span><br><span class="line">c.newP()</span><br></pre></td></tr></table></figure>
+<p><strong>super 作为对象使用在静态方法中，指向父类，而不是父类原型</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  print(msg) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'prototype'</span>, msg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> print(msg) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'static'</span>, msg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span></span>&#123;</span><br><span class="line">  print(msg) &#123;</span><br><span class="line">    <span class="keyword">super</span>.print(msg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> print(msg) &#123;</span><br><span class="line">    <span class="keyword">super</span>.print(msg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.print(<span class="number">1</span>); <span class="comment">// static 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> Child();</span><br><span class="line">c.print(<span class="number">2</span>); <span class="comment">// prototype 2</span></span><br></pre></td></tr></table></figure>
+<p>使用 super 必须<strong>显示指定是作为函数还是对象使用，否则报错</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">super</span>); <span class="comment">// Uncaught SyntaxError: 'super' keyword unexpected here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实例的-隐式原型-属性"><a href="#实例的-隐式原型-属性" class="headerlink" title="实例的 隐式原型 属性"></a>实例的 隐式原型 属性</h2><p>子类实例的 隐式原型 属性的 隐式原型 属性，指向父类实例的 隐式原型 属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Parent()</span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> Child()</span><br><span class="line">c.__proto__.__proto__ === p.__proto__ <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line">Child.prototype.__proto__ === Parent.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑从 es5 利用中间构造函数来看</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">F.prototype = Parent.prototype</span><br><span class="line">Child.prototype = <span class="keyword">new</span> F()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对象的 __proto__ 指向创建它的构造函数的原型 prototype</span></span><br><span class="line"><span class="comment">// 子类实例的 __proto__ 指向 Child.prototype, 也就是 new F()</span></span><br><span class="line"><span class="comment">// new F() 的 __proto__ 指向 F.prototype，也就是Parent.prototype</span></span><br><span class="line"><span class="comment">// Child.prototype 的 __proto__ 指向 Parent.prototype</span></span><br><span class="line"><span class="comment">// 子类的原型的隐式原型是父类的原型</span></span><br></pre></td></tr></table></figure>
+<p>子类的原型的隐式原型是父类的原型，当然也就可以通过子类实例的 隐式原型 的 隐式原型 属性给父类原型添加属性和方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c.__proto__.__proto__.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'test'</span>)</span><br><span class="line">&#125;</span><br><span class="line">p.print() <span class="comment">// 'test'</span></span><br></pre></td></tr></table></figure>
+<h2 id="类的-隐式原型-属性"><a href="#类的-隐式原型-属性" class="headerlink" title="类的 隐式原型 属性"></a>类的 隐式原型 属性</h2><p>es5 中，每一个对象都有 隐式原型 属性，指向对应构造函数的 prototype 属性。</p>
+<p>es6 中 <strong>子类的 隐式原型 属性，总是指向父类</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Child.__proto__ === Parent <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>类的继承是通过 Object.setPropertypeOf(Child.prototype, Parent.prototype) 方法实现的</p>
+<p>在 es5 继承中，<strong>父类的静态方法和属性（只能父类调用，父类实例无法调用）不能被子类继承</strong>, 但是 es6 中 <strong>子类能继承父类的静态属性和方法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Object.setPrototypeOf() 方法的实现</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf = <span class="function"><span class="keyword">function</span>(<span class="params">obj, proto</span>) </span>&#123;</span><br><span class="line">  obj._proto__ = proto</span><br><span class="line">  <span class="keyword">return</span> obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B 的实例继承 A 的实例</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(B.prototype, A.prototype)</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="comment">// B 的原型也是对象，它的隐式原型指向 A 的原型，这样 B 的原型能拿到 A 原型上的属性和方法，B 的实例具有了 A 原型上的属性和方法</span></span><br><span class="line">B.prototype.__proto__ = A.prototype <span class="comment">// 继承实现</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// B 继承 A 的静态属性</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(B, A)</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="comment">// B 作为构造函数本身也是对象，本来函数（对象）的 __proto__ 指向 Funtion.prototype(本身也是一个对象), 因此 B 能拿到 Function 原型上的属性和方法，现在重写指向 A，B 能拿到 A 上的属性和方法</span></span><br><span class="line">B.__proto__ = A</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="keyword">new</span> B()</span><br></pre></td></tr></table></figure>
+<h2 id="原生构造函数继承"><a href="#原生构造函数继承" class="headerlink" title="原生构造函数继承"></a>原生构造函数继承</h2><p>es5 中的原生构造函数 Object Array Function Date Error RegExp Boolean Number String 一般用来生成数据结构，或者作为转换函数。这些构造函数是不能继承的，因此之前不能通过继承原生构造函数定义自己的类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// es5 通过继承原生构造函数自定义子类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyArray</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Array</span>.call(<span class="keyword">this</span>,<span class="built_in">arguments</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyArray.prototype = <span class="built_in">Object</span>.create(<span class="built_in">Array</span>.prototype, &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: &#123;</span><br><span class="line">    value: MyArray,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> MyArray()</span><br><span class="line">arr[<span class="number">0</span>] = <span class="string">'a'</span></span><br><span class="line">arr.length <span class="comment">// 0 无效</span></span><br></pre></td></tr></table></figure>
+<p>这是因为子类无法获得原生构造函数内部的属性，原生构造函数会忽略 call 方法传入的 this, 原生构造函数无法绑定 this，因此拿不到内部属性</p>
+<p><strong>es5 的继承实质是先创建子类实例 this，再通过 父类.call(this, props) 将父类属性添加到子类实例上</strong>，由于父类的内部属性无法获取，导致无法继承原生的构造函数</p>
+<p><strong>es6 允许继承原生构造构造函数继承子类，是因为 es6 继承是先通过在子类构造函数中 调用 super(…) 新建父类实例 this，然后再在子类构造函数中修改 this</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyArray</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(...arg) &#123;</span><br><span class="line">    <span class="keyword">super</span>(...arg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> MyArray()</span><br><span class="line">arr[<span class="number">0</span>] = <span class="string">'a'</span></span><br><span class="line">arr.length <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>对于 es5 继承原生构造函数，可以通过内部先调用原生构造函数生成对象，再修改对象的原型链</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.setPrototypeOf = <span class="built_in">Object</span>.setPrototypeOf || <span class="function"><span class="keyword">function</span>(<span class="params">obj, proto</span>) </span>&#123;</span><br><span class="line">  obj.__proto__ = proto</span><br><span class="line">  <span class="keyword">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyArray</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// var arr = new Array()</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 考虑到需要传递 MyArray 构造函数一些参数</span></span><br><span class="line">  <span class="keyword">var</span> bindArr = <span class="built_in">Array</span>.bind(<span class="built_in">Array</span>, <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>))</span><br><span class="line">  <span class="keyword">var</span> arr = <span class="keyword">new</span> bindArr()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 对象原型链有原来指向 Array.prototype 改为 指向 MyArray.prototype</span></span><br><span class="line">  <span class="built_in">Object</span>.setPrototypeOf(arr, MyArray.prototype)</span><br><span class="line"></span><br><span class="line">  arr.test = <span class="string">'test'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义类的原型链修改</span></span><br><span class="line">MyArray.prototype = <span class="built_in">Object</span>.create(<span class="built_in">Array</span>.prototype, &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: &#123;</span><br><span class="line">    value: MyArray,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">MyArray.prototype.getLength = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.length)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> MyArray()</span><br><span class="line">arr[<span class="number">0</span>] = <span class="string">'a'</span></span><br><span class="line">arr.length <span class="comment">// 1</span></span><br><span class="line">arr.getLength() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/es6/" rel="tag"># es6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/es6 常用/" rel="next" title="es6 常用">
+                <i class="fa fa-chevron-left"></i> es6 常用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/14/es6 class 经 babel 编译分析/" rel="prev" title="es6 class 经 babel 编译分析">
+                es6 class 经 babel 编译分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-getPrototypeOf"><span class="nav-number">2.</span> <span class="nav-text">Object.getPrototypeOf()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#super-关键字-（可当做函数使用，也可当做对象使用）"><span class="nav-number">3.</span> <span class="nav-text">super 关键字 （可当做函数使用，也可当做对象使用）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#super-当做函数使用"><span class="nav-number">3.1.</span> <span class="nav-text">super 当做函数使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#super-作为对象使用"><span class="nav-number">3.2.</span> <span class="nav-text">super 作为对象使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例的-隐式原型-属性"><span class="nav-number">4.</span> <span class="nav-text">实例的 隐式原型 属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的-隐式原型-属性"><span class="nav-number">5.</span> <span class="nav-text">类的 隐式原型 属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原生构造函数继承"><span class="nav-number">6.</span> <span class="nav-text">原生构造函数继承</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
