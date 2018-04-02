@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="零. 处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
+<meta name="description" content="处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
 <meta name="keywords" content="promise,async&#x2F;await,generator">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异步">
 <meta property="og:url" content="http://jhgrrewq.github.io/2017/11/29/异步/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="零. 处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
+<meta property="og:description" content="处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:48:32.000Z">
+<meta property="og:updated_time" content="2018-03-30T12:58:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异步">
-<meta name="twitter:description" content="零. 处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
+<meta name="twitter:description" content="处理异步常见方法  异步回调函数 事件监听 发布/订阅 promise generator 函数 async/await">
 
 
 
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -109,9 +109,9 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -212,9 +212,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -311,7 +349,7 @@
 
       
         <!-- markdownlint-disable MD010 -->
-<h2 id="零-处理异步常见方法"><a href="#零-处理异步常见方法" class="headerlink" title="零. 处理异步常见方法"></a>零. 处理异步常见方法</h2><blockquote>
+<h2 id="处理异步常见方法"><a href="#处理异步常见方法" class="headerlink" title="处理异步常见方法"></a>处理异步常见方法</h2><blockquote>
 <ul>
 <li>异步回调函数</li>
 <li>事件监听</li>
@@ -322,7 +360,7 @@
 </ul>
 </blockquote>
 <a id="more"></a>
-<h2 id="一-Promise-（解决回调函数多重嵌套）"><a href="#一-Promise-（解决回调函数多重嵌套）" class="headerlink" title="一. Promise （解决回调函数多重嵌套）"></a>一. Promise （解决回调函数多重嵌套）</h2><p>1.Promise对象代表一个异步操作，有三种状态，pending（操作中），resolved（已完成），rejected（失败）</p>
+<h2 id="Promise-（解决回调函数多重嵌套）"><a href="#Promise-（解决回调函数多重嵌套）" class="headerlink" title="Promise （解决回调函数多重嵌套）"></a>Promise （解决回调函数多重嵌套）</h2><p>1.Promise对象代表一个异步操作，有三种状态，pending（操作中），resolved（已完成），rejected（失败）</p>
 <p>2.状态改变只有两种，pending -》resolved 和pending -》rejected</p>
 <p>3.状态一旦改变就不会更改</p>
 <p>4.Promise构造函数</p>
@@ -334,7 +372,7 @@
 </ul>
 <p>5.优点：异步操作变成链式调用，类似同步书写的逻辑<br>    缺点：无法取消promise；处于pending状态，无法知道进展到什么程度（操作刚开始还是操作快完成）</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve, reject)&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span>(<span class="comment">/*异步操作*/</span>)&#123;</span><br><span class="line">        resolve(value)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="二-generator函数"><a href="#二-generator函数" class="headerlink" title="二. generator函数"></a>二. generator函数</h2><p>generator 函数是一种可以停止并在之后重新进入的函数，<strong>调用返回一个 iterator 遍历器对象</strong>。generator 函数通过 next 和 yield 的配合实现流程控制</p>
+<h2 id="generator函数"><a href="#generator函数" class="headerlink" title="generator函数"></a>generator函数</h2><p>generator 函数是一种可以停止并在之后重新进入的函数，<strong>调用返回一个 iterator 遍历器对象</strong>。generator 函数通过 next 和 yield 的配合实现流程控制</p>
 <ul>
 <li>定义一个 <strong>generator 函数只需要 function 关键字后面有个 * 号，函数体内使用 yield 语句进行流程控制</strong></li>
 <li><strong>generator 函数调用并不立即执行</strong>，返回一个指向内部状态的 iterator 遍历器对象，<strong>该 iterator 对象具有 next() 方法，每次调用 next() 方法，函数会执行到 yield 语句或 return 的地方暂停。即从函数头部或者上次暂停的地方开始，直到遇到下一个 yield 表达式或者 return 语句为止</strong></li>
@@ -349,7 +387,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">yield</span> fetch    <span class="comment">// yield $.ajax  返回一个promise对象, 存放在 返回对象的 value 属性中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f.next().value.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>4.<strong>CO 模块对 generator 生成器函数简单封装</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">co</span>(<span class="params">gen</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> it = gen()</span><br><span class="line">    <span class="keyword">var</span> ret = it.next()</span><br><span class="line">    recall(ret, it)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recall</span>(<span class="params">ret, it</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = ret.value</span><br><span class="line">    <span class="keyword">var</span> done = ret.done</span><br><span class="line">    <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">        value.then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">            ret = it.next(res)</span><br><span class="line">            recall(ret, it)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!done) &#123;</span><br><span class="line">            ret = it.next()</span><br><span class="line">            recall(ret, it)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用传入生成器</span></span><br><span class="line">co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">2</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">4</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">var</span> data1 = <span class="keyword">yield</span> p1;</span><br><span class="line">  <span class="built_in">console</span>.log(data1);</span><br><span class="line">  <span class="keyword">var</span> data2 = <span class="keyword">yield</span> p2;</span><br><span class="line">  <span class="built_in">console</span>.log(data2);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="三-async-await（es2017-generator函数语法糖）"><a href="#三-async-await（es2017-generator函数语法糖）" class="headerlink" title="三. async/await（es2017 generator函数语法糖）"></a>三. async/await（es2017 generator函数语法糖）</h2><p>1.<strong>自带执行器，自动执行，不像generator需要调用 next()</strong></p>
+<h2 id="async-await（es2017-generator函数语法糖）"><a href="#async-await（es2017-generator函数语法糖）" class="headerlink" title="async/await（es2017 generator函数语法糖）"></a>async/await（es2017 generator函数语法糖）</h2><p>1.<strong>自带执行器，自动执行，不像generator需要调用 next()</strong></p>
 <p>2.<strong>函数执行时，遇到 await 先返回，等异步操作完成</strong></p>
 <p>3.await 后面紧跟任意表达式的结果</p>
 <ul>
@@ -486,7 +524,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -499,7 +537,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -542,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#零-处理异步常见方法"><span class="nav-number">1.</span> <span class="nav-text">零. 处理异步常见方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-Promise-（解决回调函数多重嵌套）"><span class="nav-number">2.</span> <span class="nav-text">一. Promise （解决回调函数多重嵌套）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-generator函数"><span class="nav-number">3.</span> <span class="nav-text">二. generator函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-async-await（es2017-generator函数语法糖）"><span class="nav-number">4.</span> <span class="nav-text">三. async/await（es2017 generator函数语法糖）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#处理异步常见方法"><span class="nav-number">1.</span> <span class="nav-text">处理异步常见方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-（解决回调函数多重嵌套）"><span class="nav-number">2.</span> <span class="nav-text">Promise （解决回调函数多重嵌套）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generator函数"><span class="nav-number">3.</span> <span class="nav-text">generator函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await（es2017-generator函数语法糖）"><span class="nav-number">4.</span> <span class="nav-text">async/await（es2017 generator函数语法糖）</span></a></li></ol></div>
             
 
           </div>
@@ -580,7 +618,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -729,6 +767,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 

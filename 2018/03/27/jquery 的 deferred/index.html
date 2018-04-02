@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="参考: jQuery的deferred对象详解  jquery 1.5 之前123456789101112131415161718192021// data1.json&amp;#123;&quot;data&quot;: 1&amp;#125;// data2.json&amp;#123;&quot;data&quot;: 2&amp;#125;var p1 = $.ajax(&amp;#123;  url: &apos;./data1.json&apos;,  success: funct">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-27T18:41:37.000Z">
+<meta property="og:updated_time" content="2018-04-02T06:48:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jquery 的 deferred">
 <meta name="twitter:description" content="参考: jQuery的deferred对象详解  jquery 1.5 之前123456789101112131415161718192021// data1.json&amp;#123;&quot;data&quot;: 1&amp;#125;// data2.json&amp;#123;&quot;data&quot;: 2&amp;#125;var p1 = $.ajax(&amp;#123;  url: &apos;./data1.json&apos;,  success: funct">
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -109,9 +109,9 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -212,9 +212,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -316,13 +354,8 @@
 <h2 id="jquery-1-5-之前"><a href="#jquery-1-5-之前" class="headerlink" title="jquery 1.5 之前"></a>jquery 1.5 之前</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data1.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="comment">// data2.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data1.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">    p2</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p2 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data2.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(p2, <span class="string">'p2'</span>) <span class="comment">// xhr 对象</span></span><br><span class="line"><span class="comment">// &#123;data: 1&#125;</span></span><br><span class="line"><span class="comment">// &#123;data: 2&#125;</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>jquery 1.5 之前 ajax 返回的是一个 xhr 对象，无法使用链式书写，$.ajax() 方法接受一个对象作为参数，对象中 success 属性指定成功回调，error 属性指定失败回调，多重异步回调只能嵌套书写</p>
-<h2 id="deferred-对象"><a href="#deferred-对象" class="headerlink" title="deferred 对象"></a>deferred 对象</h2><p>jquery 1.5 之后引入 deferred 对象，<strong>deferred 对象有三种状态，未完成、已完成、已失败</strong>。</p>
-<ul>
-<li>如果执行状态是 “已完成”，deferred 对象会异步调用 done 方法注册的回调函数（或者是异步调用 then 方法注册的第一个参数回调）</li>
-<li>如果执行状态是 “已失败”，deferred 对象会异步调用 fail 方法注册的回调函数（或者是异步调用 then 方法注册的第二个参数回调）</li>
-</ul>
-<p><strong>done、fail、then 方法都是被动监听</strong>，deferred 对象也可以主动改变自身状态，<strong>resolve 方法可以将状态从 “未完成” 变为 “已完成”， reject 方法可以将状态从 “未完成” 变成 “已失败”</strong></p>
-<ul>
+<p>jquery 1.5 之后引入 deferred 对象，使得 $.ajax() 可以链式调用</p>
+<h2 id="deferred-对象"><a href="#deferred-对象" class="headerlink" title="deferred 对象"></a>deferred 对象</h2><h3 id="jquery-deferred-api"><a href="#jquery-deferred-api" class="headerlink" title="jquery deferred api"></a>jquery deferred api</h3><ul>
 <li><strong>$.Deferred()</strong> 创建一个 deferred 对象</li>
 <li><strong>deferred.done()</strong> 注册操作成功的回调函数</li>
 <li><strong>deferred.fail()</strong> 注册操作失败的回调函数</li>
@@ -331,6 +364,12 @@
 <li><strong>deferred.reject()</strong> 手动将 deferred 对象的执行状态改为“已失败”，并异步调用 fail 方法注册的回调函数</li>
 <li><strong>$.when()</strong> 可以为多个操作注册回调</li>
 </ul>
+<h3 id="jquery-deferred-三种状态"><a href="#jquery-deferred-三种状态" class="headerlink" title="jquery deferred 三种状态"></a>jquery deferred 三种状态</h3><p><strong>deferred 对象有三种状态，未完成、已完成、已失败</strong>。</p>
+<ul>
+<li>如果执行状态是 “已完成”，deferred 对象会异步调用 done 方法注册的回调函数（或者是异步调用 then 方法注册的第一个参数回调）</li>
+<li>如果执行状态是 “已失败”，deferred 对象会异步调用 fail 方法注册的回调函数（或者是异步调用 then 方法注册的第二个参数回调）</li>
+</ul>
+<p><strong>done、fail、then 方法都是被动监听</strong>，deferred 对象也可以主动改变自身状态，<strong>resolve 方法可以将状态从 “未完成” 变为 “已完成”， reject 方法可以将状态从 “未完成” 变成 “已失败”</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p1 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data1.json'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p2 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data2.json'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p1.done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'success'</span>)</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'err'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">$.when(p1, p2).done(<span class="function"><span class="keyword">function</span>(<span class="params">data1, data2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data1[<span class="number">0</span>], data2[<span class="number">0</span>])</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(p2, <span class="string">'p2'</span>) <span class="comment">// deferred 对象</span></span><br><span class="line"><span class="comment">// &#123;data: 1&#125;</span></span><br><span class="line"><span class="comment">// &#123;data: 1&#125; &#123;data: 2&#125;</span></span><br><span class="line"><span class="comment">// success</span></span><br></pre></td></tr></table></figure>
 <p>因此可将异步操作进行封装，进而链式操作，而不必在异步函数内部进行嵌套操作</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dtd = $.Deferred() <span class="comment">// 创建一个 deferred 对象</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wait</span>(<span class="params">dtd, flag</span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'执行完毕'</span>)</span><br><span class="line">    <span class="keyword">if</span>(flag) &#123;</span><br><span class="line">      <span class="comment">// 成功</span></span><br><span class="line">      dtd.resolve() <span class="comment">// 改变状态为 “已完成”</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 失败</span></span><br><span class="line">      dtd.reject() <span class="comment">// 改变状态为 “已失败”</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> dtd</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">wait(dtd, <span class="literal">true</span>)</span><br><span class="line">  .done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'success1'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error1'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// .then(function() &#123;</span></span><br><span class="line">  <span class="comment">//   console.log('success2')</span></span><br><span class="line">  <span class="comment">// &#125;, function() &#123;</span></span><br><span class="line">  <span class="comment">//   console.log('error2')</span></span><br><span class="line">  <span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行完毕</span></span><br><span class="line"><span class="comment">// success1</span></span><br><span class="line"><span class="comment">// success2</span></span><br><span class="line"></span><br><span class="line">wait(dtd)</span><br><span class="line">  .done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'success1'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error1'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// .then(function() &#123;</span></span><br><span class="line">  <span class="comment">//   console.log('success2')</span></span><br><span class="line">  <span class="comment">// &#125;, function() &#123;</span></span><br><span class="line">  <span class="comment">//   console.log('error2')</span></span><br><span class="line">  <span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行完毕</span></span><br><span class="line"><span class="comment">// error1</span></span><br><span class="line"><span class="comment">// error2</span></span><br></pre></td></tr></table></figure>
@@ -463,7 +502,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -476,7 +515,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -519,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jquery-1-5-之前"><span class="nav-number">1.</span> <span class="nav-text">jquery 1.5 之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deferred-对象"><span class="nav-number">2.</span> <span class="nav-text">deferred 对象</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jquery-1-5-之前"><span class="nav-number">1.</span> <span class="nav-text">jquery 1.5 之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deferred-对象"><span class="nav-number">2.</span> <span class="nav-text">deferred 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery-deferred-api"><span class="nav-number">2.1.</span> <span class="nav-text">jquery deferred api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery-deferred-三种状态"><span class="nav-number">2.2.</span> <span class="nav-text">jquery deferred 三种状态</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -557,7 +596,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -706,6 +745,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 

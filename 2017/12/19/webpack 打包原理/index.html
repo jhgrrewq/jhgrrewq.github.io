@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-04-02T08:07:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack 打包原理">
 <meta name="twitter:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -109,9 +109,9 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -212,9 +212,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -320,7 +358,7 @@
 <h2 id="webpack-构建流程"><a href="#webpack-构建流程" class="headerlink" title="webpack 构建流程"></a>webpack 构建流程</h2><p>从启动 webpack 构建到输出结果是一个串行过程：</p>
 <ul>
 <li><strong>解析 webpack 配置参数（初始化参数）：</strong> 从配置文件和 shell 语句中读取并合并参数，得到最终的参数</li>
-<li><strong>开始编译：</strong> 用上一步得到的参数初始化 Compile 对象，<strong>加载注册所有配置的插件</strong>（好让插件监听 webpack 构建生命周期的事件节点，做出对应反应），执行对象的 run 方法开始执行编译</li>
+<li><strong>开始编译：</strong> 用上一步得到的参数<strong>初始化 Compile 对象</strong>，<strong>加载注册所有配置的插件</strong>（好让插件监听 webpack 构建生命周期的事件节点，做出对应反应），<strong>执行对象的 run 方法开始执行编译</strong></li>
 <li><strong>编译模块：</strong> 从配置的 entry 入口文件出发，调用所有配置的 loader 对模块构建 AST 语法树，再找出该模块依赖的模块递归下去，在解析模块递归过程中根据文件类型和 loader 配置找到合适的 loader 对模块进行转换</li>
 <li><strong>完成编译模块：</strong> 根据入口和模块间的依赖关系，组装成一个个包含多个模块的 chunk， 再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
 <li><strong>输出完成：</strong> 在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
@@ -334,7 +372,7 @@
 <p>分析上述 webpackBootstrap 立即执行函数 发现:</p>
 <h3 id="1-webpack-自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs-则需要自己为每个模块写工厂函数define-callback-）-然后将它们放入一个-modules-数组中，-并取数组的下标作为-modulesId"><a href="#1-webpack-自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs-则需要自己为每个模块写工厂函数define-callback-）-然后将它们放入一个-modules-数组中，-并取数组的下标作为-modulesId" class="headerlink" title="1 webpack 自动将每个模块文件包裹在一个工厂函数中，并传入默认参数（requirejs 则需要自己为每个模块写工厂函数define([], callback)）, 然后将它们放入一个 modules 数组中， 并取数组的下标作为 modulesId"></a>1 webpack 自动将每个模块文件<strong>包裹在一个工厂函数</strong>中，并传入默认参数（requirejs 则需要自己为每个模块写工厂函数define([], callback)）, 然后将它们放入一个 modules 数组中， 并取数组的下标作为 modulesId</h3><h3 id="2-将-modules-传入一个立即执行函数中，立即执行函数中包含一个-installModules-对象用于缓存已经加载的模块和一个模块加载函数，-最后加载入口模块并返回。"><a href="#2-将-modules-传入一个立即执行函数中，立即执行函数中包含一个-installModules-对象用于缓存已经加载的模块和一个模块加载函数，-最后加载入口模块并返回。" class="headerlink" title="2 将 modules 传入一个立即执行函数中，立即执行函数中包含一个 installModules 对象用于缓存已经加载的模块和一个模块加载函数， 最后加载入口模块并返回。"></a>2 将 modules 传入一个立即执行函数中，立即执行函数中包含<strong>一个 installModules 对象用于缓存已经加载的模块</strong>和<strong>一个模块加载函数</strong>， <strong>最后加载入口模块并返回</strong>。</h3><p><em>每个模块 webpack 只加载一次，加载过的模块存在在 installModules 中，重复加载的模块下次加载时直接从 installModules 读取</em>。</p>
 <h3 id="3-模块加载函数（webpack-require）加载模块，首先判断-installedModules-是否已经加载，加载过了就直接返回-module-exports，没有加载过该模块就通过-modules-moduleId-call-module-exports-module-module-exports-webpack-require-执行模块并将-module-exports-返回。"><a href="#3-模块加载函数（webpack-require）加载模块，首先判断-installedModules-是否已经加载，加载过了就直接返回-module-exports，没有加载过该模块就通过-modules-moduleId-call-module-exports-module-module-exports-webpack-require-执行模块并将-module-exports-返回。" class="headerlink" title="3 模块加载函数（webpack_require）加载模块，首先判断 installedModules 是否已经加载，加载过了就直接返回 module.exports，没有加载过该模块就通过 modules[moduleId].call(module.exports, module, module.exports, __webpack__require__) 执行模块并将 module.exports 返回。"></a>3 模块加载函数（<strong>webpack_require</strong>）加载模块，首先判断 installedModules 是否已经加载，加载过了就直接返回 module.exports，没有加载过该模块就通过 <code>modules[moduleId].call(module.exports, module, module.exports, __webpack__require__)</code> 执行模块并将 module.exports 返回。</h3><p><code>modules[moduleId].call(module.exports, module, module.exports, __webpack__require__)</code> 保证模块加载时 this 指向 module.exports, 并传入默认参数</p>
-<p>模块加载函数 <code>__webpack_require__</code> 提供的功能和 require 是一样的，声明对其他模块的依赖并获得该模块的 exports。不同之处在于 <code>__webpack_require__</code> 不需要提供模块的相对路径或者其他形式的 ID, 直接传入该模块在 modules 数组中的下标即可。 数组 modules 的下标和真实模块的实现是一一对应的，也省去了模块标识符的解析过程。</p>
+<p>模块加载函数 <code>__webpack_require__</code> 提供的功能和 require 是一样的，声明对其他模块的依赖并获得该模块的 exports。不同之处在于 <code>__webpack_require__</code> 不需要提供模块的相对路径或者其他形式的 ID, 直接传入该模块在 modules 数组中的下标即可。 数组 modules 的下标和真实模块的实现一一对应，省去了模块标识符的解析过程。</p>
 
       
     </div>
@@ -458,7 +496,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -471,7 +509,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -552,7 +590,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -701,6 +739,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 

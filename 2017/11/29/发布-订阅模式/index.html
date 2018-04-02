@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="零.概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
+<meta name="description" content="概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
 <meta name="keywords" content="设计模式,发布-订阅模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="发布-订阅模式">
 <meta property="og:url" content="http://jhgrrewq.github.io/2017/11/29/发布-订阅模式/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="零.概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
+<meta property="og:description" content="概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-03-30T12:58:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="发布-订阅模式">
-<meta name="twitter:description" content="零.概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
+<meta name="twitter:description" content="概念 定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法">
 
 
 
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -109,9 +109,9 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -212,9 +212,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -310,15 +348,15 @@
       
 
       
-        <h2 id="零-概念"><a href="#零-概念" class="headerlink" title="零.概念"></a>零.概念</h2><blockquote>
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
 <p><strong>定义对象之间一对多的依赖关系，当一个对象的状态改变时，所有依赖的对象都会得到通知</strong>，在js中，一般用事件模型来代替传统的发布-订阅；java中通常会把订阅者对象自身当成引用传入发布者对象中 ，同时订阅者对象还需提供一个名为诸如update的方法</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="一-js实现"><a href="#一-js实现" class="headerlink" title="一.js实现"></a>一.js实现</h2><h3 id="1-思路"><a href="#1-思路" class="headerlink" title="1.思路"></a>1.思路</h3><p>1）指定一个发布者</p>
+<h2 id="js实现"><a href="#js实现" class="headerlink" title="js实现"></a>js实现</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>1）指定一个发布者</p>
 <p>2）为发布者添加一个缓存列表，列表中存放订阅者的回调函数</p>
 <p>3）当发布时发布者会遍历缓存列表，依次触发订阅者回调函数</p>
-<h3 id="2-实现"><a href="#2-实现" class="headerlink" title="2.实现"></a>2.实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> event = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> clientList = &#123;&#125;, <span class="comment">// 缓存列表</span></span><br><span class="line">        listen, trigger, remove;</span><br><span class="line">    listen = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.clientList[key])&#123;</span><br><span class="line">            <span class="keyword">this</span>.clientList[key] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.clientList[key].push(fn); <span class="comment">// 订阅者回调函数添加进缓存列表</span></span><br><span class="line">    &#125;,</span><br><span class="line">    trigger = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> key = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>); <span class="comment">// 取出参数中的消息类型</span></span><br><span class="line">        <span class="keyword">let</span> fns = <span class="keyword">this</span>.clientList[key];</span><br><span class="line">        <span class="keyword">if</span>(!fns || fns.length === <span class="number">0</span>)&#123;  <span class="comment">// 如果没有绑定对应信息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; fns.length; i++)&#123;</span><br><span class="line">            fns[i].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>); <span class="comment">// 此时arguments为trigger调用时带上的参数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;，</span><br><span class="line">    remove = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> fns = <span class="keyword">this</span>.clientList[key];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!fns)&#123;   <span class="comment">// 如果key对应的消息类型没有被订阅则返回</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!fn)&#123;    <span class="comment">// 如果没有传入特定的回调函数，则表示要取消key对应消息类型的所有回调</span></span><br><span class="line">            fns &amp;&amp; (fns.length = <span class="number">0</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> i = fns.length<span class="number">-1</span>; i &gt; <span class="number">0</span> ; i--)&#123;</span><br><span class="line">                <span class="keyword">if</span>(fns[i] === fn)&#123;</span><br><span class="line">                    fns.splice(i,<span class="number">1</span>) <span class="comment">// 删除订阅者的回调函数</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        listen: listen,</span><br><span class="line">        trigger: trigger,</span><br><span class="line">        remove: remove</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-<h3 id="3-优化"><a href="#3-优化" class="headerlink" title="3.优化"></a>3.优化</h3><p>未订阅时发布优化，考虑建立一个堆栈，如果事件发布还没有订阅者订阅这个事件，则暂时将发布事件的动作包裹在一个函数中，这些包装函数放入堆栈，等有对象来订阅此事件时，再遍历堆栈并执行这些包装函数，也就是重新发布这些事件</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> event = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> clientList = &#123;&#125;, <span class="comment">// 缓存列表</span></span><br><span class="line">        listen, trigger, remove;</span><br><span class="line">    listen = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.clientList[key])&#123;</span><br><span class="line">            <span class="keyword">this</span>.clientList[key] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.clientList[key].push(fn); <span class="comment">// 订阅者回调函数添加进缓存列表</span></span><br><span class="line">    &#125;,</span><br><span class="line">    trigger = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> key = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>); <span class="comment">// 取出参数中的消息类型</span></span><br><span class="line">        <span class="keyword">let</span> fns = <span class="keyword">this</span>.clientList[key];</span><br><span class="line">        <span class="keyword">if</span>(!fns || fns.length === <span class="number">0</span>)&#123;  <span class="comment">// 如果没有绑定对应信息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; fns.length; i++)&#123;</span><br><span class="line">            fns[i].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>); <span class="comment">// 此时arguments为trigger调用时带上的参数</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;，</span><br><span class="line">    remove = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> fns = <span class="keyword">this</span>.clientList[key];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!fns)&#123;   <span class="comment">// 如果key对应的消息类型没有被订阅则返回</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!fn)&#123;    <span class="comment">// 如果没有传入特定的回调函数，则表示要取消key对应消息类型的所有回调</span></span><br><span class="line">            fns &amp;&amp; (fns.length = <span class="number">0</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> i = fns.length<span class="number">-1</span>; i &gt; <span class="number">0</span> ; i--)&#123;</span><br><span class="line">                <span class="keyword">if</span>(fns[i] === fn)&#123;</span><br><span class="line">                    fns.splice(i,<span class="number">1</span>) <span class="comment">// 删除订阅者的回调函数</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        listen: listen,</span><br><span class="line">        trigger: trigger,</span><br><span class="line">        remove: remove</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>未订阅时发布优化，考虑建立一个堆栈，如果事件发布还没有订阅者订阅这个事件，则暂时将发布事件的动作包裹在一个函数中，这些包装函数放入堆栈，等有对象来订阅此事件时，再遍历堆栈并执行这些包装函数，也就是重新发布这些事件</p>
 
       
     </div>
@@ -444,7 +482,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -457,7 +495,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -500,7 +538,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#零-概念"><span class="nav-number">1.</span> <span class="nav-text">零.概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-js实现"><span class="nav-number">2.</span> <span class="nav-text">一.js实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-思路"><span class="nav-number">2.1.</span> <span class="nav-text">1.思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-实现"><span class="nav-number">2.2.</span> <span class="nav-text">2.实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-优化"><span class="nav-number">2.3.</span> <span class="nav-text">3.优化</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js实现"><span class="nav-number">2.</span> <span class="nav-text">js实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">2.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.3.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -538,7 +576,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -687,6 +725,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 
