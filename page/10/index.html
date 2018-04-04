@@ -350,7 +350,7 @@
 
       
         
-          <h2 id="一-变量"><a href="#一-变量" class="headerlink" title="一.变量"></a>一.变量</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@variable：value</span><br></pre></td></tr></table></figure>
+          <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@variable：value</span><br></pre></td></tr></table></figure>
 <p><strong>url中使用</strong> 或者 <strong>样式名中作为差值变量使用</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@&#123;variable&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如 background: url()</span></span><br><span class="line">@img: <span class="string">'~assets/imgs/a.png'</span></span><br><span class="line">div&#123;</span><br><span class="line">    background: url(<span class="string">'@&#123;img&#125;'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如生成 类似后缀 col-1 col-2</span></span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -479,7 +479,7 @@
 
       
         
-          <h2 id="零-zepto-对象设计-如-‘span’"><a href="#零-zepto-对象设计-如-‘span’" class="headerlink" title="零.zepto 对象设计 如 $(‘span’)"></a>零.zepto 对象设计 如 $(‘span’)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.__proto__ = &#123;</span><br><span class="line">    addClass: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">123</span>);</span><br><span class="line">    &#125;，</span><br><span class="line">    …<span class="comment">// 更多自定义工具函数</span></span><br><span class="line">    push: <span class="built_in">Array</span>.prototype.push,</span><br><span class="line">    ….</span><br><span class="line">&#125;;</span><br><span class="line">arr.addClass();</span><br></pre></td></tr></table></figure>
+          <h2 id="zepto-对象设计-如-‘span’"><a href="#zepto-对象设计-如-‘span’" class="headerlink" title="zepto 对象设计 如 $(‘span’)"></a>zepto 对象设计 如 $(‘span’)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.__proto__ = &#123;</span><br><span class="line">    addClass: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">123</span>);</span><br><span class="line">    &#125;，</span><br><span class="line">    …<span class="comment">// 更多自定义工具函数</span></span><br><span class="line">    push: <span class="built_in">Array</span>.prototype.push,</span><br><span class="line">    ….</span><br><span class="line">&#125;;</span><br><span class="line">arr.addClass();</span><br></pre></td></tr></table></figure>
 <p>实例对象的隐式原型原指向Array.prototype, 但这里重新赋值后已不再指向Array.prototype，不再继承Array，因此不是数组<br><strong>zepto对象是一个类似数组的非数组，拥有一些数组的方法而已</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -868,7 +868,7 @@
 <blockquote>
 <p>参考: <a href="https://cn.vuejs.org/v2/guide/custom-directive.html" target="_blank" rel="noopener">vue 官方文档 自定义指令部分</a></p>
 </blockquote>
-<h2 id="一、思路"><a href="#一、思路" class="headerlink" title="一、思路"></a>一、思路</h2><blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p><strong>将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src</strong></p>
 </blockquote>
           <!--noindex-->

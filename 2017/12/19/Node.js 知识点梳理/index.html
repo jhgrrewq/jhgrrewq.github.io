@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-2-10/7115488.jpg">
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-2-10/12888853.jpg">
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-2-10/57943648.jpg">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-04-03T02:45:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js 知识点梳理">
 <meta name="twitter:description" content="概念和原理 Node.js 是基于chrome v8 引擎运行在服务器端的运行时（可理解为类似java的jre）">
@@ -357,14 +357,14 @@
 <p>Node.js 是基于chrome v8 引擎运行在服务器端的运行时（可理解为类似java的jre）</p>
 </blockquote>
 <a id="more"></a>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><h5 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h5><p>java、php或者.net等服务器端语言，会为每个客户端连接创建一个线程，而每个线程约要耗费2M内存。因此为了让web程序支持更多用户，就需要增加服务器的数量，进而可能需要提升服务器的性能（单核变多核），这无疑提升了服务器的硬件成本。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><h4 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h4><p>java、php或者.net等服务器端语言，会为每个客户端连接创建一个线程，而每个线程约要耗费2M内存。因此为了让web程序支持更多用户，就需要增加服务器的数量，进而可能需要提升服务器的性能（单核变多核），这无疑提升了服务器的硬件成本。</p>
 <p><strong>Node.js只使用单线程，不会为每个客户端连接创建一个新线程。</strong>当有客户端连接，就触发一个内部事件，通过<strong>非阻塞I/O、事件驱动机制</strong>，让Node.js宏观上并行，实现高并发。</p>
 <p>单线程的优点：操作系统没有线程创建、销毁的开销；缺点：某个客户端造成线程崩溃，整个服务就崩溃，其他客户端也崩溃。</p>
 <p><img src="http://ony85apla.bkt.clouddn.com/18-2-10/7115488.jpg" alt=""></p>
-<h5 id="非阻塞-I-O"><a href="#非阻塞-I-O" class="headerlink" title="非阻塞 I/O"></a>非阻塞 I/O</h5><p>I/O比cpu运算要耗费更长的时间。传统的单线程机制中，I/O执行时，整个线程会暂停等待I/O完成返回结果后，才执行下面的代码，也就是说<strong>I/O阻塞了代码的执行</strong>。</p>
+<h4 id="非阻塞-I-O"><a href="#非阻塞-I-O" class="headerlink" title="非阻塞 I/O"></a>非阻塞 I/O</h4><p>I/O比cpu运算要耗费更长的时间。传统的单线程机制中，I/O执行时，整个线程会暂停等待I/O完成返回结果后，才执行下面的代码，也就是说<strong>I/O阻塞了代码的执行</strong>。</p>
 <p><strong>Node.js采用非阻塞I/O, 遇到I/O读写代码时，立即转而执行其后面的代码，将I/O返回的结果放在回调函数中</strong>，提高了代码的执行效率。<strong>当某个I/O执行完毕，将以事件形式通知执行I/O操作的线程，线程执行该I/O的回调。</strong> 为了处理异步I/O, 线程必须有事件循环机制，不断检查是否有未经处理的事件，依次处理。</p>
 <p><img src="http://ony85apla.bkt.clouddn.com/18-2-10/12888853.jpg" alt=""></p>
-<h5 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h5><p>在Node中，客户端请求建立连接，提交数据等行为，会触发相应事件。<strong>在Node中，在一个时刻，只能处理一个事件回调， 但在处理一个事件回调的过程中，可以转而处理其他事件（比如有新的客户端连接），然后返回继续执行原事件的回调。这是Node的”事件环”机制</strong>。不管是新的客户端的连接请求，还是老的客户端的I/O执行完成，都会通过事件方式加入事件环，等待调度（通过一定的优先级算法调度）。</p>
+<h4 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h4><p>在Node中，客户端请求建立连接，提交数据等行为，会触发相应事件。<strong>在Node中，在一个时刻，只能处理一个事件回调， 但在处理一个事件回调的过程中，可以转而处理其他事件（比如有新的客户端连接），然后返回继续执行原事件的回调。这是Node的”事件环”机制</strong>。不管是新的客户端的连接请求，还是老的客户端的I/O执行完成，都会通过事件方式加入事件环，等待调度（通过一定的优先级算法调度）。</p>
 <p><img src="http://ony85apla.bkt.clouddn.com/18-2-10/57943648.jpg" alt=""></p>
 <blockquote>
 <p>三者缺一不可：</p>
@@ -573,7 +573,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念和原理"><span class="nav-number">1.</span> <span class="nav-text">概念和原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#单线程"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">单线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非阻塞-I-O"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">非阻塞 I/O</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事件驱动"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">事件驱动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js和浏览器端js异同"><span class="nav-number">1.2.</span> <span class="nav-text">Node.js和浏览器端js异同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适合开发"><span class="nav-number">1.3.</span> <span class="nav-text">适合开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js"><span class="nav-number">2.</span> <span class="nav-text">Node.js</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念和原理"><span class="nav-number">1.</span> <span class="nav-text">概念和原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单线程"><span class="nav-number">1.1.1.</span> <span class="nav-text">单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非阻塞-I-O"><span class="nav-number">1.1.2.</span> <span class="nav-text">非阻塞 I/O</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件驱动"><span class="nav-number">1.1.3.</span> <span class="nav-text">事件驱动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js和浏览器端js异同"><span class="nav-number">1.2.</span> <span class="nav-text">Node.js和浏览器端js异同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适合开发"><span class="nav-number">1.3.</span> <span class="nav-text">适合开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js"><span class="nav-number">2.</span> <span class="nav-text">Node.js</span></a></li></ol></div>
             
 
           </div>

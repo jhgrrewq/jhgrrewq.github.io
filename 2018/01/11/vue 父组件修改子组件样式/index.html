@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="零 问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
+<meta name="description" content="问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
 <meta name="keywords" content="vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue 父组件修改子组件样式">
 <meta property="og:url" content="http://jhgrrewq.github.io/2018/01/11/vue 父组件修改子组件样式/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="零 问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
+<meta property="og:description" content="问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-19T06:25:06.000Z">
+<meta property="og:updated_time" content="2018-04-03T02:27:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 父组件修改子组件样式">
-<meta name="twitter:description" content="零 问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
+<meta name="twitter:description" content="问题父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式  vue 父组件样式中使用 /deep/ 或 &amp;gt;&amp;gt;&amp;gt;常用 /deep/, 一些css预编译器不能识别 &amp;gt;&amp;gt;&amp;gt;  1234子组件根选择器名 /deep/ 子组件后代选择器名 &amp;#123;    ...    // 覆盖的样式&amp;#125;">
 
 
 
@@ -348,13 +348,13 @@
       
 
       
-        <h2 id="零-问题"><a href="#零-问题" class="headerlink" title="零 问题"></a>零 问题</h2><p>父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式</p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式</p>
 <blockquote>
 <p>vue 父组件样式中使用 /deep/ 或 &gt;&gt;&gt;<br><strong>常用 /deep/, 一些css预编译器不能识别 &gt;&gt;&gt;</strong></p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">子组件根选择器名 /deep/ 子组件后代选择器名 &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 覆盖的样式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="一-代码"><a href="#一-代码" class="headerlink" title="一 代码"></a>一 代码</h2><p>父组件</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>父组件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;header&gt;&lt;/header&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    import header from &apos;./header.vue&apos;</span><br><span class="line">    export default &#123;</span><br><span class="line">        ...</span><br><span class="line">        components: &#123;</span><br><span class="line">            header</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">    .header /deep/ .title&#123;</span><br><span class="line">        color: red</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
 <p>子组件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;header&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;title&quot;&gt;jack&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/templat</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">     export default &#123;</span><br><span class="line">        ...</span><br><span class="line">     &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
@@ -536,7 +536,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#零-问题"><span class="nav-number">1.</span> <span class="nav-text">零 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-代码"><span class="nav-number">2.</span> <span class="nav-text">一 代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
             
 
           </div>

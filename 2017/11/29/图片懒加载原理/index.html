@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="参考: vue 官方文档 自定义指令部分  一、思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
+<meta name="description" content="参考: vue 官方文档 自定义指令部分  思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
 <meta name="keywords" content="图片懒加载原理,算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图片懒加载原理以及实现">
 <meta property="og:url" content="http://jhgrrewq.github.io/2017/11/29/图片懒加载原理/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="参考: vue 官方文档 自定义指令部分  一、思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
+<meta property="og:description" content="参考: vue 官方文档 自定义指令部分  思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-04-03T02:35:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图片懒加载原理以及实现">
-<meta name="twitter:description" content="参考: vue 官方文档 自定义指令部分  一、思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
+<meta name="twitter:description" content="参考: vue 官方文档 自定义指令部分  思路 将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src">
 
 
 
@@ -352,47 +352,52 @@
 <blockquote>
 <p>参考: <a href="https://cn.vuejs.org/v2/guide/custom-directive.html" target="_blank" rel="noopener">vue 官方文档 自定义指令部分</a></p>
 </blockquote>
-<h2 id="一、思路"><a href="#一、思路" class="headerlink" title="一、思路"></a>一、思路</h2><blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p><strong>将页面中所有img的src属性用data-src代替（可以自定义），当页面滚动到该图片出现在可视区域时，用js取data-src属性赋给src</strong></p>
 </blockquote>
 <a id="more"></a>
-<h2 id="二、各种宽高"><a href="#二、各种宽高" class="headerlink" title="二、各种宽高"></a>二、各种宽高</h2><h3 id="1-网页可见区域宽高"><a href="#1-网页可见区域宽高" class="headerlink" title="1.网页可见区域宽高"></a>1.网页可见区域宽高</h3><ul>
+<h2 id="各种宽高"><a href="#各种宽高" class="headerlink" title="各种宽高"></a>各种宽高</h2><h3 id="网页可见区域宽高"><a href="#网页可见区域宽高" class="headerlink" title="网页可见区域宽高"></a>网页可见区域宽高</h3><ul>
 <li>低版本混杂模式 document.body.<strong>clientWidth/clientHeight</strong></li>
 <li>标准版本和ie低版本标准模式 document.documentElement.<strong>clientWidth/clientHeight</strong> </li>
 <li><strong>标准浏览器和ie9+ window.innerWdith/innerHeidht</strong></li>
 <li><strong>jquery方法  $(window).width()/height()</strong></li>
 </ul>
-<h3 id="2-网页可见区域宽高（包含边框）"><a href="#2-网页可见区域宽高（包含边框）" class="headerlink" title="2.网页可见区域宽高（包含边框）"></a>2.网页可见区域宽高（包含边框）</h3><ul>
+<h3 id="网页可见区域宽高（包含边框）"><a href="#网页可见区域宽高（包含边框）" class="headerlink" title="网页可见区域宽高（包含边框）"></a>网页可见区域宽高（包含边框）</h3><ul>
 <li>兼容混杂模式  document.body.<strong>offsetWidth/offsetHeight</strong></li>
 <li>兼容ie低版本标准模式 document.documentElement.<strong>offsetWidth/offsetHeight</strong></li>
 </ul>
-<h3 id="3-网页正文全文宽高（包含滚动部分）"><a href="#3-网页正文全文宽高（包含滚动部分）" class="headerlink" title="3.网页正文全文宽高（包含滚动部分）"></a>3.网页正文全文宽高（包含滚动部分）</h3><ul>
+<h3 id="网页正文全文宽高（包含滚动部分）"><a href="#网页正文全文宽高（包含滚动部分）" class="headerlink" title="网页正文全文宽高（包含滚动部分）"></a>网页正文全文宽高（包含滚动部分）</h3><ul>
 <li>兼容混杂模式  document.body.scrollWidth/scrollHeight</li>
 <li>兼容ie低版本标准模式 document.documentElement.scrollWidth/scrollHeight</li>
 </ul>
-<h3 id="4-网页被卷去的高-左"><a href="#4-网页被卷去的高-左" class="headerlink" title="4.网页被卷去的高/左"></a>4.网页被卷去的高/左</h3><ul>
+<h3 id="网页被卷去的高-左"><a href="#网页被卷去的高-左" class="headerlink" title="网页被卷去的高/左"></a>网页被卷去的高/左</h3><ul>
 <li>兼容混杂模式  document.body.<strong>scrollTop/scrollLeft</strong></li>
 <li>兼容ie低版本标准模式 document.documentElement.<strong>scrollTop/scrollLeft</strong> </li>
 <li><strong>标准浏览器和ie9+ window.pageYoffset/pageXoffset</strong></li>
 <li><strong>jquery方法  $(window).scrollTop()/scrollLeft()</strong></li>
 </ul>
 <p>屏幕正文部分上 window.screenTop<br>屏幕正文部分左 window.screenLeft<br>屏幕分辨率的高 window.screen.height<br>屏幕分辨率的宽 window.screen.width</p>
-<h3 id="5-元素"><a href="#5-元素" class="headerlink" title="5.元素"></a>5.元素</h3><ul>
+<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><ul>
 <li>clientWidth/Height 元素可见内容区宽高</li>
 <li>offsetWidth/Height 元素可见内容区（包含边框）宽高</li>
 <li>scrollWidth/Height 元素实际内容区（包含滚动部分）宽高</li>
 </ul>
-<h3 id="6-获取元素尺寸-（左边是jquery方法，右边是原生方法）"><a href="#6-获取元素尺寸-（左边是jquery方法，右边是原生方法）" class="headerlink" title="6.获取元素尺寸 （左边是jquery方法，右边是原生方法）"></a>6.获取元素尺寸 （左边是jquery方法，右边是原生方法）</h3><ul>
+<h3 id="获取元素尺寸-（左边是jquery方法，右边是原生方法）"><a href="#获取元素尺寸-（左边是jquery方法，右边是原生方法）" class="headerlink" title="获取元素尺寸 （左边是jquery方法，右边是原生方法）"></a>获取元素尺寸 （左边是jquery方法，右边是原生方法）</h3><ul>
 <li>$(el).width() 等同   el.style.width</li>
 <li>$(el).innerWidth()  等同 el.style.width + el.style.padding</li>
 <li>$(el).outWidth() 等同 el.offsetWidth = el.style.width + el.style.padding + el.style.border</li>
 <li>$(el).outWidth(true) 等同 el.style.width + el.style.padding + el.style.border + el.style.margin</li>
 </ul>
 <p><strong>原生 el.getBoundingClientRect().top/left/bottom/right 元素距离视口上左下右的距离</strong><br><strong>jquery $(el).offset().top/left 元素距离视口上左距离</strong></p>
-<h2 id="三、算法"><a href="#三、算法" class="headerlink" title="三、算法"></a>三、算法</h2><p>1.将含有data-src属性的dom存进数组</p>
-<p>2.监听scroll事件，在回调中开启定时器， 遍历数组</p>
-<p>3.当数组中元素的<strong>getBoundingClientRect().top 小于 网页可见区域和滚动距离之和（进入屏幕可见区域）<br>    取出该元素data-src属性的值赋给元素的src， 并将该元素从数组中删除</strong></p>
-<h2 id="四、vue-lazy-图片懒加载插件实现"><a href="#四、vue-lazy-图片懒加载插件实现" class="headerlink" title="四、vue-lazy 图片懒加载插件实现"></a>四、vue-lazy 图片懒加载插件实现</h2><p>指令 v-lazy</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><ul>
+<li><p>将含有data-src属性的dom存进数组</p>
+</li>
+<li><p>监听scroll事件，在回调中开启定时器， 遍历数组</p>
+</li>
+<li><p>当数组中元素的<strong>getBoundingClientRect().top 小于 网页可见区域和滚动距离之和（进入屏幕可见区域）<br>  取出该元素data-src属性的值赋给元素的src， 并将该元素从数组中删除</strong></p>
+</li>
+</ul>
+<h2 id="vue-lazy-图片懒加载插件实现"><a href="#vue-lazy-图片懒加载插件实现" class="headerlink" title="vue-lazy 图片懒加载插件实现"></a>vue-lazy 图片懒加载插件实现</h2><p>指令 v-lazy</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 使用 img 标签</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">v-lazy</span>=<span class="string">"imgSrc"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 使用 css background-image</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-lazy:background-image</span>=<span class="string">"imgSrc"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>插件的整体代码</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue 插件需要包含一个 install 方法，传入 Vue， 并在函数中绑定指令</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	install: <span class="function"><span class="keyword">function</span>(<span class="params">Vue, options = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> init = &#123;</span><br><span class="line">			<span class="keyword">default</span>: options.loading || <span class="string">'http://ony85apla.bkt.clouddn.com/18-2-1/40324974.jpg'</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// addListener 为 vue 指令的具体实现功能函数，监听所有使用 v-lazy 指令的元素</span></span><br><span class="line">		<span class="comment">// el 为 dom 元素， binding 为绑定对象</span></span><br><span class="line">		<span class="comment">// 如 &lt;img v-lazy="imgSrc"&gt; el 为 img binding.value 为 imgSrc</span></span><br><span class="line">		<span class="keyword">const</span> addListener = <span class="function">(<span class="params">el, binding</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// ...</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// vue 自定义指令</span></span><br><span class="line">		Vue.directive(<span class="string">'lazy'</span>, &#123;</span><br><span class="line">			<span class="comment">// 被绑定元素插入父节点时调用</span></span><br><span class="line">			inserted: addListener,</span><br><span class="line">			<span class="comment">// VNode 更新时调用</span></span><br><span class="line">			updated: addListener</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -622,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、思路"><span class="nav-number">1.</span> <span class="nav-text">一、思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、各种宽高"><span class="nav-number">2.</span> <span class="nav-text">二、各种宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-网页可见区域宽高"><span class="nav-number">2.1.</span> <span class="nav-text">1.网页可见区域宽高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-网页可见区域宽高（包含边框）"><span class="nav-number">2.2.</span> <span class="nav-text">2.网页可见区域宽高（包含边框）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-网页正文全文宽高（包含滚动部分）"><span class="nav-number">2.3.</span> <span class="nav-text">3.网页正文全文宽高（包含滚动部分）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-网页被卷去的高-左"><span class="nav-number">2.4.</span> <span class="nav-text">4.网页被卷去的高/左</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-元素"><span class="nav-number">2.5.</span> <span class="nav-text">5.元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-获取元素尺寸-（左边是jquery方法，右边是原生方法）"><span class="nav-number">2.6.</span> <span class="nav-text">6.获取元素尺寸 （左边是jquery方法，右边是原生方法）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、算法"><span class="nav-number">3.</span> <span class="nav-text">三、算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、vue-lazy-图片懒加载插件实现"><span class="nav-number">4.</span> <span class="nav-text">四、vue-lazy 图片懒加载插件实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-自定义指令"><span class="nav-number">5.1.</span> <span class="nav-text">vue 自定义指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钩子函数"><span class="nav-number">5.2.</span> <span class="nav-text">钩子函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钩子函数参数"><span class="nav-number">5.3.</span> <span class="nav-text">钩子函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象字面量"><span class="nav-number">5.4.</span> <span class="nav-text">对象字面量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种宽高"><span class="nav-number">2.</span> <span class="nav-text">各种宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网页可见区域宽高"><span class="nav-number">2.1.</span> <span class="nav-text">网页可见区域宽高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网页可见区域宽高（包含边框）"><span class="nav-number">2.2.</span> <span class="nav-text">网页可见区域宽高（包含边框）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网页正文全文宽高（包含滚动部分）"><span class="nav-number">2.3.</span> <span class="nav-text">网页正文全文宽高（包含滚动部分）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网页被卷去的高-左"><span class="nav-number">2.4.</span> <span class="nav-text">网页被卷去的高/左</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素"><span class="nav-number">2.5.</span> <span class="nav-text">元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取元素尺寸-（左边是jquery方法，右边是原生方法）"><span class="nav-number">2.6.</span> <span class="nav-text">获取元素尺寸 （左边是jquery方法，右边是原生方法）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">3.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-lazy-图片懒加载插件实现"><span class="nav-number">4.</span> <span class="nav-text">vue-lazy 图片懒加载插件实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-自定义指令"><span class="nav-number">5.1.</span> <span class="nav-text">vue 自定义指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钩子函数"><span class="nav-number">5.2.</span> <span class="nav-text">钩子函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钩子函数参数"><span class="nav-number">5.3.</span> <span class="nav-text">钩子函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象字面量"><span class="nav-number">5.4.</span> <span class="nav-text">对象字面量</span></a></li></ol></li></ol></div>
             
 
           </div>

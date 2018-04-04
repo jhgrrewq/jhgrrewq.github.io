@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-1-19/12173073.jpg">
-<meta property="og:updated_time" content="2018-03-30T11:46:50.000Z">
+<meta property="og:updated_time" content="2018-04-04T06:51:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 ERROR in xxx.js from UglifyJs">
 <meta name="twitter:image" content="http://ony85apla.bkt.clouddn.com/18-1-19/12173073.jpg">
@@ -353,10 +353,10 @@
 <blockquote>
 <p><strong>解决方案: 安装 babel-preset-env 插件</strong></p>
 </blockquote>
-<p>babel-preset-env 插件能自动根据目标运行环境自动启用需要的 babel 插件。 使用该插件，不再需要使用 es20xx presets 和 stage-x</p>
-<h2 id="一-安装"><a href="#一-安装" class="headerlink" title="一 安装"></a>一 安装</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D babel-preset-env</span><br></pre></td></tr></table></figure>
-<h2 id="二-配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目"><a href="#二-配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目" class="headerlink" title="二 配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)"></a>二 配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    use: [&#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [<span class="string">'env'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;],</span><br><span class="line">    include: [resolve(<span class="string">'src'</span>), resolve(<span class="string">'test'</span>)]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="三-项目根目录配置-babelrc"><a href="#三-项目根目录配置-babelrc" class="headerlink" title="三 项目根目录配置 .babelrc"></a>三 项目根目录配置 .babelrc</h2><p>.babelrc 文件用于配置转码的规则和插件。 一般带有rc结尾的文件通常代表自动运行加载的文件、配置等。babel6.x 版本后，所有插件都是可插拔的。这意味着安装了babel 之后是不能工作的，还必须配置对应的 .babelrc 文件。</p>
+<p>babel-preset-env 插件能自动根据目标运行环境自动启用需要的 babel 插件。 使用该插件，不再需要使用 es20xx presets</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D babel-preset-env</span><br></pre></td></tr></table></figure>
+<h2 id="配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目"><a href="#配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目" class="headerlink" title="配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)"></a>配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    use: [&#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [<span class="string">'env'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;],</span><br><span class="line">    include: [resolve(<span class="string">'src'</span>), resolve(<span class="string">'test'</span>)]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="项目根目录配置-babelrc"><a href="#项目根目录配置-babelrc" class="headerlink" title="项目根目录配置 .babelrc"></a>项目根目录配置 .babelrc</h2><p>.babelrc 文件用于配置转码的规则和插件。 一般带有rc结尾的文件通常代表自动运行加载的文件、配置等。babel6.x 版本后，所有插件都是可插拔的。这意味着安装了babel 之后是不能工作的，还必须配置对应的 .babelrc 文件。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"presets"</span>: [<span class="string">"env"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -536,7 +536,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-安装"><span class="nav-number">1.</span> <span class="nav-text">一 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目"><span class="nav-number">2.</span> <span class="nav-text">二 配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-项目根目录配置-babelrc"><span class="nav-number">3.</span> <span class="nav-text">三 项目根目录配置 .babelrc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-webpack-base-conf-js-如果使用-vue-cli-生成的项目"><span class="nav-number">2.</span> <span class="nav-text">配置 webpack-base-conf.js (如果使用 vue-cli 生成的项目)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目根目录配置-babelrc"><span class="nav-number">3.</span> <span class="nav-text">项目根目录配置 .babelrc</span></a></li></ol></div>
             
 
           </div>

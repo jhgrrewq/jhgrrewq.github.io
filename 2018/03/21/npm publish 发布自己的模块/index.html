@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="在 npm 官网上发布自己的模块首先需要在 https://www.npmjs.com 注册账号 1 编写模块一般遵循 umd / amd / commonJS 风格编写模块 2 初始化包描述文件 package.json使用 npm init 命令初始化包描述文件，要注意两点：  包名不能包含大写字母 最好先在 npm 官网搜索一下包名是否已被占用，被占用的包名模块是无法发布的  1npm in">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-04-02T15:00:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="npm publish 发布自己的模块">
 <meta name="twitter:description" content="在 npm 官网上发布自己的模块首先需要在 https://www.npmjs.com 注册账号 1 编写模块一般遵循 umd / amd / commonJS 风格编写模块 2 初始化包描述文件 package.json使用 npm init 命令初始化包描述文件，要注意两点：  包名不能包含大写字母 最好先在 npm 官网搜索一下包名是否已被占用，被占用的包名模块是无法发布的  1npm in">
@@ -365,7 +365,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm owner add &lt;user&gt; <span class="xml"><span class="tag">&lt;<span class="name">package_name</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>删除一个发布者</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm owner rm &lt;user&gt; <span class="xml"><span class="tag">&lt;<span class="name">package_name</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题 1"></a>问题 1</h2><p>上传模块可能需要验证用户身份, 使用命令 npm adduser 输入用户名密码</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题 1"></a>问题 1</h3><p>上传模块可能需要验证用户身份, 使用命令 npm adduser 输入用户名密码</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm adduser</span><br></pre></td></tr></table></figure>
 <h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题 2"></a>问题 2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ERR! you <span class="keyword">do</span> not have permission to publish <span class="string">"your module name"</span>. Are you logged <span class="keyword">in</span> <span class="keyword">as</span> the correct user?</span><br></pre></td></tr></table></figure>
 <p>报错提示没有权限，实是包名被占用。要在 npm 官网搜索没有被占用的包名后修改 package.json 的 name 字段，重新上传</p>
@@ -548,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-编写模块"><span class="nav-number">1.</span> <span class="nav-text">1 编写模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化包描述文件-package-json"><span class="nav-number">2.</span> <span class="nav-text">2 初始化包描述文件 package.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-上传模块"><span class="nav-number">3.</span> <span class="nav-text">3 上传模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模块管理"><span class="nav-number">4.</span> <span class="nav-text">对模块管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">5.</span> <span class="nav-text">常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题-1"><span class="nav-number">6.</span> <span class="nav-text">问题 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-2"><span class="nav-number">6.1.</span> <span class="nav-text">问题 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-3"><span class="nav-number">6.2.</span> <span class="nav-text">问题 3</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-编写模块"><span class="nav-number">1.</span> <span class="nav-text">1 编写模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化包描述文件-package-json"><span class="nav-number">2.</span> <span class="nav-text">2 初始化包描述文件 package.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-上传模块"><span class="nav-number">3.</span> <span class="nav-text">3 上传模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模块管理"><span class="nav-number">4.</span> <span class="nav-text">对模块管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">5.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">5.1.</span> <span class="nav-text">问题 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-2"><span class="nav-number">5.2.</span> <span class="nav-text">问题 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-3"><span class="nav-number">5.3.</span> <span class="nav-text">问题 3</span></a></li></ol></li></ol></div>
             
 
           </div>
