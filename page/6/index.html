@@ -280,6 +280,267 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/20/webpack 抽取公共模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/20/webpack 抽取公共模块/" itemprop="url">webpack 抽取公共模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T12:41:40+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考: <a href="https://github.com/happylindz/blog/issues/6" target="_blank" rel="noopener">深入理解 webpack 文件打包机制</a>、<a href="https://doc.webpack-china.org/guides/code-splitting/" target="_blank" rel="noopener">webpack官方文档 代码分离部分</a></p>
+</blockquote>
+<p>第三方引用代码库一般很大，没有引入新模块之前一般是不会变动的，因此通常希望将依赖这部分单独打包，利用浏览器缓存提高加载速度。（如果不单独打包，这些第三方依赖库会被打包进业务代码， 而且引用相同依赖的每个文件会重复打包依赖）</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/20/webpack 抽取公共模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/20/webpack tree shaking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/20/webpack tree shaking/" itemprop="url">webpack tree shaking</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T12:41:14+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="https://doc.webpack-china.org/guides/tree-shaking/" target="_blank" rel="noopener">webpack 官方文档 tree shaking 部分</a></p>
+</blockquote>
+<p>tree shaking 通常是用于描述移除 js 上下文中未引用的代码。</p>
+<ul>
+<li><p><strong>它依赖于 es6 模块系统中的静态结构特性，如 import 和 export</strong>。es6 模块的依赖关系是确定的，和运行时状态无关，可以进行静态分析，清除没用的代码。而 commonJS 是动态加载，依赖关系需要运行时才能确定。</p>
+</li>
+<li><p>其次<strong>需要开启 UglifyJsPlugin 插件对代码进行压缩</strong>（也可以使用其他压缩插件）即 webpack 本身不会执行 tree shaking , 需要第三方工具来执行未引用代码的删除工作</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/20/webpack tree shaking/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/19/webpack 配置总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1260,256 +1521,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/16/js 数组方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/16/js 数组方法/" itemprop="url">js 数组方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T14:29:15+08:00">
-                2018-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>js 提供了很多数组操作方法，有些会影响原来的数组，有些则不会，而是返回操作后的新数组</p>
-<h2 id="新增：影响原数组"><a href="#新增：影响原数组" class="headerlink" title="新增：影响原数组"></a>新增：影响原数组</h2><p><strong>Array.prototype.push() 从尾部新增元素，返回数组长度</strong><br><strong>Array.prototype.unshift() 从头部新增元素, 返回数组长度</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> add = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>]</span><br><span class="line">add.push(<span class="string">'f'</span>) <span class="comment">// 6 ['a', 'b', 'c', 'd', 'e', 'f']</span></span><br><span class="line">add.unshift(<span class="string">'z'</span>) <span class="comment">// 7 ['z', 'a', 'b', 'c', 'd', 'e' 'f']</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/16/js 数组方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/16/jquery 插件编写/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/16/jquery 插件编写/" itemprop="url">jquery 插件编写</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T13:45:45+08:00">
-                2018-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="jquery-源码总体结构分析"><a href="#jquery-源码总体结构分析" class="headerlink" title="jquery 源码总体结构分析"></a>jquery 源码总体结构分析</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, undefined</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 通常创建一个对象或实例是通过new 一个构造函数，但是如果构造函数有返回值，new创建的对象会被丢弃，返回值将作为new表达式的值。这里jQuery()内部new创建并返回另一个构造函数的实例，省去了构造函数jQuery()前面的new，也就是可以直接省略new写jQuery()</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> jQuery.fn.init(selector, context, rootjQuery)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 一些局部变量声明</span></span><br><span class="line"></span><br><span class="line">    jQuery.fn = jQuery.prototype = &#123;</span><br><span class="line">        <span class="comment">// jQuery对象是类数组</span></span><br><span class="line">        construtor: jQuery,</span><br><span class="line">        init: <span class="function"><span class="keyword">function</span>(<span class="params">selector, context, rootjQuery</span>) </span>&#123;...&#125;</span><br><span class="line">        <span class="comment">// 一堆原型属性和方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关键 jQuery.fn.init实例化对象能拥有 jQuery 原型上的属性和方法</span></span><br><span class="line">    jQuery.fn.init.prototype = jQuery.fn</span><br><span class="line">    <span class="comment">// 多个对象合并</span></span><br><span class="line">    jQuery.extend = jQuery.fn.extend = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当只有一个参数是扩展jQuery全局对象</span></span><br><span class="line">    jQuery.extend(&#123;</span><br><span class="line">        <span class="comment">// 一堆静态属性和方法</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/16/jquery 插件编写/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1564,7 +1575,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1577,7 +1588,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

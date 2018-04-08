@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+<meta name="description" content="webpack 核心概念 entry 一个 module 或 lib 的入口（可以有多个入口） module 模块，在 webpack 中一切都是模块，一个模块对应一个文件，webpack 会从入口开始递归找出所有依赖的模块 chunk 代码块，多个 module 组成的一个代码块，如将一个 module 和其所有依赖的组合为一个 chunk loader 文件转换器，用于将 module 内容">
 <meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webpack 打包原理">
 <meta property="og:url" content="http://jhgrrewq.github.io/2017/12/19/webpack 打包原理/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+<meta property="og:description" content="webpack 核心概念 entry 一个 module 或 lib 的入口（可以有多个入口） module 模块，在 webpack 中一切都是模块，一个模块对应一个文件，webpack 会从入口开始递归找出所有依赖的模块 chunk 代码块，多个 module 组成的一个代码块，如将一个 module 和其所有依赖的组合为一个 chunk loader 文件转换器，用于将 module 内容">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-03T02:54:26.000Z">
+<meta property="og:updated_time" content="2018-04-08T03:09:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack 打包原理">
-<meta name="twitter:description" content="webpack 核心概念 entry 一个可执行模块或库的入口文件（可以有多个入口） chunk 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk loader 文件转换器，如将 es6 转为 es5， scss 转为 css plugin 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功">
+<meta name="twitter:description" content="webpack 核心概念 entry 一个 module 或 lib 的入口（可以有多个入口） module 模块，在 webpack 中一切都是模块，一个模块对应一个文件，webpack 会从入口开始递归找出所有依赖的模块 chunk 代码块，多个 module 组成的一个代码块，如将一个 module 和其所有依赖的组合为一个 chunk loader 文件转换器，用于将 module 内容">
 
 
 
@@ -350,17 +350,18 @@
       
         <!-- markdownlint-disable MD010 -->
 <h2 id="webpack-核心概念"><a href="#webpack-核心概念" class="headerlink" title="webpack 核心概念"></a>webpack 核心概念</h2><ul>
-<li><strong>entry</strong> 一个可执行模块或库的入口文件（可以有多个入口）</li>
-<li><strong>chunk</strong> 多个文件组成的一个代码块，如将一个可执行模块和其所有依赖的组合为一个 chunk</li>
-<li><strong>loader</strong> 文件转换器，如将 es6 转为 es5， scss 转为 css</li>
+<li><strong>entry</strong> 一个 module 或 lib 的入口（可以有多个入口）</li>
+<li><strong>module</strong> 模块，在 webpack 中一切都是模块，一个模块对应一个文件，webpack 会从入口开始递归找出所有依赖的模块</li>
+<li><strong>chunk</strong> 代码块，多个 module 组成的一个代码块，如将一个 module 和其所有依赖的组合为一个 chunk</li>
+<li><strong>loader</strong> 文件转换器，用于将 module 内容根据需求转换为新内容，如将 es6 转为 es5， scss 转为 css</li>
 <li><strong>plugin</strong> 插件，用于扩展 webpack 功能，在 webpack 构建生命周期的节点上加入扩展 hook 为 webpack 加入功能</li>
 </ul>
 <h2 id="webpack-构建流程"><a href="#webpack-构建流程" class="headerlink" title="webpack 构建流程"></a>webpack 构建流程</h2><p>从启动 webpack 构建到输出结果是一个串行过程：</p>
 <ul>
 <li><strong>解析 webpack 配置参数（初始化参数）：</strong> 从配置文件和 shell 语句中读取并合并参数，得到最终的参数</li>
 <li><strong>开始编译：</strong> 用上一步得到的参数<strong>初始化 Compile 对象</strong>，<strong>加载注册所有配置的插件</strong>（好让插件监听 webpack 构建生命周期的事件节点，做出对应反应），<strong>执行对象的 run 方法开始执行编译</strong></li>
-<li><strong>编译模块：</strong> 从配置的 entry 入口文件出发，调用所有配置的 loader 对模块构建 AST 语法树，再找出该模块依赖的模块递归下去，在解析模块递归过程中根据文件类型和 loader 配置找到合适的 loader 对模块进行转换</li>
-<li><strong>完成编译模块：</strong> 根据入口和模块间的依赖关系，组装成一个个包含多个模块的 chunk， 再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
+<li><strong>编译模块：</strong> 从配置的 entry 递归解析所有依赖的 module，每找到一个 module 会调用配置的 loader 对 module 构建 AST 语法树并进行转换，再找出当前 module 依赖的模块递归下去，在解析 module 递归过程中根据文件类型和 loader 配置找到合适的 loader 对 module 进行转换</li>
+<li><strong>完成编译模块：</strong> 根据 entry 和 module 的依赖关系，组装成一个个包含多个 module 的 chunk（module 会以 entry 分组，一个 entry 和依赖的 module 构成 chunk）， 再把每个chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
 <li><strong>输出完成：</strong> 在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
 </ul>
 <p>在以上过程中，webpack 会在特定时间点广播特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 webpack 提供的 api 改变 webpack 的运行结果</p>
@@ -499,7 +500,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -512,7 +513,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
