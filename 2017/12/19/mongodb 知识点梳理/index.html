@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="mongodb 为非关系型数据库，collection（集合）可对应一个关系型数据库的二维表，document（文档）对应关系型数据库的行（或者说一条记录）一个集合里面各个文档的字段不一定相同一个 database 可以有多个 collection，一个 collection 中又可以有多个 document">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-03T02:49:10.000Z">
+<meta property="og:updated_time" content="2018-04-13T01:22:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb 知识点梳理">
 <meta name="twitter:description" content="mongodb 为非关系型数据库，collection（集合）可对应一个关系型数据库的二维表，document（文档）对应关系型数据库的行（或者说一条记录）一个集合里面各个文档的字段不一定相同一个 database 可以有多个 collection，一个 collection 中又可以有多个 document">
@@ -416,6 +416,10 @@
 <li><strong>db.集合名.remove(条件)</strong></li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">db.tb1.find()</span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff18a2087cb067f6dd7c7"), "name" : "zhang", "age" : 17 &#125;</span></span><br><span class="line"><span class="comment">// &#123; "_id" : 1, "name" : "zhang", "age" : 19 &#125;</span></span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff9202087cb067f6dd7c8"), "name" : "zhang0", "age" : 0 &#125;</span></span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff9202087cb067f6dd7c9"), "name" : "zhang1", "age" : 1 &#125;</span></span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff9202087cb067f6dd7ca"), "name" : "zhang2", "age" : 10 &#125;</span></span><br><span class="line">db.tb1.remove(&#123;<span class="string">"age"</span>:&#123;<span class="string">"$gt"</span>: <span class="number">5</span>&#125;&#125;)</span><br><span class="line"><span class="comment">// WriteResult(&#123; "nRemoved" : 3 &#125;)</span></span><br><span class="line">db.tb1.find()</span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff9202087cb067f6dd7c8"), "name" : "zhang0", "age" : 0 &#125;</span></span><br><span class="line"><span class="comment">// &#123; "_id" : ObjectId("5a7ff9202087cb067f6dd7c9"), "name" : "zhang1", "age" : 1 &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="用户名-密码"><a href="#用户名-密码" class="headerlink" title="用户名 密码"></a>用户名 密码</h2><p>早期使用 <code>db.addUser()</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.addUser(<span class="string">'root'</span>, <span class="string">'12345'</span>)</span><br></pre></td></tr></table></figure>
+<p>新版 api <code>db.createUser({user: &#39;&#39;, pwd: &#39;&#39;, roles: []})</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.createUser(&#123;<span class="attr">user</span>: <span class="string">'root'</span>, <span class="attr">pwd</span>: <span class="string">'12345'</span>, <span class="attr">roles</span>: []&#125;)</span><br><span class="line">db.createUser(&#123;<span class="attr">user</span>: <span class="string">'root'</span>, <span class="attr">pwd</span>: <span class="string">'12345'</span>, <span class="attr">roles</span>: [&#123;<span class="attr">role</span>: <span class="string">''</span>, <span class="attr">db</span>: <span class="string">''</span>&#125;]&#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -445,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/19/vue-router 知识点梳理/" rel="next" title="vue-router 知识点梳理">
-                <i class="fa fa-chevron-left"></i> vue-router 知识点梳理
+              <a href="/2017/12/19/koa2/" rel="next" title="koa2">
+                <i class="fa fa-chevron-left"></i> koa2
               </a>
             
           </div>
@@ -455,8 +459,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/19/koa2/" rel="prev" title="koa2">
-                koa2 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/19/vue-router 知识点梳理/" rel="prev" title="vue-router 知识点梳理">
+                vue-router 知识点梳理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -594,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-连接"><span class="nav-number">1.</span> <span class="nav-text">安装 连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-homebrew-安装"><span class="nav-number">1.1.</span> <span class="nav-text">通过 homebrew 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地安装"><span class="nav-number">1.2.</span> <span class="nav-text">本地安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接-mongo"><span class="nav-number">1.3.</span> <span class="nav-text">连接 mongo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb-基本语法和操作"><span class="nav-number">2.</span> <span class="nav-text">mongodb 基本语法和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#库操作"><span class="nav-number">2.1.</span> <span class="nav-text">库操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询（查询条件写成-json）"><span class="nav-number">2.3.</span> <span class="nav-text">查询（查询条件写成 json）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#比较查询"><span class="nav-number">2.3.1.</span> <span class="nav-text">比较查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#或-查询（-or）"><span class="nav-number">2.3.2.</span> <span class="nav-text">或 查询（$or）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#包含和不包含（-in-nin）"><span class="nav-number">2.3.3.</span> <span class="nav-text">包含和不包含（$in $nin）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-（-id-存在的情况下调用-save-方法为修改操作）"><span class="nav-number">2.4.</span> <span class="nav-text">修改 （ _id 存在的情况下调用 save 方法为修改操作）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.5.</span> <span class="nav-text">删除</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-连接"><span class="nav-number">1.</span> <span class="nav-text">安装 连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-homebrew-安装"><span class="nav-number">1.1.</span> <span class="nav-text">通过 homebrew 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地安装"><span class="nav-number">1.2.</span> <span class="nav-text">本地安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接-mongo"><span class="nav-number">1.3.</span> <span class="nav-text">连接 mongo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb-基本语法和操作"><span class="nav-number">2.</span> <span class="nav-text">mongodb 基本语法和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#库操作"><span class="nav-number">2.1.</span> <span class="nav-text">库操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询（查询条件写成-json）"><span class="nav-number">2.3.</span> <span class="nav-text">查询（查询条件写成 json）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#比较查询"><span class="nav-number">2.3.1.</span> <span class="nav-text">比较查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#或-查询（-or）"><span class="nav-number">2.3.2.</span> <span class="nav-text">或 查询（$or）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#包含和不包含（-in-nin）"><span class="nav-number">2.3.3.</span> <span class="nav-text">包含和不包含（$in $nin）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-（-id-存在的情况下调用-save-方法为修改操作）"><span class="nav-number">2.4.</span> <span class="nav-text">修改 （ _id 存在的情况下调用 save 方法为修改操作）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.5.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户名-密码"><span class="nav-number">3.</span> <span class="nav-text">用户名 密码</span></a></li></ol></div>
             
 
           </div>

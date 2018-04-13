@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-4-8/74010944.jpg">
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-4-8/21131544.jpg">
 <meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-4-8/41849529.jpg">
-<meta property="og:updated_time" content="2018-04-08T07:15:15.000Z">
+<meta property="og:updated_time" content="2018-04-08T08:00:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BFC">
 <meta name="twitter:description" content="参考: 10 分钟理解 BFC 原理、前端精选文摘：BFC 神奇背后的原理   基本概念定位普通流  在普通流中，元素按照其在 html 中的先后位置从上到下布局。在这个过程中，行内元素水平排列，直到当行被占满然后换行；块级元素则会被渲染为完成的一个新行，除非另外指定，否则所有元素默认都是普通流定位。可以说普通流中元素的位置由该元素在 html 文档中的位置决定">
@@ -374,14 +374,14 @@
 </blockquote>
 <h3 id="Box"><a href="#Box" class="headerlink" title="Box"></a>Box</h3><p>Box 是 css 布局的对象和基本单位。一个页面由多个 Box 组成。元素的类型和 display 属性决定了 Box 的类型，不同类型的 Box 会参与不同的 Fomatting Context（一个决定如何渲染文档的容器），因此 Box 内的元素会以不同的方式渲染</p>
 <ul>
-<li><strong>block-level box</strong> display 属性为 block, list-item, table 的元素，会生成 block-level box，参与 BFC(block formatting context)</li>
-<li><strong>inline-level box</strong> display 属性为 inline, inline-block,  inline-table 的元素，会生成 inline-level box，参与 IFC(inline formatting context)</li>
+<li><strong>block-level box（块级 box）</strong> display 属性为 block, list-item, table 的元素，会生成 block-level box，参与 BFC(block formatting context)</li>
+<li><strong>inline-level box（行内 box）</strong> display 属性为 inline, inline-block,  inline-table 的元素，会生成 inline-level box，参与 IFC(inline formatting context)</li>
 </ul>
 <h3 id="Formatting-Context"><a href="#Formatting-Context" class="headerlink" title="Formatting Context"></a>Formatting Context</h3><blockquote>
 <p>Formatting context 是 W3C CSS2.1 规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素如何定位，以及和其他元素的关系和相互作用。</p>
 </blockquote>
 <p>最常见的有 BFC 和 IFC</p>
-<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h2><p>BFC（block formatting context）直译为“块级格式化上下文”。它是一个独立的渲染区域，只有 block-level box 参与，它规定了内部的 block-level box 如何布局，并且与这个区域外部毫不相干</p>
+<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h2><p>BFC（block formatting context）直译为“块级格式化上下文”。<strong>它是一个独立的渲染区域，只有 block-level box (块级 box)参与，它规定了内部的 block-level box 如何布局，并且与这个区域外部毫不相干</strong></p>
 <h3 id="BFC-布局规则"><a href="#BFC-布局规则" class="headerlink" title="BFC 布局规则"></a>BFC 布局规则</h3><ul>
 <li>内部的 box 会在垂直方向上一个一个放置</li>
 <li><strong>box 垂直方向的距离由 margin 决定。属于同一个 BFC 的两个相邻 box 的 margin 会发生重叠</strong></li>
