@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue,vue-router," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: vue-router源码分析-整体流程、vue-router源码分析  本文分析 vue-router@2.0.3 使用先看一下 vue-router 官网的 demo 12345678910111213141516&amp;lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&quot;ht">
+<meta name="keywords" content="vue,vue-router">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-router 源码初步学习">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/04/17/vue-router 源码初步学习/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: vue-router源码分析-整体流程、vue-router源码分析  本文分析 vue-router@2.0.3 使用先看一下 vue-router 官网的 demo 12345678910111213141516&amp;lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&quot;ht">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-4-17/18725369.jpg">
+<meta property="og:updated_time" content="2018-04-17T09:12:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-router 源码初步学习">
+<meta name="twitter:description" content="参考: vue-router源码分析-整体流程、vue-router源码分析  本文分析 vue-router@2.0.3 使用先看一下 vue-router 官网的 demo 12345678910111213141516&amp;lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script src=&quot;ht">
+<meta name="twitter:image" content="http://ony85apla.bkt.clouddn.com/18-4-17/18725369.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/04/17/vue-router 源码初步学习/"/>
+
+
+
+
+
+  <title>vue-router 源码初步学习 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/17/vue-router 源码初步学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue-router 源码初步学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T09:44:22+08:00">
+                2018-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="https://github.com/DDFE/DDFE-blog/issues/9" target="_blank" rel="noopener">vue-router源码分析-整体流程</a>、<a href="https://www.cnblogs.com/caizhenbo/p/7297730.html" target="_blank" rel="noopener">vue-router源码分析</a></p>
+</blockquote>
+<p>本文分析 <a href="mailto:vue-router@2.0.3" target="_blank" rel="noopener">vue-router@2.0.3</a></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>先看一下 vue-router 官网的 demo</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue-router/dist/vue-router.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello App!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用 router-link 组件来导航. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通过传入 `to` 属性指定链接. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/foo"</span>&gt;</span>Go to Foo<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/bar"</span>&gt;</span>Go to Bar<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由出口 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由匹配到的组件将渲染在这里 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0. 如果使用模块化机制编程，导入Vue和VueRouter，要调用 Vue.use(VueRouter)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 定义（路由）组件。</span></span><br><span class="line"><span class="comment">// 可以从其他文件 import 进来</span></span><br><span class="line"><span class="keyword">const</span> Foo = &#123; <span class="attr">template</span>: <span class="string">'&lt;div&gt;foo&lt;/div&gt;'</span> &#125;</span><br><span class="line"><span class="keyword">const</span> Bar = &#123; <span class="attr">template</span>: <span class="string">'&lt;div&gt;bar&lt;/div&gt;'</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 定义路由</span></span><br><span class="line"><span class="comment">// 每个路由应该映射一个组件。 其中"component" 可以是</span></span><br><span class="line"><span class="comment">// 通过 Vue.extend() 创建的组件构造器，</span></span><br><span class="line"><span class="comment">// 或者，只是一个组件配置对象。</span></span><br><span class="line"><span class="comment">// 我们晚点再讨论嵌套路由。</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/foo'</span>, <span class="attr">component</span>: Foo &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/bar'</span>, <span class="attr">component</span>: Bar &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建 router 实例，然后传 `routes` 配置</span></span><br><span class="line"><span class="comment">// 你还可以传别的配置参数, 不过先这么简单着吧。</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes <span class="comment">// （缩写）相当于 routes: routes</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 创建和挂载根实例。</span></span><br><span class="line"><span class="comment">// 记得要通过 router 配置参数注入路由，</span></span><br><span class="line"><span class="comment">// 从而让整个应用都有路由功能</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router</span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在，应用已经启动了！</span></span><br></pre></td></tr></table></figure>
+<p>通过注入路由器，可以在任何组件内通过 this.$router 访问路由器，也可以通过 this.$route 访问当前路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Home.vue</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  computed: &#123;</span><br><span class="line">    username () &#123;</span><br><span class="line">      <span class="comment">// 我们很快就会看到 `params` 是什么</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.$route.params.username</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    goBack () &#123;</span><br><span class="line">      <span class="built_in">window</span>.history.length &gt; <span class="number">1</span></span><br><span class="line">        ? <span class="keyword">this</span>.$router.go(<span class="number">-1</span>)</span><br><span class="line">        : <span class="keyword">this</span>.$router.push(<span class="string">'/'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><p><img src="http://ony85apla.bkt.clouddn.com/18-4-17/18725369.jpg" alt=""></p>
+<p>这里我们先关注几个和主要流程相关的部分</p>
+<ul>
+<li><code>components 目录</code> 定义了 router-view 和 router-link 组件</li>
+<li><code>history 目录</code> 封装了 前端路由 三种模式</li>
+<li><code>create-matcher.js</code></li>
+<li><code>create-route-map.js</code></li>
+<li><code>index.js</code> vue-router 入口文件</li>
+<li><code>install.js</code> vue-router 安装模块</li>
+</ul>
+<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><p>vue 使用插件是调用 Vue.use(plugin), 而 use() 方法内部会调用 plugin 的 install 方法（没有则将 plugin 自身作为函数进行调用）</p>
+<p>入口文件 index.js 会导出 <code>VueRouter</code> 对象， 这里延续了 vue 插件的写法，对外暴露的插件对象含有的 install 方法用来安装插件的具体逻辑，同时判断如果是浏览器环境则自动安装插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 引入 install 模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; install &#125; <span class="keyword">from</span> <span class="string">'./install'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createMatcher &#125; <span class="keyword">from</span> <span class="string">'./create-matcher'</span></span><br><span class="line"><span class="keyword">import</span> &#123; HashHistory &#125; <span class="keyword">from</span> <span class="string">'./history/hash'</span></span><br><span class="line"><span class="keyword">import</span> &#123; HTML5History &#125; <span class="keyword">from</span> <span class="string">'./history/html5'</span></span><br><span class="line"><span class="keyword">import</span> &#123; AbstractHistory &#125; <span class="keyword">from</span> <span class="string">'./history/abstract'</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">VueRouter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> install: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 赋值 install 属性</span></span><br><span class="line">VueRouter.install = install</span><br><span class="line"></span><br><span class="line"><span class="comment">// 浏览器环境自动安装插件</span></span><br><span class="line"><span class="keyword">if</span> (inBrowser &amp;&amp; <span class="built_in">window</span>.Vue) &#123;</span><br><span class="line">  <span class="built_in">window</span>.Vue.use(VueRouter)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>install 模块做了如下操作</p>
+<ul>
+<li><strong>对 vue 实例进行 beforeCreate 钩子混入，在 vue 生命周期阶段会被调用</strong></li>
+<li><strong>通过 Vue.prototype 定义 $route $route, 全局可以通过 vm.$router（this.$router） vm.$route (this.$route) 访问</strong></li>
+<li><strong>全局注册 route-view router-link 组件</strong></li>
+</ul>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 router-view router-link 组件</span></span><br><span class="line"><span class="keyword">import</span> View <span class="keyword">from</span> <span class="string">'./components/view'</span></span><br><span class="line"><span class="keyword">import</span> Link <span class="keyword">from</span> <span class="string">'./components/link'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> _Vue</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">install</span> (<span class="params">Vue</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (install.installed) <span class="keyword">return</span></span><br><span class="line">  install.installed = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  _Vue = Vue</span><br><span class="line"></span><br><span class="line">  <span class="comment">// this.$root 访问根实例</span></span><br><span class="line">  <span class="comment">// 注入 $route $route， 全局可以通过 vm.$router vm.$route 访问</span></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(Vue.prototype, <span class="string">'$router'</span>, &#123;</span><br><span class="line">    get () &#123; <span class="keyword">return</span> <span class="keyword">this</span>.$root._router &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(Vue.prototype, <span class="string">'$route'</span>, &#123;</span><br><span class="line">    get () &#123; <span class="keyword">return</span> <span class="keyword">this</span>.$root._route &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 混入 beforeCreate</span></span><br><span class="line">  Vue.mixin(&#123;</span><br><span class="line">    beforeCreate () &#123;</span><br><span class="line">      <span class="comment">// 判断 初始化根实例 是否有 router 选项</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.$options.router) &#123;</span><br><span class="line">        <span class="comment">// 赋值 _router</span></span><br><span class="line">        <span class="keyword">this</span>._router = <span class="keyword">this</span>.$options.router</span><br><span class="line">        <span class="comment">// 初始化 init</span></span><br><span class="line">        <span class="keyword">this</span>._router.init(<span class="keyword">this</span>)</span><br><span class="line">        <span class="comment">// 定义 响应式 _route 对象, 一旦 _route 发生改变，会通知 router-view 执行 render 方法</span></span><br><span class="line">        Vue.util.defineReactive(<span class="keyword">this</span>, <span class="string">'_route'</span>, <span class="keyword">this</span>._router.history.current)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全局注册 router-view router-link 组件</span></span><br><span class="line">  Vue.component(<span class="string">'router-view'</span>, View)</span><br><span class="line">  Vue.component(<span class="string">'router-link'</span>, Link)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成-router-实例"><a href="#生成-router-实例" class="headerlink" title="生成 router 实例"></a>生成 router 实例</h2><p>之前 官网 demo 中, 安装完 VueRouter 插件后，会实例化一个 router 对象，并将路由配置的数组作为参数传入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>生成 router 实例过程中进行了 两部操作</p>
+<ul>
+<li><strong>根据配置数组（传入的 routes）生成路由配置表</strong></li>
+<li><strong>根据不同的模式生成监控路由变化的 history 对象</strong><br>注：history/base.js 封装了基本 history 操作的 history 类；history/hash.js，history/html5.js 和 history/abstract.js 继承了 base，只是根据不同的模式封装了一些基本操作</li>
+</ul>
+</blockquote>
+<p>index.js 导出 VueRouter 类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; createMatcher &#125; <span class="keyword">from</span> <span class="string">'./create-matcher'</span></span><br><span class="line"><span class="keyword">import</span> &#123; HashHistory &#125; <span class="keyword">from</span> <span class="string">'./history/hash'</span></span><br><span class="line"><span class="keyword">import</span> &#123; HTML5History &#125; <span class="keyword">from</span> <span class="string">'./history/html5'</span></span><br><span class="line"><span class="keyword">import</span> &#123; AbstractHistory &#125; <span class="keyword">from</span> <span class="string">'./history/abstract'</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">VueRouter</span> </span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span> (options: RouterOptions = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">this</span>.options = options</span><br><span class="line">    <span class="keyword">this</span>.beforeHooks = []</span><br><span class="line">    <span class="keyword">this</span>.afterHooks = []</span><br><span class="line">    <span class="comment">// 创建 match 匹配函数，生成匹配表</span></span><br><span class="line">    <span class="keyword">this</span>.match = createMatcher(options.routes || [])</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 路由模式 默认是 hash 模式</span></span><br><span class="line">    <span class="keyword">let</span> mode = options.mode || <span class="string">'hash'</span></span><br><span class="line">    <span class="comment">// 浏览器不支持 history 模式需要退回 hash 模式</span></span><br><span class="line">    <span class="keyword">this</span>.fallback = mode === <span class="string">'history'</span> &amp;&amp; !supportsHistory</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.fallback) &#123;</span><br><span class="line">      mode = <span class="string">'hash'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 非浏览器</span></span><br><span class="line">    <span class="keyword">if</span> (!inBrowser) &#123;</span><br><span class="line">      mode = <span class="string">'abstract'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.mode = mode</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据 mode 实例化具体的 History</span></span><br><span class="line">    <span class="keyword">switch</span> (mode) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">        <span class="keyword">this</span>.history = <span class="keyword">new</span> HTML5History(<span class="keyword">this</span>, options.base)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">        <span class="keyword">this</span>.history = <span class="keyword">new</span> HashHistory(<span class="keyword">this</span>, options.base, <span class="keyword">this</span>.fallback)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'abstract'</span>:</span><br><span class="line">        <span class="keyword">this</span>.history = <span class="keyword">new</span> AbstractHistory(<span class="keyword">this</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        assert(<span class="literal">false</span>, <span class="string">`invalid mode: <span class="subst">$&#123;mode&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 全局进入守卫</span></span><br><span class="line">  beforeEach (fn: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.beforeHooks.push(fn)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全局离开守卫</span></span><br><span class="line">  afterEach (fn: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.afterHooks.push(fn)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用 history 对象 push 方法</span></span><br><span class="line">  push (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.history.push(location)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用 history 对象 replace 方法</span></span><br><span class="line">  replace (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.history.replace(location)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用 history 对象 replace 方法</span></span><br><span class="line">  go (n: number) &#123;</span><br><span class="line">    <span class="keyword">this</span>.history.go(n)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  back () &#123;</span><br><span class="line">    <span class="keyword">this</span>.go(<span class="number">-1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  forward () &#123;</span><br><span class="line">    <span class="keyword">this</span>.go(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h3 id="生成路由配置表"><a href="#生成路由配置表" class="headerlink" title="生成路由配置表"></a>生成路由配置表</h3><p>在上述构造函数中有一行代码 <code>this.match = createMatcher(options.routes || [])</code>, 将传入 routes 配置数组处理结果赋给 router 实例的 matcher 属性。生成路由配置表是通过 <code>create-matcher.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; createRouteMap &#125; <span class="keyword">from</span> <span class="string">'./create-route-map'</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createMatcher</span> (<span class="params">routes: Array&lt;RouteConfig&gt;</span>): <span class="title">Matcher</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 创建 路由 map</span></span><br><span class="line">  <span class="keyword">const</span> &#123; pathMap, nameMap &#125; = createRouteMap(routes)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">match</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    raw: RawLocation,</span></span></span><br><span class="line"><span class="function"><span class="params">    currentRoute?: Route,</span></span></span><br><span class="line"><span class="function"><span class="params">    redirectedFrom?: Location</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">Route</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> location = normalizeLocation(raw, currentRoute)</span><br><span class="line">    <span class="keyword">const</span> &#123; name &#125; = location</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 命名路由处理</span></span><br><span class="line">    <span class="keyword">if</span> (name) &#123;</span><br><span class="line">      <span class="keyword">const</span> record = nameMap[name]</span><br><span class="line">      <span class="keyword">const</span> paramNames = getParams(record.path)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (record) &#123;</span><br><span class="line">        location.path = fillParams(record.path, location.params, <span class="string">`named route "<span class="subst">$&#123;name&#125;</span>"`</span>)</span><br><span class="line">        <span class="comment">// 创建 route</span></span><br><span class="line">        <span class="keyword">return</span> _createRoute(record, location, redirectedFrom)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (location.path) &#123;</span><br><span class="line">      <span class="comment">// 普通路由处理</span></span><br><span class="line">      location.params = &#123;&#125;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> path <span class="keyword">in</span> pathMap) &#123;</span><br><span class="line">        <span class="comment">// 从 pathMap 中找到匹配的路由创建新的 route</span></span><br><span class="line">        <span class="keyword">if</span> (matchRoute(path, location.params, location.path)) &#123;</span><br><span class="line">          <span class="keyword">return</span> _createRoute(pathMap[path], location, redirectedFrom)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// no match</span></span><br><span class="line">    <span class="keyword">return</span> _createRoute(<span class="literal">null</span>, location)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">redirect</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    record: RouteRecord,</span></span></span><br><span class="line"><span class="function"><span class="params">    location: Location</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">Route</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">alias</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    record: RouteRecord,</span></span></span><br><span class="line"><span class="function"><span class="params">    location: Location,</span></span></span><br><span class="line"><span class="function"><span class="params">    matchAs: string</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">Route</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_createRoute</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    record: ?RouteRecord,</span></span></span><br><span class="line"><span class="function"><span class="params">    location: Location,</span></span></span><br><span class="line"><span class="function"><span class="params">    redirectedFrom?: Location</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">Route</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> match</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p><code>create-Matcher.js</code> 再一次将 routes 配置数组 传给了 <code>create-route-map.js</code> 进一步处理并生成 路由 map，最终返回 match 函数, match 函数调用会返回新的 route 对象</p>
+<p><code>create-route-map.js</code> 将 routes 配置数组遍历，<strong>根据 name 和 path 将每一个路由项处理为一个 routeRecord，并分别保存到 pathMap 和 nameMap 中，并最终导出 包含 pathMap 和 nameMap 的对象</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; assert, warn &#125; <span class="keyword">from</span> <span class="string">'./util/warn'</span></span><br><span class="line"><span class="keyword">import</span> &#123; cleanPath &#125; <span class="keyword">from</span> <span class="string">'./util/path'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 路由 map</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createRouteMap</span> (<span class="params">routes: Array&lt;RouteConfig&gt;</span>): </span>&#123;</span><br><span class="line">  pathMap: Dictionary&lt;RouteRecord&gt;,</span><br><span class="line">  nameMap: Dictionary&lt;RouteRecord&gt;</span><br><span class="line">&#125; &#123;</span><br><span class="line">  <span class="comment">// path 路由 map</span></span><br><span class="line">  <span class="keyword">const</span> pathMap: Dictionary&lt;RouteRecord&gt; = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line">  <span class="comment">// name 路由 map</span></span><br><span class="line">  <span class="keyword">const</span> nameMap: Dictionary&lt;RouteRecord&gt; = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 遍历路由配置对象 添加路由记录</span></span><br><span class="line">  routes.forEach(<span class="function"><span class="params">route</span> =&gt;</span> &#123;</span><br><span class="line">    addRouteRecord(pathMap, nameMap, route)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    pathMap,</span><br><span class="line">    nameMap</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加路由记录 方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addRouteRecord</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  pathMap: Dictionary&lt;RouteRecord&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">  nameMap: Dictionary&lt;RouteRecord&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">  route: RouteConfig,</span></span></span><br><span class="line"><span class="function"><span class="params">  parent?: RouteRecord,</span></span></span><br><span class="line"><span class="function"><span class="params">  matchAs?: string</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; path, name &#125; = route</span><br><span class="line">  assert(path != <span class="literal">null</span>, <span class="string">`"path" is required in a route configuration.`</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 封装 route 记录</span></span><br><span class="line">  <span class="keyword">const</span> record: RouteRecord = &#123;</span><br><span class="line">    path: normalizePath(path, parent), <span class="comment">// 路径</span></span><br><span class="line">    components: route.components || &#123; <span class="attr">default</span>: route.component &#125;, <span class="comment">// 关联组件</span></span><br><span class="line">    instances: &#123;&#125;, <span class="comment">// 实例</span></span><br><span class="line">    name, <span class="comment">// 名字</span></span><br><span class="line">    parent, <span class="comment">// 父级 route</span></span><br><span class="line">    matchAs,</span><br><span class="line">    redirect: route.redirect, <span class="comment">// 跳转</span></span><br><span class="line">    beforeEnter: route.beforeEnter, <span class="comment">// 进入守卫</span></span><br><span class="line">    meta: route.meta || &#123;&#125; <span class="comment">// meta 参数</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 嵌套子路由</span></span><br><span class="line">  <span class="keyword">if</span> (route.children) &#123;</span><br><span class="line">    <span class="comment">// Warn if route is named and has a default child route.</span></span><br><span class="line">    <span class="comment">// If users navigate to this route by name, the default child will</span></span><br><span class="line">    <span class="comment">// not be rendered (GH Issue #629)</span></span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (route.name &amp;&amp; route.children.some(<span class="function"><span class="params">child</span> =&gt;</span> /^\/?$/.test(child.path))) &#123;</span><br><span class="line">        warn(<span class="literal">false</span>, <span class="string">`Named Route '<span class="subst">$&#123;route.name&#125;</span>' has a default child route.</span></span><br><span class="line"><span class="string">          When navigating to this named route (:to="&#123;name: '<span class="subst">$&#123;route.name&#125;</span>'"), the default child route will not be rendered.</span></span><br><span class="line"><span class="string">          Remove the name from this route and use the name of the default child route for named links instead.`</span></span><br><span class="line">        )</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 递归 收集子路由</span></span><br><span class="line">    route.children.forEach(<span class="function"><span class="params">child</span> =&gt;</span> &#123;</span><br><span class="line">      addRouteRecord(pathMap, nameMap, child, record)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 别名</span></span><br><span class="line">  <span class="keyword">if</span> (route.alias !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(route.alias)) &#123;</span><br><span class="line">      route.alias.forEach(<span class="function"><span class="params">alias</span> =&gt;</span> &#123;</span><br><span class="line">        addRouteRecord(pathMap, nameMap, &#123; <span class="attr">path</span>: alias &#125;, parent, record.path)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      addRouteRecord(pathMap, nameMap, &#123; <span class="attr">path</span>: route.alias &#125;, parent, record.path)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 按照 path 存储</span></span><br><span class="line">  pathMap[record.path] = record</span><br><span class="line">  <span class="comment">// 按照 name 存储</span></span><br><span class="line">  <span class="keyword">if</span> (name) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!nameMap[name]) &#123;</span><br><span class="line">      nameMap[name] = record</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      warn(<span class="literal">false</span>, <span class="string">`Duplicate named routes definition: &#123; name: "<span class="subst">$&#123;name&#125;</span>", path: "<span class="subst">$&#123;record.path&#125;</span>" &#125;`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">normalizePath</span> (<span class="params">path: string, parent?: RouteRecord</span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  path = path.replace(<span class="regexp">/\/$/</span>, <span class="string">''</span>)</span><br><span class="line">  <span class="keyword">if</span> (path[<span class="number">0</span>] === <span class="string">'/'</span>) <span class="keyword">return</span> path</span><br><span class="line">  <span class="keyword">if</span> (parent == <span class="literal">null</span>) <span class="keyword">return</span> path</span><br><span class="line">  <span class="keyword">return</span> cleanPath(<span class="string">`<span class="subst">$&#123;parent.path&#125;</span>/<span class="subst">$&#123;path&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="不同的模式生成-history-对象"><a href="#不同的模式生成-history-对象" class="headerlink" title="不同的模式生成 history 对象"></a>不同的模式生成 history 对象</h3><p>VueRouter 构造函数除了根据传入 routes 配置数组生成路由配置表，同时还根据不同模式生成 history 对象。而所有 history 类都继承 <code>history/base.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">History</span> </span>&#123;</span><br><span class="line">  router: VueRouter; <span class="comment">// router 对象</span></span><br><span class="line">  base: string; <span class="comment">// 基准路径</span></span><br><span class="line">  current: Route; <span class="comment">// 当前路由</span></span><br><span class="line">  pending: ?Route;</span><br><span class="line">  cb: <span class="function">(<span class="params">r: Route</span>) =&gt;</span> <span class="keyword">void</span>; <span class="comment">// 回调</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 子类实现</span></span><br><span class="line">  <span class="comment">// implemented by sub-classes</span></span><br><span class="line">  go: <span class="function">(<span class="params">n: number</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">  push: <span class="function">(<span class="params">loc: RawLocation</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">  replace: <span class="function">(<span class="params">loc: RawLocation</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">  ensureURL: <span class="function">(<span class="params">push?: boolean</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span> (router: VueRouter, base: ?string) &#123;</span><br><span class="line">    <span class="keyword">this</span>.router = router</span><br><span class="line">    <span class="keyword">this</span>.base = normalizeBase(base) <span class="comment">// 返回基准路径</span></span><br><span class="line">    <span class="comment">// start with a route object that stands for "nowhere"</span></span><br><span class="line">    <span class="keyword">this</span>.current = START <span class="comment">// 设置当前 route</span></span><br><span class="line">    <span class="keyword">this</span>.pending = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// history 对象 cb 属性是在 install.js 中注册的</span></span><br><span class="line">  listen (cb: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 路由转化函数，传入 location cb</span></span><br><span class="line">  <span class="comment">// 找到匹配路由需要过渡的则 更新 route 执行传入的回调，更新地址</span></span><br><span class="line">  transitionTo (location: RawLocation, cb?: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="comment">// 通过 match 函数生成新的 route，找到匹配路由</span></span><br><span class="line">    <span class="keyword">const</span> route = <span class="keyword">this</span>.router.match(location, <span class="keyword">this</span>.current)</span><br><span class="line">    <span class="comment">// 过渡</span></span><br><span class="line">    <span class="keyword">this</span>.confirmTransition(route, () =&gt; &#123;</span><br><span class="line">      <span class="comment">// 更新 route</span></span><br><span class="line">      <span class="keyword">this</span>.updateRoute(route)</span><br><span class="line">      <span class="comment">// 执行回调</span></span><br><span class="line">      cb &amp;&amp; cb(route)</span><br><span class="line">      <span class="comment">// 更新地址</span></span><br><span class="line">      <span class="keyword">this</span>.ensureURL()</span><br><span class="line">      <span class="comment">// 子类实现的更新 url 地址</span></span><br><span class="line">      <span class="comment">// 对于 hash 模式的话 就是更新 hash 的值</span></span><br><span class="line">      <span class="comment">// 对于 history 模式的话 就是利用 pushstate / replacestate 来更新</span></span><br><span class="line">      <span class="comment">// 浏览器地址</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 过渡</span></span><br><span class="line">  confirmTransition (route: Route, <span class="attr">cb</span>: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">this</span>.current</span><br><span class="line">    <span class="comment">// 如果前后是同一个路由，直接返回</span></span><br><span class="line">    <span class="keyword">if</span> (isSameRoute(route, current)) &#123;</span><br><span class="line">      <span class="keyword">this</span>.ensureURL()</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新路由</span></span><br><span class="line">  updateRoute (route: Route) &#123;</span><br><span class="line">    <span class="keyword">const</span> prev = <span class="keyword">this</span>.current <span class="comment">// 跳转前路由</span></span><br><span class="line">    <span class="keyword">this</span>.current = route <span class="comment">// 准备跳转南路有</span></span><br><span class="line">    <span class="keyword">this</span>.cb &amp;&amp; <span class="keyword">this</span>.cb(route) <span class="comment">// 执行回调，每次更新都会调用</span></span><br><span class="line">    <span class="keyword">this</span>.router.afterHooks.forEach(<span class="function"><span class="params">hook</span> =&gt;</span> &#123;</span><br><span class="line">      hook &amp;&amp; hook(route, prev)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回基准路径</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">normalizeBase</span> (<span class="params">base: ?string</span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!base) &#123;</span><br><span class="line">    <span class="keyword">if</span> (inBrowser) &#123;</span><br><span class="line">      <span class="comment">// respect &lt;base&gt; tag</span></span><br><span class="line">      <span class="keyword">const</span> baseEl = <span class="built_in">document</span>.querySelector(<span class="string">'base'</span>)</span><br><span class="line">      base = baseEl ? baseEl.getAttribute(<span class="string">'href'</span>) : <span class="string">'/'</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      base = <span class="string">'/'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// make sure there's the starting slash</span></span><br><span class="line">  <span class="keyword">if</span> (base.charAt(<span class="number">0</span>) !== <span class="string">'/'</span>) &#123;</span><br><span class="line">    base = <span class="string">'/'</span> + base</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// remove trailing slash</span></span><br><span class="line">  <span class="keyword">return</span> base.replace(<span class="regexp">/\/$/</span>, <span class="string">''</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p><code>history/base.js</code> 实现了基本history的操作，<code>history/hash.js</code>，<code>history/html5.js</code> 和 <code>history/abstract.js</code> 继承了base，只是根据不同的模式封装了一下几个函数的基本操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子类实现</span></span><br><span class="line"><span class="comment">// implemented by sub-classes</span></span><br><span class="line">go: <span class="function">(<span class="params">n: number</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">push: <span class="function">(<span class="params">loc: RawLocation</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">replace: <span class="function">(<span class="params">loc: RawLocation</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">ensureURL: <span class="function">(<span class="params">push?: boolean</span>) =&gt;</span> <span class="keyword">void</span>;</span><br></pre></td></tr></table></figure>
+<p>接下来看一下各个 history 类对于 transitionTo() 的调用以及上述方法的封装</p>
+<h4 id="history-hash-js"><a href="#history-hash-js" class="headerlink" title="history/hash.js"></a><code>history/hash.js</code></h4><p>hash 模式<strong>通过监听 hashchange 事件，push 和 replace 方法通过更新 url 中的hash</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> type VueRouter <span class="keyword">from</span> <span class="string">'../index'</span></span><br><span class="line"><span class="keyword">import</span> &#123; History &#125; <span class="keyword">from</span> <span class="string">'./base'</span></span><br><span class="line"><span class="keyword">import</span> &#123; getLocation &#125; <span class="keyword">from</span> <span class="string">'./html5'</span></span><br><span class="line"><span class="keyword">import</span> &#123; cleanPath &#125; <span class="keyword">from</span> <span class="string">'../util/path'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HashHistory</span> <span class="keyword">extends</span> <span class="title">History</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (router: VueRouter, base: ?string, fallback: boolean) &#123;</span><br><span class="line">    <span class="keyword">super</span>(router, base)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check history fallback deeplinking</span></span><br><span class="line">    <span class="keyword">if</span> (fallback &amp;&amp; <span class="keyword">this</span>.checkFallback()) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ensureSlash()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  checkFallback () &#123;</span><br><span class="line">    <span class="keyword">const</span> location = getLocation(<span class="keyword">this</span>.base)</span><br><span class="line">    <span class="keyword">if</span> (!<span class="regexp">/^\/#/</span>.test(location)) &#123;</span><br><span class="line">      <span class="built_in">window</span>.location.replace(</span><br><span class="line">        cleanPath(<span class="keyword">this</span>.base + <span class="string">'/#'</span> + location)</span><br><span class="line">      )</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 注册响应 hashchange 事件的回调</span></span><br><span class="line">  onHashChange () &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ensureSlash()) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(getHash(), route =&gt; &#123;</span><br><span class="line">      <span class="comment">// 作为传入 transitionTo 的回调，将 route.fullPath 替换掉 getHash() 拿到的 hash</span></span><br><span class="line">      replaceHash(route.fullPath)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// push 方法</span></span><br><span class="line">  push (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      pushHash(route.fullPath)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// replace 方法</span></span><br><span class="line">  replace (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      replaceHash(route.fullPath)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// go 方法</span></span><br><span class="line">  go (n: number) &#123;</span><br><span class="line">    <span class="built_in">window</span>.history.go(n)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// ensureURL 方法 更新 url 通过更新 hash 的值</span></span><br><span class="line">  ensureURL (push?: boolean) &#123;</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">this</span>.current.fullPath</span><br><span class="line">    <span class="keyword">if</span> (getHash() !== current) &#123;</span><br><span class="line">      push ? pushHash(current) : replaceHash(current)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ensureSlash</span> (<span class="params"></span>): <span class="title">boolean</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> path = getHash()</span><br><span class="line">  <span class="keyword">if</span> (path.charAt(<span class="number">0</span>) === <span class="string">'/'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  replaceHash(<span class="string">'/'</span> + path)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 url 中 hash</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getHash</span> (<span class="params"></span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="comment">// We can't use window.location.hash here because it's not</span></span><br><span class="line">  <span class="comment">// consistent across browsers - Firefox will pre-decode it!</span></span><br><span class="line">  <span class="keyword">const</span> href = <span class="built_in">window</span>.location.href</span><br><span class="line">  <span class="keyword">const</span> index = href.indexOf(<span class="string">'#'</span>)</span><br><span class="line">  <span class="keyword">return</span> index === <span class="number">-1</span> ? <span class="string">''</span> : href.slice(index + <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// push hash</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pushHash</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">window</span>.location.hash = path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// replace hash</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceHash</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> i = <span class="built_in">window</span>.location.href.indexOf(<span class="string">'#'</span>)</span><br><span class="line">  <span class="built_in">window</span>.location.replace(</span><br><span class="line">    <span class="built_in">window</span>.location.href.slice(<span class="number">0</span>, i &gt;= <span class="number">0</span> ? i : <span class="number">0</span>) + <span class="string">'#'</span> + path</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="history-html5-js"><a href="#history-html5-js" class="headerlink" title="history/html5.js"></a><code>history/html5.js</code></h4><p>html5 模式<strong>通过监听 popstate 事件，push 和 replace 方法通过调用 window.history 的 pushState 和 replaceState  方法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> type VueRouter <span class="keyword">from</span> <span class="string">'../index'</span></span><br><span class="line"><span class="keyword">import</span> &#123; assert &#125; <span class="keyword">from</span> <span class="string">'../util/warn'</span></span><br><span class="line"><span class="keyword">import</span> &#123; cleanPath &#125; <span class="keyword">from</span> <span class="string">'../util/path'</span></span><br><span class="line"><span class="keyword">import</span> &#123; History &#125; <span class="keyword">from</span> <span class="string">'./base'</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  saveScrollPosition,</span><br><span class="line">  getScrollPosition,</span><br><span class="line">  isValidPosition,</span><br><span class="line">  normalizePosition,</span><br><span class="line">  getElementPosition</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'../util/scroll-position'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> genKey = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">String</span>(<span class="built_in">Date</span>.now())</span><br><span class="line"><span class="keyword">let</span> _key: string = genKey()</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HTML5History</span> <span class="keyword">extends</span> <span class="title">History</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (router: VueRouter, base: ?string) &#123;</span><br><span class="line">    <span class="keyword">super</span>(router, base)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> expectScroll = router.options.scrollBehavior</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听 popstate 事件</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, e =&gt; &#123;</span><br><span class="line">      _key = e.state &amp;&amp; e.state.key</span><br><span class="line">      <span class="keyword">const</span> current = <span class="keyword">this</span>.current</span><br><span class="line">      <span class="keyword">this</span>.transitionTo(getLocation(<span class="keyword">this</span>.base), next =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (expectScroll) &#123;</span><br><span class="line">          <span class="keyword">this</span>.handleScroll(next, current, <span class="literal">true</span>) <span class="comment">// 处理滚动</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (expectScroll) &#123;</span><br><span class="line">      <span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, () =&gt; &#123;</span><br><span class="line">        saveScrollPosition(_key) <span class="comment">// 保留当前滚动位置，用于返回时候复位</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// go 方法</span></span><br><span class="line">  go (n: number) &#123;</span><br><span class="line">    <span class="built_in">window</span>.history.go(n)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// push 方法 内部调用 history html5 api pushState 方法</span></span><br><span class="line">  push (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">this</span>.current</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      pushState(cleanPath(<span class="keyword">this</span>.base + route.fullPath))</span><br><span class="line">      <span class="keyword">this</span>.handleScroll(route, current, <span class="literal">false</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// replace 方法 内部调用 history html5 api replaceState 方法</span></span><br><span class="line">  replace (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">this</span>.current</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      replaceState(cleanPath(<span class="keyword">this</span>.base + route.fullPath))</span><br><span class="line">      <span class="keyword">this</span>.handleScroll(route, current, <span class="literal">false</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ensureURL 方法 更新 url 通过 pushstate / replacestate 来更新</span></span><br><span class="line">  ensureURL (push?: boolean) &#123;</span><br><span class="line">    <span class="keyword">if</span> (getLocation(<span class="keyword">this</span>.base) !== <span class="keyword">this</span>.current.fullPath) &#123;</span><br><span class="line">      <span class="keyword">const</span> current = cleanPath(<span class="keyword">this</span>.base + <span class="keyword">this</span>.current.fullPath)</span><br><span class="line">      push ? pushState(current) : replaceState(current)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 url 中除了 base 的部分</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getLocation</span> (<span class="params">base: string</span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> path = <span class="built_in">window</span>.location.pathname</span><br><span class="line">  <span class="keyword">if</span> (base &amp;&amp; path.indexOf(base) === <span class="number">0</span>) &#123;</span><br><span class="line">    path = path.slice(base.length)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (path || <span class="string">'/'</span>) + <span class="built_in">window</span>.location.search + <span class="built_in">window</span>.location.hash</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pushState 方法内部调用 window.history.pushState</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pushState</span> (<span class="params">url: string, replace?: boolean</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// try...catch the pushState call to get around Safari</span></span><br><span class="line">  <span class="comment">// DOM Exception 18 where it limits to 100 pushState calls</span></span><br><span class="line">  <span class="keyword">const</span> history = <span class="built_in">window</span>.history</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (replace) &#123;</span><br><span class="line">      history.replaceState(&#123; <span class="attr">key</span>: _key &#125;, <span class="string">''</span>, url)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      _key = genKey()</span><br><span class="line">      history.pushState(&#123; <span class="attr">key</span>: _key &#125;, <span class="string">''</span>, url)</span><br><span class="line">    &#125;</span><br><span class="line">    saveScrollPosition(_key)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">window</span>.location[replace ? <span class="string">'assign'</span> : <span class="string">'replace'</span>](url)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pushState 方法内部调用 window.history.replaceState</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceState</span> (<span class="params">url: string</span>) </span>&#123;</span><br><span class="line">  pushState(url, <span class="literal">true</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="history-abstract-js"><a href="#history-abstract-js" class="headerlink" title="history/abstract.js"></a><code>history/abstract.js</code></h4><p>abstract 类用于 非浏览器端，通过栈数据结构来模拟路由路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> type VueRouter <span class="keyword">from</span> <span class="string">'../index'</span></span><br><span class="line"><span class="keyword">import</span> &#123; History &#125; <span class="keyword">from</span> <span class="string">'./base'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractHistory</span> <span class="keyword">extends</span> <span class="title">History</span> </span>&#123;</span><br><span class="line">  index: number;</span><br><span class="line">  stack: <span class="built_in">Array</span>&lt;Route&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span> (router: VueRouter) &#123;</span><br><span class="line">    <span class="keyword">super</span>(router)</span><br><span class="line">    <span class="keyword">this</span>.stack = []</span><br><span class="line">    <span class="keyword">this</span>.index = <span class="number">-1</span> <span class="comment">// 当前 currentRoute 下标，当前激活默认是 stack 最后一个</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// push 方法 添加 route 记录</span></span><br><span class="line">  push (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.stack = <span class="keyword">this</span>.stack.slice(<span class="number">0</span>, <span class="keyword">this</span>.index + <span class="number">1</span>).concat(route)</span><br><span class="line">      <span class="keyword">this</span>.index++</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// replace 方法 替换 route 记录</span></span><br><span class="line">  replace (location: RawLocation) &#123;</span><br><span class="line">    <span class="keyword">this</span>.transitionTo(location, route =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.stack = <span class="keyword">this</span>.stack.slice(<span class="number">0</span>, <span class="keyword">this</span>.index).concat(route)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  go (n: number) &#123;</span><br><span class="line">    <span class="keyword">const</span> targetIndex = <span class="keyword">this</span>.index + n</span><br><span class="line">    <span class="keyword">if</span> (targetIndex &lt; <span class="number">0</span> || targetIndex &gt;= <span class="keyword">this</span>.stack.length) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> route = <span class="keyword">this</span>.stack[targetIndex]</span><br><span class="line">    <span class="keyword">this</span>.confirmTransition(route, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.index = targetIndex</span><br><span class="line">      <span class="keyword">this</span>.updateRoute(route)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ensureURL () &#123;</span><br><span class="line">    <span class="comment">// noop</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Vue-实例化"><a href="#Vue-实例化" class="headerlink" title="Vue 实例化"></a>Vue 实例化</h2><p>在官网 demo 中, 初始化 vue 实例 options 中传入 router</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router,</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div id="app"&gt;</span></span><br><span class="line"><span class="string">      &lt;h1&gt;Basic&lt;/h1&gt;</span></span><br><span class="line"><span class="string">      &lt;ul&gt;</span></span><br><span class="line"><span class="string">        &lt;li&gt;&lt;router-link to="/"&gt;/&lt;/router-link&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li&gt;&lt;router-link to="/foo"&gt;/foo&lt;/router-link&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li&gt;&lt;router-link to="/bar"&gt;/bar&lt;/router-link&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;router-link tag="li" to="/bar"&gt;/bar&lt;/router-link&gt;</span></span><br><span class="line"><span class="string">      &lt;/ul&gt;</span></span><br><span class="line"><span class="string">      &lt;router-view class="view"&gt;&lt;/router-view&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+<p>而之前 <code>install.js</code> 中, 判断初始化根实例 是否有 router 选项，有就说明带有路由配置的 router 实例被创建了，这时候会继续 执行 <code>this._router.init(this)</code> 和定义 响应式 <code>_route</code> 对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 混入 beforeCreate</span></span><br><span class="line">Vue.mixin(&#123;</span><br><span class="line">  beforeCreate () &#123;</span><br><span class="line">    <span class="comment">// 判断 初始化根实例 是否有 router 选项</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.$options.router) &#123;</span><br><span class="line">      <span class="comment">// 赋值 _router</span></span><br><span class="line">      <span class="keyword">this</span>._router = <span class="keyword">this</span>.$options.router</span><br><span class="line">      <span class="comment">// 初始化 init</span></span><br><span class="line">      <span class="keyword">this</span>._router.init(<span class="keyword">this</span>)</span><br><span class="line">      <span class="comment">// 定义 响应式 _route 对象</span></span><br><span class="line">      Vue.util.defineReactive(<span class="keyword">this</span>, <span class="string">'_route'</span>, <span class="keyword">this</span>._router.history.current)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>看 <code>index.js</code> 中 VueRouter 构造函数中的 init() 方法</p>
+<ul>
+<li>其实就是针对 HTML5History 和 HashHistory 特殊处理，需要当前浏览器地址栏里的 path 或者 hash 来激活对应的路由，这里就是通过调用 transitionTo() 方法</li>
+<li>同时调用 history 对象 listen() 方法注册 callback，而通过 <code>history/base.js</code> 可知 transitionTo() 中，history 更新后会调用这个 callback, <strong>这个 callback 作用就是更新当前实例 _route 值</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">VueRouter</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  init (app: any <span class="comment">/* Vue component instance */</span>) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">this</span>.app = app</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> history = <span class="keyword">this</span>.history</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化时，hash 模式和 html5 模式有可能存在进入的不是默认页，需要根据当前浏览器地址栏里的 path 或者 hash 来激活对应的路由，此时就是通过调用 transitionTo 来达到目的</span></span><br><span class="line">    <span class="keyword">if</span> (history <span class="keyword">instanceof</span> HTML5History) &#123;</span><br><span class="line">      history.transitionTo(getLocation(history.base))</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (history <span class="keyword">instanceof</span> HashHistory) &#123;</span><br><span class="line">      history.transitionTo(getHash(), () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 监听 hashchange 事件并执行 onHashChange 方法</span></span><br><span class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, () =&gt; &#123;</span><br><span class="line">          history.onHashChange()</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册当前 history 对象的 cb</span></span><br><span class="line">    <span class="comment">// history/base 中 listen (cb: Function) &#123;this.cb = cb&#125;</span></span><br><span class="line">    <span class="comment">// cb 会在 history 更新后调用</span></span><br><span class="line">    <span class="comment">// cb 作用在于更新当前实例 _route</span></span><br><span class="line">    history.listen(<span class="function"><span class="params">route</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.app._route = route</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>对于 <code>history.listen(route =&gt; {this.app._route = route})</code> ，history 更新后会调用这个 callback, 这个 callback 作用就是更新当前实例 _route 值，联系之前 <code>install.js</code> 定义响应式的 _route 对象 <code>Vue.util.defineReactive(this, &#39;_route&#39;, this._router.history.current)</code>, <code>this._router.history.current</code> 就是当前 history 实例的当前活动路由对象。<strong>这意味着每当 history 更新后会更新实例的 _route，会触发更新机制，继而会触发 router-view 组件的 render 重新渲染</strong></p>
+<h2 id="router-view-组件"><a href="#router-view-组件" class="headerlink" title="router-view 组件"></a>router-view 组件</h2><p><code>components/view.js</code> 定义了 router-view 组件，其逻辑就是拿到匹配的组件进行渲染</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'router-view'</span>,</span><br><span class="line">  functional: <span class="literal">true</span>, <span class="comment">// 功能组件，单纯渲染</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    name: &#123;</span><br><span class="line">      type: <span class="built_in">String</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">'default'</span> <span class="comment">// 默认 default 默认命名视图 name</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// h 函数（createElement 函数生成 vnode）</span></span><br><span class="line">  render (h, &#123; props, children, parent, data &#125;) &#123;</span><br><span class="line">    <span class="comment">// 解决深度嵌套</span></span><br><span class="line">    data.routerView = <span class="literal">true</span></span><br><span class="line">    <span class="comment">// route 对象</span></span><br><span class="line">    <span class="keyword">const</span> route = parent.$route</span><br><span class="line">    <span class="comment">// 缓存</span></span><br><span class="line">    <span class="keyword">const</span> cache = parent._routerViewCache || (parent._routerViewCache = &#123;&#125;)</span><br><span class="line">    <span class="keyword">let</span> depth = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> inactive = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当前组件深度</span></span><br><span class="line">    <span class="keyword">while</span> (parent) &#123;</span><br><span class="line">      <span class="keyword">if</span> (parent.$vnode &amp;&amp; parent.$vnode.data.routerView) &#123;</span><br><span class="line">        depth++</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 处理 keep-alive 逻辑</span></span><br><span class="line">      <span class="keyword">if</span> (parent._inactive) &#123;</span><br><span class="line">        inactive = <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      parent = parent.$parent</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    data.routerViewDepth = depth</span><br><span class="line">    <span class="comment">// 得到匹配的当前组件层级的 路由记录</span></span><br><span class="line">    <span class="keyword">const</span> matched = route.matched[depth]</span><br><span class="line">    <span class="keyword">if</span> (!matched) &#123;</span><br><span class="line">      <span class="keyword">return</span> h()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 得到待渲染组件</span></span><br><span class="line">    <span class="keyword">const</span> name = props.name</span><br><span class="line">    <span class="comment">// const matched = route.matched[depth]</span></span><br><span class="line">    <span class="keyword">const</span> component = inactive</span><br><span class="line">      ? cache[name]</span><br><span class="line">      : (cache[name] = matched.components[name])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!inactive) &#123;</span><br><span class="line">      <span class="comment">// 非 keep-alive 模式，每次都要设置钩子</span></span><br><span class="line">      <span class="comment">// 进而更新匹配的实例元素</span></span><br><span class="line">      <span class="keyword">const</span> hooks = data.hook || (data.hook = &#123;&#125;)</span><br><span class="line">      hooks.init = <span class="function"><span class="params">vnode</span> =&gt;</span> &#123;</span><br><span class="line">        matched.instances[name] = vnode.child</span><br><span class="line">      &#125;</span><br><span class="line">      hooks.prepatch = <span class="function">(<span class="params">oldVnode, vnode</span>) =&gt;</span> &#123;</span><br><span class="line">        matched.instances[name] = vnode.child</span><br><span class="line">      &#125;</span><br><span class="line">      hooks.destroy = <span class="function"><span class="params">vnode</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (matched.instances[name] === vnode.child) &#123;</span><br><span class="line">          matched.instances[name] = <span class="literal">undefined</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用 createElement 函数渲染匹配组件</span></span><br><span class="line">    <span class="keyword">return</span> h(component, data, children)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="router-link-组件"><a href="#router-link-组件" class="headerlink" title="router-link 组件"></a>router-link 组件</h2><p><code>components/link.js</code> 定义了 router-link 组件, 就是<strong>在点击时根据设置的 to 值调用 router 的 push 或 replace 方法来更新路由；同时会检查自身是否于当前路由匹配（严格匹配和包含匹配）来决定自身是否添加 activeClass</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; cleanPath &#125; <span class="keyword">from</span> <span class="string">'../util/path'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createRoute, isSameRoute, isIncludedRoute &#125; <span class="keyword">from</span> <span class="string">'../util/route'</span></span><br><span class="line"><span class="keyword">import</span> &#123; normalizeLocation &#125; <span class="keyword">from</span> <span class="string">'../util/location'</span></span><br><span class="line"><span class="keyword">import</span> &#123; _Vue &#125; <span class="keyword">from</span> <span class="string">'../install'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// work around weird flow bug</span></span><br><span class="line"><span class="keyword">const</span> toTypes: <span class="built_in">Array</span>&lt;<span class="built_in">Function</span>&gt; = [<span class="built_in">String</span>, <span class="built_in">Object</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'router-link'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    to: &#123; <span class="comment">// 目标路由链接</span></span><br><span class="line">      type: toTypes,</span><br><span class="line">      required: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tag: &#123; <span class="comment">// router-link 被渲染成的 html 标签</span></span><br><span class="line">      type: <span class="built_in">String</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">'a'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 完整模式，如果为 true 意味着 绝对相等的路由才会添加 activeClass，否则是包含关系</span></span><br><span class="line">    exact: <span class="built_in">Boolean</span>,</span><br><span class="line">    <span class="comment">// 在当前（相对）路径中附加路径</span></span><br><span class="line">    append: <span class="built_in">Boolean</span>,</span><br><span class="line">    <span class="comment">// 如果为 true 则调用 router.replace() 替换历史操作</span></span><br><span class="line">    replace: <span class="built_in">Boolean</span>,</span><br><span class="line">    <span class="comment">// 链接激活时使用的 css 类名</span></span><br><span class="line">    activeClass: <span class="built_in">String</span></span><br><span class="line">  &#125;,</span><br><span class="line">  render (h: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    <span class="comment">// 得到 router 实例和当前激活的 route 对象</span></span><br><span class="line">    <span class="keyword">const</span> router = <span class="keyword">this</span>.$router</span><br><span class="line">    <span class="keyword">const</span> current = <span class="keyword">this</span>.$route</span><br><span class="line">    <span class="keyword">const</span> to = normalizeLocation(<span class="keyword">this</span>.to, current, <span class="keyword">this</span>.append)</span><br><span class="line">    <span class="comment">// 根据当前目标链接和当前的 router 匹配结果</span></span><br><span class="line">    <span class="keyword">const</span> resolved = router.match(to, current)</span><br><span class="line">    <span class="keyword">const</span> fullPath = resolved.redirectedFrom || resolved.fullPath</span><br><span class="line">    <span class="keyword">const</span> base = router.history.base</span><br><span class="line">    <span class="comment">// 创建 href</span></span><br><span class="line">    <span class="keyword">const</span> href = createHref(base, fullPath, router.mode)</span><br><span class="line">    <span class="keyword">const</span> classes = &#123;&#125;</span><br><span class="line">    <span class="comment">// 激活 class：优先当前组件上获取，要么是 router 设置的 linkActiveClass，默认是 'router-link-active'</span></span><br><span class="line">    <span class="keyword">const</span> activeClass = <span class="keyword">this</span>.activeClass || router.options.linkActiveClass || <span class="string">'router-link-active'</span></span><br><span class="line">    <span class="comment">// 比较目标</span></span><br><span class="line">    <span class="comment">// 因为有命名路由，因此不一定有 path</span></span><br><span class="line">    <span class="keyword">const</span> compareTarget = to.path ? createRoute(<span class="literal">null</span>, to) : resolved</span><br><span class="line">    <span class="comment">// 如果严格模式，判断是否是相同路由（path query params hash）</span></span><br><span class="line">    <span class="comment">// 否则走包含逻辑（path 包含、query 包含、hash 为空或相同）</span></span><br><span class="line">    classes[activeClass] = <span class="keyword">this</span>.exact</span><br><span class="line">      ? isSameRoute(current, compareTarget)</span><br><span class="line">      : isIncludedRoute(current, compareTarget)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 事件绑定</span></span><br><span class="line">    <span class="keyword">const</span> on = &#123;</span><br><span class="line">      click: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// don't redirect with control keys</span></span><br><span class="line">        <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">        <span class="comment">// 忽略功能键的点击</span></span><br><span class="line">        <span class="keyword">if</span> (e.metaKey || e.ctrlKey || e.shiftKey) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// don't redirect when preventDefault called</span></span><br><span class="line">        <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">        <span class="comment">// 已阻止返回</span></span><br><span class="line">        <span class="keyword">if</span> (e.defaultPrevented) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// don't redirect on right click</span></span><br><span class="line">        <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">        <span class="comment">// 右击</span></span><br><span class="line">        <span class="keyword">if</span> (e.button !== <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="comment">// don't redirect if `target="_blank"`</span></span><br><span class="line">        <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">        <span class="comment">// `target="_blank"` 忽略</span></span><br><span class="line">        <span class="keyword">const</span> target = e.target.getAttribute(<span class="string">'target'</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="regexp">/\b_blank\b/i</span>.test(target)) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 阻止默认行为 防止跳转</span></span><br><span class="line">        e.preventDefault()</span><br><span class="line">        <span class="comment">// router-link 点击会触发 route 改变</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.replace) &#123;</span><br><span class="line">          <span class="comment">// replace 逻辑</span></span><br><span class="line">          router.replace(to)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// push 逻辑</span></span><br><span class="line">          router.push(to)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建元素需要附加的数据</span></span><br><span class="line">    <span class="keyword">const</span> data: any = &#123;</span><br><span class="line">      class: classes</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.tag === <span class="string">'a'</span>) &#123;</span><br><span class="line">      data.on = on</span><br><span class="line">      data.attrs = &#123; href &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// find the first &lt;a&gt; child and apply listener and href</span></span><br><span class="line">      <span class="comment">// 找到第一个 &lt;a&gt; 并给这个元素事件绑定和 href 属性</span></span><br><span class="line">      <span class="keyword">const</span> a = findAnchor(<span class="keyword">this</span>.$slots.default)</span><br><span class="line">      <span class="keyword">if</span> (a) &#123;</span><br><span class="line">        <span class="comment">// in case the &lt;a&gt; is a static node</span></span><br><span class="line">        a.isStatic = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">const</span> extend = _Vue.util.extend</span><br><span class="line">        <span class="keyword">const</span> aData = a.data = extend(&#123;&#125;, a.data)</span><br><span class="line">        aData.on = on</span><br><span class="line">        <span class="keyword">const</span> aAttrs = a.data.attrs = extend(&#123;&#125;, a.data.attrs)</span><br><span class="line">        aAttrs.href = href</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// doesn't have &lt;a&gt; child, apply listener to self</span></span><br><span class="line">        <span class="comment">// 没有 &lt;a&gt; 就给当前元素自身绑定事件</span></span><br><span class="line">        data.on = on</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建元素</span></span><br><span class="line">    <span class="keyword">return</span> h(<span class="keyword">this</span>.tag, data, <span class="keyword">this</span>.$slots.default)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findAnchor</span> (<span class="params">children</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (children) &#123;</span><br><span class="line">    <span class="keyword">let</span> child</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; children.length; i++) &#123;</span><br><span class="line">      child = children[i]</span><br><span class="line">      <span class="keyword">if</span> (child.tag === <span class="string">'a'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> child</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (child.children &amp;&amp; (child = findAnchor(child.children))) &#123;</span><br><span class="line">        <span class="keyword">return</span> child</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createHref</span> (<span class="params">base, fullPath, mode</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// hash 形式 '/#/xxx'</span></span><br><span class="line">  <span class="comment">// h5 形式 '/xxx'</span></span><br><span class="line">  <span class="keyword">var</span> path = mode === <span class="string">'hash'</span> ? <span class="string">'/#'</span> + fullPath : fullPath</span><br><span class="line">  <span class="keyword">return</span> base ? cleanPath(base + path) : path</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><ul>
+<li>混入beforeCreate生命周期处理，初始化 _router，_route 等数据</li>
+<li>全局设置 Vue 静态访问 $router 和 $route</li>
+<li>全局注册 router-link 和 router-view 两个组件，router-link 用于触发路由的变化，router-view 用于触发对应路由视图的变化</li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="根据路由配置生成-router-实例"><a href="#根据路由配置生成-router-实例" class="headerlink" title="根据路由配置生成 router 实例"></a>根据路由配置生成 router 实例</h3><ul>
+<li>根据 routes 配置数组生成路由配置记录表</li>
+<li>根据不同模式生成 history 对象</li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="将-router-实例注入-vue-根实例"><a href="#将-router-实例注入-vue-根实例" class="headerlink" title="将 router 实例注入 vue 根实例"></a>将 router 实例注入 vue 根实例</h3><ul>
+<li>根据 beforeCreate 混入，为根 vue 对象设置了劫持字段 _route</li>
+<li>调用 init() 函数，完成首次路由的渲染，首次渲染的调用路径是调用 history.transitionTo 方法，根据 router 的 match 函数，生成一个新的 route 对象<br>接着通过 confirmTransition 对比一下新生成的 route 和当前的 route 对象是否改变，改变的话触发 updateRoute，更新 hsitory.current 属性，触发根组件的_route 的变化,从而导致组件的调用 render 函数，更新 router-view</li>
+<li><strong>另外一种更新路由的方式是主动触发:</strong> router-link 绑定了 click 方法，触发 history.push 或者 history.replace, 从而触发 history.transitionTo<br>同时会监控 hashchange 和 popstate 来对路由变化作对用的处理</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/vue-router/" rel="tag"># vue-router</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/16/flow/" rel="next" title="flow">
+                <i class="fa fa-chevron-left"></i> flow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码结构"><span class="nav-number">2.</span> <span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件安装"><span class="nav-number">3.</span> <span class="nav-text">插件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-router-实例"><span class="nav-number">4.</span> <span class="nav-text">生成 router 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成路由配置表"><span class="nav-number">4.1.</span> <span class="nav-text">生成路由配置表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同的模式生成-history-对象"><span class="nav-number">4.2.</span> <span class="nav-text">不同的模式生成 history 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#history-hash-js"><span class="nav-number">4.2.1.</span> <span class="nav-text">history/hash.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#history-html5-js"><span class="nav-number">4.2.2.</span> <span class="nav-text">history/html5.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#history-abstract-js"><span class="nav-number">4.2.3.</span> <span class="nav-text">history/abstract.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-实例化"><span class="nav-number">5.</span> <span class="nav-text">Vue 实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#router-view-组件"><span class="nav-number">6.</span> <span class="nav-text">router-view 组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#router-link-组件"><span class="nav-number">7.</span> <span class="nav-text">router-link 组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">8.1.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据路由配置生成-router-实例"><span class="nav-number">8.2.</span> <span class="nav-text">根据路由配置生成 router 实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将-router-实例注入-vue-根实例"><span class="nav-number">8.3.</span> <span class="nav-text">将 router 实例注入 vue 根实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
