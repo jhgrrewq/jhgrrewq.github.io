@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象  默认绑定全局变量当">
+<meta name="description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构">
 <meta name="keywords" content="js,this">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js 中的 this">
 <meta property="og:url" content="http://jhgrrewq.github.io/2018/01/22/js 中的 this/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象  默认绑定全局变量当">
+<meta property="og:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-03T02:16:19.000Z">
+<meta property="og:updated_time" content="2018-05-08T08:26:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js 中的 this">
-<meta name="twitter:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象  默认绑定全局变量当">
+<meta name="twitter:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构">
 
 
 
@@ -349,9 +349,9 @@
 
       
         <blockquote>
-<p>总原则: <strong>this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。</strong>在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象</p>
+<p>总原则: <strong>this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。</strong>在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构造函数，this 指向 new 出来的对象</p>
 </blockquote>
-<h2 id="默认绑定全局变量"><a href="#默认绑定全局变量" class="headerlink" title="默认绑定全局变量"></a>默认绑定全局变量</h2><p>当函数单独定义和调用时，this 绑定全局变量</p>
+<h2 id="默认绑定全局变量"><a href="#默认绑定全局变量" class="headerlink" title="默认绑定全局变量"></a>默认绑定全局变量</h2><p>当函数单独定义和调用时，this 绑定全局变量（非严格模式）</p>
 <h3 id="全局"><a href="#全局" class="headerlink" title="全局"></a>全局</h3><p><strong>this 为 window（非严格模式）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -386,7 +386,7 @@
 <p>new 操作符创建一个对象的原理：</p>
 <ul>
 <li><strong>new 创建一个对象</strong></li>
-<li><strong>将构造函数的作用域赋给新对象（因此 this 指向这个新对象）</strong></li>
+<li><strong>将构造函数的作用域赋给新对象（因此 this 指向这个新对象），添加 [[prototype]] 连接</strong></li>
 <li><strong>执行构造函数中的代码（属性和方法被加入到 新对象）</strong></li>
 <li><strong>返回新对象</strong></li>
 </ul>
@@ -516,7 +516,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -529,7 +529,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

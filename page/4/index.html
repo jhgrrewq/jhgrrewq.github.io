@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/08/es6 iterator/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/27/es6 Promise 标准/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/08/es6 iterator/" itemprop="url">es6 iterator</a></h1>
+                <a class="post-title-link" href="/2018/03/27/es6 Promise 标准/" itemprop="url">es6 Promise 标准</a></h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T14:03:51+08:00">
-                2018-03-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T13:37:52+08:00">
+                2018-03-27
               </time>
             
 
@@ -351,13 +351,13 @@
       
         
           <blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="noopener">ECMAScript 6 入门 iterator 部分</a></p>
+<p>参考: <a href="https://juejin.im/post/597724c26fb9a06bb75260e8" target="_blank" rel="noopener">八段代码彻底掌握 Promise</a></p>
 </blockquote>
 <!-- markdownlint-disable MD010 -->
-<p>iterator 遍历器是一种机制、一种接口，它为各种不同的数据结构提供统一的访问机制。<strong>任何数据结构只要部署 iterator 接口，就可以完成遍历（依次处理该数据结构中的所有成员）。es6 中提供的遍历方法 </strong>for…of 便是自动寻找该对象的 iterator 接口**</p>
+<h2 id="Promise-的立即执行"><a href="#Promise-的立即执行" class="headerlink" title="Promise 的立即执行"></a>Promise 的立即执行</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'create new promise'</span>)</span><br><span class="line">  resolve(<span class="string">'success'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'after new promise'</span>)</span><br><span class="line"></span><br><span class="line">p.then(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(val)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// create new promise</span></span><br><span class="line"><span class="comment">// after new promise</span></span><br><span class="line"><span class="comment">// success</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/08/es6 iterator/#more" rel="contents">
+            <a class="btn" href="/2018/03/27/es6 Promise 标准/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -408,7 +408,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/es6 Set Map/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/27/js 创建对象的多种方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -427,7 +427,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/es6 Set Map/" itemprop="url">es6 Set Map</a></h1>
+                <a class="post-title-link" href="/2018/03/27/js 创建对象的多种方式/" itemprop="url">js 创建对象的多种方式</a></h1>
         
 
         <div class="post-meta">
@@ -439,8 +439,280 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T13:29:10+08:00">
-                2018-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T13:35:37+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/27/js 创建对象的多种方式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/27/js 工具函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/js 工具函数/" itemprop="url">js 工具函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T00:43:58+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!-- markdownlint-disable MD010 -->
+<h2 id="数组扁平化"><a href="#数组扁平化" class="headerlink" title="数组扁平化"></a>数组扁平化</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>]</span><br><span class="line"><span class="comment">// 扁平化后</span></span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<p>数组扁平化是将嵌套数组变为一维数组，思路就是遍历数组每个元素，当该元素还是数组时继续遍历，直到不为数组时将其 push 一个新数组中</p>
+<h3 id="递归实现"><a href="#递归实现" class="headerlink" title="递归实现"></a>递归实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = [] <span class="comment">// 最终返回的数组</span></span><br><span class="line">	arr.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (item <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><br><span class="line">		<span class="comment">// 判断方法还可以有 Array.isArray()</span></span><br><span class="line">		<span class="comment">// Object.prototype.toString.call(obj) === '[object Array]'</span></span><br><span class="line">			ret = ret.concat(flatten(item)) <span class="comment">// 当元素为数组时递归调用</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			ret.push(item) <span class="comment">// 当元素不为数组直接 push</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(flatten([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>])) <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p>reduce 第一个参数是处理函数，第二个参数是传入处理函数的初始值，数组每次处理数组元素都会调用该处理函数，最终返回处理后的值。</p>
+<p>处理函数第一个参数 prev 是每轮处理后的返回值，第二参数 cur 为当前处理元素，第三个参数 index 为当前处理元素位置，第四个参数 arr 为当前处理数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> prev.concat(cur <span class="keyword">instanceof</span> <span class="built_in">Array</span> ? flatten(cur) : cur)</span><br><span class="line">	&#125;, [])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(flatten([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>])) <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<h3 id="es6-扩展运算符"><a href="#es6-扩展运算符" class="headerlink" title="es6 扩展运算符"></a>es6 扩展运算符</h3><p>es6 扩展运算符只能扁平一层，可循环判断数组中元素是否存在数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (arr.some(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">Array</span>.isArray(item))) &#123;</span><br><span class="line">		arr = [].concat(...arr)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(flatten([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>])) <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="number">2</span>]</span><br><span class="line"><span class="comment">// 去重后 [1, '1', 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="两层循环"><a href="#两层循环" class="headerlink" title="两层循环"></a>两层循环</h3><p>设置标志位为 false，当外层循环的数组元素和内层循环的去重数组元素相等，设置标志位为 true。内层循环结束时标志还为 false，说明之前没有重复元素，数组元素可以添加到去重数组中</p>
+<p>另一种方法是利用 js 没有块级作用域，循环变量用 var 声明。同样是两层循环，另一种是当外层循环的数组元素和内层循环的去重数组元素相等跳出当前内存恶棍循环。当 j 等于去重数组长度，说明之前没有重复元素，数组元素可以添加到去重数组中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = []</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">		<span class="keyword">let</span> flag = <span class="literal">false</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; ret.length; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (ret[j] === arr[i]) &#123;</span><br><span class="line">				flag = <span class="literal">true</span></span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">			ret.push(arr[i])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = []</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; ret.length; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (ret[j] === arr[i]) &#123;</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 这里 j 是 var 声明，在 for 外可以访问到</span></span><br><span class="line">		<span class="comment">// 如果没有重复元素，j 等于 去重数组长度</span></span><br><span class="line">		<span class="keyword">if</span> (j === ret.length) &#123;</span><br><span class="line">			ret.push(arr[i])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(unique([<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="number">2</span>])) <span class="comment">// [1, '1', 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组-indexOf-方法"><a href="#数组-indexOf-方法" class="headerlink" title="数组 indexOf() 方法"></a>数组 indexOf() 方法</h3><p>利用数组 indexOf 方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = []</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ret.indexOf(arr[i]) === <span class="number">-1</span>) &#123;</span><br><span class="line">			ret.push(arr[i])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(unique([<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="number">2</span>])) <span class="comment">// [1, '1', 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="两层循环-使用-splice"><a href="#两层循环-使用-splice" class="headerlink" title="两层循环 + 使用 splice"></a>两层循环 + 使用 splice</h3><p>外层循环下标 i 从 0 到倒数第二个元素（没必要到最后一个），内层循环下标 j 从 i + 1 （i之前的保证已经没有重复）到最后一个元素。删除元素后个数少 1，内层循环下标 j 减 1</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[j] === arr[i]) &#123;</span><br><span class="line">				arr.splice(j--, <span class="number">1</span>)</span><br><span class="line">				<span class="comment">// 删除后元素少了 1，j 应当减1</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(unique([<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="number">2</span>])) <span class="comment">// [1, '1', 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="es6-Set"><a href="#es6-Set" class="headerlink" title="es6 Set"></a>es6 Set</h3><p>Set 不包含重复元素，因此可以使用数组初始化 Set，再将 Set 转化为数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// Array.from 将类数组转为数组</span></span><br><span class="line">	<span class="comment">// 或者使用 es6 扩展运算符 [...new Set(arr)]</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(unique([<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="number">2</span>])) <span class="comment">// [1, '1', 2]</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组乱序"><a href="#数组乱序" class="headerlink" title="数组乱序"></a>数组乱序</h2><p>将数组打乱。思路是遍历数组，通过将当前元素和随机位置元素交换</p>
+<h3 id="Math-random-结合获取随机位置"><a href="#Math-random-结合获取随机位置" class="headerlink" title="Math.random() 结合获取随机位置"></a>Math.random() 结合获取随机位置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> i</span><br><span class="line">	<span class="keyword">let</span> j</span><br><span class="line">	<span class="keyword">let</span> tmp</span><br><span class="line">	<span class="keyword">for</span> (i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		<span class="comment">// Math.random() 生成 0-1 随机数</span></span><br><span class="line">		<span class="comment">// 根据 i 生成随机 j</span></span><br><span class="line">		j = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * i)</span><br><span class="line">		tmp = arr[i]</span><br><span class="line">		arr[i] = arr[j]</span><br><span class="line">		arr[j] = tmp</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(shuffle([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]))</span><br></pre></td></tr></table></figure>
+<h3 id="es6-数组解构赋值简化"><a href="#es6-数组解构赋值简化" class="headerlink" title="es6 数组解构赋值简化"></a>es6 数组解构赋值简化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		<span class="keyword">let</span> j = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * i);</span><br><span class="line">		[arr[i], arr[j]] = [arr[j], arr[i]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(shuffle([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]))</span><br></pre></td></tr></table></figure>
+<h2 id="数组求最值"><a href="#数组求最值" class="headerlink" title="数组求最值"></a>数组求最值</h2><p>如求最小值，Math.min(arg1, arg2, arg3, …) 求一系列参数的最小值，同理 Math.max()<br>对数组（如元素全是数字）求最值，容易想到的方法是使用 Math.min / Math.max</p>
+<h3 id="简单的循环比较"><a href="#简单的循环比较" class="headerlink" title="简单的循环比较"></a>简单的循环比较</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxAndmin</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> min = arr[<span class="number">0</span>]</span><br><span class="line">	<span class="keyword">let</span> max = arr[<span class="number">0</span>]</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[i] &lt; min) &#123;</span><br><span class="line">			min = arr[i]</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[i] &gt; max) &#123;</span><br><span class="line">			max = arr[i]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		min: min,</span><br><span class="line">		max: max</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(maxAndmin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])) <span class="comment">// &#123;min: 1, max: 7&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="reduce-1"><a href="#reduce-1" class="headerlink" title="reduce"></a>reduce</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxAndmin</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> min = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> prev &gt; cur ? cur : prev</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">let</span> max = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> prev &lt; cur ? cur : prev</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		min: min,</span><br><span class="line">		max: max</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(maxAndmin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])) <span class="comment">// &#123;min: 1, max: 7&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="sort-排序后取出头尾元素"><a href="#sort-排序后取出头尾元素" class="headerlink" title="sort() 排序后取出头尾元素"></a>sort() 排序后取出头尾元素</h3><p>sort() 传入比较函数，升序或者降序后取出头尾元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxAndmin</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	arr.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> a - b <span class="comment">// 升序</span></span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		min: arr[<span class="number">0</span>],</span><br><span class="line">		max: arr[arr.length - <span class="number">1</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(maxAndmin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])) <span class="comment">// &#123;min: 1, max: 7&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxAndmin</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> min = <span class="built_in">Math</span>.min.apply(<span class="literal">null</span>, arr)</span><br><span class="line">	<span class="keyword">let</span> max = <span class="built_in">Math</span>.max.apply(<span class="literal">null</span>, arr)</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		min: min,</span><br><span class="line">		max: max</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(maxAndmin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])) <span class="comment">// &#123;min: 1, max: 7&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="es6-扩展运算符-1"><a href="#es6-扩展运算符-1" class="headerlink" title="es6 扩展运算符"></a>es6 扩展运算符</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxAndmin</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> min = <span class="built_in">Math</span>.min(...arr)</span><br><span class="line">	<span class="keyword">let</span> max = <span class="built_in">Math</span>.max(...arr)</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		min: min,</span><br><span class="line">		max: max</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(maxAndmin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])) <span class="comment">// &#123;min: 1, max: 7&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h2><h2 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/26/koa2 源码解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/26/koa2 源码解读/" itemprop="url">koa2 源码解读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T10:49:30+08:00">
+                2018-03-26
               </time>
             
 
@@ -480,19 +752,143 @@
         
           <!-- markdownlint-disable MD010 -->
 <blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/set-map" target="_blank" rel="noopener">ECMAScript 6 入门 Set 和 Map 数据结构 部分</a>、<a href="https://www.cnblogs.com/vicfeel/p/5829568.html" target="_blank" rel="noopener">向 ES6 看齐，用更好的 Javascript(三)</a>、<a href="http://blog.csdn.net/qq_30100043/article/details/53198243" target="_blank" rel="noopener">es6 数组对象新增方法 Array.from()将两类对象转为真正的数组</a></p>
+<p>koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。 使用 koa 编写 web 应用，通过组合<strong>不同的 generator(koa2 用 async/await)</strong>，可以免除重复繁琐的回调函数嵌套， 并极大地提升错误处理的效率。<strong>koa 不在内核方法中绑定任何中间件</strong>， 它仅仅提供了一个轻量优雅的函数库，使得编写 Web 应用变得得心应手</p>
 </blockquote>
-<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>Set <strong>类似数组，但是成员的值都是唯一的，没有重复的值</strong></p>
+<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- lib/</span><br><span class="line">-- application.js <span class="comment">// 入口文件</span></span><br><span class="line">-- context.js</span><br><span class="line">-- request.js</span><br><span class="line">-- response.js</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/26/koa2 源码解读/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/21/npm publish 发布自己的模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/npm publish 发布自己的模块/" itemprop="url">npm publish 发布自己的模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T17:17:50+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在 npm 官网上发布自己的模块首先需要在 <a href="https://www.npmjs.com" target="_blank" rel="noopener">https://www.npmjs.com</a> 注册账号</p>
+<h2 id="1-编写模块"><a href="#1-编写模块" class="headerlink" title="1 编写模块"></a>1 编写模块</h2><p>一般遵循 umd / amd / commonJS 风格编写模块</p>
+<h2 id="2-初始化包描述文件-package-json"><a href="#2-初始化包描述文件-package-json" class="headerlink" title="2 初始化包描述文件 package.json"></a>2 初始化包描述文件 package.json</h2><p>使用 npm init 命令初始化包描述文件，要注意两点：</p>
 <ul>
-<li><strong>Set 本身是一个构造函数</strong>，用来生成 Set 数据结构</li>
-<li>可以通过 <strong>add 方法向 Set 结构加入成员</strong></li>
-<li>Set 函数可接受一个数组（或具有 iterable 接口的其他数据结构）作为参数，用来初始化</li>
-<li>向 Set 加入值的时候<strong>不会发生类型转换（但这里区别在于 NaN 等于自身，而精确运算 === 认为 NaN 不等于自身）</strong></li>
-<li>两个对象总是不相等的，包括两个空对象</li>
+<li><strong>包名不能包含大写字母</strong></li>
+<li><strong>最好先在 npm 官网搜索一下包名是否已被占用，被占用的包名模块是无法发布的</strong></li>
 </ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/es6 Set Map/#more" rel="contents">
+            <a class="btn" href="/2018/03/21/npm publish 发布自己的模块/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -543,7 +939,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/es6 Symbol/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/21/js arguments/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -562,7 +958,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/es6 Symbol/" itemprop="url">es6 Symbol</a></h1>
+                <a class="post-title-link" href="/2018/03/21/js arguments/" itemprop="url">js arguments</a></h1>
         
 
         <div class="post-meta">
@@ -574,764 +970,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T11:01:07+08:00">
-                2018-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ECMAScript 6 入门 Symbol 部分</a></p>
-</blockquote>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。<strong>es6 引入一种新的原始数据类型 Symbol，表示独一无二的值</strong></p>
-<p>因此<strong>基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/es6 Symbol/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/浏览器回流和重回/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/06/浏览器回流和重回/" itemprop="url">浏览器回流和重绘</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T09:46:48+08:00">
-                2018-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="https://juejin.im/post/5a9923e9518825558251c96a?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="noopener">浏览器的回流与重绘 (Reflow &amp; Repaint)
-</a></p>
-</blockquote>
-<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><blockquote>
-<p><strong>回流必引起重绘，重绘不一定会引起回流</strong></p>
-</blockquote>
-<ul>
-<li>浏览器使用流式布局模型</li>
-<li><strong>浏览器会把 html 解析成 DOM，把 css 解析成 CSSOM, DOM 和 CSSOM 合并产生 render tree</strong></li>
-<li>有了 render tree 就<strong>知道所有节点的样式，然后计算他们在页面的大小和位置，最后把节点绘制在页面上</strong></li>
-<li>由于浏览器使用流式布局，<strong>对 render tree 的计算通常只需要遍历一次就可以完成，但是 table 和其内部元素除外，他们可能需要多次计算，通常要花 3 倍于同等元素的时间，这是为什么要避免使用 table 布局的原因之一</strong></li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/浏览器回流和重回/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/26/webpack loader 编写/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/webpack loader 编写/" itemprop="url">webpack loader 编写</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T11:13:57+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>编写的 webpack 扩展如果是想对一个个单独文件进行转换就编写 loader，否则编写 plugin</p>
-</blockquote>
-<ul>
-<li><p><strong>一个 loader 的职责是单一的，只需要完成一种转换</strong> 如果一个源文件需要进行经过多种转换才能正常使用，就通过多个 loader 转换。调用多个 loader 转换一个文件时，每个 loader 会链式顺序执行，第一个 loader 将会拿到需要处理的原内容，上一个 loader 处理后的结果会传给下一个接着处理，最后的 loader 将处理后的最终结果返回给 webpack</p>
-</li>
-<li><p>开发 loader 时请保持其职责的单一性，只需关心输入和输出</p>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/26/webpack loader 编写/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/16/babel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/babel/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T10:38:55+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/16/js 常见排序实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/js 常见排序实现/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T10:38:34+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/16/前端路由的实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/前端路由的实现/" itemprop="url">前端路由的实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T10:38:02+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/03/js call apply bind/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/03/js call apply bind/" itemprop="url">js call apply bind</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-03T21:18:48+08:00">
-                2018-02-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T15:47:22+08:00">
+                2018-03-21
               </time>
             
 
@@ -1370,18 +1010,13 @@
       
         
           <blockquote>
-<p>参考: <a href="https://github.com/mqyqingfeng/Blog/issues/12" target="_blank" rel="noopener">JavaScript深入之bind的模拟实现</a></p>
+<p>参考: <a href="">Javascript 高级程序设计（第三版）</a>、<a href="https://github.com/mqyqingfeng/Blog/issues/14" target="_blank" rel="noopener">JavaScript深入之类数组对象与arguments</a></p>
 </blockquote>
 <!-- markdownlint-disable MD010 -->
-<h2 id="call-apply-bind-方法的异同："><a href="#call-apply-bind-方法的异同：" class="headerlink" title="call apply bind 方法的异同："></a>call apply bind 方法的异同：</h2><ul>
-<li>三者都是改变函数 this 对象指向的</li>
-<li><strong>三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式）</strong></li>
-<li>三者都可以使用后续参数传参</li>
-<li><strong>call apply 是立即调用，bind 是返回对应函数，延迟调用</strong></li>
-</ul>
+<p>在函数体内能通过 arguments 对象访问参数数组，从而获取传递给参数的每一个函数。arguments 是一个类数组（不是 Array 实例），可以使用方括号语法访问它的每一个元素，使用 length 属性确定传递进来实参参数。arguments 对象还有一个 callee 属性，该属性是一个指针，指向拥有这个 arguments 对象的函数</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/02/03/js call apply bind/#more" rel="contents">
+            <a class="btn" href="/2018/03/21/js arguments/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1432,7 +1067,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/03/base64 编码原理/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/20/js 事件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1451,7 +1086,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/03/base64 编码原理/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/03/20/js 事件/" itemprop="url">未命名</a></h1>
         
 
         <div class="post-meta">
@@ -1463,8 +1098,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-03T21:15:07+08:00">
-                2018-02-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T11:44:44+08:00">
+                2018-03-20
               </time>
             
 
@@ -1505,6 +1140,388 @@
           
             
           
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/20/js 变量 作用域 作用域链/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/js 变量 作用域 作用域链/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T11:44:29+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/15/js call apply 模拟实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/js call apply 模拟实现/" itemprop="url">js call apply 模拟实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:52:32+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>参考:<a href="https://github.com/mqyqingfeng/Blog/issues/11" target="_blank" rel="noopener">JavaScript深入之call和apply的模拟实现</a></p>
+</blockquote>
+<!-- narkdownlint-disable MD010 -->
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数也是可以有返回值</span></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2,name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+<p>当前对象没有某个方法，借用 call 和 apply 其他对象的方法，改变函数 this 指向传入的对象，使当前对象也能调用该方法</p>
+<p>模拟实现需要三个步骤：</p>
+<ul>
+<li><strong>将借用的方法设为当前对象的属性</strong></li>
+<li><strong>当前对象调用该方法</strong></li>
+<li><strong>删除该属性</strong></li>
+<li><strong>有函数返回值就返回</strong></li>
+</ul>
+<h2 id="call-模拟实现"><a href="#call-模拟实现" class="headerlink" title="call 模拟实现"></a>call 模拟实现</h2><p>该方法能被函数调用，需要挂载在 Function 原型上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newCall = <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 取出需要传入的参数 从第二个参数开始</span></span><br><span class="line">  <span class="keyword">let</span> args = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">    args[i - <span class="number">1</span>] = <span class="built_in">arguments</span>[i]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// let args = Array.prototype.slice.call(arguments, 1)</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (args &amp;&amp; args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...args)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="apply-模拟实现"><a href="#apply-模拟实现" class="headerlink" title="apply 模拟实现"></a>apply 模拟实现</h2><p>apply 的实现类似 call，第二个参数是参数数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newApply = <span class="function"><span class="keyword">function</span> (<span class="params">ctx, arr</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (arr &amp;&amp; arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...arr)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/15/js new 的原理和模拟实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:51:34+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: JavaScript 高级程序设计（第 3 版）</p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="new-一个对象的原理"><a href="#new-一个对象的原理" class="headerlink" title="new 一个对象的原理"></a>new 一个对象的原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name</span><br><span class="line">	<span class="keyword">this</span>.age = age</span><br><span class="line">	<span class="keyword">this</span>.job = job</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'jack'</span>, <span class="number">20</span>, <span class="string">'Teacher'</span>)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/15/js new 的原理和模拟实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1542,7 +1559,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1592,7 +1609,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1605,7 +1622,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
