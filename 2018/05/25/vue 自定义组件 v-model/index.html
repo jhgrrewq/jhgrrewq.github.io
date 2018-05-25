@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="vue," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户">
-<meta property="og:type" content="website">
-<meta property="og:title" content="jhgrrewq 前端小站">
-<meta property="og:url" content="http://jhgrrewq.github.io/tags/hexo/index.html">
+<meta name="description" content="参考: vue.js 官方文档 自定义组件 v-model 部分  vue 中的 v-modelvue 中 v-model 指令其实是一个语法糖，相当于将 input 标签的 value 属性值绑定到 val 属性，同时监听 input 标签的 input 事件，将输入内容赋值给 val 属性，实现了双向绑定 1234&amp;lt;input v-model=&quot;val&quot;&amp;gt;// 相当于&amp;lt;in">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 自定义组件 v-model">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/05/25/vue 自定义组件 v-model/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户">
+<meta property="og:description" content="参考: vue.js 官方文档 自定义组件 v-model 部分  vue 中的 v-modelvue 中 v-model 指令其实是一个语法糖，相当于将 input 标签的 value 属性值绑定到 val 属性，同时监听 input 标签的 input 事件，将输入内容赋值给 val 属性，实现了双向绑定 1234&amp;lt;input v-model=&quot;val&quot;&amp;gt;// 相当于&amp;lt;in">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-25T08:31:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jhgrrewq 前端小站">
-<meta name="twitter:description" content="爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户">
+<meta name="twitter:title" content="vue 自定义组件 v-model">
+<meta name="twitter:description" content="参考: vue.js 官方文档 自定义组件 v-model 部分  vue 中的 v-modelvue 中 v-model 指令其实是一个语法糖，相当于将 input 标签的 value 属性值绑定到 val 属性，同时监听 input 标签的 input 事件，将输入内容赋值给 val 属性，实现了双向绑定 1234&amp;lt;input v-model=&quot;val&quot;&amp;gt;// 相当于&amp;lt;in">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/tags/hexo/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/05/25/vue 自定义组件 v-model/"/>
 
 
 
 
 
-  <title>标签: hexo | jhgrrewq 前端小站</title>
+  <title>vue 自定义组件 v-model | jhgrrewq 前端小站</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,54 +267,158 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>hexo<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/25/vue 自定义组件 v-model/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/05/16/hexo 增加流程图解析/" itemprop="url">
-              
-                <span itemprop="name">hexo 增加流程图解析</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">vue 自定义组件 v-model</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-16T08:56:16+08:00"
-              content="2018-05-16" >
-          05-16
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T15:58:59+08:00">
+                2018-05-25
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="https://cn.vuejs.org/v2/guide/components-custom-events.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84-v-model" target="_blank" rel="noopener">vue.js 官方文档 自定义组件 v-model 部分</a></p>
+</blockquote>
+<h2 id="vue-中的-v-model"><a href="#vue-中的-v-model" class="headerlink" title="vue 中的 v-model"></a>vue 中的 v-model</h2><p>vue 中 v-model 指令其实是一个语法糖，相当于将 input 标签的 value 属性值绑定到 val 属性，同时监听 input 标签的 input 事件，将输入内容赋值给 val 属性，实现了双向绑定</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"val"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 相当于</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">"val"</span> @<span class="attr">input</span>=<span class="string">"val = $event.target.value"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="自定义组件-v-model"><a href="#自定义组件-v-model" class="headerlink" title="自定义组件 v-model"></a>自定义组件 v-model</h2><blockquote>
+<p>一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 特性用于不同的目的。model 选项可以用来避免这样的冲突</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">'custom-input'</span>, &#123;</span><br><span class="line">	model: &#123;</span><br><span class="line">		props: <span class="string">'checked'</span>,</span><br><span class="line">		event: <span class="string">'change'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	props: &#123;</span><br><span class="line">		checked: <span class="built_in">Boolean</span></span><br><span class="line">	&#125;,</span><br><span class="line">	template: <span class="string">`</span></span><br><span class="line"><span class="string">		&lt;input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)"&gt;</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">custom-input</span> <span class="attr">v-model</span>=<span class="string">"test"</span>&gt;</span><span class="tag">&lt;/<span class="name">custom-input</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>组件定义时要用 model 属性定义使用的 props 和 event，且要在 props 属性中声明 model 定义的 props 名</strong>，这里组件定义 model 会使用名为 checked 的 prop 和名为 change 的事件，因此 组件 v-model 绑定的变量 test 的值会被传入 checked 这个 prop， 同时触发 change 事件时候传递新的值的时候，test 属性会被更新</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/15/js 无限嵌套树状结构/" rel="next" title="js 无限嵌套树状结构">
+                <i class="fa fa-chevron-left"></i> js 无限嵌套树状结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -320,6 +426,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -340,8 +450,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -373,7 +492,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -406,6 +525,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-中的-v-model"><span class="nav-number">1.</span> <span class="nav-text">vue 中的 v-model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义组件-v-model"><span class="nav-number">2.</span> <span class="nav-text">自定义组件 v-model</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -539,6 +674,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -615,6 +754,5 @@
   
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.0/flowchart.min.js"></script>
 </body>
 </html>

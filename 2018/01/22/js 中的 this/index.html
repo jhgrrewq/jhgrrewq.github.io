@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-08T08:26:01.000Z">
+<meta property="og:updated_time" content="2018-05-16T15:37:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js 中的 this">
 <meta name="twitter:description" content="总原则: this 对象是在运行时基于函数的执行环境绑定的，谁调用 this 就指向谁。在全局函数中，this 指向 window（非严格模式），而函数作为某个对象的方法调用时候，this 指向那个对象，不过，匿名函数的执行环境具有全局性，this 对象通常指向 window。在通过 call apply bind 等方法改变函数执行环境的情况下， this 会指向其他对象。通过 new 一个构">
@@ -371,6 +371,7 @@
 <ul>
 <li><strong>使用 es6 箭头函数</strong></li>
 </ul>
+<p>– <strong>箭头函数本身没有自己的 this</strong><br>– <strong>内部 this 在函数声明时确定</strong><br>– <strong>内部 this 为外部代码块的 this，如果外层也是箭头函数，再往上层查找，this 绑定后就不再改变</strong><br>– <strong>箭头函数不可以做构造函数</strong><br>– <strong>箭头函数本身没有 arguments</strong><br>– <strong>如果箭头函数外层是函数，在函数调用时会把外部的 arguments 拿来</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    fn: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>) <span class="comment">// obj &#123;fn: function&#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        f()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.fn()</span><br></pre></td></tr></table></figure>
 <h2 id="隐式调用"><a href="#隐式调用" class="headerlink" title="隐式调用"></a>隐式调用</h2><p>隐式调用是说函数调用时拥有一个上下文对象，仿佛该函数属于这个对象</p>
 <h3 id="函数作为对象的一个属性，而且是作为对象的属性调用"><a href="#函数作为对象的一个属性，而且是作为对象的属性调用" class="headerlink" title="函数作为对象的一个属性，而且是作为对象的属性调用"></a>函数作为对象的一个属性，而且是作为对象的属性调用</h3><p><strong>this 为调用的最后一个对象（函数作为对象的一个属性，而且是作为对象属性调用）</strong></p>
@@ -529,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -791,6 +792,5 @@
   
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.0/flowchart.min.js"></script>
 </body>
 </html>

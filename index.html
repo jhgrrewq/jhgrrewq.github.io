@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/16/hexo 增加流程图解析/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/25/vue 自定义组件 v-model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/16/hexo 增加流程图解析/" itemprop="url">hexo 增加流程图解析</a></h1>
+                <a class="post-title-link" href="/2018/05/25/vue 自定义组件 v-model/" itemprop="url">vue 自定义组件 v-model</a></h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T08:56:16+08:00">
-                2018-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T15:58:59+08:00">
+                2018-05-25
               </time>
             
 
@@ -351,13 +351,13 @@
       
         
           <blockquote>
-<p>转载: <a href="http://wewelove.github.io/fcoder/2017/09/06/markdown-flowchart/" target="_blank" rel="noopener">为 Hexo 增加流程图解析功能</a></p>
+<p>参考: <a href="https://cn.vuejs.org/v2/guide/components-custom-events.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84-v-model" target="_blank" rel="noopener">vue.js 官方文档 自定义组件 v-model 部分</a></p>
 </blockquote>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装 <a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">hexo-filter-flowchart</a> 插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -S hexo-filter-flowchart</span><br></pre></td></tr></table></figure>
+<h2 id="vue-中的-v-model"><a href="#vue-中的-v-model" class="headerlink" title="vue 中的 v-model"></a>vue 中的 v-model</h2><p>vue 中 v-model 指令其实是一个语法糖，相当于将 input 标签的 value 属性值绑定到 val 属性，同时监听 input 标签的 input 事件，将输入内容赋值给 val 属性，实现了双向绑定</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"val"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 相当于</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">"val"</span> @<span class="attr">input</span>=<span class="string">"val = $event.target.value"</span>&gt;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/16/hexo 增加流程图解析/#more" rel="contents">
+            <a class="btn" href="/2018/05/25/vue 自定义组件 v-model/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -548,7 +548,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/14/vue-cli template 编写/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/05/14/vue-cli template 编写/" itemprop="url">vue-cli 3.0 初体验</a></h1>
         
 
         <div class="post-meta">
@@ -1579,7 +1579,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1821,6 +1821,5 @@
   
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.0/flowchart.min.js"></script>
 </body>
 </html>
