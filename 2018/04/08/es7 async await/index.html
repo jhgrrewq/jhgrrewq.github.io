@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接返回一个 promise 对象">
+<meta name="description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await  async / await 其实一种语法糖  async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接">
 <meta name="keywords" content="async &#x2F; await">
 <meta property="og:type" content="article">
 <meta property="og:title" content="es7 async &#x2F; await">
 <meta property="og:url" content="http://jhgrrewq.github.io/2018/04/08/es7 async await/index.html">
 <meta property="og:site_name" content="jhgrrewq 前端小站">
-<meta property="og:description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接返回一个 promise 对象">
+<meta property="og:description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await  async / await 其实一种语法糖  async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-23T01:27:21.000Z">
+<meta property="og:updated_time" content="2018-05-29T00:40:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es7 async &#x2F; await">
-<meta name="twitter:description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接返回一个 promise 对象">
+<meta name="twitter:description" content="处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await  async / await 其实一种语法糖  async 函数执行后会自动返回一个 promise 对象12let fn = async function() &amp;#123;&amp;#125;console.log(fn()) // async 函数里没有任何代码，执行后直接">
 
 
 
@@ -349,6 +349,9 @@
 
       
         <p>处理异步时候，除了使用异步回调，promise，generator 函数 + co，还可以使用最新的 async / await</p>
+<blockquote>
+<p>async / await 其实一种语法糖</p>
+</blockquote>
 <h2 id="async-函数执行后会自动返回一个-promise-对象"><a href="#async-函数执行后会自动返回一个-promise-对象" class="headerlink" title="async 函数执行后会自动返回一个 promise 对象"></a>async 函数执行后会自动返回一个 promise 对象</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fn = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn()) <span class="comment">// async 函数里没有任何代码，执行后直接返回一个 promise 对象</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="await-只能在-async-函数里使用"><a href="#await-只能在-async-函数里使用" class="headerlink" title="await 只能在 async 函数里使用"></a>await 只能在 async 函数里使用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="keyword">await</span> <span class="built_in">Promise</span>.resolve(<span class="string">'ok'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(result)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// await is only valid in async function</span></span><br><span class="line"></span><br><span class="line">fn = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="keyword">await</span> <span class="built_in">Promise</span>.resolve(<span class="string">'ok'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(result)</span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
@@ -489,7 +492,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -502,7 +505,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
