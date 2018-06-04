@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: 原生JS中DOM节点相关API合集  节点属性12345678910111213141516171819202122node.nodeName // 返回节点名称，只读node.nodeType // 返回节点类型的常数值，只读        // 1 代表 Element 元素结点        // 2 代表属性节点        // 3 代表 Text 文本节点        /">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js dom 节点相关 api">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/06/04/js dom 节点相关 api/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: 原生JS中DOM节点相关API合集  节点属性12345678910111213141516171819202122node.nodeName // 返回节点名称，只读node.nodeType // 返回节点类型的常数值，只读        // 1 代表 Element 元素结点        // 2 代表属性节点        // 3 代表 Text 文本节点        /">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-6-4/97931137.jpg">
+<meta property="og:updated_time" content="2018-06-04T13:44:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js dom 节点相关 api">
+<meta name="twitter:description" content="参考: 原生JS中DOM节点相关API合集  节点属性12345678910111213141516171819202122node.nodeName // 返回节点名称，只读node.nodeType // 返回节点类型的常数值，只读        // 1 代表 Element 元素结点        // 2 代表属性节点        // 3 代表 Text 文本节点        /">
+<meta name="twitter:image" content="http://ony85apla.bkt.clouddn.com/18-6-4/97931137.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/04/js dom 节点相关 api/"/>
+
+
+
+
+
+  <title>js dom 节点相关 api | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/04/js dom 节点相关 api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js dom 节点相关 api</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-04T15:30:50+08:00">
+                2018-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="https://microzz.com/2017/04/06/jsdom/" target="_blank" rel="noopener">原生JS中DOM节点相关API合集</a></p>
+</blockquote>
+<h2 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">node.nodeName <span class="comment">// 返回节点名称，只读</span></span><br><span class="line">node.nodeType <span class="comment">// 返回节点类型的常数值，只读</span></span><br><span class="line">        <span class="comment">// 1 代表 Element 元素结点</span></span><br><span class="line">        <span class="comment">// 2 代表属性节点</span></span><br><span class="line">        <span class="comment">// 3 代表 Text 文本节点</span></span><br><span class="line">        <span class="comment">// 8 代表Comment注释节点</span></span><br><span class="line">        <span class="comment">// 9 代表Document节点</span></span><br><span class="line">        <span class="comment">// 11 代表DocumentFragment文档片段节点</span></span><br><span class="line">node.nodeValue <span class="comment">// 返回 Text 或 Comment 节点的文本值，只读</span></span><br><span class="line">node.textContent <span class="comment">// 返回当前节点和后代所有节点的文本内容， 可读写</span></span><br><span class="line">node.baseURI <span class="comment">// 返回当前页面的绝对路径</span></span><br><span class="line">node.ownerDocument <span class="comment">// 返回当前节点所在顶层文档对象 document</span></span><br><span class="line"></span><br><span class="line">node.nextSibling <span class="comment">// 返回紧跟在当前节点后面的第一个兄弟节点</span></span><br><span class="line">node.previousSibling <span class="comment">// 返回当前节点前面距离最近的一个兄弟节点</span></span><br><span class="line">node.parentNode <span class="comment">// 返回当前节点的父节点</span></span><br><span class="line">node.childNodes <span class="comment">// 返回当前节点的全部子节点（只读的类数组，可能包含空白节点）</span></span><br><span class="line">node.firstChild <span class="comment">// 返回当前节点的第一个子节点</span></span><br><span class="line">node.lastChild <span class="comment">// 返回当前节点的最后一个子节点</span></span><br><span class="line">node.children <span class="comment">// 返回指定节点的全部 element 子节点（Text 节点或 Comment 节点没有 children 属性）</span></span><br><span class="line">node.firstElementChild <span class="comment">// 返回当前节点的第一个 element 子节点</span></span><br><span class="line">node.lastElementChild <span class="comment">// 返回当前节点的最后一个 element 子节点</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">node.appendChild(newNode) <span class="comment">// 向节点添加最后一个子节点</span></span><br><span class="line">node.hasChildNodes() <span class="comment">// 返回布尔值，表示当前节点是否有子节点</span></span><br><span class="line">node.cloneNode(<span class="literal">true</span>) <span class="comment">// 默认为 false（克隆节点），true(克隆节点和其属性以及后代)</span></span><br><span class="line">node.insertBefore(newNode, oldNode) <span class="comment">// 在指定子节点之前插入新的子节点</span></span><br><span class="line">node.removeChild(child) <span class="comment">// 删除子节点，必须在删除节点的父节点上操作</span></span><br><span class="line">node.replaceChild(newChild, oldChild) <span class="comment">// 替换节点</span></span><br><span class="line">node.contain(newNode) <span class="comment">// 返回一个布尔值，表示参数节点是否是当前节点的后代节点</span></span><br><span class="line">node.compareDocumentPosition(newNode) <span class="comment">// 返回一个 7 比特位的二进制值，表示参数节点和当前节点的关系</span></span><br><span class="line">node.isEqualNode(newNode) <span class="comment">// 返回布尔值，检查两个节点是否相等。两个节点相等就是节点的类型相同、属性相同、子节点相同</span></span><br><span class="line">node.normalize() <span class="comment">//用于清理当前节点内部全部 Text 节点。会去除空的文本节点并将毗邻的文本节点合并为一个</span></span><br><span class="line"></span><br><span class="line">node.remove() <span class="comment">// 用于删除当前节点</span></span><br></pre></td></tr></table></figure>
+<h2 id="Document-节点"><a href="#Document-节点" class="headerlink" title="Document 节点"></a>Document 节点</h2><h3 id="Document-节点属性"><a href="#Document-节点属性" class="headerlink" title="Document 节点属性"></a>Document 节点属性</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.doctype <span class="comment">// 返回文档 doctype</span></span><br><span class="line"><span class="built_in">document</span>.documentElement <span class="comment">// 返回当前文档的根节点</span></span><br><span class="line"><span class="built_in">document</span>.defaultView <span class="comment">// 返回 document 对象所在的 window 对象</span></span><br><span class="line"><span class="built_in">document</span>.body <span class="comment">// 返回当前文档的 body 节点</span></span><br><span class="line"><span class="built_in">document</span>.head <span class="comment">// 返回当前文档的 head 节点</span></span><br><span class="line"><span class="built_in">document</span>.activeElement <span class="comment">// 返回当前文档中获得焦点的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点集合属性</span></span><br><span class="line"><span class="built_in">document</span>.links <span class="comment">// 返回当前文档的全部 a 元素</span></span><br><span class="line"><span class="built_in">document</span>.forms <span class="comment">// 返回页面中全部表单元素</span></span><br><span class="line"><span class="built_in">document</span>.images <span class="comment">// 返回页面中全部图片元素</span></span><br><span class="line"><span class="built_in">document</span>.embeds <span class="comment">// 返回页面中全部嵌入对象</span></span><br><span class="line"><span class="built_in">document</span>.scripts <span class="comment">// 返回当前文档中所有脚本</span></span><br><span class="line"><span class="built_in">document</span>.styleSheets <span class="comment">// 返回当前网页的全部样式表</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 文档信息属性</span></span><br><span class="line"><span class="built_in">document</span>.documentURI <span class="comment">// 表示当前文档网址</span></span><br><span class="line"><span class="built_in">document</span>.URL <span class="comment">// 返回当前文档网址</span></span><br><span class="line"><span class="built_in">document</span>.domain <span class="comment">// 返回当前文档域名</span></span><br><span class="line"><span class="built_in">document</span>.lastModified <span class="comment">// 返回当前文档最后修改的时间戳</span></span><br><span class="line"><span class="built_in">document</span>.location <span class="comment">// 返回 location 对象，提供当前文档的 URL 信息</span></span><br><span class="line"><span class="built_in">document</span>.referrer <span class="comment">// 返回当前文档的访问来源</span></span><br><span class="line"><span class="built_in">document</span>.title <span class="comment">// 返回当前文档的标题</span></span><br><span class="line"><span class="built_in">document</span>.characterSet <span class="comment">// 返回渲染当前文档的字符集，如 UTF-8</span></span><br><span class="line"><span class="built_in">document</span>.readState <span class="comment">// 返回当前文档的状态</span></span><br><span class="line"><span class="built_in">document</span>.desigeMode <span class="comment">// 控制当前文档是否可编辑，可读写</span></span><br><span class="line"><span class="built_in">document</span>.compatMode <span class="comment">// 返回浏览器处理文档的模式</span></span><br><span class="line"><span class="built_in">document</span>.cookie <span class="comment">// 用来操作 cookie</span></span><br></pre></td></tr></table></figure>
+<h3 id="document-节点方法"><a href="#document-节点方法" class="headerlink" title="document 节点方法"></a>document 节点方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读写方法</span></span><br><span class="line"><span class="built_in">document</span>.open() <span class="comment">// 新建并打开一个文档</span></span><br><span class="line"><span class="built_in">document</span>.write() <span class="comment">// 向当前文档写入内容</span></span><br><span class="line"><span class="built_in">document</span>.writeIn() <span class="comment">// 向当前文档写入内容，尾部添加换行符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找结点</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(selectors) <span class="comment">// 接受一个 css 选择器作为参数，返回第一个匹配该选择器的元素结点</span></span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(selectors) <span class="comment">// 接受一个 css 选择器作为参数，返回所有匹配该选择器的元素结点</span></span><br><span class="line"><span class="built_in">document</span>.getElementsByTagName(tagName) <span class="comment">// 返回指定 html 标签的元素</span></span><br><span class="line"><span class="built_in">document</span>.getElementsByClassName(className) <span class="comment">// 返回包含所有 class 符合指定条件的元素</span></span><br><span class="line"><span class="built_in">document</span>.getElementsByName(name) <span class="comment">// 选择拥有 name 属性的 HTML 元素（如 &lt;form&gt; &lt;radio&gt; &lt;img&gt; &lt;frame&gt; &lt;embed&gt; &lt;object&gt;）</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(id) <span class="comment">// 返回匹配指定 id 属性的元素节点</span></span><br><span class="line"><span class="built_in">document</span>.elementFromPoint(x, y) <span class="comment">// 返回位于页面指定位置最上层的 element 子节点</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成节点</span></span><br><span class="line"><span class="built_in">document</span>.createElement(tagName) <span class="comment">// 生成 html 元素节点</span></span><br><span class="line"><span class="built_in">document</span>.createTextNode(text) <span class="comment">// 生成文本节点</span></span><br><span class="line"><span class="built_in">document</span>.createAttribute(name) <span class="comment">// 申城一个新的属性对象节点，并返回它</span></span><br><span class="line"><span class="built_in">document</span>.createDocumentFragment() <span class="comment">// 生成一个 DocumentFragment 对象</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.createEvent(event) <span class="comment">// 生成一个事件对象，该对象能被 element.dispatchEvent() 方法使用</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(type, listener, capture) <span class="comment">// 注册事件</span></span><br><span class="line"><span class="built_in">document</span>.removeEventListener(type, listener, capture) <span class="comment">// 注销事件</span></span><br><span class="line"><span class="built_in">document</span>.dispatchEvent(event) <span class="comment">// 触发事件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.hasFocus() <span class="comment">// 返回一个布尔值，表示当前文档中是否有元素被激活</span></span><br><span class="line"><span class="built_in">document</span>.adoptNode(externalNode) <span class="comment">// 将某个节点从原来所在文档中移除，插入当前文档，并返回插入后的新节点</span></span><br><span class="line"><span class="built_in">document</span>.importNode(externalNode, deep) <span class="comment">// 件外部文档拷贝指定节点，插入当前文档</span></span><br></pre></td></tr></table></figure>
+<h2 id="Element-节点"><a href="#Element-节点" class="headerlink" title="Element 节点"></a>Element 节点</h2><h3 id="Element-节点属性"><a href="#Element-节点属性" class="headerlink" title="Element 节点属性"></a>Element 节点属性</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 特性属性</span></span><br><span class="line">element.attributes <span class="comment">// 返回当前元素结点的所有属性节点</span></span><br><span class="line">element.id <span class="comment">// 返回指定元素的 id 属性，可读写</span></span><br><span class="line">element.tagName <span class="comment">// 返回指定元素的大写标签名</span></span><br><span class="line">element.innerHTML <span class="comment">// 返回该元素包含的 html 代码，可读写</span></span><br><span class="line">element.outerHTML <span class="comment">// 返回指定元素结点的所有 html 代码，包括自身和包含的所有子元素，可读写</span></span><br><span class="line">element.className <span class="comment">// 返回当前元素的 class 属性，可读写</span></span><br><span class="line">element.classList <span class="comment">// 返回当前元素节点的所有 class 集合</span></span><br><span class="line">element.dataset <span class="comment">// 返回元素节点中所有 data-* 属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 尺寸属性</span></span><br><span class="line">element.clientWidth <span class="comment">// 返回元素结点可见部分的宽度(含 padding，不含 border margin 滚动条)</span></span><br><span class="line">element.clientHeight <span class="comment">// 返回元素结点可见部分的高度(含 padding，不含 border margin 滚动条)</span></span><br><span class="line">element.clientTop <span class="comment">// 返回元素结点距左边框的宽度</span></span><br><span class="line">element.clientLeft <span class="comment">// 返回元素结点距顶部边框的高度</span></span><br><span class="line">element.offsetWidth <span class="comment">// 返回元素的水平宽度（包括 padding border）</span></span><br><span class="line">element.offsetHeight <span class="comment">// 返回元素的垂直高度（包括 padding border）</span></span><br><span class="line">element.offsetLeft <span class="comment">// 返回当前元素左上角相对 element.offsetParent 节点的水平偏移（包括 padding border 滚动条）</span></span><br><span class="line">element.offsetTop <span class="comment">// 返回当前元素左上角相对 element.offsetParent 节点的垂直偏移（包括 padding border 滚动条）</span></span><br><span class="line">element.scrollWidth <span class="comment">// 返回元素结点的总高度（包括看不见的部分 滚动的部分）</span></span><br><span class="line">element.scrollWidth <span class="comment">// 返回元素结点的总宽度（包括看不见的部分 滚动的部分）</span></span><br><span class="line">element.scrollWidth <span class="comment">// 返回元素结点的水平滚动条向右滚动的像素数值，通过设置该属性可以改变元素的滚动位置</span></span><br><span class="line">element.scrollWidth <span class="comment">// 返回元素节点垂直滚动向下滚动的像素数值</span></span><br><span class="line">element.style <span class="comment">// 返回元素节点的行内样式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点相关属性</span></span><br><span class="line">element.children <span class="comment">// 当前元素节点的左右子元素</span></span><br><span class="line">element.childElementCount <span class="comment">// 返回当前元素节点包含的子 html 元素节点的个数</span></span><br><span class="line">element.firstElementChild <span class="comment">// 返回当前节点的第一个 element 子节点</span></span><br><span class="line">element.lastElementChild <span class="comment">// 返回当前节点的最后一个 element 子节点</span></span><br><span class="line">element.nextElementSibling <span class="comment">// 返回当前元素节点的下一个兄弟 HTML 元素节点</span></span><br><span class="line">element.previousElementSibling <span class="comment">// 返回当前元素节点的前一个兄弟 HTML 元素节点</span></span><br><span class="line">element.offsetParent <span class="comment">// 返回当前元素节点最靠近的，并且 css 的 position 属性不等于 static 的父元素</span></span><br></pre></td></tr></table></figure>
+<h3 id="Element-节点方法"><a href="#Element-节点方法" class="headerlink" title="Element 节点方法"></a>Element 节点方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 位置方法</span></span><br><span class="line">element.getBoundingClientRect() <span class="comment">// 返回一个对象，包含 top、left、right、bottom、width、height</span></span><br><span class="line">    <span class="comment">// top 元素(不包括 margin)上边界距离视口原点的距离</span></span><br><span class="line">    <span class="comment">// left 元素(不包括 margin)左外边界距离视口原点的距离</span></span><br><span class="line">    <span class="comment">// right 元素(不包括 margin)右外边界距离视口原点的距离</span></span><br><span class="line">    <span class="comment">// bottom 元素(不包括 margin)下边界距离视口原点的距离</span></span><br><span class="line">    <span class="comment">// width 元素自身宽度（包含 border padding 滚动部分）</span></span><br><span class="line">    <span class="comment">// height 元素自身高度（包含 border padding 滚动部分）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//属性方法</span></span><br><span class="line">element.getAttribute(name) <span class="comment">// 读取指定属性</span></span><br><span class="line">element.setAttribute(name, value) <span class="comment">// 设置指定属性</span></span><br><span class="line">element.hasAttribute(name) <span class="comment">// 返回一个布尔值，表示当前元素结点</span></span><br><span class="line">element.removeAttribute(name) <span class="comment">// 移除指定属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找方法</span></span><br><span class="line">element.querySelector()</span><br><span class="line">element.querySelectorAll()</span><br><span class="line">element.querySelectorByTagName()</span><br><span class="line">element.querySelectorByClassName()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件方法</span></span><br><span class="line">element.addEventListener()</span><br><span class="line">element.removeEventListener()</span><br><span class="line">element.dispatchEvent()</span><br><span class="line">element.attachEvent(oneventName, listener) <span class="comment">// ie8 及以下</span></span><br><span class="line">element.detachEvent(oneventName, listener) <span class="comment">// ie8 及以下</span></span><br><span class="line"></span><br><span class="line">element.scrollInteView() <span class="comment">// 滚动当前元素，进入浏览器可见区域</span></span><br><span class="line"></span><br><span class="line">element.insertAdjacentHTML(where, htmlString) <span class="comment">// 解析 html 字符串，然后将生成的节点插入到 dom 树的指定位置</span></span><br><span class="line">element.insertAdjacentHTML(<span class="string">'beforeBegin'</span>, htmlString) <span class="comment">// 在该元素前插入</span></span><br><span class="line">element.insertAdjacentHTML(<span class="string">'afterBegin'</span>, htmlString) <span class="comment">// 在该元素的第一个子元素前插入</span></span><br><span class="line">element.insertAdjacentHTML(<span class="string">'beforeEnd'</span>, htmlString) <span class="comment">// 在该元素最后一个子元素后面插入</span></span><br><span class="line">element.insertAdjacentHTML(<span class="string">'afterEnd'</span>, htmlString) <span class="comment">// 在该元素后插入</span></span><br><span class="line"></span><br><span class="line">element.remove() <span class="comment">// 将当前元素节点从 dom 中移除</span></span><br><span class="line">element.focus() <span class="comment">// 将当前页面焦点转移到指定元素上</span></span><br></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="document-createDocumentFragment"><a href="#document-createDocumentFragment" class="headerlink" title="document.createDocumentFragment()"></a>document.createDocumentFragment()</h3><ul>
+<li>DocumentFragment 是独立的，不属于任何其他文档，其 parentNode 为 null</li>
+<li>有任意多个子节点，<strong>可通过 <code>appendChild()</code> <code>insertBefore()</code> 等方法传递一个 DocumentFragment 时，文档片段子节点会从片段移动到文档中，文档片段清空</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.querySelector(selector)</span><br><span class="line"><span class="keyword">var</span> child = el.firstChild</span><br><span class="line"><span class="keyword">while</span>(child) &#123;</span><br><span class="line">  fragment.appendChild(child)</span><br><span class="line">  child = el.firstChild</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="document-createAttribute-name"><a href="#document-createAttribute-name" class="headerlink" title="document.createAttribute(name)"></a>document.createAttribute(name)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)</span><br><span class="line"><span class="keyword">var</span> attr = <span class="built_in">document</span>.createAttribute(<span class="string">'class'</span>)</span><br><span class="line">attr.value = <span class="string">'newClass'</span></span><br><span class="line">node.setAttributeNode(attr)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>node.setAttributeNode(node)</code> 设置或更新当前元素属性为指定的属性节点</li>
+<li><code>node.setAttribute(attribute,attributeValue)</code> 设定具有指定名称的属性值</li>
+<li><code>node.getAttributeNode(node)</code> 返回当前元素属性为指定的属性节点</li>
+<li><code>node.getAttribute(attribute)</code> 返回具有指定名称的属性值</li>
+</ul>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-4/97931137.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/04/js 事件/" rel="next" title="js 事件">
+                <i class="fa fa-chevron-left"></i> js 事件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#节点属性"><span class="nav-number">1.</span> <span class="nav-text">节点属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Document-节点"><span class="nav-number">3.</span> <span class="nav-text">Document 节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Document-节点属性"><span class="nav-number">3.1.</span> <span class="nav-text">Document 节点属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#document-节点方法"><span class="nav-number">3.2.</span> <span class="nav-text">document 节点方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Element-节点"><span class="nav-number">4.</span> <span class="nav-text">Element 节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Element-节点属性"><span class="nav-number">4.1.</span> <span class="nav-text">Element 节点属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element-节点方法"><span class="nav-number">4.2.</span> <span class="nav-text">Element 节点方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#document-createDocumentFragment"><span class="nav-number">5.1.</span> <span class="nav-text">document.createDocumentFragment()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#document-createAttribute-name"><span class="nav-number">5.2.</span> <span class="nav-text">document.createAttribute(name)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
