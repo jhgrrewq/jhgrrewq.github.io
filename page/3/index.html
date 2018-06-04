@@ -280,6 +280,133 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/02/js 事件循环/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/02/js 事件循环/" itemprop="url">js 事件循环</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T14:49:45+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
+<h2 id="同步-异步-（关注消息通信机制）"><a href="#同步-异步-（关注消息通信机制）" class="headerlink" title="同步 异步 （关注消息通信机制）"></a>同步 异步 （关注消息通信机制）</h2><p>同步是<strong>指发出一个“调用”时候，在没有的结果的时候，该“调用”就不返回。但是一旦返回就得到了返回值</strong>。这是由“调用者”主动等待这个“调用结果”</p>
+<p>异步是<strong>在“调用”发出后就立即返回。当一个异步过程调用发出后，调用者不会立即得到结果。而是在“调用”发出后，“被调用者”通过状态、通知来通知调用者，或通过回调函数处理这个调用</strong></p>
+<p>同步和异步的区别在于关注消息通信机制，同步会等待最终的调用结果，异步不会返回调用结果，而是之后通过事件、通知等来通知调用者</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/02/js 事件循环/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/virtual DOM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -860,7 +987,7 @@
 <h2 id="判断字符串回文"><a href="#判断字符串回文" class="headerlink" title="判断字符串回文"></a>判断字符串回文</h2><h3 id="字符串变成数组倒序比较"><a href="#字符串变成数组倒序比较" class="headerlink" title="字符串变成数组倒序比较"></a>字符串变成数组倒序比较</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">plalindrome</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> reStr = str.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>)</span><br><span class="line">	<span class="keyword">return</span> reStr === str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(plalindrome(<span class="string">'asdfdsa'</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(plalindrome(<span class="string">'asdf'</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 <h3 id="reduceRight"><a href="#reduceRight" class="headerlink" title="reduceRight"></a>reduceRight</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">plalindrome</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> arr = str.split(<span class="string">''</span>)</span><br><span class="line">	<span class="keyword">let</span> reStr = arr.reduceRight(<span class="function">(<span class="params">prev, cur</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> prev + cur</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> reStr === str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(plalindrome(<span class="string">'asdfdsa'</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(plalindrome(<span class="string">'asdf'</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 <h3 id="利用栈"><a href="#利用栈" class="headerlink" title="利用栈"></a>利用栈</h3><p>将字符串依次入栈，再一次出栈组成新的字符串（逆序的字符串），最后再比较</p>
-<h2 id="字符串出现最多元素"><a href="#字符串出现最多元素" class="headerlink" title="字符串出现最多元素"></a>字符串出现最多元素</h2><h2 id="字符串中单词首字母大写"><a href="#字符串中单词首字母大写" class="headerlink" title="字符串中单词首字母大写"></a>字符串中单词首字母大写</h2><h3 id="for-map-replace"><a href="#for-map-replace" class="headerlink" title="for / map + replace"></a>for / map + replace</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">titleCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> convertArr = str.split(<span class="string">' '</span>)</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; convertArr.length; i++) &#123;</span><br><span class="line">		convertArr[i] = convertArr[i].replace(convertArr[i].charAt(<span class="number">0</span>), convertArr[i].charAt(<span class="number">0</span>).toUpperCase())</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> convertArr.join(<span class="string">' '</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(titleCase(<span class="string">'adfa Asd'</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="字符串中单词首字母大写"><a href="#字符串中单词首字母大写" class="headerlink" title="字符串中单词首字母大写"></a>字符串中单词首字母大写</h2><h3 id="for-map-replace"><a href="#for-map-replace" class="headerlink" title="for / map + replace"></a>for / map + replace</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">titleCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> convertArr = str.split(<span class="string">' '</span>)</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; convertArr.length; i++) &#123;</span><br><span class="line">		convertArr[i] = convertArr[i].replace(convertArr[i].charAt(<span class="number">0</span>), convertArr[i].charAt(<span class="number">0</span>).toUpperCase())</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> convertArr.join(<span class="string">' '</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(titleCase(<span class="string">'adfa Asd'</span>))</span><br></pre></td></tr></table></figure>
 <h3 id="map-slice"><a href="#map-slice" class="headerlink" title="map + slice"></a>map + slice</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">titleCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> str.split(<span class="string">' '</span>).map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> item.charAt(<span class="number">0</span>).toUpperCase() + item.slice(<span class="number">1</span>)</span><br><span class="line">	&#125;).join(<span class="string">' '</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(titleCase(<span class="string">'adfa Asd'</span>))</span><br></pre></td></tr></table></figure>
 <h3 id="正则匹配替换"><a href="#正则匹配替换" class="headerlink" title="正则匹配替换"></a>正则匹配替换</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 每次匹配一个单词</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">titleCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> str.replace(<span class="regexp">/\w\S*/g</span>, item =&gt; &#123;</span><br><span class="line">		<span class="keyword">return</span> item.charAt(<span class="number">0</span>).toUpperCase() + item.slice(<span class="number">1</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者匹配出最开始出现的首字母和每个单词的首字母</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">titleCase</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> str.replace(<span class="regexp">/( |^)\w/g</span>, item =&gt; &#123;</span><br><span class="line">		<span class="keyword">return</span> item.toUpperCase()</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(titleCase(<span class="string">'adfa Asd'</span>))</span><br></pre></td></tr></table></figure>
 <h2 id="字符串中长度最长单词输出并输出长度"><a href="#字符串中长度最长单词输出并输出长度" class="headerlink" title="字符串中长度最长单词输出并输出长度"></a>字符串中长度最长单词输出并输出长度</h2><h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">longest</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> arr = str.split(<span class="string">' '</span>)</span><br><span class="line">	<span class="keyword">let</span> longNum = <span class="number">0</span></span><br><span class="line">	<span class="keyword">let</span> longer = arr[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[i].length &gt; longNum) &#123;</span><br><span class="line">			longNum = arr[i].length</span><br><span class="line">			longer = arr[i]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> [longer, longNum]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(longest(<span class="string">'asd dffsdf sdffffff'</span>)) <span class="comment">// ["sdffffff", 8]</span></span><br></pre></td></tr></table></figure>
@@ -1477,134 +1604,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/15/js new 的原理和模拟实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/15/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:51:34+08:00">
-                2018-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: JavaScript 高级程序设计（第 3 版）</p>
-</blockquote>
-<!-- markdownlint-disable MD010 -->
-<h2 id="new-一个对象的原理"><a href="#new-一个对象的原理" class="headerlink" title="new 一个对象的原理"></a>new 一个对象的原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name</span><br><span class="line">	<span class="keyword">this</span>.age = age</span><br><span class="line">	<span class="keyword">this</span>.job = job</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'jack'</span>, <span class="number">20</span>, <span class="string">'Teacher'</span>)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/15/js new 的原理和模拟实现/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1659,7 +1658,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

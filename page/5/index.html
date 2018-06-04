@@ -280,6 +280,139 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/26/webpack loader 编写/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/26/webpack loader 编写/" itemprop="url">webpack loader 编写</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T11:13:57+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>编写的 webpack 扩展如果是想对一个个单独文件进行转换就编写 loader，否则编写 plugin</p>
+</blockquote>
+<ul>
+<li><p><strong>一个 loader 的职责是单一的，只需要完成一种转换</strong> 如果一个源文件需要进行经过多种转换才能正常使用，就通过多个 loader 转换。调用多个 loader 转换一个文件时，每个 loader 会链式顺序执行，第一个 loader 将会拿到需要处理的原内容，上一个 loader 处理后的结果会传给下一个接着处理，最后的 loader 将处理后的最终结果返回给 webpack</p>
+</li>
+<li><p>开发 loader 时请保持其职责的单一性，只需关心输入和输出</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/26/webpack loader 编写/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/02/03/js call apply bind/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1415,140 +1548,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/20/axios 登录拦截/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/20/axios 登录拦截/" itemprop="url">axios 登录拦截</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T23:17:20+08:00">
-                2018-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>项目地址：<a href="https://github.com/jhgrrewq/vue-login.git" target="_blank" rel="noopener">https://github.com/jhgrrewq/vue-login.git</a></p>
-</blockquote>
-<p>该项目是利用了 github 的 personal token 来替代 用户名密码 访问 github 的仓库列表</p>
-<ul>
-<li><p>需要先在 github <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">生成 token</a></p>
-</li>
-<li><p>之后可以通过 <strong>设置请求 header 中的 Authorization 字段</strong> 发起请求</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求用户的仓库列表</span></span><br><span class="line">curl -v -H <span class="string">"Authorization: token TOKEN"</span> https:<span class="comment">//api.github.com/user/repos</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/20/axios 登录拦截/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1603,7 +1602,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
