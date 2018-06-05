@@ -280,6 +280,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/05/webpack require 的几种用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/05/webpack require 的几种用法/" itemprop="url">webpack require 的几种用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T22:25:11+08:00">
+                2018-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="commonJS-同步加载"><a href="#commonJS-同步加载" class="headerlink" title="commonJS 同步加载"></a>commonJS 同步加载</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'../utils/a.js'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br></pre></td></tr></table></figure>
+<p>commonJS require 引入的模块是同步引入，模块会被打包到引入它的文件中</p>
+<h2 id="commonJS-异步加载"><a href="#commonJS-异步加载" class="headerlink" title="commonJS 异步加载"></a>commonJS 异步加载</h2><p>webpack 中的 <code>require.ensure</code> 能实现代码切割，并将<strong>依赖的模块全部打包到另外一个文件</strong>，并<strong>异步加载</strong>分块的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'start'</span>)</span><br><span class="line"><span class="built_in">require</span>.ensure([], <span class="function"><span class="keyword">function</span>(<span class="params">require</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 多个依赖的模块的打包到单独的一个文件中</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'../utils/a.js'</span>)</span><br><span class="line">  <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'../utils/b.js'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'require'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br><span class="line"><span class="comment">// start end require 异步加载</span></span><br></pre></td></tr></table></figure>
+<h2 id="commonJS-预加载懒执行"><a href="#commonJS-预加载懒执行" class="headerlink" title="commonJS 预加载懒执行"></a>commonJS 预加载懒执行</h2><p>不同于上面的方法中依赖传入空数组，下面的写法唯一的区别在于一开始模块只是加载并没有执行，真正执行是 <code>require(&#39;../utils/a.js&#39;)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.ensure([<span class="string">'../utils/a.js'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a)</span><br><span class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'../utils/a.js'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="AMD-异步加载"><a href="#AMD-异步加载" class="headerlink" title="AMD 异步加载"></a>AMD 异步加载</h2><p>webpack 同样支持 AMD 写法，同样是将<strong>依赖的模块全部打包到另外一个文件</strong>，并<strong>异步加载</strong>分块的代码，可以认为是 <code>require.ensure</code> 的 AMD 写法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'start'</span>)</span><br><span class="line"><span class="built_in">require</span>([<span class="string">'../utils/a.js'</span>,<span class="string">'../utils/b.js'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 多个依赖的模块的打包到单独的一个文件中</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'require'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/04/js dom 节点相关 api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1408,132 +1534,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/30/js 数据结构和算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/30/js 数据结构和算法/" itemprop="url">js 数据结构和算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T10:31:58+08:00">
-                2018-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（二）——链表</a>、<a href="https://github.com/wengjq/Blog/issues/5" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/6" target="_blank" rel="noopener">javaScript的数据结构与算法（三）——集合 数据结构与算法</a>、<a href="https://github.com/wengjq/Blog/issues/7" target="_blank" rel="noopener">javaScript的数据结构与算法（四）——字典和散列表</a>、<a href="https://github.com/wengjq/Blog/issues/8" target="_blank" rel="noopener">javaScript的数据结构与算法（五）——树</a>、<a href="https://github.com/wengjq/Blog/issues/9" target="_blank" rel="noopener">javaScript的数据结构与算法（六）——图</a></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/30/js 数据结构和算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1588,7 +1588,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
