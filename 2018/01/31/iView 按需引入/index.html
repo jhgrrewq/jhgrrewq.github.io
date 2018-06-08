@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="iView 一般直接使用在入口文件中配置 12345import iView from &apos;iview&apos;import &apos;iview/dist/styles/iview.css&apos;     //iview cssimport &apos;src/assets/css/iview-theme.less&apos; //自定义主题Vue.use(iView)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T11:35:10.000Z">
+<meta property="og:updated_time" content="2018-06-08T01:14:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iView 按需引入">
 <meta name="twitter:description" content="iView 一般直接使用在入口文件中配置 12345import iView from &apos;iview&apos;import &apos;iview/dist/styles/iview.css&apos;     //iview cssimport &apos;src/assets/css/iview-theme.less&apos; //自定义主题Vue.use(iView)">
@@ -357,7 +357,6 @@
 <h3 id="按需引入组件"><a href="#按需引入组件" class="headerlink" title="按需引入组件"></a>按需引入组件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如在入口文件中</span></span><br><span class="line"><span class="keyword">import</span> &#123; BackTop &#125; <span class="keyword">from</span> <span class="string">'iview'</span></span><br><span class="line">Vue.component(<span class="string">'BackTop'</span>, BackTop)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中 用法和引用自定义组件相同</span></span><br><span class="line"><span class="keyword">import</span> &#123; BackTop &#125; <span class="keyword">from</span> <span class="string">'iview'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    components: &#123;</span><br><span class="line">        BackTop</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="打包编译"><a href="#打包编译" class="headerlink" title="打包编译"></a>打包编译</h3><p>如果没有在 webpack 的 modules 中对 loader 进行配置，生产环境打包 ‘iview/src’ 目录下 js 文件会出现错误 “ERROR in xxx.js from UglifyJs”</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.base.conf.js</span></span><br><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/iview.src.*?js$/</span>,</span><br><span class="line">    loader: <span class="string">'babel-loader'</span>  <span class="comment">// 使用 babel-loader</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
       
     </div>
     
