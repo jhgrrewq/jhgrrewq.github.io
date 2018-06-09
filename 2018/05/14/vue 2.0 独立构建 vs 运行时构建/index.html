@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="参考: Vue.js 官网 对不同构建版本解释、从一个奇怪的错误出发理解 Vue 基本概念  基础知识在 NPM 包的 dist/ 目录下有多个 Vue.js 构建版本     UMD CommonJS ES Module     完整版 vue.js vue.common.js vue.esm.js   只含运行时版 vue.runtime.js vue.runtime.common.js">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-09T08:03:10.000Z">
+<meta property="og:updated_time" content="2018-06-09T08:11:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 2.0 独立构建 vs 运行时构建">
 <meta name="twitter:description" content="参考: Vue.js 官网 对不同构建版本解释、从一个奇怪的错误出发理解 Vue 基本概念  基础知识在 NPM 包的 dist/ 目录下有多个 Vue.js 构建版本     UMD CommonJS ES Module     完整版 vue.js vue.common.js vue.esm.js   只含运行时版 vue.runtime.js vue.runtime.common.js">
@@ -412,7 +412,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	resolve: &#123;</span><br><span class="line">		extensions: [<span class="string">'.js'</span>, <span class="string">'.vue'</span>],</span><br><span class="line">		alias: &#123;</span><br><span class="line">			<span class="comment">// 精确匹配</span></span><br><span class="line">			<span class="string">'vue$'</span>: <span class="string">'vue/dist/vue.common.js'</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>解决上面 webpack 项目中的问题需要在 webpack 配置中 <code>resolve</code> 属性添加 <code>alias</code> 设置</p>
 <h2 id="vue-选项对象中-el-属性、template-属性和-render-渲染函数-（需要渲染-dom）"><a href="#vue-选项对象中-el-属性、template-属性和-render-渲染函数-（需要渲染-dom）" class="headerlink" title="vue 选项对象中 el 属性、template 属性和 render 渲染函数 （需要渲染 dom）"></a>vue 选项对象中 el 属性、template 属性和 render 渲染函数 （需要渲染 dom）</h2><blockquote>
-<p>当 Vue 选项对象中有 render 渲染函数，Vue 构造函数会直接使用渲染函数渲染 dom （忽略 template 属性和 el 属性）；当选项对象中没有 render 渲染函数时，Vue 构造函数首先将 remplate 模板编译成渲染函数，然后在渲染 dom；而当 Vue 想象中既没有 render 渲染函数，又没有 template 模板，会通过 el 属性获取挂载元素的 outerHTML 作为模板，并编译生成函数</p>
+<p>当 Vue 选项对象中有 render 渲染函数，Vue 构造函数会直接使用渲染函数渲染 dom （忽略 template 属性和 el 属性）；当选项对象中没有 render 渲染函数时，Vue 构造函数首先将 template 模板编译成渲染函数，然后在渲染 dom；而当 Vue 实例选项中既没有 render 渲染函数，又没有 template 模板，会通过 el 属性获取挂载元素的 outerHTML 作为模板，并编译生成函数</p>
 </blockquote>
 <ul>
 <li>总之，渲染 dom 时，render 渲染函数优先级最高，template 次之并且需编译成渲染函数，而挂载点 el 属性对应元素存在并且前两者都不存在，其 outerHTML 才会用于编译并渲染</li>
