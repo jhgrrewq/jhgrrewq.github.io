@@ -351,7 +351,7 @@
       
         
           <blockquote>
-<p>参考: <a href="https://github.com/tsy77/blog/issues/1" target="_blank" rel="noopener">Vue全家桶实现原理简要梳理</a>、<a href="https://github.com/DDFE/DDFE-blog/issues/18" target="_blank" rel="noopener">Vue 2.0 的 virtual-dom 实现简析</a>、<a href="http://developer.51cto.com/art/201707/545802.htm" target="_blank" rel="noopener">深入Vue2.0底层思想–模板渲染</a>、<a href="https://ustbhuangyi.github.io/vue-analysis" target="_blank" rel="noopener">Vue.js 技术揭秘</a>、<a href="https://juejin.im/post/59c7b25a5188257a125d7a98#heading-4" target="_blank" rel="noopener">从Vue.js源码看异步更新DOM策略及nextTick</a></p>
+<p>参考: <a href="https://github.com/tsy77/blog/issues/1" target="_blank" rel="noopener">Vue全家桶实现原理简要梳理</a>、<a href="https://github.com/DDFE/DDFE-blog/issues/18" target="_blank" rel="noopener">Vue 2.0 的 virtual-dom 实现简析</a>、<a href="http://developer.51cto.com/art/201707/545802.htm" target="_blank" rel="noopener">深入Vue2.0底层思想–模板渲染</a>、<a href="https://ustbhuangyi.github.io/vue-analysis" target="_blank" rel="noopener">Vue.js 技术揭秘</a>、<a href="https://juejin.im/post/59c7b25a5188257a125d7a98#heading-4" target="_blank" rel="noopener">从Vue.js源码看异步更新DOM策略及nextTick</a>、<a href="https://github.com/DDFE/DDFE-blog/issues/18" target="_blank" rel="noopener">Vue 2.0 的 virtual-dom 实现简析</a></p>
 </blockquote>
 <p>本文 <a href="mailto:vue@2.0.0" target="_blank" rel="noopener">vue@2.0.0</a></p>
 <h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">├── compiler/               <span class="comment">// 解析 template，生成 render 函数和 ast</span></span><br><span class="line">│   ├── codegen/                    <span class="comment">// 根据 ast 生成 render 函数</span></span><br><span class="line">│   ├── directives/                 <span class="comment">// 解析 ast 中指令，生成对应 render 函数</span></span><br><span class="line">│   └── parser/                     <span class="comment">// 正则遍历 template 字符串，通过栈记录元素关系，生成 ast</span></span><br><span class="line">├── core                    <span class="comment">// Vue 实例相关，vue 源码核心</span></span><br><span class="line">│   ├── components/                 <span class="comment">// 通用组件，keep-alive 组件</span></span><br><span class="line">│   ├── global-api/                 <span class="comment">// 注册 Vue 构造函数上的静态方法，如 Vue.install、Vue.set...</span></span><br><span class="line">│   ├── instance/                   <span class="comment">// 注册 Vue.prototype，以及构造函数</span></span><br><span class="line">│   ├── observer/                   <span class="comment">// 数据双向绑定相关，主要有 watcher observer dep</span></span><br><span class="line">│   ├── util/                       <span class="comment">// 工具</span></span><br><span class="line">│   └── vdom/                       <span class="comment">// vnode 相关，包含 createVnode， patchNode 等</span></span><br><span class="line">├── platforms               <span class="comment">// core 基础上扩展</span></span><br><span class="line">│   └── web/                        <span class="comment">// 将 core 中代码包装成 web 平台所需要的方法，如 Vue.prototype.$mount 实际包装了 core 中的 $mount</span></span><br><span class="line">│       ├── compiler/</span><br><span class="line">│       ├── runtime/</span><br><span class="line">│       ├── server/</span><br><span class="line">│       └── util/</span><br><span class="line">├── server/                 <span class="comment">// ssr 相关，执行 Vue 代码，生成 Vue 实例；输出流或字符串，传递给 renderNode，renderNode 通过 vnode 生成各种 HTML 标签</span></span><br><span class="line">├── sfc</span><br><span class="line">│   └── parser.js</span><br><span class="line">└── shared                  <span class="comment">// 上述公共工具</span></span><br><span class="line">    └── util.js</span><br></pre></td></tr></table></figure>
@@ -973,130 +973,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/09/vue 2.0 源码学习——模板渲染/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/09/vue 2.0 源码学习——模板渲染/" itemprop="url">vue 2.0 源码学习--模板渲染</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T18:07:20+08:00">
-                2018-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>vue 1.0 模板渲染采用 <code>DocumentFragment</code>, vue 2.0 借鉴了 react 的 virtual dom，对 template 的编译首先转化为 AST 树，再得到 render 函数返回 VNode (vue 中的 virtual dom)</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/09/vue 2.0 源码学习——模板渲染/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/07/js 常见排序实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1601,6 +1477,134 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/04/js 继承的多种方式和优缺点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/04/js 继承的多种方式和优缺点/" itemprop="url">js 继承的多种方式和优缺点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-04T09:56:23+08:00">
+                2018-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="">javascript 高级程序设计第三版</a>、<a href="https://github.com/mqyqingfeng/Blog/issues/16" target="_blank" rel="noopener">JavaScript深入之继承的多种方式和优缺点</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'jack'</span></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child1.getName()) <span class="comment">// jack</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/04/js 继承的多种方式和优缺点/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1655,7 +1659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
