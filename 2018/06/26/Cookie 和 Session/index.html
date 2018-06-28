@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="jhgrrewq 前端小站">
 <meta property="og:description" content="Cookiehttp 是一个无状态的协议，业务中往往需要一定的状态，否则无法区分用户之间的身份，最早的方案就是 Cookie Cookie 的处理分为如下几步：  服务器向客户端发送 Cookie 浏览器保存 Cookie 之后每次浏览器都会将 Cookie 发给服务器（同域）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-26T08:01:28.000Z">
+<meta property="og:updated_time" content="2018-06-28T01:07:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cookie 和 Session">
 <meta name="twitter:description" content="Cookiehttp 是一个无状态的协议，业务中往往需要一定的状态，否则无法区分用户之间的身份，最早的方案就是 Cookie Cookie 的处理分为如下几步：  服务器向客户端发送 Cookie 浏览器保存 Cookie 之后每次浏览器都会将 Cookie 发给服务器（同域）">
@@ -358,7 +358,7 @@
 <a id="more"></a>
 <h3 id="请求头-Cookie"><a href="#请求头-Cookie" class="headerlink" title="请求头 Cookie"></a>请求头 Cookie</h3><p>请求中 Cookie 在请求头 <code>Cookie</code> 字段中 <strong>Cookie 值的格式是 key=value;key2=value2</strong></p>
 <h3 id="响应头-Set-Cookie"><a href="#响应头-Set-Cookie" class="headerlink" title="响应头 Set-Cookie"></a>响应头 Set-Cookie</h3><p>响应中 Cookie 在响应头 <code>Set-Cookie</code> 字段中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: name=value;Path=/;Expires=Sun, 23-Apr-23 09:01:35 GMT; Domain=..domain.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: name=value;Path=/;Expires=Sun, 23-Apr-23 09:01:35 GMT; Domain=domain.com</span><br></pre></td></tr></table></figure>
 <p><code>name=value</code> 是必须包含的部分，其余都是可选参数。几个主要选项如下：</p>
 <ul>
 <li><code>Path</code>: 表示该 Cookie 影响到的路径，当前访问的路径不满足该匹配时，浏览器则不发送这个 Cookie</li>
