@@ -280,6 +280,135 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/03/vue keep-alive 组件源码简析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/03/vue keep-alive 组件源码简析/" itemprop="url">vue keep-alive 组件源码简析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T19:55:43+08:00">
+                2018-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="https://cn.vuejs.org/v2/api/#keep-alive" target="_blank" rel="noopener">Vue.js 官网 keep-alive</a>、<a href="https://www.cnblogs.com/sysuhanyf/p/7454530.html" target="_blank" rel="noopener">Vue keep-alive实践总结</a>、<a href="https://github.com/answershuto/learnVue/blob/master/docs/%E8%81%8A%E8%81%8Akeep-alive%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.MarkDown" target="_blank" rel="noopener">聊聊keep-alive组件的使用及其实现原理.MarkDown</a></p>
+</blockquote>
+<h2 id="keep-alive-组件实践"><a href="#keep-alive-组件实践" class="headerlink" title="keep-alive 组件实践"></a>keep-alive 组件实践</h2><blockquote>
+<p><code>keep-alive</code> 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们（主要用于保存组件状态和防止重复渲染）。和 <code>transition</code> 相似，<code>keep-alive</code> 是一个抽象组件，自身不会渲染一个 dom 元素<br>当组件在 <code>keep-alive</code> 内切换，它的 <code>activated</code> <code>deactivated</code> 两个生命周期钩子函数将会被执行</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/03/vue keep-alive 组件源码简析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/02/flex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1410,170 +1539,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/14/vue 2.0 独立构建 vs 运行时构建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/vue 2.0 独立构建 vs 运行时构建/" itemprop="url">vue 2.0 独立构建 vs 运行时构建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T09:34:21+08:00">
-                2018-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A" target="_blank" rel="noopener">Vue.js 官网 对不同构建版本解释</a>、<a href="https://zhuanlan.zhihu.com/p/25486761" target="_blank" rel="noopener">从一个奇怪的错误出发理解 Vue 基本概念</a></p>
-</blockquote>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>在 NPM 包的 <code>dist/</code> 目录下有多个 Vue.js 构建版本</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:left">UMD</th>
-<th style="text-align:left">CommonJS</th>
-<th style="text-align:left">ES Module</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>完整版</strong></td>
-<td style="text-align:left">vue.js</td>
-<td style="text-align:left">vue.common.js</td>
-<td style="text-align:left">vue.esm.js</td>
-</tr>
-<tr>
-<td><strong>只含运行时版</strong></td>
-<td style="text-align:left">vue.runtime.js</td>
-<td style="text-align:left">vue.runtime.common.js</td>
-<td style="text-align:left">vue.runtime.esm.js</td>
-</tr>
-<tr>
-<td><strong>完整版（生产环境）</strong></td>
-<td style="text-align:left">vue.min.js</td>
-<td style="text-align:left">-</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td><strong>只含运行时版（生产环境)</strong></td>
-<td style="text-align:left">vue.runtime.min.js</td>
-<td style="text-align:left">-</td>
-<td style="text-align:left">-</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/14/vue 2.0 独立构建 vs 运行时构建/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1628,7 +1593,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1641,7 +1606,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
