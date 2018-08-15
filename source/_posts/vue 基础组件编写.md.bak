@@ -1,0 +1,191 @@
+---
+title: vue 基础组件编写
+tag: 
+	- vue
+	- 组件
+---
+
+<!-- markdownlint-MD010 disable -->
+## vue基础组件编写
+
+本着“高内聚，低耦合”原则，组件与外部交互主要通过：
+
+### props
+
+外部数据通过props传入，传入的数据尽量只用于渲染，避免直接修改外部传入数据 （**props, data, computed 的数据都被 vue 进行数据劫持，props除了直接作为数据绑定渲染，另外就是作为data中的数据初始赋值，data中的数据会进行初始赋值，也可以被修改， computed数据是基于依赖改变而改变， watch可以检测数据发生改变做一些操作**）
+
+<!-- more -->
+
+### slot
+
+组件内部通过slot，可以包裹外部传入的dom
+
+### 事件派发
+
+基础组件不处理业务相关逻辑，通过事件派发出去
+
+### 外部组件调用
+
+组件可以定义一些方法，外部组件引用组件后，**给组件添加ref，使用 this.$refs.组件引用名.fnName()**
+
+## 导航组件实现
+
+需求
+
+- 切换 tab 对应 tab 高亮
+- 切换 tab 做其他操作
+- 外部组件通过路由跳转到当前组件，对应 tab 高亮
+
+导航数据 nav.js
+
+```javascript
+// tab 用id属性作唯一标识， url跳转路由和
+export default [{
+        name: '政企服务',
+        id: 'govService'
+    }, {
+        name: '园区在线',
+        id: 'zoneOnline'
+    }, {
+        name: '企业云服务',
+        id: 'cloud'
+    }]
+```
+
+nav 组件
+
+```vue
+<template>
+    <div v-for="item in nav" :key="item.id" @click="handleClick(item)">
+        <span :class="{'active': item.id === active}">{{item.name}}</span>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        // 外部可传入 activeId，用于设置默认激活 tab
+        activeId: {
+            type: String,
+            default: ''
+        },
+        nav: {
+           type: Array,
+           default: function() {
+                return []
+            }
+        }
+    },
+    data() {
+        return {
+            // active 用 props 的 activeId 初始化，可被修改，修改后触发视图更新
+            active: this.activeId,
+        }
+    },
+    watch: {
+        // watch props 传入数据, 改变触发, 因为此处的props中的 activeId 只是作为初始值赋值
+        activeId(newId) {
+            this.setActive(newId)
+        }
+    },
+    methods: {
+        // 切换 tab 设置当前激活 tab，同时向外派发事件
+        handleClick(item){
+            this.setActive(item.id)
+            this.$emit('tab', item)
+        },
+        // setActive方法修改data中的 active
+        setActive(id) {
+            this.active = id
+        }
+    }
+}
+</script>
+
+```
+
+外部调用（引入组件，传入nav，根据路由传入当前激活的 activeId）
+
+```vue
+<template>
+    <nav :nav="nav" :activeId="activeId"></nav>
+</template>
+
+<script>
+import './nav.vue'
+import nav from './nav.js'
+export default {
+    data() {
+        return {
+            nav
+        }
+    },
+    computed: {
+        activeId() {
+            return this.$route.path.substr(1)
+        }
+    },
+    components: {
+        nav
+    }
+}
+</script>
+
+```
+
+## 父子双向绑定
+
+上面说到 vue不推荐直接修改父组件数据，如果想实现父子组件双向绑定，可以子组件将新修改的值通过事件派发出去，父组件接收后绑定数据再传入子组件
+
+```vue
+// 父组件 template
+<child :value="data" @change="changeValue"></child>
+
+// 父组件 js
+export default {
+    ...
+    data() {
+        return {
+            data: [1, 2]
+        }
+    },
+    methods: {
+        changeValue(newVal) {
+            this.data = newVal
+        }
+    }
+}
+
+// 子组件 js
+export default {
+    ...
+    props: {
+        value: {
+            type: Array,
+            default: function() {
+                return []
+            }
+        }
+    },
+    ...
+
+    mounted: {
+        this.$emit('change', [1, 2, 3])
+    }
+}
+
+```
+
+**vue 2.3+ 重新增加了 .sync 修饰符， 一个子组件改变了一个带 .sync 的 prop 的值时，需要显式触发 update:props 更新事件。**相当于vue定义了一个update事件，让子组件能直接显式调用， 但还是不建议使用。
+
+```vue
+// 父组件 template
+<child :foo.sync="bar"></child>
+
+// 父组件 template被自动扩展为
+<child :foo="bar" @updata:foo="var => bar = var"></child>
+
+
+// 子组件需要显式调用更新时间
+this.$emit('update:foo', newValue)
+```

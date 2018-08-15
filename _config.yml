@@ -1,0 +1,128 @@
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: jhgrrewq 前端小站 # 首页 title 名称
+subtitle: '置我于死地者 必将赐我以后生'
+description: '爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户'
+keywords:
+author: jhgrrewq
+language: zh-Hans # 修改语言环境为简体汉字
+timezone:
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://jhgrrewq.github.io # 静态网站托管域名
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace:
+  
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+  
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 5
+pagination_dir: page
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+# theme: landscape
+# 设置主题为next
+theme: next
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo:
+      github: git@github.com:jhgrrewq/jhgrrewq.github.io.git
+      coding: git@git.coding.net:qwerrghj/qwerrghj.git
+  branch: master
+
+# 设置头像
+avatar: https://avatars0.githubusercontent.com/u/8380737?s=460&v=4
+
+# Social links
+social:
+  GitHub: https://github.com/jhgrrewq
+
+algolia:
+  applicationID: O0AP0FGXSX
+  apiKey: ab7c2224e88a925feeea82c8902add9d
+  adminApiKey: 29e84dc21ac2a5c9598ba9a89935ce21
+  indexName: jhgrrewq
+  chunkSize: 5000
+
+flowchart:
+  raphael: https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js
+  flowchart: https://cdn.bootcss.com/flowchart/1.7.0/flowchart.min.js
+  options": 
+      scale: 1,
+      line-width: 2
+      line-length: 50
+      text-margin: 10
+      font-size: 12
+    
+sequence:
+  webfont: https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js
+  raphael: https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js
+  underscore: https://cdn.bootcss.com/underscore.js/1.8.3/underscore-min.js
+  sequence: https://cdn.bootcss.com/js-sequence-diagrams/1.0.6/sequence-diagram-min.js
+  css: # optional, the url for css, such as hand drawn theme 
+  options: 
+    theme: simple
+    css_class:
+
+# mermaid chart
+mermaid: ## mermaid url https://github.com/knsv/mermaid
+  enable: true  # default true
+  version: "7.1.2" # default v7.1.2
+  options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
+    #startOnload: true  // default true

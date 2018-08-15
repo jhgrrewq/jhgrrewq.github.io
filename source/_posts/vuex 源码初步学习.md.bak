@@ -1,0 +1,780 @@
+---
+title: vuex 源码初步学习
+tag: 
+	- vue
+	- vuex
+---
+
+> 参考: [Vuex 2.0 源码分析](https://github.com/DDFE/DDFE-blog/issues/8)
+
+<!-- markdownlint-disable MD010 -->
+
+本文分析源码 vue@2.0.0 vuex@2.0.0
+
+<!-- more -->
+
+## 基础
+
+### Vue.use()
+
+```js
+import Vue from 'vue'
+import Vuex from 'vuex'
+...
+Vue.use(vuex)
+
+// 其实 use 方法还可以传入其他参数
+// Vue.use(plugin, arg1, ...)
+```
+
+通常在 vue 中使用插件是通过使用 `use` 方法，传入使用的插件
+
+```js
+Vue.use = function (plugin) {
+	/* istanbul ignore if */
+	// 判断 plugin 的 installed 属性是否存在，存在说明 plugin 已安装就返回
+	if (plugin.installed) {
+		return
+	}
+	// additional parameters
+	// 通过 toArray 方法对 Vue.use() 方法的 arguments 提取第一个参数之后的参数组成数组，同时把 Vue 作为 第一个元素插入到新数组的开头
+	// 如 Vue.use(Vuex), 处理成的参数数组为 [Vue]
+	var args = toArray(arguments, 1)
+	args.unshift(this)
+	// plugin 的 install 属性是一个函数，立即执行 plugin.install，接受的第一个参数是 Vue
+	// 如果plugin 的 install 属性不是函数，则认为 plugin 本身为函数，执行 plugin 函数，参数为 args 数组内的元素
+	if (typeof plugin.install === 'function') {
+		plugin.install.apply(plugin, args)
+		// plugin.install(Vue, arg1, ...)
+	} else {
+		plugin.apply(null, args)
+	}
+	// 最后设置 plugin 的 installed 属性为 true
+	plugin.installed = true
+	return this
+}
+
+// 取出 start 下标值之后（包含）的元素返回一个新数组
+function toArray (list, start) {
+  start = start || 0
+  var i = list.length - start
+  var ret = new Array(i)
+  while (i--) {
+		// 先利用 i 判断，再 i--
+    ret[i] = list[i + start]
+  }
+  return ret
+}
+```
+
+`Vue.use` 方法就是**执行一个 plugin 函数或者 plugin 的 `install` 方法注册插件，并且向 plugin 或 plugin.install 传入 Vue 作为第一个参数，`use` 方法从第二个参数开始的参数作为 plugin 或 plugin.install 的其他参数。**因此 vue 插件最好导出一个对象，对象中包含 `install` 方法，`install` 方法传入第一个参数为 Vue
+
+### mixin
+
+```js
+var mixin = {
+	data() {
+		return {
+			message: 'hello',
+			foo: 'abc'
+		}
+	},
+	created() {
+		console.log('mixin 钩子被调用')
+	},
+	methods: {
+		print() {
+			console.log('mixin print')
+		}
+	}
+}
+
+new Vue({
+	mixins: [mixin],
+	data() {
+		return {
+			message: 'goodbye',
+			bar: 'def'
+		}
+	},
+	created() {
+		console.log('组件 钩子被调用')
+		console.log(this.$data) // {message: 'goodbye', foo: 'abc', bar: 'def'}
+		this.print() // 组件 print
+	},
+	methods: {
+		print() {
+			console.log('组件 print')
+		}
+	}
+})
+
+// mixin 钩子被调用
+// 组件 钩子被调用
+// {message: 'goodbye', foo: 'abc', bar: 'def'}
+// 组件 print
+```
+
+mixin 可以包含任何组件选项，所有 mixin 选项将会被混入组件自身选项
+
+- 数据对象 data 内部进行**浅合并（一层属性深度），同名时以组件自身数据优先**
+- **同名钩子函数混合成一个数组，都会被调用，mixin 中的钩子在组件自身钩子前调用**
+- **值为对象的选项，如 methods、components、directives, 将会混合成同一个对象，如果对象有同名属性，取组件的键值对**
+
+## vuex 入口
+
+```js
+export default {
+  Store: Store,
+  install: install,
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapMutations: mapActions
+}
+```
+
+vuex 导出一个对象，对象的 `install` 属性是一个函数用于 Vue 注册插件（传入第一个参数为 Vue），对象的 `Store` 属性是一个构造函数，可以传入配置项生成 store 实例，对象同时提供了 `mapState mapGetters mapActions mapMutations` 语法糖
+
+```js
+// 通常使用将配置项传入 Store 构造函数创建一个 store 实例
+new Vuex.Store({
+	state: {
+		...
+	},
+	getters: {
+		...
+	},
+	actions: {
+		...
+	},
+	mutations: {
+		...
+	}
+})
+
+// 通常在组件中引入 mapState mapGetters mapActions mapMutations 语法糖
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+
+// 执行 Vue.use(Vuex) 实际是调用 Vuex 的 install 方法注册插件
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+```
+
+## install()
+
+先来看一下 vuex 插件的 `install` 方法
+
+```js
+var Vue // bind on install
+...
+
+function install (_Vue) {
+	// 首先判断全局 Vue 是否存在，保证 install 方法只执行一次
+  if (Vue) {
+    console.error(
+      '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+    )
+    return
+  }
+  // 参数 _Vue 赋给全局变量 Vue
+  Vue = _Vue
+  applyMixin(Vue)
+}
+
+// auto install in dist mode
+// 非组件化在浏览器环境中全局使用
+if (typeof window !== 'undefined' && window.Vue) {
+  install(window.Vue)
+}
+```
+
+`install` 方法首先对全局 Vue 是否存在进行判断，保证 `install` 方法只执行一次，再调用 `applyMixin(Vue)` 方法
+
+```js
+// src/mixin.js
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0])
+
+	// 将 vuexInit 方法通过 mixin 混合进入 init(1.0 版本) 或 beforeCreate 钩子（2.0 版本）
+  if (version >= 2) {
+    var usesInit = Vue.config._lifecycleHooks.indexOf('init') > -1
+    Vue.mixin(usesInit ? { init: vuexInit } : { beforeCreate: vuexInit })
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit
+      _init.call(this, options)
+    }
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+		// this.$option 获取 vue 实例初始化时的选项
+		// new Vue({el,store,router,components,...})
+    var options = this.$options
+    // store injection
+    if (options.store) {
+			// 可以通过 this.$store.xxx 访问 vuex 的数据和状态
+      this.$store = options.store
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store
+    }
+  }
+}
+```
+
+`applyMixin` 方法作用是在 vue 的生命周期钩子中（早期 `init`，2.0 版本后 `beforeCreate`）添加 vuex 初始化代码，也就是**给 vue 实例添加 `$store` 属性，从而可以通过 `this.$store.xxx` 访问 vuex 的数据和状态**
+
+## Store 构造函数
+
+初始化 Store 构造函数时，会传入一个对象，包含定义好的 `state getters actions mutations`，复杂的情况下如果是拆分成多个子模块，还会传入 `modules`。
+
+```js
+// 断言，第一个参数是条件，当第一个参数条件不为 true 进行处理
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+var Store = function Store (options) {
+	// 断言，需要 Vue 存在并且支持 promise
+	// 添加 promise 支持，模块化开发时可安装 babel-polyfill，在入口文件 一开始添加 import 'babel-polyfill'
+  assert(Vue, "must call Vue.use(Vuex) before creating a store instance.")
+  assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.")
+
+	// 拿到 options 中的 state plugins strict, state 为 rootState，plugins 为插件，strict 为是否开启严格模式，默认是不开启
+  const {
+    state = {},
+    plugins = [],
+    strict = false
+  } = options
+
+  // store internal state
+  this._options = options // 存储 options
+  this._committing = false // 标识一个提交状态，保证 vuex 对 state 的修改只能在 vuex 的回调函数中，不能在外部修改 state
+  this._actions = Object.create(null) // 存储用户定义的所有 actions
+  this._mutations = Object.create(null) // 存储用户定义的所有 mutations
+  this._wrappedGetters = Object.create(null) // 存储用户定义的所有 getters
+  this._runtimeModules = Object.create(null) // 存储运行时所有的 modules
+  this._subscribers = [] // 存储对 mutations 变化的订阅者
+  this._watcherVM = new Vue() // 该属性是一个 vue 实例，是利用 vue 实例方法 $watch 来观测变化
+
+  // bind commit and dispatch to self
+  // 将 Store 类的 dispatch 和 commit 方法 中 this 指向当前 store 实例
+  var store = this
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+    }
+    this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  }
+
+  // strict mode
+  this.strict = strict
+
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  // 将 options 中传入的属性进行注册安装
+  installModule(this, state, [], options)
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+	// 初始化 store._vm, 观测 state getters 变化
+  resetStoreVM(this, state)
+
+  // apply plugins
+	// 应用 plugin
+  plugins.concat(devtoolPlugin).forEach(function (plugin) { return plugin(this$1); })
+};
+```
+
+Store 构造函数中通过断言判断 Vue 属性是否存在，promise 是否存在（Vuex 依赖 promise）。**添加 promise 支持，模块化开发时可安装 babel-polyfill，在入口文件 添加 import 'babel-polyfill'**
+
+其次获取传入参数中的选项 `state plugins strict`，并给 store 实例添加属性，分别存储 `getters actions mutations`、参数项 `options`、`mutations` 变化订阅者等
+
+再次是 vuex 核心，**调用 `installModule` 方法将 options 中的各种属性模块进行注册安装，调用 `resetStoreVM` 方法初始化 `store._vm`, 观测 `state getters` 变化，最后引用传入 plugins**
+
+## installModule()
+
+```js
+// installModule(this, state, [], options)
+function installModule (store, rootState, path, module, hot) {
+  const isRoot = !path.length
+  const {
+    state,
+    actions,
+    mutations,
+    getters,
+    modules
+  } = module
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1))
+    var moduleName = path[path.length - 1]
+    store._withCommit(function () {
+      Vue.set(parentState, moduleName, state || {})
+    })
+  }
+
+  // 注册 mutations
+  if (mutations) {
+    Object.keys(mutations).forEach(function (key) {
+      registerMutation(store, key, mutations[key], path)
+    })
+  }
+
+  // 注册 actions
+  if (actions) {
+    Object.keys(actions).forEach(function (key) {
+      registerAction(store, key, actions[key], path)
+    })
+  }
+
+  // 注册 getters
+  if (getters) {
+    wrapGetters(store, getters, path)
+  }
+
+  // 遍历子模块
+  // 如果有子模块，递归调用 installModules 安装子模块，不同于之前，这里 installModule 传入的参数 path不为空，module 为对应的子模块
+  if (modules) {
+    Object.keys(modules).forEach(function (key) {
+      installModule(store, rootState, path.concat(key), modules[key], hot)
+    })
+  }
+}
+```
+
+`installModule` 函数可接收5个参数，`store`、`rootState`、`path`、`module`、`hot`，`store` 表示当前 Store 实例，`rootState` 表示根 state，`path` 表示当前嵌套模块的路径数组，`module` 表示当前安装的模块，`hot` 表示当动态改变 modules 或者热更新的时候为 true。
+
+因为在构造函数调用时为 `installModule(this, state, [], options)`, 因此 `isRoot` 为 true(`isRoot = !path.length`)，`module` 是传入的 options，可以拿到 `module` 下的 `state getters mutations actions modules`
+
+如果不考虑 modules 情况，接着分别对 `mutations actions getters` 调用 `registerMutation` 方法、 `registerAction` 方法、 `wrapGetters` 方法
+
+当项目比较复杂时，vuex 允许将 store 拆分成 `module` （模块），每个模块拥有自己的 `state getters actions mutations`, 甚至是嵌套的模块
+
+
+
+### registerMutation()
+
+```js
+function getNestedState (state, path) {
+  return path.length
+    ? path.reduce(function (state, key) { return state[key]; }, state)
+    : state
+}
+
+function Store() {
+  ...
+  // 注册 mutations
+  if (mutations) {
+    Object.keys(mutations).forEach(function (key) {
+      registerMutation(store, key, mutations[key], path)
+    })
+  }
+	...
+}
+
+function registerMutation (store, type, handler, path) {
+  if ( path === void 0 ) path = [];
+
+  var entry = store._mutations[type] || (store._mutations[type] = [])
+  entry.push(function wrappedMutationHandler (payload) {
+    handler(getNestedState(store.state, path), payload)
+  })
+}
+```
+
+```js
+Store.prototype.commit = function commit (type, payload, options) {
+  var this$1 = this;
+
+  // check object-style commit
+  if (isObject(type) && type.type) {
+    options = payload
+    payload = type
+    type = type.type
+  }
+  var mutation = { type: type, payload: payload }
+  var entry = this._mutations[type]
+  if (!entry) {
+    console.error(("[vuex] unknown mutation type: " + type))
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload)
+    })
+  })
+  if (!options || !options.silent) {
+    this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); })
+  }
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing
+  this._committing = true
+  fn()
+  this._committing = committing
+};
+
+Store.prototype.subscribe = function subscribe (fn) {
+  var subs = this._subscribers
+  if (subs.indexOf(fn) < 0) {
+    subs.push(fn)
+  }
+  return function () {
+    var i = subs.indexOf(fn)
+    if (i > -1) {
+      subs.splice(i, 1)
+    }
+  }
+};
+```
+
+### registerAction()
+
+```js
+function registerAction (store, type, handler, path) {
+  if ( path === void 0 ) path = [];
+
+  var entry = store._actions[type] || (store._actions[type] = [])
+  var dispatch = store.dispatch;
+  var commit = store.commit;
+  entry.push(function wrappedActionHandler (payload, cb) {
+    var res = handler({
+      dispatch: dispatch,
+      commit: commit,
+      getters: store.getters,
+      state: getNestedState(store.state, path),
+      rootState: store.state
+    }, payload, cb)
+    if (!isPromise(res)) {
+      res = Promise.resolve(res)
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err)
+        throw err
+      })
+    } else {
+      return res
+    }
+  })
+}
+```
+
+```js
+Store.prototype.dispatch = function dispatch (type, payload) {
+  // check object-style dispatch
+  if (isObject(type) && type.type) {
+    payload = type
+    type = type.type
+  }
+  var entry = this._actions[type]
+  if (!entry) {
+    console.error(("[vuex] unknown action type: " + type))
+    return
+  }
+  return entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload)
+};
+```
+
+### wrapGetters()
+
+```js
+function wrapGetters (store, moduleGetters, modulePath) {
+  Object.keys(moduleGetters).forEach(function (getterKey) {
+    var rawGetter = moduleGetters[getterKey]
+    if (store._wrappedGetters[getterKey]) {
+      console.error(("[vuex] duplicate getter key: " + getterKey))
+      return
+    }
+    store._wrappedGetters[getterKey] = function wrappedGetter (store) {
+      return rawGetter(
+        getNestedState(store.state, modulePath), // local state
+        store.getters, // getters
+        store.state // root state
+      )
+    }
+  })
+}
+```
+
+## resetStoreVM()
+
+```js
+function resetStoreVM (store, state) {
+  var oldVm = store._vm
+
+  // bind store public getters
+  store.getters = {}
+  var wrappedGetters = store._wrappedGetters
+  var computed = {}
+  Object.keys(wrappedGetters).forEach(function (key) {
+    var fn = wrappedGetters[key]
+    // use computed to leverage its lazy-caching mechanism
+    computed[key] = function () { return fn(store); }
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; }
+    })
+  })
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent
+  Vue.config.silent = true
+  store._vm = new Vue({
+    data: { state: state },
+    computed: computed
+  })
+  Vue.config.silent = silent
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store)
+  }
+
+  if (oldVm) {
+    // dispatch changes in all subscribed watchers
+    // to force getter re-evaluation.
+    store._withCommit(function () {
+      oldVm.state = null
+    })
+    Vue.nextTick(function () { return oldVm.$destroy(); })
+  }
+}
+```
+
+## mapState mapGetters mapActions mapMutations
+
+### mapState
+
+`mapState` 方法会将 store 中的 state 映射到局部计算属性中
+
+- 使用
+
+```js
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+    // ...
+    // 传入对象
+    ...mapState({
+      count: state => state.countNum,
+      countAlias: 'count'
+    })
+
+    // 传入数组
+    /*
+    ...mapState(['countNum'])
+    */
+  }
+}
+```
+
+等同于
+
+```js
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+    // ...
+    count() {
+      return this.$store.state.countNum
+    },
+    countAlias() {
+      return this.$store.state['countNum']
+    }
+    // 传入数组
+    /*
+    countNum: () {
+      return this.$store.state['countNum']
+    }
+    */
+  }
+}
+```
+
+- 源码
+
+```js
+// src/helpers.js
+export function mapState (states) {
+  const res = {}
+  normalizeMap(states).forEach(({ key, val }) => {
+    res[key] = function mappedState () {
+      return typeof val === 'function'
+        ? val.call(this, this.$store.state, this.$store.getters)
+        : this.$store.state[val]
+    }
+  })
+  return res
+}
+
+// 如果传入参数是数组，返回 包含元素 {key, val: key} 对象的数组，如果传入对象，则返回包含元素 {key，val: map[key]} 对象的数组
+// 这里 val 中的值是 vuex 真正定义的属性名
+function normalizeMap (map) {
+  return Array.isArray(map)
+    ? map.map(key => ({ key, val: key }))
+    : Object.keys(map).map(key => ({ key, val: map[key] }))
+}
+```
+
+`mapState` 方法中对传入数据先调用 `normalizeMap` 方法进行处理, 调用数组的 map 方法，如果传入参数是数组，返回 包含元素 {key, val: key} 对象的数组，如果传入对象，则返回包含元素 {key，val: map[key]} 对象的数组。
+
+之后利用 `normalizeMap` 返回的数组继续遍历，返回一个对象，这个对象的属性值都是一个 mappedState 函数，函数对 val 类型进行判断，如果 val 是一个函数，则直接调用该函数，把当前 store 上的 state 和 getter 作为参数，返回值作为 mappedState 的返回值；否则直接把 `this.$store.state[val]` 作为 mappedState 的返回值
+
+### mapGetters
+
+`mapGetters` 方法会将 store 中的 getters 映射到局部计算属性中
+
+```js
+// src/helpers.js
+export function mapGetters (getters) {
+  const res = {}
+  normalizeMap(getters).forEach(({ key, val }) => {
+    res[key] = function mappedGetter () {
+      if (!(val in this.$store.getters)) {
+        console.error(`[vuex] unknown getter: ${val}`)
+      }
+      return this.$store.getters[val]
+    }
+  })
+  return res
+}
+```
+
+mapGetters 的实现类似 mapState，**不同的是 val 不能是函数，只能是一个字符串**，并且会检查 `val in this.$store.getters`, 如果为 false 会输出一条错误日志
+
+### mapActions
+
+`mapActions` 方法会将 store 中的 `dispatch` 方法映射到组件的 `methods` 中，和 `mapState` `mapGetters` 类似，只不过它映射的不是计算书型，而是组件的 `methods` 对象
+
+```js
+// src/helpers.js
+export function mapActions (actions) {
+  const res = {}
+  normalizeMap(actions).forEach(({ key, val }) => {
+    res[key] = function mappedAction (...args) {
+      return this.$store.dispatch.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+}
+```
+
+`mapActions` 的实现类似，返回函数中对 `dispatch` 方法进行了一次封装并返回
+
+```js
+import { mapActions } from 'vuex'
+export default {
+  // ...
+  methods: {
+    // ...
+    // 映射 `this.increment()` 到 `this.$store.dispatch('increment')`
+    ...mapActions({
+      'increment'
+    }),
+    // 映射 `this.add()` 到 `this.$store.dispatch('increment')`
+    ...mapActions([
+      'add'
+    ])
+  }
+}
+```
+
+等同于
+
+```js
+import { mapActions } from 'vuex'
+export default {
+  // ...
+  methods: {
+    // ...
+    increment(...args) {
+      return this.$store.dispatch.apply(this.$store, ['increment'].concat(args))
+    },
+    add(...args) {
+      return this.$store.dispatch.apply(this.$store, ['increment'].concat(args))
+    }
+  }
+}
+```
+
+### mapMutations
+
+`mapMutations` 方法会将 store 中的 `commit` 方法映射到组件的 `methods` 中
+
+```js
+export function mapMutations (mutations) {
+  const res = {}
+  normalizeMap(mutations).forEach(({ key, val }) => {
+    res[key] = function mappedMutation (...args) {
+      return this.$store.commit.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+}
+```
+
+`mapMutations` 的实现类似 `mapActions`，唯一区别是映射的是 store 的 `commit` 方法
+
+```js
+import { mapMutations } from 'vuex'
+export default {
+  // ...
+  methods: {
+    // ...
+    // 映射 `this.increment()` 到 `this.$store.commit('increment')`
+    ...mapMutations({
+      'increment'
+    }),
+    // 映射 `this.add()` 到 `this.$store.commit('increment')`
+    ...mapMutations([
+      'add'
+    ])
+  }
+}
+```
+
+等同于
+
+```js
+import { mapMutations } from 'vuex'
+export default {
+  // ...
+  methods: {
+    // ...
+    increment(...args) {
+      return this.$store.commit.apply(this.$store, ['increment'].concat(args))
+    },
+    add(...args) {
+      return this.$store.commit.apply(this.$store, ['increment'].concat(args))
+    }
+  }
+}
+```

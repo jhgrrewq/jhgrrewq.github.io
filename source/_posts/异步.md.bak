@@ -1,0 +1,201 @@
+---
+title: 异步
+tag: 
+	- promise
+	- async/await
+	- generator
+---
+
+<!-- markdownlint-disable MD010 -->
+
+## 处理异步常见方法
+
+> - 异步回调函数
+> - 事件监听
+> - 发布/订阅
+> - promise
+> - generator 函数
+> - async/await
+
+<!-- more -->
+
+## Promise （解决回调函数多重嵌套）
+
+1.Promise对象代表一个异步操作，有三种状态，pending（操作中），resolved（已完成），rejected（失败）
+
+2.状态改变只有两种，pending -》resolved 和pending -》rejected
+
+3.状态一旦改变就不会更改
+
+4.Promise构造函数
+
+- Promise构造函数传入resolve和reject两个方法, **返回一个promise对象**
+- **resolve 函数将 promise 对象将 pending 状态转为 resolved 状态，在异步操作成功时调用，将异步操作结果作为参数传递出去**
+- **reject 函数将 promise 对象将 pending 状态转为 rejected 状态，在异步操作失败时调用，将异步操作错误作为参数传递出去**
+- promise对象 可用**then方法指定 resolved 状态回调 和 rejected 状态回调**
+
+5.优点：异步操作变成链式调用，类似同步书写的逻辑
+    缺点：无法取消promise；处于pending状态，无法知道进展到什么程度（操作刚开始还是操作快完成）
+
+```javascript
+var promise = new Promise(resolve, reject){
+    ...
+    if(/*异步操作*/){
+        resolve(value)
+    }else{
+        reject(error)
+    }
+}
+
+promise.then(function(value){}, function(error){})
+```
+
+## generator函数
+
+generator 函数是一种可以停止并在之后重新进入的函数，**调用返回一个 iterator 遍历器对象**。generator 函数通过 next 和 yield 的配合实现流程控制
+
+- 定义一个 **generator 函数只需要 function 关键字后面有个 * 号，函数体内使用 yield 语句进行流程控制**
+- **generator 函数调用并不立即执行**，返回一个指向内部状态的 iterator 遍历器对象，**该 iterator 对象具有 next() 方法，每次调用 next() 方法，函数会执行到 yield 语句或 return 的地方暂停。即从函数头部或者上次暂停的地方开始，直到遇到下一个 yield 表达式或者 return 语句为止**
+- **next() 返回一个对象 { value：yield 表达式的值，done: true/false }**
+- **value 属性值为当前 yield 表达式的值，done 属性值为布尔值，表示遍历是否结束**
+- **可以理解为 yield 有返回数据的功能，yield 表达式的值（如果是 promise 会将最后 resolve 或 reject 的值返回）返回存放在 next() 返回一个对象中的 value 属性中**
+
+```js
+function* gen() {
+    yield 'hello'
+    yield 'world'
+    return
+}
+
+var iter = gen()
+
+var a = iter.next()
+console.log(a) // {value: "hello", done: false}
+var b = iter.next()
+console.log(b) // {value: "world", done: false}
+var c = iter.next()
+console.log(c) // {value: undefined, done: true}
+
+
+// 说明 generator 函数调用返回 iterator 遍历器
+// 注意 generator 函数是能够保存自己状态的
+for (let item of iter) {
+    console.log(item)
+    // undefined 因为 iter 指向的遍历器 上面已经通过调用 next() 遍历完毕
+}
+for (let item of gen()) {
+    // 重新调用 generator 函数返回一个新的 iterator 遍历器对象
+    console.log(item)
+    // "hello"
+    // "world"
+}
+```
+
+每次调用 next(), 遇到 yield 或 return 语句停止，返回一个对象，对象 value 属性保存 yield 后面表达式返回的值，对象的 done 属性为布尔值，表示遍历是否结束
+
+```js
+// 这里第一次调用 g.next(), 遇到 yield 100 停止，并没有赋值给变量 a, 返回一个对象，对象的 value 属性是 100，done 属性是 false
+// 第二次调用 g.next('aa'), 传递参数 'aa' 被赋值给 a，并执行 console.log('a', a) 打印出来，遇到 yield 200 停止，返回 {value: 200, done: false}
+// ...
+var foo = function *() {
+    const a = yield 100
+    console.log('a', a) // a aa
+    const b = yield 200
+    console.log('b', b) // b bb
+    const c = yield 100
+    console.log('b', c) // c cc
+}
+var g = foo()
+g.next() // {value: 100, done: false}
+g.next('aa') // {value: 200, done: false}
+g.next('bb') // {value: 300, done: false}
+g.next('cc') // {value: undefined, done: true}
+```
+
+3.异步应用
+
+```javascript
+var f = function* (){
+    ...
+    yield fetch    // yield $.ajax  返回一个promise对象, 存放在 返回对象的 value 属性中
+}
+
+f.next().value.then(data => {
+    // ...
+})
+```
+
+4.**CO 模块对 generator 生成器函数简单封装**
+
+```javascript
+function co(gen) {
+    var it = gen()
+    var ret = it.next()
+    recall(ret, it)
+}
+
+function recall(ret, it) {
+    var value = ret.value
+    var done = ret.done
+    if (value instanceof Promise) {
+        value.then(function(res){
+            ret = it.next(res)
+            recall(ret, it)
+        })
+    } else {
+        if (!done) {
+            ret = it.next()
+            recall(ret, it)
+        }
+    }
+}
+
+// 调用传入生成器
+co(function* (){
+  let p1 = new Promise((resolve, reject) => {
+    resolve(2)
+  })
+  let p2 = new Promise((resolve, reject) => {
+    resolve(4)
+  })
+  var data1 = yield p1;
+  console.log(data1);
+  var data2 = yield p2;
+  console.log(data2);
+})
+```
+
+## async/await（es2017 generator函数语法糖）
+
+1.**自带执行器，自动执行，不像generator需要调用 next()**
+
+2.**函数执行时，遇到 await 先返回，等异步操作完成**
+
+3.await 后面紧跟任意表达式的结果
+
+- 如果 await 等到的不是一个 promise 对象，则 await 表达式的结果就是它等到的东西
+
+- **如果 await 等到的是一个 promise 对象，await 会等待这个 Promise 完成，并将其 resolve 的结果返回出来**
+
+4.异步应用
+
+```javascript
+    async function (){
+         ...
+         await ...
+    }
+
+var a = async function(){
+  let p1 = new Promise((resolve, reject) => {
+    resolve(2)
+  })
+  let p2 = new Promise((resolve, reject) => {
+    resolve(4)
+  })
+  var data1 = await p1;
+  console.log(data1); // 2
+  var data2 = await p2;
+  console.log(data2); // 4
+}
+a()
+```

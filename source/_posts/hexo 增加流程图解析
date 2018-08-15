@@ -1,0 +1,65 @@
+---
+title: hexo 增加流程图解析
+tag: 
+  - hexo
+---
+
+> 转载: [为 Hexo 增加流程图解析功能](http://wewelove.github.io/fcoder/2017/09/06/markdown-flowchart/)
+
+## 安装
+
+安装 [hexo-filter-flowchart](https://github.com/bubkoo/hexo-filter-flowchart) 插件
+
+```bash
+npm install -S hexo-filter-flowchart
+```
+
+<!-- more -->
+
+## 配置
+
+站点根目录下配置文件 _.config.yml 添加
+
+```js
+flowchart:
+  raphael: https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js
+  flowchart: https://cdn.bootcss.com/flowchart/1.7.0/flowchart.min.js
+  options": 
+      scale: 1,
+      line-width: 2
+      line-length: 50
+      text-margin: 10
+      font-size: 12
+```
+
+## 示例
+
+```js
+st=>start: 开始:>http://www.google.com[blank]
+e=>end: 结束:>http://www.google.com[blank]
+op1=>operation: 操作
+sub1=>subroutine: 子流程
+cond=>condition: yes or no ?:>http://www.google.com[blank]
+io=>inputoutput: 输入输出...
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1
+```
+
+```flowchart
+st=>start: 开始:>http://www.google.com[blank]
+e=>end: 结束:>http://www.google.com[blank]
+op1=>operation: 操作
+sub1=>subroutine: 子流程
+cond=>condition: yes or no ?:>http://www.google.com[blank]
+io=>inputoutput: 输入输出...
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1
+```
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+````
