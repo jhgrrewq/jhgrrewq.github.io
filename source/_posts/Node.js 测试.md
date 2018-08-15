@@ -617,3 +617,79 @@ branches:
 env:
  global:
 ```
+
+### 应用：github pages 博客持续集成
+
+笔者之前已经通过 github pages 搭建了 hexo 主题的博客，部署需要执行以下命令
+
+```bash
+# 清空 public 文件夹
+hexo clean
+
+# hexo generate 将文章编译到 public 文件夹
+hexo g
+
+# hexo deploy 将 public 内容部署到 jhgrrewq.github.io 仓库
+hexo d
+```
+
+jhgrrewq.github.io 仓库下 master 分支是 public 文件夹内容，也就是博客的静态内容，为了使用 travis 持续集成，需要将博客源代码提交到一个新分支如 `hexo`
+
+#### 步骤
+
+- 在 travis 官网启动应用
+- 在 travis 对应项目（笔者的是 jhgrrewq.github.io）下进入 `setting`
+- 在 `Environment Variables` 选项下添加 [`github token`](https://github.com/settings/tokens)
+
+![](http://ony85apla.bkt.clouddn.com/18-8-15/90889324.jpg)
+
+#### .travis.yml 配置文件
+
+```bash
+language: node_js
+node_js: stable
+
+addons: # Travis CI建议加的，自动更新api
+  apt:
+    update: true
+
+cache:
+  directories:
+  - node_modules # 缓存 node_modules
+
+install:
+- npm install # 初次安装，在CI环境中，执行安装npm依赖
+
+# before_script:
+
+script:
+- hexo g # 执行 hexo generate，把文章编译到 public
+
+after_success: # 执行 script 成功后，进入到 public
+- cd ./public
+- git init
+- git config user.name "jhgrrewq"
+- git config user.email "52792521@163.com"
+- git add .
+- git commit -m "Update site"
+- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+# 这里需要使用到 token 登录 github
+
+branches:
+  only:
+  - hexo # CI 只针对分支 hexo
+
+env:
+  global: # 全局变量，上面的提交到github的命令有用到
+  - GH_REF: github.com/jhgrrewq/jhgrrewq.github.io.git
+  - secure:
+# secure是自动生成的，执行`travis encrypt 'GH_TOKEN=${your_github_personal_access_token}' --add`
+```
+
+编写好 .travis.yml 文件后，以后分支下文件修改提交到远程，会自动持续集成
+
+#### 常见问题
+
+- 本地页面正常，推送后页面空白
+
+一般 next 主题文件缺少导致，查看远程仓库分支下 themes/next 一般是空的。只需要将 themes/next 全部内容添加进 git 版本依赖即可

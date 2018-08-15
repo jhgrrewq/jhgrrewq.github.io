@@ -1,6 +1,5 @@
 language: node_js
-node_js: 
-  - "6"
+node_js: stable
 
 addons: # Travis CI建议加的，自动更新api
   apt:
@@ -23,7 +22,7 @@ after_success: # 执行 script 成功后，进入到 public
 - git init
 - git config user.name "jhgrrewq"
 - git config user.email "52792521@163.com"
-- git add -A
+- git add .
 - git commit -m "Update site"
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 
