@@ -15,7 +15,6 @@ install:
 # before_script:
 
 script:
-- hexo clean
 - hexo g # 执行 hexo generate，把文章编译到 public
 
 after_success: # 执行 script 成功后，进入到 public
