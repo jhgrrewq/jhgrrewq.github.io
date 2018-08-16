@@ -673,7 +673,8 @@ after_success: # 执行 script 成功后，进入到 public
 - git add .
 - git commit -m "Update site"
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
-# 这里需要使用到 token 登录 github
+- git push --force --quiet "https://${CN_TOKEN}@${CN_REF}" master:master
+# 分别推送到 github coding.net 需要使用到 token 登录
 
 branches:
   only:
@@ -682,6 +683,7 @@ branches:
 env:
   global: # 全局变量，上面的提交到github的命令有用到
   - GH_REF: github.com/jhgrrewq/jhgrrewq.github.io.git
+  - CN_REF: git.coding.net/qwerrghj/qwerrghj.git
   - secure:
 # secure是自动生成的，执行`travis encrypt 'GH_TOKEN=${your_github_personal_access_token}' --add`
 ```

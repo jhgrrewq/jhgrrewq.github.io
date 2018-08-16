@@ -359,6 +359,21 @@ sudo nginx -c /etc/nginx/nginx.conf
 sudo nginx -s reload
 ```
 
+### 反向代理
+
+笔者将域名代理到自己的 github pages 博客
+
+```bash
+server {
+	listen 80;
+	server_name blog.jhgrrewq.com;
+
+	location / {
+		proxy_pass https://jhgrrewq.github.io/;
+	}
+}
+```
+
 ### 
 
 

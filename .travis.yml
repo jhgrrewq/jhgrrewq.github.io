@@ -6,13 +6,13 @@ addons: # Travis CI建议加的，自动更新api
     update: true
 
 cache:
-  directories: 
+  directories:
   - node_modules # 缓存 node_modules
 
 install:
 - npm install # 初次安装，在CI环境中，执行安装npm依赖
 
-# before_script: 
+# before_script:
 
 script:
 - hexo g # 执行 hexo generate，把文章编译到 public
@@ -25,6 +25,8 @@ after_success: # 执行 script 成功后，进入到 public
 - git add .
 - git commit -m "Update site"
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+- git push --force --quiet "https://${CN_TOKEN}@${CN_REF}" master:master
+# 分别推送到 github coding.net 需要使用到 token 登录
 
 branches:
   only:
@@ -33,5 +35,6 @@ branches:
 env:
   global: # 全局变量，上面的提交到github的命令有用到
   - GH_REF: github.com/jhgrrewq/jhgrrewq.github.io.git
-  - secure: 
+  - CN_REF: git.coding.net/qwerrghj/qwerrghj.git
+  - secure:
 # secure是自动生成的，执行`travis encrypt 'GH_TOKEN=${your_github_personal_access_token}' --add`
