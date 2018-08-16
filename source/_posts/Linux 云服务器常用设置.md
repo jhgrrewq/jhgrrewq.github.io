@@ -361,7 +361,7 @@ sudo nginx -s reload
 
 ### 反向代理
 
-笔者将域名代理到自己的 github pages 博客
+笔者将域名代理到 coding pages 博客
 
 ```bash
 server {
@@ -369,7 +369,7 @@ server {
 	server_name blog.jhgrrewq.com;
 
 	location / {
-		proxy_pass https://jhgrrewq.github.io/;
+		proxy_pass https://qwerrghj.coding.me/;
 	}
 }
 ```

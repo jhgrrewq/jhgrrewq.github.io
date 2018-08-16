@@ -683,7 +683,7 @@ branches:
 env:
   global: # 全局变量，上面的提交到github的命令有用到
   - GH_REF: github.com/jhgrrewq/jhgrrewq.github.io.git
-  - CN_REF: git.coding.net/qwerrghj/qwerrghj.git
+  - CN_REF: git.coding.net/qwerrghj/qwerrghj.coding.me.git
   - secure:
 # secure是自动生成的，执行`travis encrypt 'GH_TOKEN=${your_github_personal_access_token}' --add`
 ```
