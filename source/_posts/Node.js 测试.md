@@ -674,7 +674,7 @@ after_success: # 执行 script 成功后，进入到 public
 - git add .
 - git commit -m "Update site"
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
-- git push "https://qwerrghj:${CO_TOKEN}@${CO_REF}" master:master
+- git push --force --quiet "https://qwerrghj:${CO_TOKEN}@${CO_REF}" master:master
 # 分别推送到 github coding.net 需要使用到 token 登录
 
 branches:
