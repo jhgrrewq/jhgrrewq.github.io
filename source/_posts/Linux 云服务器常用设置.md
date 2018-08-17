@@ -352,11 +352,18 @@ pkill -9 nginx
 sudo nginx -c /etc/nginx/nginx.conf
 ```
 
-- 重启 nginx
+- 重启 nginx (热启动，修改配置重启不影响线上)
 
 ```bash
 # 进入 nginx 安装目录
 sudo nginx -s reload
+```
+
+- 测试 nginx 配置
+
+```bash
+# 进入 nginx 安装目录
+sudo nginx -t
 ```
 
 ### 反向代理

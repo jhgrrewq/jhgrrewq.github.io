@@ -618,7 +618,7 @@ env:
  global:
 ```
 
-### 应用：github pages 博客持续集成
+### 应用：github pages / coding pages 博客持续集成
 
 笔者之前已经通过 github pages 搭建了 hexo 主题的博客，部署需要执行以下命令
 
