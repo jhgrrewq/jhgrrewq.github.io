@@ -4,6 +4,8 @@ tag:
 	- Linux
 ---
 
+<!-- markdownlint-disable MD010 -->
+
 > 参考: [linux云服务器常用设置](http://www.cnblogs.com/xiaohuochai/p/7749727.html)
 
 ## 登录 登出
@@ -381,9 +383,26 @@ server {
 }
 ```
 
-### 
-
-
-## 配置 ssl 证书
+### 配置 ssl 证书
 
 - 生成 ssl 证书
+
+- 基本 https 配置
+
+```bash
+upstream jack {
+  server 127.0.0.1:8081;
+}
+
+server {
+	listen 443;
+	server_name jhgrrewq.com;
+	ssl on;
+	ssl_certificate /etc/nginx/certs/1_jhgrrewq.com_bundle.crt;
+	ssl_certificate_key /etc/nginx/certs/2_jhgrrewq.com.key;
+
+	location / {
+		proxy_pass http://jack;
+	}
+}
+```
