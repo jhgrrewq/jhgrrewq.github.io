@@ -9,7 +9,7 @@ tag:
 - 编辑 `~/.bashrc`, 每行输入一个 alias 命令
 
 ```bash
-ssh -p 20000 test@118.24.149.79
+alia ssh_jhgrrewq='ssh -p 20000 test@118.24.149.79'
 ```
 
 - 编辑 `~/.bash_profile`，输入如下命令（该文件是每次打开终端都会自动执行的文件）

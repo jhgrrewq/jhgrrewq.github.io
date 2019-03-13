@@ -8,6 +8,31 @@ tag:
 
 > 参考: [linux云服务器常用设置](http://www.cnblogs.com/xiaohuochai/p/7749727.html)
 
+
+## 重装系统后重新登录
+
+```bash
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+SHA256:fpZat/wEOrHUkMv81FrwdoGEBI6Xs+OlEHNElmyUu90.
+Please contact your system administrator.
+Add correct host key in /Users/jackzhang/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /Users/jackzhang/.ssh/known_hosts:41
+ECDSA host key for 118.24.149.79 has changed and you have requested strict checking.
+Host key verification failed.
+```
+
+服务器重装后连接远程服务器，本地和远程服务器 ssh 连接不上导致错误，因此需要删除本地 ssh 缓存信息
+
+```
+ssh-keygen -R <host>
+```
+
 ## 登录 登出
 
 - ssh 用户名密码登录
@@ -75,7 +100,7 @@ sudo passwd test
 sudo gpasswd -a test sudo
 ```
 
-- 配置 visudo
+- 配置 visudo (相当于编辑 vim /etc/sudoers 文件)
 
 ```bash
 sudo visudo
@@ -190,7 +215,7 @@ df -h
 
 ssh 默认端口是 22。为提高服务器安全性，缩小被扫描和猜测几率，可将其修改为其他端口
 
-- 修改 `/etc/ssh/sshd_conf` 文件端口为 1024 - 65536 之前端口(0-1024 端口一般系统占用)
+- 修改 `/etc/ssh/sshd_conf` 文件端口为 1024 - 65536 之间端口(0-1024 端口一般系统占用)
 
 ```bash
 sudo vim /etc/ssh/sshd_config/
