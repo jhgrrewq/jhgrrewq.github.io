@@ -8,7 +8,6 @@ tag:
 
 > 参考: [linux云服务器常用设置](http://www.cnblogs.com/xiaohuochai/p/7749727.html)
 
-
 ## 重装系统后重新登录
 
 ```bash
@@ -85,7 +84,6 @@ ubuntu 系统默认不创建目录，如果需要添加 `-m` 参数
 
 ```bash
 sudo useradd test -m
-sudo adduser test -m
 ```
 
 - 设置用户密码
@@ -218,7 +216,7 @@ ssh 默认端口是 22。为提高服务器安全性，缩小被扫描和猜测�
 - 修改 `/etc/ssh/sshd_conf` 文件端口为 1024 - 65536 之间端口(0-1024 端口一般系统占用)
 
 ```bash
-sudo vim /etc/ssh/sshd_config/
+sudo vim /etc/ssh/sshd_config
 ```
 
 ![](http://ony85apla.bkt.clouddn.com/18-8-16/93374088.jpg)
@@ -237,12 +235,24 @@ sudo service ssh restart
 
 使用 ssh key 免密登录后，可以设置取消密码登录，同样是修改 `/etc/ssh/sshd_config`，将 `PasswordAuthentication yes` 改为 `PasswordAuthentication no`, 在重启 ssh 服务
 
-## 配置 Node.js 生产环境
+## linux 包依赖安装
 
 - 更新包列表
 
 ```bash
 sudo apt-get update
+```
+
+- 卸载包但不删除配置
+
+```bash
+sudo apt-get remove <package>
+```
+
+- 卸载包并且删除配置
+
+```bash
+sudo apt-get purge <package>
 ```
 
 - 安装常用依赖
@@ -251,18 +261,116 @@ sudo apt-get update
 sudo apt-get install vim openssl build-essential libssl-dev wget curl git
 ```
 
-- 安装 nvm 模块管理 node 版本
+## 安装 Node.js
+
+linux 安装 Node.js 一般有三种方式：
+
+- 下载源码并手动编译二进制文件
+- 直接下载二进制文件并解压
+- 使用 `apt-get install nodejs` `sudo apt-get install npm`下载(不推荐)
+
+### 直接下载二进制文件并解压
+
+- 去官网下载和系统匹配的二进制文件
+
+通过命令 `uname -a` 查看系统位数为 64 位
+
+```
+Linux VM-0-9-ubuntu 4.4.0-130-generic #156-Ubuntu SMP Thu Jun 14 08:53:28 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+- 下载的 tar 包文件上传到服务器并且解压，然后通过建立软连接变为全局
+
+1）上传服务器可是任意路径，笔者这里为 `/home/test/software/`
+2) 上传解压
+
+```bash
+# 上传远程服务器
+scp -P <port> -r node-v10.15.3-linux-x64.tar.xz test@<host>:/home/test/software
+# 解压
+tar -xvf node-v10.15.3-linux-x64.tar.xz
+# 重命名
+mv node-v10.15.3-linux-x64.tar.xz nodejs-v10.15.3
+```
+
+3) 解压目录 `nodejs-v10.15.3` 下 `bin` 目录下有 node npm npx 三个执行文件。 **因为 `/home/test/software/node-v10.15.3-linux-x64/bin` 不在环境变量中，因此只能在当前目录下才能执行 node 的程序，如果在其他目录下想要执行 node 命令，必须通过绝对路径。如果想要在任意目录访问，需要将 node 所在目录添加到环境变量；或者通过软连接的形式将 node 和 npm 链接到系统默认的 path 目录下**
+
+```bash
+sudo ln -s /home/test/software/nodejs-v10.15.3/bin/node /usr/local/bin/node
+sudo ln -s /home/test/software/nodejs-v10.15.3/bin/npm /usr/local/bin/npm
+```
+
+- 删除软链接
+
+```bash
+# 如删除上述软连接
+rm -rf /usr/local/bin/node
+```
+
+### 执行 `npm i -g <package>` 报错没有找到命令
+
+npm 全局安装找不到命令，**本质还是环境变量问题**
+
+linux 环境变量有三种：
+
+- 当前用户当前 shell 有效（临时环境变量关闭则失效）
+- 当前用户有效
+- 所有用户都有效
+
+#### 当前用户当前 shell 有效
+
+在 shell 中执行以下命令，`$PATH:` 后跟想要加入环境变量的目录
+
+```bash
+export PATH=$PATH:/home/test/software/nodejs-v10.15.3/bin
+```
+
+#### 当前用户有效
+
+修改当前用户目录下 `./bashrc` 文件, 执行 `source ~/.bashrc`
+
+```bash
+export PATH=$PATH:/home/test/software/nodejs-v10.15.3/bin
+```
+
+#### 所有用户
+
+修改 	`/etc/profile` 文件, 执行 `source /etc/profile`
+
+```bash
+export PATH=$PATH:/home/test/software/nodejs-v10.15.3/bin
+```
+
+## 安装 Node.js 常用依赖
+
+- 安装 n 模块管理 node 版本
 
 ```bash
 # 常用指令
+# 列出当前安装的 node 版本
+n
+# 列出 node 全部现有版本
+n ls
+# 列出 node 发行的最新版本
+n --latest
+# 列出 node 长期支持的最新版本
+n --lts
+# 安装最新发行的 node 版本
+n latest
+# 安装最新的长期支持版本
+n lts
+
 # 安装特定版本 node
-nvm install 8.0.0
+n <version>
 
 # 使用特定版本 node
-nvm use 8.0.0
+n use <version>
 
-# 设置默认 node
-nvm alias default 8.0.0
+# 删除特定 node(可删除多个)
+n rm <version ...>
+
+# 删除除了当前版本的所有版本
+n prune
 ```
 
 - 安装 nrm 管理 registry
