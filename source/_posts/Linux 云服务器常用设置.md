@@ -523,8 +523,18 @@ server {
 - 基本 https 配置
 
 ```bash
+# 基本配置
+server {
+	listen 443;
+	server_name jhgrrewq.com;
+	ssl on;
+	ssl_certificate /etc/nginx/certs/1_jhgrrewq.com_bundle.crt;
+	ssl_certificate_key /etc/nginx/certs/2_jhgrrewq.com.key;
+}
+
+# 负载
 upstream jack {
-  server 127.0.0.1:8081;
+  server 127.0.0.1:<port>;
 }
 
 server {
