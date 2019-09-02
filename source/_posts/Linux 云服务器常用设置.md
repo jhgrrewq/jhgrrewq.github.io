@@ -187,6 +187,14 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub test@118.24.149.79
 
 之后就可免密码登录 `ssh test@118.24.149.79`
 
+注意遇到 `ssh-copy-id -i command not found`
+
+- 本地终端执行以下命令
+
+`curl -L https://raw.githubusercontent.com/beautifulcode/ssh-copy-id-for-OSX/master/install.sh | sh`
+
+输入本地软件安装密码，看到 `Installed ssh-copy-id into /usr/local/bin`，说明 ssh-copy-id 安装成功
+
 ## 常见 linux 操作
 
 - 查看系统盘

@@ -4,21 +4,7 @@ tag:
 	- Node.js
 	- koa2
 ---
-<!-- markdownlint-disable MD010 -->
-
 > koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。 使用 koa 编写 web 应用，通过组合**不同的 generator(koa2 用 async/await)**，可以免除重复繁琐的回调函数嵌套， 并极大地提升错误处理的效率。**koa 不在内核方法中绑定任何中间件**， 它仅仅提供了一个轻量优雅的函数库，使得编写 Web 应用变得得心应手
-
-## 代码结构
-
-```js
-- lib/
--- application.js // 入口文件
--- context.js
--- request.js
--- response.js
-```
-
-<!-- more -->
 
 ## 基础
 
@@ -61,7 +47,130 @@ function Server(requestListener) {
 }
 ```
 
-## application.js
+### 常见中间件操作
+
+- 静态服务
+
+  ```js
+  app.use(require('koa-static')(__dirname + '/'))
+  ```
+
+- 路由
+
+  ```js
+  const router = require('koa-router')()
+  router.get('/string', async (ctx, next) => {
+    ctx.body = 'koa2 string'
+  })
+  router.get('/json', async (ctx, next) => {
+    ctx.body = {
+      title: 'koa2 json'
+    }
+  })
+  app.use(router.routes())
+  ```
+
+- 日志
+
+  ```js
+  app.use(async (ctx,next) => {
+  	const start = new Date().getTime()
+  	console.log(`start: ${ctx.url}`);
+  	await next();
+  	const end = new Date().getTime() console.log(`请求${ctx.url}, 耗时${parseInt(end-start)}ms`)
+  })
+  ```
+
+## 源码
+
+### 代码结构
+
+```js
+- lib/
+-- application.js // 入口文件
+-- context.js
+-- request.js
+-- response.js
+```
+
+<!-- more -->
+
+### 基础
+
+```js
+const http = require('http')
+
+http.createServer(function(req, res, next) {
+  // res.writeHead(statusCode, [reason], [headers])
+  res.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'})
+  // res.statusCode = 200
+  // res.setHead('Content-Type', 'text/html;charset=UTF-8')
+  res.end('hi')
+}).listen(3000, function() {
+  console.log('listen at port 3000')
+})
+```
+
+使用 Node.js 原生创建一个 http 服务器的代码, 实际上是调用 http.createServer(requestListener), 创建一个 http.Server 的实例，http.Server 继承于 EventEmitter 类。传入的 requestListener 是一个函数，会自动添加到 'request' 事件，最后将 http.Server 的实例绑定到 3000 端口，开始监听来自 3000 端口的请求
+
+requestListener 函数接受两个参数 req 和 res，req 是一个可读流，res 是一个可写流。通过 req 获取该 http 请求的所有信息，同时将数据写入 res 来对请求做出响应
+
+```js
+// Node.js 源码 http.js
+const server = require('_http_server');
+const { Server } = server;
+function createServer(requestListener) {
+  return new Server(requestListener);
+}
+
+// Node.js 源码 _http_server.js
+// Server 构造函数 传入 requestListener，如果 requestListener 存在会被添加到 'request' 事件
+function Server(requestListener) {
+  if (!(this instanceof Server)) return new Server(requestListener);
+  net.Server.call(this, { allowHalfOpen: true });
+
+  if (requestListener) {
+    this.on('request', requestListener);
+  }
+  ...
+}
+```
+
+#### 常见中间件操作
+
+- 静态服务
+
+  ```js
+  app.use(require('koa-static')(__dirname + '/'))
+  ```
+
+- 路由
+
+  ```js
+  const router = require('koa-router')()
+  router.get('/string', async (ctx, next) => {
+    ctx.body = 'koa2 string'
+  })
+  router.get('/json', async (ctx, next) => {
+    ctx.body = {
+      title: 'koa2 json'
+    }
+  })
+  app.use(router.routes())
+  ```
+
+- 日志
+
+  ```js
+  app.use(async (ctx,next) => {
+  	const start = new Date().getTime()
+  	console.log(`start: ${ctx.url}`);
+  	await next();
+  	const end = new Date().getTime() console.log(`请求${ctx.url}, 耗时${parseInt(end-start)}ms`)
+  })
+  ```
+
+### application.js
 
 使用 koa2 创建一个 server 代码非常简单
 
@@ -79,7 +188,7 @@ app.listen(3000, () => {
 })
 ```
 
-### 构造函数
+#### 构造函数
 
 application.js 实现并导出一个构造函数，该构造函数继承 Emitter 类，context, request, response 是三个字面量创建的对象，封装了一些方法和属性（大部分都是属性的 get 和 set）, 同时将这三个对象作为原型生成的对象缓存在 application 实例的对应属性中
 
@@ -119,7 +228,7 @@ function responed(ctx) {
 }
 ```
 
-### use(fn)
+#### use(fn)
 
 构造函数原型方法 **use 方法实质是注册一个中间件**，将传入的中间件 push 到自身的 middlewares 数组中。传入的中间件必须是函数，在 koa2 中，如果传入的中间件是 generator 方法，会调用 koa-convert 模块进行转化
 
@@ -142,7 +251,7 @@ use(fn) {
 }
 ```
 
-### listen(...arg)
+#### listen(...arg)
 
 在 Node.js 原生代码中，通过向 http.createServer 传递一个函数来创建一个  http.Server 实例来启动应用，构造函数原型方法 **listen 方法就是对其封装，只不过 http.createServer 会传入自身 callback 的调用**
 
@@ -154,7 +263,7 @@ listen(...args) {
 }
 ```
 
-### callback()
+#### callback()
 
 this.callback() 返回的肯定是一个函数，而这个函数就是根据 req 获取信息，同时向 res 中写入数据。
 
@@ -252,7 +361,7 @@ app.callback = function(){
 };
 ```
 
-### respond(ctx)
+#### respond(ctx)
 
 respond 方法是 application 模块的私有方法，就是根据 ctx ，向 res 集中写入数据，响应 http 请求
 
@@ -305,9 +414,13 @@ function respond(ctx) {
 }
 ```
 
-### createContext(req, res)
+#### createContext(req, res)
 
 其实是将context, request, response 作为原型创建的对象指定为 app 中对应的属性，将原生 req 和 res 赋给相应的属性
+
+-  context request respones 都有相应 app req res 对象属性
+- context.respone / context.request 访问的是 koa 封装的 response / request 对象属性方法
+- context.req / context.res 访问的是 Node.js 封装的 req / res 对象属性方法
 
 ```js
  createContext(req, res) {
@@ -333,7 +446,7 @@ function respond(ctx) {
   }
 ```
 
-## context.js
+### context.js
 
 该模块中，将 request 对象和 response 对象的一些方法和属性委托给了 context 对象, 并导出 context 对象
 
@@ -469,9 +582,9 @@ Delegator.prototype.setter = function(name){
 ...
 ```
 
-## request.js
+### request.js
 
-request 模块导出一个对象，对象的属性设置 getter 和 setter，封装了 Node.js 中 req 对象的一些属性方法
+request 模块导出一个对象，**对象的属性设置 getter 和 setter**，**封装了 Node.js 中 req 对象的一些属性方法**
 
 同理 response.js
 
@@ -494,7 +607,7 @@ module.exports = {
 }
 ```
 
-## 中间件
+### 中间件
 
 对于每一个请求都会调用中间件进行处理。在 koa 中，中间件通过 use 方法注册，koa2 中间件函数不能是 generator 函数，可以使用 async / await
 
@@ -583,6 +696,207 @@ function compose (middleware) {
       } catch (err) {
         return Promise.reject(err)
       }
+    }
+  }
+}
+```
+
+## 实现
+
+### koa 简易实现
+
+koa 重点在于实现其异步中间件机制，也就是实现 compose 方法，将中间件数组混合成一个函数再进行调用
+
+```js
+async function a(ctx, next) {
+	console.log('a before')
+  await next()
+  console.log('a back')
+}
+async function b(ctx, next) {
+	console.log('b before')
+  await next()
+  console.log('b back')
+}
+// 执行 compose
+compose([a, b])({})
+
+// a before
+// b before
+// b back
+// a back
+```
+
+```js
+function compose(middleware) {
+	return function(ctx) {
+    // 执行第一个
+		return dispatch(0)
+    function dispatch(i) {
+      let fn = middleware(i)
+      // 以为是异步，返回一个 promise
+      if (!fn) return Promise.resolve()
+      return Promise.resolve(
+        // 调用中间件
+        fn(ctx, function next() {
+          // 调用中间件时传入的 next 函数调用 dispatch 方法调用下一个中间件
+					return dispatch(i + 1)
+        })
+      )
+    }
+  }
+}
+```
+
+### 常见中间件简易实现
+
+#### koa 中间件规范
+
+- 一个 **async** 函数
+
+- 接收 ctx 和 next 两个参数
+
+- 任务结束需要执行 next
+
+  ```js
+  const mid = aysnc (ctx, next) => {
+    // 来到中间件，洋葱圈左边
+    await next() // 进入其他中间件
+    // 再次回到中间件，洋葱圈右边
+  }
+  ```
+
+但是一般中间件都会提供一些参数用于用户自定义配置，因此中间件一般是两层函数，外层函数用于传递配置项，内层函数是真正 koa 中间件，在 koa 中间件中调用 next，否则无法调用后续中间件
+
+```js
+const mid => config => {
+	// to do 
+  // 处理配置等
+  return async (ctx, next) => {
+    // to do
+    await next()
+    // to do 
+  }
+}
+```
+
+#### 中间件常见任务
+
+- 请求拦截
+- 路由
+- 静态文件服务
+- 日志 
+
+#### koa-router 简易实现
+
+可能用法
+
+```js
+const Koa = require('koa')
+const Router = require('./router')
+const app = new Koa()
+const router = new Router()
+
+router.get('/index', async ctx => { ctx.body = 'index page' })
+router.post('/index', async ctx => { ctx.body = 'post page' })
+
+// 路由实例输出父中间件 router.routes()
+app.use(router.routes())
+```
+
+重点在于 router.routes() 方法实现，router 类需要对 get post 等请求中间件提供一个数组进行缓存，routes() 方法返回的中间件需要对每次发来的请求去数组中进行筛选，执行匹配的请求中间件
+
+```js
+// ./router.js
+module.exports = class Router {
+  constructor() {
+    this.stack = []
+  }
+  register(path, methods, middeware) {
+    const route = { path, methods, middleware }
+    this.stack.push(route)
+  }
+  // 这里只处理 get 和 post，其他请求方法同理
+  get(path, middleware) {
+		this.register(path, 'get', middleware)
+  }
+  post(path, middleware) {
+		this.register(path, 'post', middleware)
+  }
+  routes() {
+    // 中间件逻辑
+    const stack = this.stack
+    return async (ctx, next) => {
+      const currentPath = ctx.url
+     	const route = stack.filter(item => {
+        // 简易处理
+        if (currentPath === item.path && item.methods.indexOf(ctx.methods) > -1) {
+          return item.middleware
+        }
+      })
+      if (route && typeof route === 'function') {
+        return route(ctx, next)
+      }
+      await next()
+    }
+	}
+}
+```
+
+#### koa-static 简易实现
+
+- 配置绝对资源目录地址，默认 public
+- 获取文件或目录信息
+- 静态文件读取
+- 返回
+
+```js
+// 使用
+const static = require('./static')
+app.use(static(__dirname + '/public'))
+```
+
+关键在于对请求路径进行判断，对静态资源目录开头的请求进行处理，否则认为不是静态资源，调用下一个中间件
+
+```js
+// ./static.js
+const fs = require('fs')
+module.exports = (dirPath = './public') => {
+  return async (ctx, next) => {
+    if (ctx.url.indexOf('public') === 0) {
+			// public 开头 读取文件
+      const url = path.resolve(__dirname, dirPath)
+      const filepath = url + ctx.url.replace("/public", "")
+      try{
+        const static = fs.statSync(filePath)
+        if (static.isDirectory()) {
+          // 显示文件列表
+          const ret = ['<div']
+          dir.forEach(filename => {
+            if (filename.indexOf(".") > -1) {
+              ret.push(
+                `<p><a style="color:black" href="${
+                  ctx.url
+                }/${filename}">${filename}</a></p>`
+							)
+						} else {
+							// 文件 ret.push(
+                `<p><a href="${ctx.url}/${filename}">${filename}</a></p>`
+              )
+					} })
+          ret.push("</div>")
+          ctx.body = ret.join("");
+        } else {
+          // 文件处理
+          console.log('文件')
+        }
+      } catch(err => {
+        // 读取文件报错
+        ctx.body = '404 not found'
+    	})
+    } else {
+      // 不是静态资源，调用下一个中间件
+      await next()
     }
   }
 }
