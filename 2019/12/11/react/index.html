@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="起步项目 安装官方脚手架 npm install -g create-react-app 创建项目 create-react-app react-study 启动项目 npm start  文件结构1234567891011121314├── README.md              文档├── public							   静态资源│   ├── favicon.ico│   ├── in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jhgrrewq 前端小站">
+<meta property="og:url" content="http://jhgrrewq.github.io/2019/12/11/react/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="起步项目 安装官方脚手架 npm install -g create-react-app 创建项目 create-react-app react-study 启动项目 npm start  文件结构1234567891011121314├── README.md              文档├── public							   静态资源│   ├── favicon.ico│   ├── in">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-12T02:43:16.655Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jhgrrewq 前端小站">
+<meta name="twitter:description" content="起步项目 安装官方脚手架 npm install -g create-react-app 创建项目 create-react-app react-study 启动项目 npm start  文件结构1234567891011121314├── README.md              文档├── public							   静态资源│   ├── favicon.ico│   ├── in">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2019/12/11/react/"/>
+
+
+
+
+
+  <title> | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/12/11/react/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-11T09:33:59+08:00">
+                2019-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="起步项目"><a href="#起步项目" class="headerlink" title="起步项目"></a>起步项目</h2><ul>
+<li>安装官方脚手架 <code>npm install -g create-react-app</code></li>
+<li>创建项目 <code>create-react-app react-study</code></li>
+<li>启动项目 <code>npm start</code></li>
+</ul>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├── README.md              文档</span><br><span class="line">├── public							   静态资源</span><br><span class="line">│   ├── favicon.ico</span><br><span class="line">│   ├── index.html</span><br><span class="line">│   └── manifest.json</span><br><span class="line">└── src									   源码</span><br><span class="line">    ├── App.css</span><br><span class="line">    ├── App.js             根组件</span><br><span class="line">    ├── App.test.js</span><br><span class="line">    ├── index.css          全局样式</span><br><span class="line">    ├── index.js           入口文件</span><br><span class="line">    ├── logo.svg</span><br><span class="line">    └── serviceWorker.js   pwa支持</span><br><span class="line">├── package.json           npm 依赖</span><br></pre></td></tr></table></figure>
+<h2 id="CRA-（create-react-app）项目真容"><a href="#CRA-（create-react-app）项目真容" class="headerlink" title="CRA （create-react-app）项目真容"></a>CRA （create-react-app）项目真容</h2><p>使用 <code>npm run eject</code> 弹出项目真容，会多出两个目录</p>
+<p>该操作不可逆</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── config</span><br><span class="line">	├── env.js                     处理.env环境变量配置文件</span><br><span class="line">	├── paths.js                   提供各种路径</span><br><span class="line">	├── webpack.config.js          webpack配置文件</span><br><span class="line">	└── webpackDevServer.config.js 测试服务器配置文件</span><br><span class="line">└── scripts                      启动、打包和测试脚本 </span><br><span class="line">	├── build.js                   打包脚本</span><br><span class="line">	├── start.js                   启动脚本</span><br><span class="line">	└── test.js                    测试脚本</span><br></pre></td></tr></table></figure>
+<h3 id="env-js"><a href="#env-js" class="headerlink" title="env.js"></a>env.js</h3><p>用来处理 env 文件中配置的变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node 运行环境：development production test 等</span></span><br><span class="line"><span class="keyword">const</span> NODE_ENV = process.env.NODE_ENV</span><br><span class="line"></span><br><span class="line"><span class="comment">// 待扫描的文件名数组</span></span><br><span class="line"><span class="keyword">const</span> dotenvFiles = [</span><br><span class="line">  <span class="string">`<span class="subst">$&#123;paths.dotenv&#125;</span>.<span class="subst">$&#123;NODE_ENV&#125;</span>.local`</span>, <span class="comment">// .env.development.local</span></span><br><span class="line">  <span class="string">`<span class="subst">$&#123;paths.dotenv&#125;</span>.<span class="subst">$&#123;NODE_ENV&#125;</span>`</span>,	     <span class="comment">// .env.development</span></span><br><span class="line">  NODE_ENV !== <span class="string">'test'</span> &amp;&amp; <span class="string">`<span class="subst">$&#123;paths.dotenv&#125;</span>.local`</span>, <span class="comment">// .env.local</span></span><br><span class="line">  paths.dotenv, <span class="comment">// .env</span></span><br><span class="line">].filter(<span class="built_in">Boolean</span>); <span class="comment">// 判断文件存在</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 .env* 文件中加载文件变量</span></span><br><span class="line">dotenvFiles.forEach(<span class="function"><span class="params">dotenvFile</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (fs.existsSync(dotenvFile)) &#123;</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">'dotenv-expand'</span>)(</span><br><span class="line">      <span class="built_in">require</span>(<span class="string">'dotenv'</span>).config(&#123;</span><br><span class="line">        path: dotenvFile,</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h3><ul>
+<li>支持 ts</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Check if TypeScript is setup 启用 ts</span></span><br><span class="line"><span class="keyword">const</span> useTypeScript = fs.existsSync(paths.appTsConfig); <span class="comment">// 配置 tsconfig.json</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TypeScript type checking ts 相关插件启用</span></span><br><span class="line">plugins: [</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  useTypeScript &amp;&amp;</span><br><span class="line">    <span class="keyword">new</span> ForkTsCheckerWebpackPlugin(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>支持 sass 和 css 模块化</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// style files regexes</span></span><br><span class="line"><span class="keyword">const</span> cssRegex = <span class="regexp">/\.css$/</span>;</span><br><span class="line"><span class="keyword">const</span> cssModuleRegex = <span class="regexp">/\.module\.css$/</span>; <span class="comment">// css 模块化</span></span><br><span class="line"><span class="keyword">const</span> sassRegex = <span class="regexp">/\.(scss|sass)$/</span>;</span><br><span class="line"><span class="keyword">const</span> sassModuleRegex = <span class="regexp">/\.module\.(scss|sass)$/</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  rules: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// "oneOf" will traverse all following loaders until one will</span></span><br><span class="line">      <span class="comment">// match the requirements. When no loader matches it will fall</span></span><br><span class="line">      <span class="comment">// back to the "file" loader at the end of the loader list.</span></span><br><span class="line">      <span class="comment">// 这里由上至下进行匹配，只有一个匹配后面就不匹配</span></span><br><span class="line">      oneOf: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: cssRegex,</span><br><span class="line">          exclude: cssModuleRegex, <span class="comment">// 优先处理 css ，排除模块化 css 文件</span></span><br><span class="line">          use: getStyleLoaders(&#123;</span><br><span class="line">            importLoaders: <span class="number">1</span>,</span><br><span class="line">            sourceMap: isEnvProduction &amp;&amp; shouldUseSourceMap,</span><br><span class="line">          &#125;),</span><br><span class="line">          sideEffects: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          test: cssModuleRegex,</span><br><span class="line">          use: getStyleLoaders(&#123;</span><br><span class="line">            importLoaders: <span class="number">1</span>,</span><br><span class="line">            sourceMap: isEnvProduction &amp;&amp; shouldUseSourceMap,</span><br><span class="line">            modules: &#123;</span><br><span class="line">              getLocalIdent: getCSSModuleLocalIdent,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>入口</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">entry: [</span><br><span class="line">      <span class="comment">// Include an alternative client for WebpackDevServer. A client's job is to</span></span><br><span class="line">      <span class="comment">// connect to WebpackDevServer by a socket and get notified about changes.</span></span><br><span class="line">      <span class="comment">// When you save a file, the client will either apply hot updates (in case</span></span><br><span class="line">      <span class="comment">// of CSS changes), or refresh the page (in case of JS changes). When you</span></span><br><span class="line">      <span class="comment">// make a syntax error, this client will display a syntax error overlay.</span></span><br><span class="line">      <span class="comment">// Note: instead of the default WebpackDevServer client, we use a custom one</span></span><br><span class="line">      <span class="comment">// to bring better experience for Create React App users. You can replace</span></span><br><span class="line">      <span class="comment">// the line below with these two lines if you prefer the stock client:</span></span><br><span class="line">      <span class="comment">// require.resolve('webpack-dev-server/client') + '?/',</span></span><br><span class="line">      <span class="comment">// require.resolve('webpack/hot/dev-server'),</span></span><br><span class="line">      isEnvDevelopment &amp;&amp;</span><br><span class="line">        <span class="built_in">require</span>.resolve(<span class="string">'react-dev-utils/webpackHotDevClient'</span>), <span class="comment">// 开发环境 热更新文件</span></span><br><span class="line">     	paths.appIndexJs <span class="comment">// src/index 入口文件</span></span><br><span class="line">    ].filter(<span class="built_in">Boolean</span>),</span><br></pre></td></tr></table></figure>
+<h2 id="React-和-ReactDom"><a href="#React-和-ReactDom" class="headerlink" title="React 和 ReactDom"></a>React 和 ReactDom</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> ReactDom <span class="keyword">from</span> <span class="string">'react-dom'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// babel-loader 可转换 jsx -&gt; vdom, 需要使用 React.createElement() 等</span></span><br><span class="line"><span class="comment">// &lt;h1&gt;test&lt;/h1&gt; -&gt; React.createElement('h1', 'test') </span></span><br><span class="line"><span class="keyword">const</span> jsx = &lt;h1&gt;test&lt;/h1&gt;</span><br><span class="line">ReactDOM.render(jsx, <span class="built_in">document</span>.querySelector(<span class="string">'#root'</span>))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>React 负责逻辑控制， 数据 -&gt; vdom</li>
+<li>ReactDom 渲染实际 dom，vdom -&gt; dom，如果是移动端，要用别的库渲染</li>
+<li>React 可用 jsx 来描述 UI</li>
+</ul>
+<h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><p>jsx 是一种 js 语法扩展，能很好描述 UI</p>
+<ul>
+<li>使用 表达式 <code>{}</code></li>
+<li>表达式可以是 <code>变量</code> 、<code>常量</code> 、<code>函数</code> 、jsx </li>
+<li>条件可以通过三元表达式等实现</li>
+<li>数组元素可通过 map 等函数实现</li>
+<li>class for 等属于保留字，class 用 className 替代， for 用 htmlFor 替代</li>
+<li>style 或 class 可以使用 css 模块化</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> style <span class="keyword">from</span> <span class="string">'./index.module.css'</span></span><br><span class="line">&lt;h1 className=&#123; style.img &#125;&gt;test&lt;<span class="regexp">/h1&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="dotenv-从文件加载环境变量"><a href="#dotenv-从文件加载环境变量" class="headerlink" title="dotenv 从文件加载环境变量"></a>dotenv 从文件加载环境变量</h3><p><code>require(&#39;dotenv&#39;).config()</code> 会默认读取项目根目录下的 .env 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 可传入路径和编码方式</span><br><span class="line">config(&#123;</span><br><span class="line">  path: <span class="string">''</span>,</span><br><span class="line">  Encoding: <span class="string">''</span> </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/28/docker/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/22/使用verdaccio 搭建npm私服/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起步项目"><span class="nav-number">1.</span> <span class="nav-text">起步项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件结构"><span class="nav-number">2.</span> <span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRA-（create-react-app）项目真容"><span class="nav-number">3.</span> <span class="nav-text">CRA （create-react-app）项目真容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#env-js"><span class="nav-number">3.1.</span> <span class="nav-text">env.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-config-js"><span class="nav-number">3.2.</span> <span class="nav-text">webpack.config.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-和-ReactDom"><span class="nav-number">4.</span> <span class="nav-text">React 和 ReactDom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX"><span class="nav-number">5.</span> <span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-number">6.</span> <span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dotenv-从文件加载环境变量"><span class="nav-number">6.1.</span> <span class="nav-text">dotenv 从文件加载环境变量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

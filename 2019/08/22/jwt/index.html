@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="跨域认证问题互联万服务用户认证一般流程如下  用户向服务器发送用户名密码 服务器验证通过后，在当前对话 session 中保存相关数据，如用户角色、登录时间等 服务器向用户返回一个 session_id，写入用户 cookie 用户随后每个请求，都会通过 cookie，将 session_id 传回服务器 服务器收到 session_id，找到前期保存数据  这种模式的问题在于扩展性不好，对于服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jhgrrewq 前端小站">
+<meta property="og:url" content="http://jhgrrewq.github.io/2019/08/22/jwt/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="跨域认证问题互联万服务用户认证一般流程如下  用户向服务器发送用户名密码 服务器验证通过后，在当前对话 session 中保存相关数据，如用户角色、登录时间等 服务器向用户返回一个 session_id，写入用户 cookie 用户随后每个请求，都会通过 cookie，将 session_id 传回服务器 服务器收到 session_id，找到前期保存数据  这种模式的问题在于扩展性不好，对于服务">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-27T09:34:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jhgrrewq 前端小站">
+<meta name="twitter:description" content="跨域认证问题互联万服务用户认证一般流程如下  用户向服务器发送用户名密码 服务器验证通过后，在当前对话 session 中保存相关数据，如用户角色、登录时间等 服务器向用户返回一个 session_id，写入用户 cookie 用户随后每个请求，都会通过 cookie，将 session_id 传回服务器 服务器收到 session_id，找到前期保存数据  这种模式的问题在于扩展性不好，对于服务">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2019/08/22/jwt/"/>
+
+
+
+
+
+  <title> | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/08/22/jwt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-22T14:41:03+08:00">
+                2019-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="跨域认证问题"><a href="#跨域认证问题" class="headerlink" title="跨域认证问题"></a>跨域认证问题</h2><p>互联万服务用户认证一般流程如下</p>
+<ul>
+<li>用户向服务器发送用户名密码</li>
+<li>服务器验证通过后，在当前对话 session 中保存相关数据，如用户角色、登录时间等</li>
+<li>服务器向用户返回一个 session_id，写入用户 cookie</li>
+<li>用户随后每个请求，都会通过 cookie，将 session_id 传回服务器</li>
+<li>服务器收到 session_id，找到前期保存数据</li>
+</ul>
+<p>这种模式的问题在于扩展性不好，对于服务器集群或是跨域的服务导向架构，要求 session 数据共享。一般有两种解决方法：</p>
+<ul>
+<li>session 数据持久化，写入数据库或别的持久层</li>
+<li>服务器不保存 session 数据，所有数据保存在客户端，每次请求都发回服务器。JWT 方法就是其中代表</li>
+</ul>
+<h2 id="JWT-原理"><a href="#JWT-原理" class="headerlink" title="JWT 原理"></a>JWT 原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"姓名"</span>: <span class="string">"张三"</span>,</span><br><span class="line">  <span class="string">"角色"</span>: <span class="string">"管理员"</span>,</span><br><span class="line">  <span class="string">"到期时间"</span>: <span class="string">"2018年7月1日0点0分"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JWT 原理是服务器认证后生成一个 json 对象 (类似上面这个 json 对象) 发回给用户，之后用户和服务器通信都要发回这个 json 对象。服务器完全只靠这个对象认定用户身份。为防止用户出篡改数据，服务器在生成这个对象时会加上签名</p>
+<h2 id="JWT-数据结构"><a href="#JWT-数据结构" class="headerlink" title="JWT 数据结构"></a>JWT 数据结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<p>JWT 是一字符串，中间用点<code>.</code> 分割成了三部分：</p>
+<ul>
+<li>Header (头部)</li>
+<li>Payload (负载)</li>
+<li>Signature (签名）</li>
+</ul>
+<p>写成一行就是 <code>Header.Payload.Signature</code></p>
+<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header 部分是一个 json 对象，描述 JWT 的元数据， 一般如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">  <span class="string">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>alg</code> 属性表示签名算法，默认是 HMAC SHA256（写成 HS256）</p>
+</li>
+<li><p><code>typ</code> 属性表示令牌的类型，JWT 令牌统一为 <code>JWT</code></p>
+</li>
+</ul>
+<p>最终要将上述 json 对象使用 <code>Base64URL</code>算法转成字符串</p>
+<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><p>Payload 部分也是一个 json 对象，用来存放实际需要传输的数据。JWT 规定了 7 个官方字段供选用</p>
+<ul>
+<li>iss(issuser)  发送人</li>
+<li>exp(expiration time) 过期时间</li>
+<li>sub(subject) 主题</li>
+<li>aud(audience) 受众</li>
+<li>nbf(Not Before) 生效时间</li>
+<li>iat(Issued At) 签发时间</li>
+<li>jti(JWT ID) 编号</li>
+</ul>
+<p>除了官方字段，还可以在这部分定义私有字段,  如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">  <span class="string">"admin"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JWT 默认是不加密的，任何人都可以读取</p>
+<p>Payload 部分也要使用 <code>Base64URL</code>算法转成字符串</p>
+<h3 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h3><p>Signature 部分是对前两部分的签名，防止篡改</p>
+<p>首先需要指定一个<code>密钥（secret）</code>。 该密钥只能服务器知道，不能泄露给用户。然后使用 Header 指定的签名算法（默认是HMAC SHA256），按照下面公司是产生签名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(base64UrlEncode(header)+<span class="string">'.'</span>+base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名后，把 Header Payload Signature 三部分使用 <code>.</code>  拼接成字符串，返回给用户</p>
+<h3 id="base64UrlEncode"><a href="#base64UrlEncode" class="headerlink" title="base64UrlEncode"></a>base64UrlEncode</h3><p>之前提到 Header 和 Payload 串形算法是 base64URL 这个算法类似 base64. 因为 JWT 作为令牌有时候可能会放到 url 中（如 <a href="http://xxx.xx.com/?token=xx）。base64" target="_blank" rel="noopener">http://xxx.xx.com/?token=xx）。base64</a> 中有三个字符 <code>+</code> <code>/</code> <code>=</code></p>
+<p>在 url 中有特殊含义，因此要替换掉，<code>=</code> 省略、<code>+</code> 替换成 <code>-</code>、<code>/</code> 体替换成<code>_</code>， 这就是base64URL 算法</p>
+<h2 id="JWT-使用方式"><a href="#JWT-使用方式" class="headerlink" title="JWT 使用方式"></a>JWT 使用方式</h2><p>客户端收到服务器发的 JWT，可以存储在 cookie 中，也可以存储在 localStorage 中。此后客户端每次与服务器通信都要带上这个 JWT。可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息<code>Authorization</code>字段里面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JWT-特点"><a href="#JWT-特点" class="headerlink" title="JWT 特点"></a>JWT 特点</h2><ul>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输</li>
+</ul>
+<h2 id="jwt-simple-源码"><a href="#jwt-simple-源码" class="headerlink" title="jwt-simple 源码"></a>jwt-simple 源码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * module dependencies</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * support algorithm mapping</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> algorithmMap = &#123;</span><br><span class="line">  HS256: <span class="string">'sha256'</span>,</span><br><span class="line">  HS384: <span class="string">'sha384'</span>,</span><br><span class="line">  HS512: <span class="string">'sha512'</span>,</span><br><span class="line">  RS256: <span class="string">'RSA-SHA256'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Map algorithm to hmac or sign type, to determine which crypto function to use</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> typeMap = &#123;</span><br><span class="line">  HS256: <span class="string">'hmac'</span>,</span><br><span class="line">  HS384: <span class="string">'hmac'</span>,</span><br><span class="line">  HS512: <span class="string">'hmac'</span>,</span><br><span class="line">  RS256: <span class="string">'sign'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * expose object</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> jwt = <span class="built_in">module</span>.exports;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * version</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jwt.version = <span class="string">'0.5.6'</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Decode jwt</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; token</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; key</span></span><br><span class="line"><span class="comment"> * @param &#123;Boolean&#125; [noVerify]</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; [algorithm]</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125; payload</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jwt.decode = <span class="function"><span class="keyword">function</span> <span class="title">jwt_decode</span>(<span class="params">token, key, noVerify, algorithm</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// check token</span></span><br><span class="line">  <span class="keyword">if</span> (!token) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'No token supplied'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// check segments</span></span><br><span class="line">  <span class="keyword">var</span> segments = token.split(<span class="string">'.'</span>);</span><br><span class="line">  <span class="keyword">if</span> (segments.length !== <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Not enough or too many segments'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// All segment should be base64</span></span><br><span class="line">  <span class="keyword">var</span> headerSeg = segments[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">var</span> payloadSeg = segments[<span class="number">1</span>];</span><br><span class="line">  <span class="keyword">var</span> signatureSeg = segments[<span class="number">2</span>];</span><br><span class="line">  <span class="comment">// base64 decode and parse JSON</span></span><br><span class="line">  <span class="keyword">var</span> header = <span class="built_in">JSON</span>.parse(base64urlDecode(headerSeg));</span><br><span class="line">  <span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(base64urlDecode(payloadSeg));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!noVerify) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!algorithm &amp;&amp; <span class="regexp">/BEGIN( RSA)? PUBLIC KEY/</span>.test(key.toString())) &#123;</span><br><span class="line">      algorithm = <span class="string">'RS256'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signingMethod = algorithmMap[algorithm || header.alg];</span><br><span class="line">    <span class="keyword">var</span> signingType = typeMap[algorithm || header.alg];</span><br><span class="line">    <span class="keyword">if</span> (!signingMethod || !signingType) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm not supported'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// verify signature. `sign` will return base64 string.</span></span><br><span class="line">    <span class="comment">// 将 Header 和 Payload 重新生成签名，和已有的签名比对</span></span><br><span class="line">    <span class="keyword">var</span> signingInput = [headerSeg, payloadSeg].join(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">if</span> (!verify(signingInput, key, signingMethod, signingType, signatureSeg)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Signature verification failed'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Support for nbf and exp claims.</span></span><br><span class="line">    <span class="comment">// According to the RFC, they should be in seconds.</span></span><br><span class="line">    <span class="keyword">if</span> (payload.nbf &amp;&amp; <span class="built_in">Date</span>.now() &lt; payload.nbf*<span class="number">1000</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Token not yet active'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (payload.exp &amp;&amp; <span class="built_in">Date</span>.now() &gt; payload.exp*<span class="number">1000</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Token expired'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> payload;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Encode jwt</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; payload</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; key</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; algorithm</span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; options</span></span><br><span class="line"><span class="comment"> * @return &#123;String&#125; token</span></span><br><span class="line"><span class="comment"> * @api public</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 一般用法 jwt.encode(payload, secret)</span></span><br><span class="line">jwt.encode = <span class="function"><span class="keyword">function</span> <span class="title">jwt_encode</span>(<span class="params">payload, key, algorithm, options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查 key 密钥</span></span><br><span class="line">  <span class="keyword">if</span> (!key) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Require key'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 检查 algorithm, default is HS256</span></span><br><span class="line">  <span class="keyword">if</span> (!algorithm) &#123;</span><br><span class="line">    algorithm = <span class="string">'HS256'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> signingMethod = algorithmMap[algorithm];</span><br><span class="line">  <span class="keyword">var</span> signingType = typeMap[algorithm];</span><br><span class="line">  <span class="keyword">if</span> (!signingMethod || !signingType) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm not supported'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// header, typ is fixed value.</span></span><br><span class="line">  <span class="keyword">var</span> header = &#123; <span class="attr">typ</span>: <span class="string">'JWT'</span>, <span class="attr">alg</span>: algorithm &#125;;</span><br><span class="line">  <span class="keyword">if</span> (options &amp;&amp; options.header) &#123;</span><br><span class="line">    assignProperties(header, options.header);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// create segments, all segments should be base64 string</span></span><br><span class="line">  <span class="keyword">var</span> segments = [];</span><br><span class="line">  segments.push(base64urlEncode(<span class="built_in">JSON</span>.stringify(header)));</span><br><span class="line">  segments.push(base64urlEncode(<span class="built_in">JSON</span>.stringify(payload)));</span><br><span class="line">  segments.push(sign(segments.join(<span class="string">'.'</span>), key, signingMethod, signingType));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> segments.join(<span class="string">'.'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * private util functions</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">assignProperties</span>(<span class="params">dest, source</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> attr <span class="keyword">in</span> source) &#123;</span><br><span class="line">    <span class="keyword">if</span> (source.hasOwnProperty(attr)) &#123;</span><br><span class="line">      dest[attr] = source[attr];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">verify</span>(<span class="params">input, key, method, type, signature</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(type === <span class="string">"hmac"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (signature === sign(input, key, method, type));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">"sign"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> crypto.createVerify(method)</span><br><span class="line">                 .update(input)</span><br><span class="line">                 .verify(key, base64urlUnescape(signature), <span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm type not recognized'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sign</span>(<span class="params">input, key, method, type</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// HMACSHA256(base64UrlEncode(header)+'.'+base64UrlEncode(payload),secret)</span></span><br><span class="line">  <span class="comment">// sign(input, key)</span></span><br><span class="line">  <span class="keyword">var</span> base64str;</span><br><span class="line">  <span class="keyword">if</span>(type === <span class="string">"hmac"</span>) &#123;</span><br><span class="line">    <span class="comment">// hmc 签名算法</span></span><br><span class="line">    base64str = crypto.createHmac(method, key).update(input).digest(<span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">"sign"</span>) &#123;</span><br><span class="line">    base64str = crypto.createSign(method).update(input).sign(key, <span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm type not recognized'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> base64urlEscape(base64str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlDecode</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Buffer.from(base64urlUnescape(str), <span class="string">'base64'</span>).toString();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlUnescape</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  str += <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5</span> - str.length % <span class="number">4</span>).join(<span class="string">'='</span>);</span><br><span class="line">  <span class="keyword">return</span> str.replace(<span class="regexp">/\-/g</span>, <span class="string">'+'</span>).replace(<span class="regexp">/_/g</span>, <span class="string">'/'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlEncode</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// str 转为 Buffer 二进制数据，再转为 base64 串</span></span><br><span class="line">  <span class="keyword">return</span> base64urlEscape(Buffer.from(str).toString(<span class="string">'base64'</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlEscape</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//base64 中有三个字符 + / = 在 url 中有特殊含义，因此要替换掉，= 省略、+ 替换成 -、/ 替换成_， 这就是base64URL 算法</span></span><br><span class="line">  <span class="keyword">return</span> str.replace(<span class="regexp">/\+/g</span>, <span class="string">'-'</span>).replace(<span class="regexp">/\//g</span>, <span class="string">'_'</span>).replace(<span class="regexp">/=/g</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Node-crypto-模块"><a href="#Node-crypto-模块" class="headerlink" title="Node crypto 模块"></a>Node crypto 模块</h3><p>HMAC 散列运算消息认证码：</p>
+<ul>
+<li>运算使用散列算法，以一个密钥 (secret)和一个消息为输入，生成一个消息摘要作为输出</li>
+<li>HMAC运算可以用来验证两段数据是否匹配，以确认该数据没有被篡改</li>
+</ul>
+<p>在使用 HMAC 算法前，使用 createHmac 方法创建一个 hmac 对象</p>
+<h4 id="crypto-createHmac-params-key"><a href="#crypto-createHmac-params-key" class="headerlink" title="crypto.createHmac(params, key)"></a><strong>crypto.createHmac(params, key)</strong></h4><p>该方法中使用两个参数，第一个参数含义是在Node.js中使用的<strong>算法</strong>，比如’sha1’, ‘md5’, ‘sha256’, ‘sha512’等等，该方法返回的是<strong>hmac对象</strong>。第二个参数 key 参数值为一个字符串，用于指定一个PEM格式的<strong>密钥</strong>。</p>
+<h4 id="hmac-update-data"><a href="#hmac-update-data" class="headerlink" title="hmac.update(data)"></a><strong>hmac.update(data)</strong></h4><p>在该方法中，使用一个参数，其参数值为一个<strong>Buffer对象或一个字符串</strong>，用于<strong>指定摘要内容</strong>。也是一样可以在被输出之前使用多次update方法来添加摘要内容。</p>
+<p><strong>最后一步就是使用 hmac 对象的 digest 方法来输出摘要内容了；使用了digest方法作为输出后，因此是不能向hmac对象中追加内容</strong></p>
+<p>####<strong>hmac.digest([encoding])</strong></p>
+<p>该方法有一个参数，该参数是一个可选值，表示的意思是 用于<strong>指定输出摘要的编码格式</strong>，可指定参数值为 ‘hex’, ‘binary’, 及 ‘base64’. 如果不使用该参数，那么digest方法返回一个是<strong>Buffer对象</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/15/vue ssr/" rel="next" title="vue 服务端渲染">
+                <i class="fa fa-chevron-left"></i> vue 服务端渲染
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/18/es6 proxy/" rel="prev" title="es6 proxy">
+                es6 proxy <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域认证问题"><span class="nav-number">1.</span> <span class="nav-text">跨域认证问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-原理"><span class="nav-number">2.</span> <span class="nav-text">JWT 原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-数据结构"><span class="nav-number">3.</span> <span class="nav-text">JWT 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Header"><span class="nav-number">3.1.</span> <span class="nav-text">Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Payload"><span class="nav-number">3.2.</span> <span class="nav-text">Payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Signature"><span class="nav-number">3.3.</span> <span class="nav-text">Signature</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64UrlEncode"><span class="nav-number">3.4.</span> <span class="nav-text">base64UrlEncode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-使用方式"><span class="nav-number">4.</span> <span class="nav-text">JWT 使用方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JWT-特点"><span class="nav-number">5.</span> <span class="nav-text">JWT 特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jwt-simple-源码"><span class="nav-number">6.</span> <span class="nav-text">jwt-simple 源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-crypto-模块"><span class="nav-number">6.1.</span> <span class="nav-text">Node crypto 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#crypto-createHmac-params-key"><span class="nav-number">6.1.1.</span> <span class="nav-text">crypto.createHmac(params, key)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hmac-update-data"><span class="nav-number">6.1.2.</span> <span class="nav-text">hmac.update(data)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue ssr," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考：vue ssr 官网  原理服务器端渲染整体 服务端渲染不同环境开发环境  生产环境 实践服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 webpack 入口文件，一个用于浏览器端渲染 webpack.config.client.js, 一个用于服务器端渲染 webpack.config.server.js, 将它们的公有部分抽取作为 webpack">
+<meta name="keywords" content="vue ssr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 服务端渲染">
+<meta property="og:url" content="http://jhgrrewq.github.io/2019/08/15/vue ssr/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考：vue ssr 官网  原理服务器端渲染整体 服务端渲染不同环境开发环境  生产环境 实践服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 webpack 入口文件，一个用于浏览器端渲染 webpack.config.client.js, 一个用于服务器端渲染 webpack.config.server.js, 将它们的公有部分抽取作为 webpack">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://jhgrrewq.github.io/Users/jack/Desktop/ssr/24cb61b30fd3554b408c5e4c83704408_meitu_1.png">
+<meta property="og:image" content="http://jhgrrewq.github.io/Users/jack/Desktop/ssr/屏幕快照%202019-08-15%20下午5.04.16.png">
+<meta property="og:image" content="http://jhgrrewq.github.io/Users/jack/Desktop/ssr/屏幕快照%202019-08-15%20下午5.04.48.png">
+<meta property="og:updated_time" content="2019-08-15T10:54:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 服务端渲染">
+<meta name="twitter:description" content="参考：vue ssr 官网  原理服务器端渲染整体 服务端渲染不同环境开发环境  生产环境 实践服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 webpack 入口文件，一个用于浏览器端渲染 webpack.config.client.js, 一个用于服务器端渲染 webpack.config.server.js, 将它们的公有部分抽取作为 webpack">
+<meta name="twitter:image" content="http://jhgrrewq.github.io/Users/jack/Desktop/ssr/24cb61b30fd3554b408c5e4c83704408_meitu_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2019/08/15/vue ssr/"/>
+
+
+
+
+
+  <title>vue 服务端渲染 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/08/15/vue ssr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue 服务端渲染</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-15T16:58:28+08:00">
+                2019-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考：<a href="https://ssr.vuejs.org/zh/guide/" target="_blank" rel="noopener">vue ssr 官网</a></p>
+</blockquote>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="服务器端渲染整体"><a href="#服务器端渲染整体" class="headerlink" title="服务器端渲染整体"></a>服务器端渲染整体</h3><p><img src="/Users/jack/Desktop/ssr/24cb61b30fd3554b408c5e4c83704408_meitu_1.png" alt="24cb61b30fd3554b408c5e4c83704408_meitu_1"></p>
+<h3 id="服务端渲染不同环境"><a href="#服务端渲染不同环境" class="headerlink" title="服务端渲染不同环境"></a>服务端渲染不同环境</h3><p>开发环境</p>
+<p><img src="/Users/jack/Desktop/ssr/屏幕快照 2019-08-15 下午5.04.16.png" alt="屏幕快照 2019-08-15 下午5.04.16"></p>
+<p>生产环境</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/Users/jack/Desktop/ssr/屏幕快照 2019-08-15 下午5.04.48.png" alt=""></h2><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 <code>webpack</code> 入口文件，一个用于浏览器端渲染 <code>webpack.config.client.js</code>, 一个用于服务器端渲染 <code>webpack.config.server.js</code>, 将它们的公有部分抽取作为 <code>webpack.config.base.js</code>, 之后通过<code>webpack-merge</code> 合并。同时需要一个 server 提供 http 服务，这里用的 koa</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简化的目录</span></span><br><span class="line">- build // 打包</span><br><span class="line">    - webpack.config.base..js</span><br><span class="line">    - webpack.config.client.js</span><br><span class="line">    - webpack.config.server.js</span><br><span class="line">- src</span><br><span class="line">    - </span><br><span class="line">    - app.vue</span><br><span class="line">    - index.js</span><br><span class="line">    - client-entry.js   </span><br><span class="line">    - server-entry.js   </span><br><span class="line">    - create-app.js   </span><br><span class="line">- server</span><br><span class="line">		- index.js</span><br></pre></td></tr></table></figure>
+<h3 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h3><p>在纯客户端应用中，每个用户会在各自浏览器中使用新的应用程序实例。对于服务端渲染，每个请求都应该是全新独立的应用程序实例，以便不会有交叉请求造成的状态污染。因此需要 create-app.js 中对 app.js 修改，包装成一个工厂函数，每次调用会返回一个全新根组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./app.vue'</span></span><br><span class="line"><span class="keyword">import</span> createRouter <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> createStore <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./styles/global.scss'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端每次请求都会渲染返回一个新的 app router store 实例，避免状态污染</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> router = createRouter()</span><br><span class="line">  <span class="keyword">const</span> store = createStore()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; app, router, store &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在浏览器端，直接新建一个根组件将其挂载就能激活</p>
+<p><code>client-entry.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> createApp <span class="keyword">from</span> <span class="string">'./create-app'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; app &#125; = createApp()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端渲染好的应用 根元素 添加了一个特殊的属性 &lt;div id="app" data-server-rendered="true"&gt;，这让客户端 vue 知道这部分 html 是 Vue 在服务端渲染的，需要用激活模式挂载</span></span><br><span class="line"><span class="comment">// app.$mount('#root') 激活客户端脚本</span></span><br><span class="line"><span class="comment">// 对于没有 data-server-rendered 属性的元素上，还可以向 $mount 函数的 hydrating 参数位置传入 true，来强制使用激活模式</span></span><br><span class="line"><span class="comment">// app.$mount('#root', true)</span></span><br><span class="line">app.$mount(<span class="string">'#root'</span>)</span><br></pre></td></tr></table></figure>
+<p>在服务器端需要返回一个函数，该函数作用是接受一个 <code>context</code> 参数，同时每次都返回一个新的根组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> createApp <span class="keyword">from</span> <span class="string">'./create-app'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里 context 也就是服务端渲染 renderToString 传入 context</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, router, store &#125; = createApp()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 服务端主动调用</span></span><br><span class="line">    router.push(context.url)</span><br><span class="line">    <span class="comment">// 路由记录被推进去后，所有异步操作完成（如加载异步组件）</span></span><br><span class="line">    router.onReady(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> matchedComponents = router.getMatchedComponents()</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!matchedComponents.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`no component matched`</span>))</span><br><span class="line">      &#125;</span><br><span class="line">			resolve(app)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h3><h4 id="wepack-config-base-js"><a href="#wepack-config-base-js" class="headerlink" title="wepack.config.base.js"></a>wepack.config.base.js</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> createVueLoaderOptions = <span class="built_in">require</span>(<span class="string">'../vue-loader.config'</span>)</span><br><span class="line"><span class="keyword">const</span> isDev = process.env.NODE_ENV === <span class="string">'development'</span></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  target: <span class="string">'web'</span>,</span><br><span class="line">  entry: path.join(__dirname, <span class="string">'../src/client-entry.js'</span>),</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.[hash:8].js'</span>,</span><br><span class="line">    path: path.join(__dirname, <span class="string">'../dist'</span>),</span><br><span class="line">    <span class="comment">// 开发环境直接将静态文件的 publicPath 指定全</span></span><br><span class="line">    publicPath: <span class="string">'http://0.0.0.0:8000/dist/'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(vue|js|jsx)$/</span>,</span><br><span class="line">        loader: <span class="string">'eslint-loader'</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        enforce: <span class="string">'pre'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.vue$/</span>,</span><br><span class="line">        loader: <span class="string">'vue-loader'</span>,</span><br><span class="line">        options: createVueLoaderOptions(isDev)</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx$/</span>,</span><br><span class="line">        loader: <span class="string">'babel-loader'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(gif|jpg|jpeg|png|svg)$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'url-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              limit: <span class="number">1024</span>,</span><br><span class="line">              name: <span class="string">'resources/[path][name].[hash:8].[ext]'</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config</span><br></pre></td></tr></table></figure>
+<h4 id="webpack-config-client-js"><a href="#webpack-config-client-js" class="headerlink" title="webpack.config.client.js"></a>webpack.config.client.js</h4><p>注意到使用 <code>vue-server-renderer/client-plugin</code>  插件，最终会打包出 <code>vue-ssr-client-manifest.json</code>， 最后会被服务端 inject 到 html 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> HTMLPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>)</span><br><span class="line"><span class="keyword">const</span> ExtractPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.config.base'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VueClientPlugin = <span class="built_in">require</span>(<span class="string">'vue-server-renderer/client-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isDev = process.env.NODE_ENV === <span class="string">'development'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> defaultPluins = [</span><br><span class="line">  <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">    <span class="string">'process.env'</span>: &#123;</span><br><span class="line">      NODE_ENV: isDev ? <span class="string">'"development"'</span> : <span class="string">'"production"'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="keyword">new</span> HTMLPlugin(&#123;</span><br><span class="line">    template: path.join(__dirname, <span class="string">'../template.html'</span>)</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="comment">// 此插件在输出目录中生成 `vue-ssr-client-manifest.json`。</span></span><br><span class="line">  <span class="keyword">new</span> VueClientPlugin()</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> devServer = &#123;</span><br><span class="line">  port: <span class="number">8000</span>,</span><br><span class="line">  host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">  overlay: &#123;</span><br><span class="line">    errors: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  headers: &#123; <span class="string">'Access-Control-Allow-Origin'</span>: <span class="string">'*'</span> &#125;,</span><br><span class="line">  historyApiFallback: &#123;</span><br><span class="line">    index: <span class="string">'/dist/index.html'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  proxy: &#123;</span><br><span class="line">    <span class="string">'/api'</span>: <span class="string">'http://127.0.0.1:3000'</span>,</span><br><span class="line">    <span class="string">'/user'</span>: <span class="string">'http://127.0.0.1:3000'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  hot: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isDev) &#123;</span><br><span class="line">  config = merge(baseConfig, &#123;</span><br><span class="line">    devtool: <span class="string">'#cheap-module-eval-source-map'</span>,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.scss/</span>,</span><br><span class="line">          use: [</span><br><span class="line">            <span class="string">'vue-style-loader'</span>,</span><br><span class="line">            <span class="string">'css-loader'</span>,</span><br><span class="line">            &#123;</span><br><span class="line">              loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">              options: &#123;</span><br><span class="line">                sourceMap: <span class="literal">true</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">'sass-loader'</span></span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    devServer,</span><br><span class="line">    plugins: defaultPluins.concat([</span><br><span class="line">      <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(),</span><br><span class="line">      <span class="keyword">new</span> webpack.NoEmitOnErrorsPlugin()</span><br><span class="line">    ])</span><br><span class="line">  &#125;)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 生产环境 css 提取到单独文件</span></span><br><span class="line">  config = merge(baseConfig, &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">      app: path.join(__dirname, <span class="string">'../src/client-entry.js'</span>),</span><br><span class="line">      vendor: [<span class="string">'vue'</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">'[name].[chunkhash:8].js'</span>,</span><br><span class="line">      publicPath: <span class="string">'/dist/'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.scss/</span>,</span><br><span class="line">          use: ExtractPlugin.extract(&#123;</span><br><span class="line">            fallback: <span class="string">'vue-style-loader'</span>,</span><br><span class="line">            use: [</span><br><span class="line">              <span class="string">'css-loader'</span>,</span><br><span class="line">              &#123;</span><br><span class="line">                loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">                options: &#123;</span><br><span class="line">                  sourceMap: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="string">'sass-loader'</span></span><br><span class="line">            ]</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: defaultPluins.concat([</span><br><span class="line">      <span class="keyword">new</span> ExtractPlugin(<span class="string">'styles.[contentHash:8].css'</span>)</span><br><span class="line">    ])</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config</span><br></pre></td></tr></table></figure>
+<h4 id="webpack-config-server-js"><a href="#webpack-config-server-js" class="headerlink" title="webpack.config.server.js"></a>webpack.config.server.js</h4><p>注意使用 <code>vue-server-renderer/server-plugin&#39;</code> 插件，会输出 <code>vue-ssr-server-bundle.json</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> ExtractPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>)</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.config.base'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VueServerPlugin = <span class="built_in">require</span>(<span class="string">'vue-server-renderer/server-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> config</span><br><span class="line"></span><br><span class="line">config = merge(baseConfig, &#123;</span><br><span class="line">  <span class="comment">// 这允许 webpack 以 Node 适用方式(Node-appropriate fashion)处理动态导入(dynamic import)，</span></span><br><span class="line">  <span class="comment">// 并且还会在编译 Vue 组件时，告知 `vue-loader` 输送面向服务器代码(server-oriented code)</span></span><br><span class="line">  target: <span class="string">'node'</span>,</span><br><span class="line">  <span class="comment">// entry 指向应用的 server-entry 文件</span></span><br><span class="line">  entry: path.join(__dirname, <span class="string">'../src/server-entry.js'</span>),</span><br><span class="line">  <span class="comment">// 对 bundle renderer 提供 source map 支持</span></span><br><span class="line">  devtool: <span class="string">'source-map'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs2'</span>,</span><br><span class="line">    filename: <span class="string">'server-entry.js'</span>, <span class="comment">// 每个输出 bundle 名称</span></span><br><span class="line">    path: path.join(__dirname, <span class="string">'../server-build'</span>) <span class="comment">// 输出目录绝对地址</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 外置化应用程序依赖模块。可以使服务器构建速度更快，并生成较小的 bundle 文件</span></span><br><span class="line">  externals: <span class="built_in">Object</span>.keys(<span class="built_in">require</span>(<span class="string">'../package.json'</span>).dependencies),</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.scss/</span>,</span><br><span class="line">        use: ExtractPlugin.extract(&#123;</span><br><span class="line">          fallback: <span class="string">'vue-style-loader'</span>,</span><br><span class="line">          use: [</span><br><span class="line">            <span class="string">'css-loader'</span>,</span><br><span class="line">            &#123;</span><br><span class="line">              loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">              options: &#123;</span><br><span class="line">                sourceMap: <span class="literal">true</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">'sass-loader'</span></span><br><span class="line">          ]</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> ExtractPlugin(<span class="string">'styles.[contentHash:8].css'</span>),</span><br><span class="line">    <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">      <span class="string">'process.env.NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(process.env.NODE_ENV || <span class="string">'development'</span>),</span><br><span class="line">      <span class="string">'process.env.VUE_ENV'</span>: <span class="string">'"server"'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// 这是将服务器的整个输出</span></span><br><span class="line">    <span class="comment">// 构建为单个 JSON 文件的插件</span></span><br><span class="line">    <span class="comment">// 默认文件名为 `vue-ssr-server-bundle.json`</span></span><br><span class="line">    <span class="keyword">new</span> VueServerPlugin()</span><br><span class="line">    <span class="comment">// 可指定 filename</span></span><br><span class="line">    <span class="comment">// new VueServerPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   filename: 'xxxx'</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config</span><br></pre></td></tr></table></figure>
+<h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><h4 id="入口文件"><a href="#入口文件" class="headerlink" title="入口文件"></a>入口文件</h4><p>这里重点在要区分不同环境产出 html</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="keyword">const</span> bodyparser = <span class="built_in">require</span>(<span class="string">'koa-body'</span>)</span><br><span class="line"><span class="keyword">const</span> apiRouter = <span class="built_in">require</span>(<span class="string">'./router/api'</span>)</span><br><span class="line"><span class="keyword">const</span> staticRouter = <span class="built_in">require</span>(<span class="string">'./router/static'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isDev = process.env.NODE_ENV === <span class="string">'development'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误中间件</span></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`request with path <span class="subst">$&#123;ctx.path&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">await</span> next()</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error)</span><br><span class="line">    ctx.status = <span class="number">500</span></span><br><span class="line">    <span class="keyword">if</span> (isDev) &#123;</span><br><span class="line">      ctx.body = error.message</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ctx.body = <span class="string">'please try again later!'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析post数据并注册路由</span></span><br><span class="line">app.use(bodyparser())</span><br><span class="line"><span class="comment">// 注册 api 接口路由</span></span><br><span class="line">app.use(apiRouter.routes()).use(apiRouter.allowedMethods())</span><br><span class="line"><span class="comment">// 注册静态文件目录</span></span><br><span class="line">app.use(staticRouter.routes()).use(staticRouter.allowedMethods())</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据不同环境产出返回不同 html 页面</span></span><br><span class="line"><span class="keyword">const</span> pageRouter = isDev ? <span class="built_in">require</span>(<span class="string">'./router/dev-ssr'</span>) : <span class="built_in">require</span>(<span class="string">'./router/ssr'</span>)</span><br><span class="line">app.use(pageRouter.routes()).use(pageRouter.allowedMethods())</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'api服务已启动'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="ssr"><a href="#ssr" class="headerlink" title="ssr"></a>ssr</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> VueServerRender = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> serverRender = <span class="built_in">require</span>(<span class="string">'../server-render'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> clientManifest = <span class="built_in">require</span>(<span class="string">'../../dist/vue-ssr-client-manifest.json'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> renderer = VueServerRender</span><br><span class="line">  .createBundleRenderer(</span><br><span class="line">    path.join(__dirname, <span class="string">'../../server-build/vue-ssr-server-bundle.json'</span>),</span><br><span class="line">    &#123;</span><br><span class="line">      inject: <span class="literal">false</span>,</span><br><span class="line">      clientManifest</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> template = fs.readFileSync(</span><br><span class="line">  path.join(__dirname, <span class="string">'../server-template.ejs'</span>),</span><br><span class="line">  <span class="string">'utf-8'</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router()</span><br><span class="line">router.get(<span class="string">'*'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> serverRender(ctx, renderer, template)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+<p>生产环境下客户端清单 <code>vue-ssr-client-manifest.json</code> 和 服务端 bundle 文件 <code>vue-ssr-server-bundle.json</code>  都已生成，只要调用 <code>vue-server-renderer</code>  插件的 <code>createBundleRenderer(serverBundle, {/* 选项 */})</code>  得到一个 <code>renderer</code>  渲染器，如果传入模板 template， 就能按照官方规则，调用 <code>renderToString</code>方法将根据 服务端 bundle 文件 和 模板 template 生成 html 字符串，同时会把客户端 manifest 注入到 html 对应位置（如 style script 等）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bundle = fs.readFileSync(path.resolve(__dirname, <span class="string">'../../server-build/vue-ssr-server-bundle.json'</span>))</span><br><span class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>).createBundleRenderer(bundle, &#123;</span><br><span class="line">  template,</span><br><span class="line">  clientManifest: <span class="built_in">require</span>(<span class="string">'../../dist/vue-ssr-client-manifest.json'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">renderer.renderToString(<span class="function">(<span class="params">err, html</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(err)</span><br><span class="line">      ctx.status = <span class="number">500</span></span><br><span class="line">      ctx.body = <span class="string">'服务器内部错误'</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ctx.headers[<span class="string">'Content-Type'</span>] = <span class="string">'text/html'</span></span><br><span class="line">      ctx.body = html</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果不想按照官方注册规则，生成 renderer 传入 <code>inject: false</code> 参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> renderer = VueServerRender</span><br><span class="line">  .createBundleRenderer(</span><br><span class="line">    path.join(__dirname, <span class="string">'../../server-build/vue-ssr-server-bundle.json'</span>),</span><br><span class="line">    &#123;</span><br><span class="line">      inject: <span class="literal">false</span>,</span><br><span class="line">      clientManifest</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<p>这时 renderToString 回调函数中，传入 context 参数， 最终返回渲染字符串， 传入的 context 对象最终会暴露 <a href="https://ssr.vuejs.org/zh/guide/build-config.html#客户端配置-client-config" target="_blank" rel="noopener">如下方法</a>，方便用户调用用于自定义渲染</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (ctx, renderer, template) =&gt; &#123;</span><br><span class="line">  ctx.headers[<span class="string">'Content-Type'</span>] = <span class="string">'text/html'</span></span><br><span class="line">  <span class="keyword">const</span> context = &#123; <span class="attr">url</span>: ctx.path &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// renderToString 回调函数中，传入的 context 对象会暴露如下方法</span></span><br><span class="line">    <span class="comment">// https://ssr.vuejs.org/zh/guide/build-config.html#客户端配置-client-config</span></span><br><span class="line">    <span class="keyword">const</span> appString = <span class="keyword">await</span> renderer.renderToString(context)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> html = ejs.render(template, &#123;</span><br><span class="line">      appString,</span><br><span class="line">      styles: context.renderStyles(),</span><br><span class="line">      scripts: context.renderScripts()</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    ctx.body = html</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'render error'</span>, error)</span><br><span class="line">    <span class="keyword">throw</span> error</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="dev-ssr"><a href="#dev-ssr" class="headerlink" title="dev-ssr"></a>dev-ssr</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> MemoryFS = <span class="built_in">require</span>(<span class="string">'memory-fs'</span>) <span class="comment">// 几乎等同 fs，扩展了 fs，文件生成在内存中</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> VueServerRenderer = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> serverRender = <span class="built_in">require</span>(<span class="string">'../server-render'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> serverConfig = <span class="built_in">require</span>(<span class="string">'../../build/webpack.config.server'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译 webpack, 通过调用 webpack，传入配置对象，得到一个 complier 对象</span></span><br><span class="line"><span class="comment">// 通过对 compiler 对象 watch 或者 run 调用得到打包的 bundle 文件</span></span><br><span class="line"><span class="keyword">const</span> serverCompiler = webpack(serverConfig)</span><br><span class="line"><span class="keyword">const</span> mfs = <span class="keyword">new</span> MemoryFS()</span><br><span class="line">serverCompiler.outputFileSystem = mfs <span class="comment">// 指定 compiler 输出目录</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bundle</span><br><span class="line"><span class="comment">// watch 文件改动，文件改动会重新打包生成一个新的 bundle</span></span><br><span class="line">serverCompiler.watch(&#123;&#125;, (err, stats) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err <span class="comment">// 打包报错</span></span><br><span class="line">  stats = stats.toJson() <span class="comment">// eslint 报错等</span></span><br><span class="line">  stats.errors.forEach(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err))</span><br><span class="line">  stats.warnings.forEach(<span class="function"><span class="params">warn</span> =&gt;</span> <span class="built_in">console</span>.log(warn))</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取生成的 bundle</span></span><br><span class="line">  <span class="keyword">const</span> bundlePath = path.join(</span><br><span class="line">    serverConfig.output.path,</span><br><span class="line">    <span class="string">'vue-ssr-server-bundle.json'</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  bundle = <span class="built_in">JSON</span>.parse(mfs.readFileSync(bundlePath, <span class="string">'utf-8'</span>)) <span class="comment">// 从内存中读取 bundle 字符串，vue-server-render 需要 json 形式</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'new bundle generated'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handleSSR = <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  <span class="comment">// 服务刚起时 webpack 第一次打包比较慢，此时 bundle 可能还不存在</span></span><br><span class="line">  <span class="keyword">if</span> (!bundle) &#123;</span><br><span class="line">    ctx.body = <span class="string">'wait a moment!'</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取客户端打包静态文件</span></span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: clientManifest &#125; = <span class="keyword">await</span> axios.get(</span><br><span class="line">    <span class="string">`http://0.0.0.0:8000/dist/vue-ssr-client-manifest.json`</span></span><br><span class="line">    <span class="comment">// `http://127.0.0.1:8000/vue-ssr-client-manifest.json`</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取模板路径</span></span><br><span class="line">  <span class="keyword">const</span> template = fs.readFileSync(</span><br><span class="line">    path.join(__dirname, <span class="string">'../server-template.ejs'</span>), <span class="string">'utf-8'</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 声明 renderer</span></span><br><span class="line">  <span class="comment">// 默认情况下直接传入生成的客户端清单和页面模板</span></span><br><span class="line">  <span class="comment">// const renderer = createBundleRenderer(serverBundle, &#123;</span></span><br><span class="line">  <span class="comment">//   template,</span></span><br><span class="line">  <span class="comment">//   clientManifest</span></span><br><span class="line">  <span class="comment">// &#125;)</span></span><br><span class="line">  <span class="comment">// 当提供 template 选项时，资源注入是自动执行的，不按照官方规定注入设置 inject: false</span></span><br><span class="line">  <span class="keyword">const</span> renderer = VueServerRenderer</span><br><span class="line">    .createBundleRenderer(bundle, &#123;</span><br><span class="line">      <span class="comment">// 不按照官方规定注入</span></span><br><span class="line">      inject: <span class="literal">false</span>,</span><br><span class="line">      clientManifest</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 渲染页面</span></span><br><span class="line">  <span class="keyword">await</span> serverRender(ctx, renderer, template)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router()</span><br><span class="line">router.get(<span class="string">'*'</span>, handleSSR)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+<p>不同于生产环境的时，这时候的服务端 bundle 文件是需要 watch webpack 每次打包生成得到 bundle，而客户端清单文件需要请求客户端服务器内存中打包的文件</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-ssr/" rel="tag"># vue ssr</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/12/Nuxt/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/22/jwt/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器端渲染整体"><span class="nav-number">1.1.</span> <span class="nav-text">服务器端渲染整体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端渲染不同环境"><span class="nav-number">1.2.</span> <span class="nav-text">服务端渲染不同环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实践"><span class="nav-number">3.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用实例"><span class="nav-number">3.1.</span> <span class="nav-text">应用实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-配置"><span class="nav-number">3.2.</span> <span class="nav-text">webpack 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#wepack-config-base-js"><span class="nav-number">3.2.1.</span> <span class="nav-text">wepack.config.base.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-config-client-js"><span class="nav-number">3.2.2.</span> <span class="nav-text">webpack.config.client.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-config-server-js"><span class="nav-number">3.2.3.</span> <span class="nav-text">webpack.config.server.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器"><span class="nav-number">3.3.</span> <span class="nav-text">服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#入口文件"><span class="nav-number">3.3.1.</span> <span class="nav-text">入口文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssr"><span class="nav-number">3.3.2.</span> <span class="nav-text">ssr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dev-ssr"><span class="nav-number">3.3.3.</span> <span class="nav-text">dev-ssr</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

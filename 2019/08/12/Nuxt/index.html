@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue ssr,Nuxt," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考：Nuxt 官网  Nuxtnuxt渲染流程plugin(执行1次) =&amp;gt; nuxtServerInit(执行1次) =&amp;gt; middleware =&amp;gt; validate =&amp;gt;  page(middleware/asyncData) =&amp;gt; render  当用户访问应用程序, 如果 store 中定义了 nuxtServerInit action，Nuxt.js">
+<meta name="keywords" content="vue ssr,Nuxt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jhgrrewq 前端小站">
+<meta property="og:url" content="http://jhgrrewq.github.io/2019/08/12/Nuxt/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考：Nuxt 官网  Nuxtnuxt渲染流程plugin(执行1次) =&amp;gt; nuxtServerInit(执行1次) =&amp;gt; middleware =&amp;gt; validate =&amp;gt;  page(middleware/asyncData) =&amp;gt; render  当用户访问应用程序, 如果 store 中定义了 nuxtServerInit action，Nuxt.js">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zh.nuxtjs.org/nuxt-schema.svg">
+<meta property="og:updated_time" content="2019-08-21T00:44:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jhgrrewq 前端小站">
+<meta name="twitter:description" content="参考：Nuxt 官网  Nuxtnuxt渲染流程plugin(执行1次) =&amp;gt; nuxtServerInit(执行1次) =&amp;gt; middleware =&amp;gt; validate =&amp;gt;  page(middleware/asyncData) =&amp;gt; render  当用户访问应用程序, 如果 store 中定义了 nuxtServerInit action，Nuxt.js">
+<meta name="twitter:image" content="https://zh.nuxtjs.org/nuxt-schema.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2019/08/12/Nuxt/"/>
+
+
+
+
+
+  <title> | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/08/12/Nuxt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T11:26:55+08:00">
+                2019-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考：<a href="https://zh.nuxtjs.org/guide" target="_blank" rel="noopener">Nuxt 官网</a></p>
+</blockquote>
+<h2 id="Nuxt"><a href="#Nuxt" class="headerlink" title="Nuxt"></a>Nuxt</h2><h3 id="nuxt渲染流程"><a href="#nuxt渲染流程" class="headerlink" title="nuxt渲染流程"></a>nuxt渲染流程</h3><p>plugin(执行1次) =&gt; nuxtServerInit(执行1次) =&gt; middleware =&gt; validate =&gt;  page(middleware/asyncData) =&gt; render</p>
+<ol>
+<li><p>当用户访问应用程序, 如果 store 中定义了 nuxtServerInit action，Nuxt.js 将调用它更新 store。</p>
+</li>
+<li><p>将加载即将访问页面所依赖的任何中间件。Nuxt 首先从 nuxt.config.js 这个文件中，加载全局依赖的中间件，之后检测每个相应页面对应的布局文件 ，最后，检测布局文件下子组件依赖的中间件。以上是中间件的加载顺序。</p>
+</li>
+<li><p>如果要访问的路由是一个动态路由, 且有一个相应的 validate() 方法路由的validate 方法，讲进行路由校验。</p>
+</li>
+<li><p>Nuxt.js 调用 asyncData() 和 fetch() 方法，在渲染页面之前加载异步数据。asyncData() 方法用于异步获取数据，并将 fetch 回来的数据，在服务端渲染到页面。 用 fetch() 方法取回的将数据在渲染页面之前填入store。</p>
+</li>
+<li><p>将所有数据渲染到页面。</p>
+</li>
+</ol>
+<p><img src="https://zh.nuxtjs.org/nuxt-schema.svg" alt="nuxt-schema"></p>
+<p>plugin(执行1次) =&gt; nuxtServerInit(执行1次) =&gt; middleware =&gt; validate =&gt;  page(middleware/asyncData) =&gt; render</p>
+<h3 id="nuxt安装"><a href="#nuxt安装" class="headerlink" title="nuxt安装"></a>nuxt安装</h3><p>运行 create-nuxt-app</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx create-nuxt-app &lt;项目名&gt;</span><br><span class="line"><span class="comment"># 或者 yarn</span></span><br><span class="line">yarn create nuxt-app &lt;项目名&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>assets</strong>:  资源目录用于组织未编译的静态资源文件，会被打包</p>
+<p><strong>components</strong>:  组件目录用于组织应用的 vue 组件，Nuxt 不会扩展增强该目录下的组件，即这些组件不会像页面组件具有 <code>asyncData</code> 方法等特性</p>
+<p><strong>layouts</strong>: 布局目录用于组织页面的布局组件</p>
+<p><strong>middleware</strong>：中间件目录用于存放应用的中间件</p>
+<p><strong>plugins</strong>:  插件目录用于存放在 <code>根vue.js应用</code>  实例化之前需要运行的插件</p>
+<p><strong>static</strong>：静态文件目录的文件不会被 Nuxt 调用 webpack 进行构建编译处理。服务器启动时该目录的文件会映射到应用的根路径 /</p>
+<p><strong>store</strong>: <code>store</code> 目录用于组织应用的 vuex 文件。Nuxt 集成了 vuex 相关功能配置，只需要在目录下创建一个 index.js 文件即可激活这些配置</p>
+<p><strong>nuxt.config.js</strong>: 用于组织 Nuxt 的个性化配置，以便覆盖配置</p>
+</blockquote>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>pages目录中所有 <code>*.vue</code> 文件自动生成应用的路由配置</p>
+<ul>
+<li>pages/detail.vue 详情页</li>
+<li>pages/admin.vue 商品管理页</li>
+<li>pages/login.vue 登录页</li>
+</ul>
+<h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><p><strong>下划线作为前缀</strong>的 vue 文件或者目录会被定义为动态路由，如下的文件结构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| detail/</span><br><span class="line">----| _id.vue</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果 detail/ 不存在 index.vue, :id 将作为可选参数</p>
+</blockquote>
+<h3 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h3><p>创建子嵌套路由，需要创建一个 .vue 文件，同时创建一个和该文件同名的目录用于存放子视图组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| index/</span><br><span class="line">----| _id.vue</span><br><span class="line">--| index.vue</span><br></pre></td></tr></table></figure>
+<p>生成路由配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">path: <span class="string">"/"</span>,</span><br><span class="line">name: <span class="string">"index"</span>,</span><br><span class="line">...</span><br><span class="line">children: [&#123;</span><br><span class="line">  path: <span class="string">":id?"</span>,</span><br><span class="line">  name: <span class="string">"index-id"</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p>添加路由导航，layouts/default.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;nav&gt;</span><br><span class="line">&lt;nuxt-link to=&quot;/&quot;&gt;首页&lt;/nuxt-link&gt;</span><br><span class="line">&lt;!--别名：n-link，NLink，NuxtLink--&gt;</span><br><span class="line">&lt;NLink to=&quot;/admin&quot;&gt;管理&lt;/NLink&gt;</span><br><span class="line">&lt;/nav&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>禁用预加载 <code>&lt;n-link no-prefetch&gt;page not pre-fetched&lt;/n-link&gt;</code></p>
+</blockquote>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><h4 id="默认布局"><a href="#默认布局" class="headerlink" title="默认布局"></a>默认布局</h4><p><code>layouts/default.vue</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;nuxt/&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="自定义布局"><a href="#自定义布局" class="headerlink" title="自定义布局"></a>自定义布局</h4><p>创建空白布局页面 <code>layouts/blank.vue</code> ，用于login.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;nuxt /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>页面 <code>pages/login.vue</code> 使用自定义布局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  layout: &apos;blank&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="自定义错误页"><a href="#自定义错误页" class="headerlink" title="自定义错误页"></a>自定义错误页</h4><p>创建<code>layouts/error.vue</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  &lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">      &lt;h1 v-if=&quot;error.statusCode === 404&quot;&gt;页面不存在&lt;/h1&gt;</span><br><span class="line">      &lt;h1 v-else&gt;应用发生错误异常&lt;/h1&gt;</span><br><span class="line">      &lt;nuxt-link to=&quot;/&quot;&gt;首 页&lt;/nuxt-link&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    props: [&apos;error&apos;]</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h3><p>页面组件就是 vue 组件，Nuxt 只不过为这些组件添加了一些特殊配置项</p>
+<p>如给页面添加标题和 meta</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  head() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      title: &quot;课程列表&quot;,</span><br><span class="line">      meta: [&#123; name: &quot;description&quot;, hid: &quot;description&quot;, content: &quot;set page meta&quot; &#125;],</span><br><span class="line">      link: [&#123; rel: &quot;favicon&quot;, href: &quot;favicon.ico&quot; &#125;],</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="异步数据获取"><a href="#异步数据获取" class="headerlink" title="异步数据获取"></a>异步数据获取</h3><p><code>asyncData</code> 方法可以在设置组件数据之前异步获取或处理数据，组件初始化之前，请求接口返回的数据会融合在 data 中，一并返回模版显示。服务端渲染，请求是在服务端发送的，由其他页面回退到该页面时，请求是在客户端发送</p>
+<blockquote>
+<p>该方法在组件创建之前，因此不能访问 this</p>
+</blockquote>
+<p>例子： 获取商品列表</p>
+<h4 id="接口准备"><a href="#接口准备" class="headerlink" title="接口准备"></a>接口准备</h4><ul>
+<li>安装依赖 <code>npm i koa-router koa-bodyparser -S</code></li>
+<li>创建接口文件 <code>server/api.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="keyword">const</span> bodyparser = <span class="built_in">require</span>(<span class="string">"koa-bodyparser"</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">"koa-router"</span>)(&#123; <span class="attr">prefix</span>: <span class="string">"/api"</span> &#125;)</span><br><span class="line"><span class="comment">// 设置cookie加密秘钥</span></span><br><span class="line">app.keys = [<span class="string">"some secret"</span>, <span class="string">"another secret"</span>]</span><br><span class="line"><span class="keyword">const</span> goods = [</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">"Web全栈架构师"</span>, <span class="attr">price</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">"Python架构师"</span>, <span class="attr">price</span>: <span class="number">1000</span> &#125;</span><br><span class="line">]</span><br><span class="line">router.get(<span class="string">"/goods"</span>, ctx =&gt; &#123;</span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    ok: <span class="number">1</span>,</span><br><span class="line">    goods</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">router.get(<span class="string">"/detail"</span>, ctx =&gt; &#123;</span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    ok: <span class="number">1</span>,</span><br><span class="line">    data: goods.find(<span class="function"><span class="params">good</span> =&gt;</span> good.id == ctx.query.id)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">router.post(<span class="string">"/login"</span>, ctx =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> user = ctx.request.body</span><br><span class="line">  <span class="keyword">if</span> (user.username === <span class="string">"jack"</span> &amp;&amp; user.password === <span class="string">"123"</span>) &#123;</span><br><span class="line">    <span class="comment">// 将token存入cookie</span></span><br><span class="line">    <span class="keyword">const</span> token = <span class="string">'a mock token'</span></span><br><span class="line">    ctx.cookies.set(<span class="string">'token'</span>, token)</span><br><span class="line">    ctx.body = &#123; <span class="attr">ok</span>: <span class="number">1</span>, token &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ctx.body = &#123; <span class="attr">ok</span>: <span class="number">0</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 解析post数据并注册路由</span></span><br><span class="line">app.use(bodyparser())</span><br><span class="line">app.use(router.routes())</span><br><span class="line">app.listen(<span class="number">8080</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'api服务已启动'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="整合-axios"><a href="#整合-axios" class="headerlink" title="整合 axios"></a>整合 axios</h4><p>安装 @nuxtjs/axios 模块  <code>npm install @nuxtjs/axios -S</code></p>
+<p>配置 nuxt.config.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">modules: [</span><br><span class="line">  &apos;@nuxtjs/axios&apos;,</span><br><span class="line">],</span><br><span class="line">axios: &#123;</span><br><span class="line">  proxy: true</span><br><span class="line">&#125;,</span><br><span class="line">proxy: &#123;</span><br><span class="line">  &quot;/api&quot;: &quot;http://localhost:8080&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试代码，获取商品列表， index.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  async asyncData(&#123; $axios, error &#125;) &#123;</span><br><span class="line">  	const &#123;ok, goods&#125; = await $axios.$get(&quot;/api/goods&quot;);</span><br><span class="line">    if (ok) &#123;</span><br><span class="line">      return &#123; goods &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    // 错误处理</span><br><span class="line">    error(&#123; statusCode: 400, message: &quot;数据查询失败&quot; &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>测试代码，获取商品详情，/index/_id.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;pre v-if=&quot;goodInfo&quot;&gt;&#123;&#123;goodInfo&#125;&#125;&lt;/pre&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  async asyncData(&#123; $axios, params, error &#125;) &#123;</span><br><span class="line">    if (params.id) &#123;</span><br><span class="line">      // asyncData中不能使用 this 获取组件实例</span><br><span class="line">      // 但是可以通过上下文获取相关数据</span><br><span class="line">      const &#123; data: goodInfo &#125; = await $axios.$get(&quot;/api/detail&quot;, &#123; params &#125;);</span><br><span class="line">      if (goodInfo) &#123;</span><br><span class="line">        return &#123; goodInfo &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      error(&#123; statusCode: 400, message: &quot;商品详情查询失败&quot; &#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return &#123; goodInfo: null &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>中间件会在一个页面或一个组件运行前执行定义好的函数，常用于权限控制、校验等任务</p>
+<p>例子：管理员页面保护，创建 <code>middleware/auth.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export default function(&#123; route, redirect, store &#125;) &#123;</span><br><span class="line">  // 上下文中通过store访问vuex中的全局状态</span><br><span class="line">  // 通过vuex中令牌存在与否判断是否登录</span><br><span class="line">  if (!store.state.user.token) &#123;</span><br><span class="line">  	redirect(&quot;/login?redirect=&quot;+route.path);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册中间件，admin.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">	middleware: [&apos;auth&apos;]</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>全局 路由守卫可在 nuxt.config.js 的 router 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; router: &#123;</span><br><span class="line">&gt; 	middleware: [auth]</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="状态管理-vuex"><a href="#状态管理-vuex" class="headerlink" title="状态管理 vuex"></a>状态管理 vuex</h3><p>应用根目录下如果存在 <code>store</code> 目录，Nuxt 会启动 vuex</p>
+<p>Nuxt 有两种使用 store 方法：</p>
+<ul>
+<li><p>普通：store/index.js 会返回一个 Vuex.Store 实例，<code>nuxtServerInit</code>  方法必须定义在该文件的 actions 中</p>
+</li>
+<li><p>模块：store 目录下的每个 .js 文件会被转换成为状态树指定命名的子模块（index 是根模块，相当设置了namespaced: true)）</p>
+</li>
+</ul>
+<p>Nuxt 提供了模块方式的简便写法：使用状态树模块化的方式，store/index.js 不需要返回 Vuex.Store 实例，和其他模块一样直接将 state、mutations 和 actions 导出暴露</p>
+<p>例子： 用户登录和用户登录状态保存。创建 store/user.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> state = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  token: <span class="string">''</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> mutations = &#123;</span><br><span class="line">  SET_TOKEN(state, token) &#123;</span><br><span class="line">    state.token = token;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getters = &#123;</span><br><span class="line">  isLogin(state) &#123;</span><br><span class="line">    <span class="keyword">return</span> !!state.token</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> actions = &#123;</span><br><span class="line">  login(&#123; commit, getters &#125;, u) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.$login(u).then(<span class="function">(<span class="params">&#123; token &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (token) &#123;</span><br><span class="line">        commit(<span class="string">"SET_TOKEN"</span>, token)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> getters.isLogin</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>Nuxt 在运行应用之前执行插件函数，只执行一次，对引入或设置 vue 插件、自定义模块、第三方模块时特别有用</p>
+<p>例子： 接口注入，利用插件机制将服务接口注入组件实例、store 实例中，创建 plugins/api-inject.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (&#123; $axios &#125;, inject) =&gt; &#123;</span><br><span class="line">  inject(<span class="string">"login"</span>, user =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> $axios.$post(<span class="string">"/api/login"</span>, user);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册插件，nuxt.config.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">	&quot;@/plugins/api-inject&quot;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>登录页面逻辑， login.vue</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;用户登录&lt;/h2&gt;</span><br><span class="line">    &lt;el-input v-model=&quot;user.username&quot;&gt;&lt;/el-input&gt;</span><br><span class="line">    &lt;el-input type=&quot;password&quot; v-model=&quot;user.password&quot;&gt;&lt;/el-input&gt;</span><br><span class="line">    &lt;el-button @click=&quot;onLogin&quot;&gt;登录&lt;/el-button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  layout: &apos;blank&apos;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      user: &#123;</span><br><span class="line">        username: &quot;&quot;,</span><br><span class="line">        password: &quot;&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    onLogin() &#123; </span><br><span class="line">      this.$store.dispatch(&quot;user/login&quot;, this.user).then(ok =&gt; &#123;</span><br><span class="line">        if (ok) &#123;</span><br><span class="line">          const redirect = this.$route.query.redirect || &quot;/&quot;;</span><br><span class="line">          this.$router.push(redirect);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>例子：添加请求拦截器附加 token，创建 plugins/interceptor.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params">&#123; $axios, store &#125;</span>) </span>&#123;</span><br><span class="line">  $axios.onRequest(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (store.state.user.token) &#123;</span><br><span class="line">      config.headers.Authorization = <span class="string">"Bearer "</span> + store.state.user.token</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 响应拦截，可做状态码处理</span></span><br><span class="line">  $axios.onResponse(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'data:::::::::'</span>, data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册插件，nuxt.config.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">export default function(&#123; $axios, store &#125;) &#123;</span><br><span class="line">  $axios.onRequest(config =&gt; &#123;</span><br><span class="line">    if (store.state.user.token) &#123;</span><br><span class="line">      config.headers.Authorization = &quot;Bearer &quot; + store.state.user.token</span><br><span class="line">    &#125;</span><br><span class="line">    return config;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  // 响应拦截，可做状态码处理</span><br><span class="line">  $axios.onResponse(data =&gt; &#123;</span><br><span class="line">    console.log(&apos;data:::::::::&apos;, data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="nuxtServerInit"><a href="#nuxtServerInit" class="headerlink" title="nuxtServerInit"></a>nuxtServerInit</h3><p>在 store 的根模块 actions 定义 <code>nuxtServerInit</code> 方法，Nuxt 调用它时会将页面上下文对象作为第二个参数传给它。可以利用这个方法将一些服务端的数据传给客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">export const actions = &#123;</span><br><span class="line">  // nuxtServerInit 只能定义在跟模块 actions 中</span><br><span class="line">  // 参数1 actions 上下文， 参数2 组件 context 上下文</span><br><span class="line">  // cookie-universal-nuxt 用于服务器和客户端无差别处理 cookie</span><br><span class="line">  nuxtServerInit(&#123; commit &#125;, &#123; app &#125;) &#123;</span><br><span class="line">    const token = app.$cookies.get(&quot;token&quot;)</span><br><span class="line">    if (token) &#123;</span><br><span class="line">      console.log(&quot;nuxtServerInit: token:&quot;+token)</span><br><span class="line">      commit(&quot;user/SET_TOKEN&quot;, token)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>安装依赖模块：cookie-universal-nuxt <code>npm i -S cookie-universal-nuxt</code></p>
+<p>注册 nuxt.config.js <code>modules: [&quot;cookie-universal-nuxt&quot;]</code></p>
+</blockquote>
+<h3 id="Nuxt-常用配置项"><a href="#Nuxt-常用配置项" class="headerlink" title="Nuxt 常用配置项"></a>Nuxt 常用配置项</h3><h4 id="配置端口-ip"><a href="#配置端口-ip" class="headerlink" title="配置端口 ip"></a>配置端口 ip</h4><p>开发常会遇到服务地址端口被占用或者指定IP的情况。可以在根目录下的 package.json 里对 config 项进行配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"config"</span>: &#123;</span><br><span class="line">	<span class="string">"nuxt"</span>: &#123;</span><br><span class="line">		<span class="string">"host"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">		<span class="string">"port"</span>: <span class="string">"1000"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="全局-css"><a href="#全局-css" class="headerlink" title="全局 css"></a>全局 css</h4><p><code>nuxt.config.js</code>  中配置 css 字段，数组，每项是字符串</p>
+<p>对于 <code>sass</code> 这类文件要预先安装  node-sass sass-loader 包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">css: [</span><br><span class="line">  <span class="comment">// 直接加载一个 Node.js 模块。（在这里它是一个 Sass 文件）</span></span><br><span class="line">  <span class="string">'bulma'</span>,</span><br><span class="line">  <span class="comment">// 项目里要用的 CSS 文件</span></span><br><span class="line">  <span class="string">'@/assets/css/main.css'</span>,</span><br><span class="line">  <span class="comment">// 项目里要使用的 SCSS 文件</span></span><br><span class="line">  <span class="string">'@/assets/css/main.scss'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="发布部署"><a href="#发布部署" class="headerlink" title="发布部署"></a>发布部署</h3><h4 id="服务端渲染部署"><a href="#服务端渲染部署" class="headerlink" title="服务端渲染部署"></a>服务端渲染部署</h4><p>先编译构建再启动 Nuxt 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>生成内容在 .nuxt/dist</p>
+</blockquote>
+<h4 id="静态应用部署"><a href="#静态应用部署" class="headerlink" title="静态应用部署"></a>静态应用部署</h4><p>Nuxt.js 可依据路由配置将应用静态化，使得我们可以将应用部署至任何一个静态站点主机服务商</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run generate</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意渲染和接口服务器需要处于启动当中</p>
+<p>生成内容在 .nuxt/dist</p>
+</blockquote>
+<h2 id="部分源码学习"><a href="#部分源码学习" class="headerlink" title="部分源码学习"></a>部分源码学习</h2><h3 id="开发环境服务器启动脚本"><a href="#开发环境服务器启动脚本" class="headerlink" title="开发环境服务器启动脚本"></a>开发环境服务器启动脚本</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> consola = <span class="built_in">require</span>(<span class="string">'consola'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; Nuxt, Builder &#125; = <span class="built_in">require</span>(<span class="string">'nuxt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Import and Set Nuxt.js options</span></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'../nuxt.config.js'</span>)</span><br><span class="line">config.dev = app.env !== <span class="string">'production'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">start</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Instantiate nuxt.js</span></span><br><span class="line">  <span class="comment">// 实例化一个 Nuxt 类</span></span><br><span class="line">  <span class="keyword">const</span> nuxt = <span class="keyword">new</span> Nuxt(config)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123;</span><br><span class="line">    host = process.env.HOST || <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    port = process.env.PORT || <span class="number">3000</span></span><br><span class="line">  &#125; = nuxt.options.server</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Build in development</span></span><br><span class="line">  <span class="keyword">if</span> (config.dev) &#123;</span><br><span class="line">    <span class="comment">// 开发环境调用 Buildre 实例化对象的 build 方法进行文件打包构建</span></span><br><span class="line">    <span class="keyword">const</span> builder = <span class="keyword">new</span> Builder(nuxt)</span><br><span class="line">    <span class="keyword">await</span> builder.build()</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> nuxt.ready()</span><br><span class="line">  &#125;</span><br><span class="line">	</span><br><span class="line">  <span class="comment">// 添加请求中间件</span></span><br><span class="line">  app.use(<span class="function">(<span class="params">ctx</span>) =&gt;</span> &#123;</span><br><span class="line">    ctx.status = <span class="number">200</span></span><br><span class="line">    ctx.respond = <span class="literal">false</span> <span class="comment">// Bypass Koa's built-in response handling</span></span><br><span class="line">    ctx.req.ctx = ctx <span class="comment">// This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash</span></span><br><span class="line">    <span class="comment">// 调用 nuxt render 方法</span></span><br><span class="line">    nuxt.render(ctx.req, ctx.res)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  app.listen(port, host)</span><br><span class="line">  consola.ready(&#123;</span><br><span class="line">    message: <span class="string">`Server listening on http://<span class="subst">$&#123;host&#125;</span>:<span class="subst">$&#123;port&#125;</span>`</span>,</span><br><span class="line">    badge: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">start()</span><br></pre></td></tr></table></figure>
+<h3 id="自动生成-routes"><a href="#自动生成-routes" class="headerlink" title="自动生成 routes"></a>自动生成 routes</h3><p> <code>@nuxt/builder/dist/build.js</code> 中进行开发环境文件打包的 build 方法中用到一个 <code>generateRoutesAndFiles</code>方法，引入 glob 库对 pages 下的文件进行遍历，并进行了字符串的处理，最后将所有的 vue 文件地址，整个的项目地址和 pages 作为参数传给<code>createRoutes</code> 函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> generateRoutesAndFiles() &#123;</span><br><span class="line">    consola.debug(<span class="string">'Generating nuxt files'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Plugins</span></span><br><span class="line">    <span class="keyword">this</span>.plugins = <span class="built_in">Array</span>.from(<span class="keyword">this</span>.normalizePlugins());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> templateContext = <span class="keyword">new</span> TemplateContext(<span class="keyword">this</span>, <span class="keyword">this</span>.options);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">      <span class="keyword">this</span>.resolveLayouts(templateContext), <span class="comment">// 处理 layouts</span></span><br><span class="line">      <span class="keyword">this</span>.resolveRoutes(templateContext), <span class="comment">// 处理 routes</span></span><br><span class="line">      <span class="keyword">this</span>.resolveStore(templateContext), <span class="comment">// 处理 store</span></span><br><span class="line">      <span class="keyword">this</span>.resolveMiddleware(templateContext) <span class="comment">// 处理 middleware</span></span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.resolveCustomTemplates(templateContext);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.resolveLoadingIndicator(templateContext);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add vue-app template dir to watchers</span></span><br><span class="line">    <span class="keyword">this</span>.options.build.watch.push(<span class="keyword">this</span>.globPathWithExtensions(<span class="keyword">this</span>.template.dir));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.compileTemplates(templateContext);</span><br><span class="line"></span><br><span class="line">    consola.success(<span class="string">'Nuxt files generated'</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// resolveRoutes 方法中对不同页面进行处理，最终调用 createRoutes 函数</span></span><br><span class="line"><span class="keyword">async</span> resolveRoutes(&#123; templateVars &#125;) &#123;</span><br><span class="line">    consola.debug(<span class="string">'Generating routes...'</span>);</span><br><span class="line">    ...</span><br><span class="line">  	<span class="keyword">if</span> (<span class="keyword">this</span>._nuxtPages) &#123;</span><br><span class="line">      <span class="comment">// 用户 pages 目录下页面文件</span></span><br><span class="line">      <span class="comment">// Use nuxt.js createRoutes bases on pages/</span></span><br><span class="line">      <span class="keyword">const</span> files = &#123;&#125;;</span><br><span class="line">      <span class="keyword">const</span> ext = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`\\.(<span class="subst">$&#123;<span class="keyword">this</span>.supportedExtensions.join(<span class="string">'|'</span>)&#125;</span>)$`</span>);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">const</span> page <span class="keyword">of</span> <span class="keyword">await</span> <span class="keyword">this</span>.resolveFiles(<span class="keyword">this</span>.options.dir.pages)) &#123;</span><br><span class="line">        <span class="keyword">const</span> key = page.replace(ext, <span class="string">''</span>);</span><br><span class="line">        <span class="comment">// .vue file takes precedence over other extensions</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="regexp">/\.vue$/</span>.test(page) || !files[key]) &#123;</span><br><span class="line">          files[key] = page.replace(<span class="regexp">/(['"])/g</span>, <span class="string">'\\$1'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      templateVars.router.routes = utils.createRoutes(&#123;</span><br><span class="line">        files: <span class="built_in">Object</span>.values(files),</span><br><span class="line">        srcDir: <span class="keyword">this</span>.options.srcDir,</span><br><span class="line">        pagesDir: <span class="keyword">this</span>.options.dir.pages,</span><br><span class="line">        routeNameSplitter: <span class="keyword">this</span>.options.router.routeNameSplitter,</span><br><span class="line">        supportedExtensions: <span class="keyword">this</span>.supportedExtensions</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125; </span><br><span class="line">  	...</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>createRoutes</code>  函数中对传过来的所有文件地址进行遍历，再对每一个文件地址字符串处理，以中划线进行拼接。以此作为 route.name</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> r = <span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> lastArg = args[args.length - <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">if</span> (startsWithSrcAlias(lastArg)) &#123;</span><br><span class="line">    <span class="keyword">return</span> lastArg</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> path.resolve(...args.map(normalize))</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">const</span> createRoutes = <span class="function"><span class="keyword">function</span> <span class="title">createRoutes</span>(<span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">  files,</span></span></span><br><span class="line"><span class="function"><span class="params">  srcDir,</span></span></span><br><span class="line"><span class="function"><span class="params">  pagesDir = <span class="string">''</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  routeNameSplitter = <span class="string">'-'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  supportedExtensions = [<span class="string">'vue'</span>, <span class="string">'js'</span>, <span class="string">'ts'</span>, <span class="string">'tsx'</span>]</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> routes = [];</span><br><span class="line">  files.forEach(<span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> keys = file</span><br><span class="line">      .replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`^<span class="subst">$&#123;pagesDir&#125;</span>`</span>), <span class="string">''</span>)</span><br><span class="line">      .replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`\\.(<span class="subst">$&#123;supportedExtensions.join(<span class="string">'|'</span>)&#125;</span>)$`</span>), <span class="string">''</span>)</span><br><span class="line">      .replace(<span class="regexp">/\/&#123;2,&#125;/g</span>, <span class="string">'/'</span>)</span><br><span class="line">      .split(<span class="string">'/'</span>)</span><br><span class="line">      .slice(<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如 ../index.vue =&gt; keys ['index']</span></span><br><span class="line">    <span class="comment">// 如 ../index/_id.vue =&gt; keys ['index', '_id']</span></span><br><span class="line">    <span class="keyword">const</span> route = &#123; <span class="attr">name</span>: <span class="string">''</span>, <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: r(srcDir, file) &#125;;</span><br><span class="line">    <span class="comment">// route = &#123; name: '', path: '', component: '/xxx/xxx.vue' &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> parent = routes;</span><br><span class="line">    keys.forEach(<span class="function">(<span class="params">key, i</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// remove underscore only, if its the prefix</span></span><br><span class="line">      <span class="keyword">const</span> sanitizedKey = key.startsWith(<span class="string">'_'</span>) ? key.substr(<span class="number">1</span>) : key;</span><br><span class="line"></span><br><span class="line">      route.name = route.name</span><br><span class="line">        ? route.name + routeNameSplitter + sanitizedKey</span><br><span class="line">        : sanitizedKey;</span><br><span class="line">      route.name += key === <span class="string">'_'</span> ? <span class="string">'all'</span> : <span class="string">''</span>;</span><br><span class="line">      route.chunkName = file.replace(<span class="regexp">/\.(`$&#123;supportedExtensions.join('|')&#125;`)$/</span>, 	<span class="string">''</span>);</span><br><span class="line">      	</span><br><span class="line">      <span class="comment">// 对routes进行查找，这里就可以看出为什么使用嵌套路由要在同路径下再加一个同名的vue文件，它的判断条件就是在 routes 中找到 name：route.name 的集合</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果有嵌套路由，暂时 route.path 为空，没有嵌套路由就直接以'/'拼接 route.path，这里就可以看到动态路由的合成原理，如果是动态路由，route.path将会以 : 替换 _ ,末尾加上 ?</span></span><br><span class="line">      <span class="keyword">const</span> child = parent.find(<span class="function"><span class="params">parentRoute</span> =&gt;</span> parentRoute.name === route.name);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (child) &#123;</span><br><span class="line">        child.children = child.children || [];</span><br><span class="line">        parent = child.children;</span><br><span class="line">        route.path = <span class="string">''</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key === <span class="string">'index'</span> &amp;&amp; i + <span class="number">1</span> === keys.length) &#123;</span><br><span class="line">        route.path += i &gt; <span class="number">0</span> ? <span class="string">''</span> : <span class="string">'/'</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        route.path += <span class="string">'/'</span> + getRoutePathExtension(key); <span class="comment">// route.path 以 : 替换 _ ,末尾加上 ?</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (key.startsWith(<span class="string">'_'</span>) &amp;&amp; key.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">          route.path += <span class="string">'?'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    parent.push(route);</span><br><span class="line">  &#125;);</span><br><span class="line">	</span><br><span class="line">  sortRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> cleanChildrenRoutes(routes, <span class="literal">false</span>, routeNameSplitter)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将 route.name 和 route.path 都放入 routes 中，进行排序，路径短的先放入，最后调用 <code>cleanChildrenRoutes</code>函数，对嵌套路由进行处理。</p>
+<p>至此对 routes 的 path 和 name 的命名的处理已经结束</p>
+<h3 id="nuxt"><a href="#nuxt" class="headerlink" title=".nuxt"></a>.nuxt</h3><p>Nuxt 自动 watch 文件动态编译生成 .nuxt 目录文件， 看一下服务端渲染入口文件 <code>.nuxt/server.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">async</span> (ssrContext) =&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// 1. 服务端每次请求都会重新实例化一个 route store app</span></span><br><span class="line">  <span class="comment">// Create the app definition and the instance (created for each request)</span></span><br><span class="line">  <span class="keyword">const</span> &#123; app, router, store &#125; = <span class="keyword">await</span> createApp(ssrContext)</span><br><span class="line">  <span class="keyword">const</span> _app = <span class="keyword">new</span> Vue(app)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Add meta infos (used in renderer.js)</span></span><br><span class="line">  ssrContext.meta = _app.$meta()</span><br><span class="line">  <span class="comment">// Keep asyncData for each matched component in ssrContext (used in app/utils.js via this.$ssrContext)</span></span><br><span class="line">  ssrContext.asyncData = &#123;&#125;</span><br><span class="line">	...</span><br><span class="line">  <span class="comment">// 获取匹配访问路由的组件，得到组件数组</span></span><br><span class="line">  <span class="comment">// Components are already resolved by setContext -&gt; getRouteData (app/utils.js)</span></span><br><span class="line">  <span class="keyword">const</span> Components = getMatchedComponents(router.match(ssrContext.url))</span><br><span class="line">	</span><br><span class="line">  <span class="comment">// 2. 执行 store 入口文件 nuxtServerInit 方法</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Dispatch store nuxtServerInit</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (store._actions &amp;&amp; store._actions.nuxtServerInit) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> store.dispatch(<span class="string">'nuxtServerInit'</span>, app.context)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.debug(<span class="string">'Error occurred when calling nuxtServerInit: '</span>, err.message)</span><br><span class="line">      <span class="keyword">throw</span> err</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line"> 	<span class="comment">// 3. 执行全局 middleware</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Call global middleware (nuxt.config.js)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">let</span> midd = []</span><br><span class="line">  midd = midd.map(<span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> name === <span class="string">'function'</span>) <span class="keyword">return</span> name</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> middleware[name] !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      app.context.error(&#123; <span class="attr">statusCode</span>: <span class="number">500</span>, <span class="attr">message</span>: <span class="string">'Unknown middleware '</span> + name &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> middleware[name]</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">await</span> middlewareSeries(midd, app.context)</span><br><span class="line">  <span class="comment">// ...If there is a redirect or an error, stop the process</span></span><br><span class="line">  <span class="keyword">if</span> (ssrContext.redirected) <span class="keyword">return</span> noopApp()</span><br><span class="line">  <span class="keyword">if</span> (ssrContext.nuxt.error) <span class="keyword">return</span> renderErrorPage()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. 设置 layout</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Set layout</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">// 优先组件 layout 选项读取</span></span><br><span class="line">  <span class="keyword">let</span> layout = Components.length ? Components[<span class="number">0</span>].options.layout : NuxtError.layout</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> layout === <span class="string">'function'</span>) layout = layout(app.context)</span><br><span class="line">  <span class="comment">// 加载 layout</span></span><br><span class="line">  <span class="keyword">await</span> _app.loadLayout(layout)</span><br><span class="line">  <span class="keyword">if</span> (ssrContext.nuxt.error) <span class="keyword">return</span> renderErrorPage()</span><br><span class="line">  <span class="comment">// 设置 layout</span></span><br><span class="line">  layout = _app.setLayout(layout)</span><br><span class="line">  ssrContext.nuxt.layout = _app.layoutName</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 5. 执行页面级别中间件 middleware</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Call middleware (layout + pages)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  midd = []</span><br><span class="line">  layout = sanitizeComponent(layout)</span><br><span class="line">  <span class="keyword">if</span> (layout.options.middleware) midd = midd.concat(layout.options.middleware)</span><br><span class="line">  Components.forEach(<span class="function">(<span class="params">Component</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (Component.options.middleware) &#123;</span><br><span class="line">      midd = midd.concat(Component.options.middleware)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  midd = midd.map(<span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> name === <span class="string">'function'</span>) <span class="keyword">return</span> name</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> middleware[name] !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      app.context.error(&#123; <span class="attr">statusCode</span>: <span class="number">500</span>, <span class="attr">message</span>: <span class="string">'Unknown middleware '</span> + name &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> middleware[name]</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">await</span> middlewareSeries(midd, app.context)</span><br><span class="line">  <span class="comment">// ...If there is a redirect or an error, stop the process</span></span><br><span class="line">  <span class="keyword">if</span> (ssrContext.redirected) <span class="keyword">return</span> noopApp()</span><br><span class="line">  <span class="keyword">if</span> (ssrContext.nuxt.error) <span class="keyword">return</span> renderErrorPage()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 6. 执行页面路由校验</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Call .validate()</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">let</span> isValid = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> Component <span class="keyword">of</span> Components) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> Component.options.validate !== <span class="string">'function'</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      isValid = <span class="keyword">await</span> Component.options.validate(app.context)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!isValid) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (validationError) &#123;</span><br><span class="line">    <span class="comment">// ...If .validate() threw an error</span></span><br><span class="line">    app.context.error(&#123;</span><br><span class="line">      statusCode: validationError.statusCode || <span class="string">'500'</span>,</span><br><span class="line">      message: validationError.message</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> renderErrorPage()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...If .validate() returned false</span></span><br><span class="line">  <span class="keyword">if</span> (!isValid) &#123;</span><br><span class="line">    <span class="comment">// Don't server-render the page in generate mode</span></span><br><span class="line">    <span class="keyword">if</span> (ssrContext._generate) ssrContext.nuxt.serverRendered = <span class="literal">false</span></span><br><span class="line">    <span class="comment">// Render a 404 error page</span></span><br><span class="line">    <span class="keyword">return</span> render404Page()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If no Components found, returns 404</span></span><br><span class="line">  <span class="keyword">if</span> (!Components.length) <span class="keyword">return</span> render404Page()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 7. 执行 asyncData 获取异步数据</span></span><br><span class="line">  <span class="comment">// Call asyncData &amp; fetch hooks on components matched by the route.</span></span><br><span class="line">  <span class="keyword">const</span> asyncDatas = <span class="keyword">await</span> <span class="built_in">Promise</span>.all(Components.map(<span class="function">(<span class="params">Component</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> promises = []</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Call asyncData(context)</span></span><br><span class="line">    <span class="keyword">if</span> (Component.options.asyncData &amp;&amp; <span class="keyword">typeof</span> Component.options.asyncData === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> promise = promisify(Component.options.asyncData, app.context)</span><br><span class="line">      promise.then(<span class="function">(<span class="params">asyncDataResult</span>) =&gt;</span> &#123;</span><br><span class="line">        ssrContext.asyncData[Component.cid] = asyncDataResult</span><br><span class="line">        applyAsyncData(Component)</span><br><span class="line">        <span class="keyword">return</span> asyncDataResult</span><br><span class="line">      &#125;)</span><br><span class="line">      promises.push(promise)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      promises.push(<span class="literal">null</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Call fetch(context)</span></span><br><span class="line">    <span class="keyword">if</span> (Component.options.fetch) &#123;</span><br><span class="line">      promises.push(Component.options.fetch(app.context))</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      promises.push(<span class="literal">null</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promises)</span><br><span class="line">  &#125;))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (process.env.DEBUG &amp;&amp; asyncDatas.length)<span class="built_in">console</span>.debug(<span class="string">'Data fetching '</span> + ssrContext.url + <span class="string">': '</span> + (<span class="built_in">Date</span>.now() - s) + <span class="string">'ms'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// datas are the first row of each</span></span><br><span class="line">  ssrContext.nuxt.data = asyncDatas.map(<span class="function"><span class="params">r</span> =&gt;</span> r[<span class="number">0</span>] || &#123;&#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...If there is a redirect or an error, stop the process</span></span><br><span class="line">  <span class="keyword">if</span> (ssrContext.redirected) <span class="keyword">return</span> noopApp()</span><br><span class="line">  <span class="keyword">if</span> (ssrContext.nuxt.error) <span class="keyword">return</span> renderErrorPage()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Call beforeNuxtRender methods &amp; add store state</span></span><br><span class="line">  <span class="keyword">await</span> beforeRender()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> _app</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="store"><a href="#store" class="headerlink" title="store"></a>store</h4><p><code>.nuxt/store.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VUEX_PROPERTIES = [<span class="string">'state'</span>, <span class="string">'getters'</span>, <span class="string">'actions'</span>, <span class="string">'mutations'</span>]</span><br><span class="line"><span class="keyword">let</span> store = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> (<span class="function"><span class="keyword">function</span> <span class="title">updateModules</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> 	<span class="comment">// store 根文件</span></span><br><span class="line">  store = normalizeRoot(<span class="built_in">require</span>(<span class="string">'../store/index.js'</span>), <span class="string">'store/index.js'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Enforce store modules</span></span><br><span class="line">  store.modules = store.modules || &#123;&#125;</span><br><span class="line"></span><br><span class="line">  resolveStoreModules(<span class="built_in">require</span>(<span class="string">'../store/user.js'</span>), <span class="string">'user.js'</span>)</span><br><span class="line">  <span class="comment">// If the environment supports hot reloading...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 模块热更新会重新执行</span></span><br><span class="line">  <span class="keyword">if</span> (process.client &amp;&amp; <span class="built_in">module</span>.hot) &#123;</span><br><span class="line">    <span class="comment">// Whenever any Vuex module is updated...</span></span><br><span class="line">    <span class="built_in">module</span>.hot.accept([</span><br><span class="line">      <span class="string">'../store/index.js'</span>,</span><br><span class="line">      <span class="string">'../store/user.js'</span>,</span><br><span class="line">    ], () =&gt; &#123;</span><br><span class="line">      <span class="comment">// Update `root.modules` with the latest definitions.</span></span><br><span class="line">      updateModules()</span><br><span class="line">      <span class="comment">// Trigger a hot update in the store.</span></span><br><span class="line">      <span class="built_in">window</span>.$nuxt.$store.hotUpdate(store)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// createStore</span></span><br><span class="line"><span class="comment">// 生成 store 函数</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createStore = store <span class="keyword">instanceof</span> <span class="built_in">Function</span> ? store : <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Vuex.Store(<span class="built_in">Object</span>.assign(&#123;</span><br><span class="line">    strict: (process.env.NODE_ENV !== <span class="string">'production'</span>)</span><br><span class="line">  &#125;, store))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>resolveStoreModules</code>  处理 modules,  <code>store/user.js</code>  中 state getters mutations actions 具名导出，这里可以看出将 <code>store/user.js</code>  作为一个模块，<code>mergeProperty(storeModule, moduleData[property], property)</code> 会将 state getters mutations actions 整合到对应模块中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolveStoreModules</span>(<span class="params">moduleData, filename</span>) </span>&#123;</span><br><span class="line">  moduleData = moduleData.default || moduleData</span><br><span class="line">  <span class="comment">// Remove store src + extension (./foo/index.js -&gt; foo/index)</span></span><br><span class="line">  <span class="keyword">const</span> namespace = filename.replace(<span class="regexp">/\.(js|mjs|ts)$/</span>, <span class="string">''</span>)</span><br><span class="line">  <span class="keyword">const</span> namespaces = namespace.split(<span class="string">'/'</span>)</span><br><span class="line">  <span class="keyword">let</span> moduleName = namespaces[namespaces.length - <span class="number">1</span>]</span><br><span class="line">  <span class="keyword">const</span> filePath = <span class="string">`store/<span class="subst">$&#123;filename&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">  moduleData = moduleName === <span class="string">'state'</span></span><br><span class="line">    ? normalizeState(moduleData, filePath)</span><br><span class="line">    : normalizeModule(moduleData, filePath)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If src is a known Vuex property</span></span><br><span class="line">  <span class="keyword">if</span> (VUEX_PROPERTIES.includes(moduleName)) &#123;</span><br><span class="line">    <span class="keyword">const</span> property = moduleName</span><br><span class="line">    <span class="keyword">const</span> storeModule = getStoreModule(store, namespaces, &#123; <span class="attr">isProperty</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Replace state since it's a function</span></span><br><span class="line">    mergeProperty(storeModule, moduleData, property)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If file is foo/index.js, it should be saved as foo</span></span><br><span class="line">  <span class="keyword">const</span> isIndexModule = (moduleName === <span class="string">'index'</span>)</span><br><span class="line">  <span class="keyword">if</span> (isIndexModule) &#123;</span><br><span class="line">    namespaces.pop()</span><br><span class="line">    moduleName = namespaces[namespaces.length - <span class="number">1</span>]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> storeModule = getStoreModule(store, namespaces)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> property <span class="keyword">of</span> VUEX_PROPERTIES) &#123;</span><br><span class="line">    mergeProperty(storeModule, moduleData[property], property)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (moduleData.namespaced === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> storeModule.namespaced</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getStoreModule</span>(<span class="params">storeModule, namespaces, &#123; isProperty = false &#125; = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// If ./mutations.js</span></span><br><span class="line">  <span class="keyword">if</span> (!namespaces.length || (isProperty &amp;&amp; namespaces.length === <span class="number">1</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> storeModule</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> namespace = namespaces.shift()</span><br><span class="line"></span><br><span class="line">  storeModule.modules[namespace] = storeModule.modules[namespace] || &#123;&#125;</span><br><span class="line">  storeModule.modules[namespace].namespaced = <span class="literal">true</span></span><br><span class="line">  storeModule.modules[namespace].modules = storeModule.modules[namespace].modules || &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> getStoreModule(storeModule.modules[namespace], namespaces, &#123; isProperty &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h4><p>从 <code>.nuxt/server.js</code> 中 看到设置 layout 其实是执行了 <code>.nuxt/App.js</code> 的 <code>setLayout</code> 和 <code>loadLayout</code>  方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _77180f1e <span class="keyword">from</span> <span class="string">'../layouts/blank.vue'</span></span><br><span class="line"><span class="keyword">import</span> _6f6c098b <span class="keyword">from</span> <span class="string">'../layouts/default.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> layouts = &#123; <span class="string">"_blank"</span>: _77180f1e,<span class="string">"_default"</span>: _6f6c098b &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line"> 	...</span><br><span class="line">	<span class="comment">// 本质渲染 layoutEl</span></span><br><span class="line">  render(h, props) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">const</span> layoutEl = h(<span class="keyword">this</span>.layout || <span class="string">'nuxt'</span>)</span><br><span class="line">    <span class="keyword">const</span> templateEl = h(<span class="string">'div'</span>, &#123;</span><br><span class="line">      domProps: &#123;</span><br><span class="line">        id: <span class="string">'__layout'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      key: <span class="keyword">this</span>.layoutName</span><br><span class="line">    &#125;, [ layoutEl ])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> transitionEl = h(<span class="string">'transition'</span>, &#123;</span><br><span class="line">			...</span><br><span class="line">		&#125;, [ templateEl ])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> h(<span class="string">'div'</span>, &#123;</span><br><span class="line">      domProps: &#123;</span><br><span class="line">        id: <span class="string">'__nuxt'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, [loadingEl, transitionEl])</span><br><span class="line">  &#125;,</span><br><span class="line">  data: <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">		...</span><br><span class="line">    layout: <span class="literal">null</span>,</span><br><span class="line">    layoutName: <span class="string">''</span></span><br><span class="line">  &#125;),</span><br><span class="line">  methods: &#123;</span><br><span class="line">    ...</span><br><span class="line">    setLayout(layout) &#123;</span><br><span class="line">      <span class="keyword">if</span>(layout &amp;&amp; <span class="keyword">typeof</span> layout !== <span class="string">'string'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'[nuxt] Avoid using non-string value as layout property.'</span>)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!layout || !layouts[<span class="string">'_'</span> + layout]) &#123;</span><br><span class="line">        layout = <span class="string">'default'</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.layoutName = layout</span><br><span class="line">      <span class="keyword">this</span>.layout = layouts[<span class="string">'_'</span> + layout]</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.layout</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 加载异步 layout 组件</span></span><br><span class="line">    loadLayout(layout) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!layout || !layouts[<span class="string">'_'</span> + layout]) &#123;</span><br><span class="line">        layout = <span class="string">'default'</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(layouts[<span class="string">'_'</span> + layout])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h4><p>layout 组件一般都是会使用页面组件 <code>&lt;nuxt/&gt;</code>， 这个组件本质使用了嵌套路由组件 <code>&lt;nuxt-child/&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># layouts/default.vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;nav&gt;</span><br><span class="line">      &lt;!-- 推荐使用 nuxt-link --&gt;</span><br><span class="line">      &lt;nuxt-link to=&quot;/&quot;&gt;首页&lt;/nuxt-link&gt;</span><br><span class="line">      &lt;!--别名：n-link，NLink，NuxtLink--&gt;</span><br><span class="line">      &lt;NLink to=&quot;/admin&quot;  no-prefetch&gt;管理&lt;/NLink&gt;</span><br><span class="line">      &lt;!-- &lt;n-link to=&quot;/cart&quot;&gt;购物车&lt;/n-link&gt; --&gt;</span><br><span class="line">    &lt;/nav&gt;</span><br><span class="line">    &lt;nuxt /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="nuxt-child"><a href="#nuxt-child" class="headerlink" title="nuxt-child"></a>nuxt-child</h5><p>整体功能其实是对 router-view 的封装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;nuxt-child keep-alive :keep-alive-props=&quot;&#123; exclude: [&apos;modal&apos;] &#125;&quot; /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 将被转换成以下形式 --&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;keep-alive :exclude=&quot;[&apos;modal&apos;]&quot;&gt;</span><br><span class="line">    &lt;router-view /&gt;</span><br><span class="line">  &lt;/keep-alive&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>.nuxt/components/nuxt-child.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'NuxtChild'</span>,</span><br><span class="line">  functional: <span class="literal">true</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    nuxtChildKey: &#123;</span><br><span class="line">      type: <span class="built_in">String</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">''</span></span><br><span class="line">    &#125;,</span><br><span class="line">    keepAlive: <span class="built_in">Boolean</span>,</span><br><span class="line">    keepAliveProps: &#123;</span><br><span class="line">      type: <span class="built_in">Object</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="literal">undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  render(h, &#123; parent, data, props &#125;) &#123;</span><br><span class="line">    data.nuxtChild = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">const</span> _parent = parent</span><br><span class="line">    <span class="keyword">const</span> transitions = parent.$nuxt.nuxt.transitions</span><br><span class="line">    <span class="keyword">const</span> defaultTransition = parent.$nuxt.nuxt.defaultTransition</span><br><span class="line">		<span class="comment">// 嵌套层次处理</span></span><br><span class="line">    <span class="keyword">let</span> depth = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (parent) &#123;</span><br><span class="line">      <span class="keyword">if</span> (parent.$vnode &amp;&amp; parent.$vnode.data.nuxtChild) &#123;</span><br><span class="line">        depth++</span><br><span class="line">      &#125;</span><br><span class="line">      parent = parent.$parent</span><br><span class="line">    &#125;</span><br><span class="line">    data.nuxtChildDepth = depth</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> transition = transitions[depth] || defaultTransition</span><br><span class="line">    <span class="keyword">const</span> transitionProps = &#123;&#125;</span><br><span class="line">    transitionsKeys.forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> transition[key] !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        transitionProps[key] = transition[key]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> listeners = &#123;&#125;</span><br><span class="line">    listenersKeys.forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> transition[key] === <span class="string">'function'</span>) &#123;</span><br><span class="line">        listeners[key] = transition[key].bind(_parent)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// Add triggerScroll event on beforeEnter (fix #1376)</span></span><br><span class="line">    <span class="keyword">const</span> beforeEnter = listeners.beforeEnter</span><br><span class="line">    listeners.beforeEnter = <span class="function">(<span class="params">el</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// Ensure to trigger scroll event after calling scrollBehavior</span></span><br><span class="line">      <span class="built_in">window</span>.$nuxt.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>.$nuxt.$emit(<span class="string">'triggerScroll'</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">if</span> (beforeEnter) <span class="keyword">return</span> beforeEnter.call(_parent, el)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> routerView = [</span><br><span class="line">      h(<span class="string">'router-view'</span>, data)</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">if</span> (props.keepAlive) &#123;</span><br><span class="line">      routerView = [</span><br><span class="line">        h(<span class="string">'keep-alive'</span>, &#123; <span class="attr">props</span>: props.keepAliveProps &#125;, routerView)</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> h(<span class="string">'transition'</span>, &#123;</span><br><span class="line">      props: transitionProps,</span><br><span class="line">      on: listeners</span><br><span class="line">    &#125;, routerView)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> transitionsKeys = [</span><br><span class="line">  <span class="string">'name'</span>,</span><br><span class="line">  <span class="string">'mode'</span>,</span><br><span class="line">  <span class="string">'appear'</span>,</span><br><span class="line">  <span class="string">'css'</span>,</span><br><span class="line">  <span class="string">'type'</span>,</span><br><span class="line">  <span class="string">'duration'</span>,</span><br><span class="line">  <span class="string">'enterClass'</span>,</span><br><span class="line">  <span class="string">'leaveClass'</span>,</span><br><span class="line">  <span class="string">'appearClass'</span>,</span><br><span class="line">  <span class="string">'enterActiveClass'</span>,</span><br><span class="line">  <span class="string">'enterActiveClass'</span>,</span><br><span class="line">  <span class="string">'leaveActiveClass'</span>,</span><br><span class="line">  <span class="string">'appearActiveClass'</span>,</span><br><span class="line">  <span class="string">'enterToClass'</span>,</span><br><span class="line">  <span class="string">'leaveToClass'</span>,</span><br><span class="line">  <span class="string">'appearToClass'</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> listenersKeys = [</span><br><span class="line">  <span class="string">'beforeEnter'</span>,</span><br><span class="line">  <span class="string">'enter'</span>,</span><br><span class="line">  <span class="string">'afterEnter'</span>,</span><br><span class="line">  <span class="string">'enterCancelled'</span>,</span><br><span class="line">  <span class="string">'beforeLeave'</span>,</span><br><span class="line">  <span class="string">'leave'</span>,</span><br><span class="line">  <span class="string">'afterLeave'</span>,</span><br><span class="line">  <span class="string">'leaveCancelled'</span>,</span><br><span class="line">  <span class="string">'beforeAppear'</span>,</span><br><span class="line">  <span class="string">'appear'</span>,</span><br><span class="line">  <span class="string">'afterAppear'</span>,</span><br><span class="line">  <span class="string">'appearCancelled'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h5 id="nuxt-link"><a href="#nuxt-link" class="headerlink" title="nuxt-link"></a>nuxt-link</h5><p>整体功能其实是对 router-link 的封装，增加了链接页面的预获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'NuxtLink'</span>,</span><br><span class="line">  extends: Vue.component(<span class="string">'RouterLink'</span>), <span class="comment">// 继承全局注册的 router-link 组件</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    noPrefetch: &#123;</span><br><span class="line">      type: <span class="built_in">Boolean</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-ssr/" rel="tag"># vue ssr</a>
+          
+            <a href="/tags/Nuxt/" rel="tag"># Nuxt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/04/vue cli/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/15/vue ssr/" rel="prev" title="vue 服务端渲染">
+                vue 服务端渲染 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nuxt"><span class="nav-number">1.</span> <span class="nav-text">Nuxt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxt渲染流程"><span class="nav-number">1.1.</span> <span class="nav-text">nuxt渲染流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxt安装"><span class="nav-number">1.2.</span> <span class="nav-text">nuxt安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由"><span class="nav-number">1.3.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态路由"><span class="nav-number">1.4.</span> <span class="nav-text">动态路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套路由"><span class="nav-number">1.5.</span> <span class="nav-text">嵌套路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.6.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图"><span class="nav-number">1.7.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认布局"><span class="nav-number">1.7.1.</span> <span class="nav-text">默认布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义布局"><span class="nav-number">1.7.2.</span> <span class="nav-text">自定义布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义错误页"><span class="nav-number">1.7.3.</span> <span class="nav-text">自定义错误页</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面"><span class="nav-number">1.8.</span> <span class="nav-text">页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步数据获取"><span class="nav-number">1.9.</span> <span class="nav-text">异步数据获取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口准备"><span class="nav-number">1.9.1.</span> <span class="nav-text">接口准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整合-axios"><span class="nav-number">1.9.2.</span> <span class="nav-text">整合 axios</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间件"><span class="nav-number">1.10.</span> <span class="nav-text">中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态管理-vuex"><span class="nav-number">1.11.</span> <span class="nav-text">状态管理 vuex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件"><span class="nav-number">1.12.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxtServerInit"><span class="nav-number">1.13.</span> <span class="nav-text">nuxtServerInit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nuxt-常用配置项"><span class="nav-number">1.14.</span> <span class="nav-text">Nuxt 常用配置项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置端口-ip"><span class="nav-number">1.14.1.</span> <span class="nav-text">配置端口 ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全局-css"><span class="nav-number">1.14.2.</span> <span class="nav-text">全局 css</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布部署"><span class="nav-number">1.15.</span> <span class="nav-text">发布部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端渲染部署"><span class="nav-number">1.15.1.</span> <span class="nav-text">服务端渲染部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态应用部署"><span class="nav-number">1.15.2.</span> <span class="nav-text">静态应用部署</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分源码学习"><span class="nav-number">2.</span> <span class="nav-text">部分源码学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境服务器启动脚本"><span class="nav-number">2.1.</span> <span class="nav-text">开发环境服务器启动脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动生成-routes"><span class="nav-number">2.2.</span> <span class="nav-text">自动生成 routes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxt"><span class="nav-number">2.3.</span> <span class="nav-text">.nuxt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#store"><span class="nav-number">2.3.1.</span> <span class="nav-text">store</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#layout"><span class="nav-number">2.3.2.</span> <span class="nav-text">layout</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组件"><span class="nav-number">2.3.3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#nuxt-child"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">nuxt-child</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nuxt-link"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">nuxt-link</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="单元测试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="BDD vs TDDBDD 行为驱动开发(偏向自然语言)先写需求功能点描述，这种描述是客户、产品经理、开发、测试都能看懂的，且基于文本的；实质是让开发的产品符合客户需求 TDD 测试驱动开发先写测试，再写实现代码，并不断进行迭代重构，主要是给开发人员，让开发的程序没有出错">
+<meta name="keywords" content="单元测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单元测试">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/08/17/Node.js 测试/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="BDD vs TDDBDD 行为驱动开发(偏向自然语言)先写需求功能点描述，这种描述是客户、产品经理、开发、测试都能看懂的，且基于文本的；实质是让开发的产品符合客户需求 TDD 测试驱动开发先写测试，再写实现代码，并不断进行迭代重构，主要是给开发人员，让开发的程序没有出错">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-8-15/90889324.jpg">
+<meta property="og:updated_time" content="2019-12-18T02:04:14.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单元测试">
+<meta name="twitter:description" content="BDD vs TDDBDD 行为驱动开发(偏向自然语言)先写需求功能点描述，这种描述是客户、产品经理、开发、测试都能看懂的，且基于文本的；实质是让开发的产品符合客户需求 TDD 测试驱动开发先写测试，再写实现代码，并不断进行迭代重构，主要是给开发人员，让开发的程序没有出错">
+<meta name="twitter:image" content="http://ony85apla.bkt.clouddn.com/18-8-15/90889324.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/08/17/Node.js 测试/"/>
+
+
+
+
+
+  <title>单元测试 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/08/17/Node.js 测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单元测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T08:42:03+08:00">
+                2018-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="BDD-vs-TDD"><a href="#BDD-vs-TDD" class="headerlink" title="BDD vs TDD"></a>BDD vs TDD</h2><h3 id="BDD-行为驱动开发-偏向自然语言"><a href="#BDD-行为驱动开发-偏向自然语言" class="headerlink" title="BDD 行为驱动开发(偏向自然语言)"></a>BDD 行为驱动开发(偏向自然语言)</h3><p>先写需求功能点描述，这种描述是客户、产品经理、开发、测试都能看懂的，且基于文本的；实质是让开发的产品符合客户需求</p>
+<h3 id="TDD-测试驱动开发"><a href="#TDD-测试驱动开发" class="headerlink" title="TDD 测试驱动开发"></a>TDD 测试驱动开发</h3><p>先写测试，再写实现代码，并不断进行迭代重构，主要是给开发人员，让开发的程序没有出错</p>
+<a id="more"></a>
+<h2 id="Node-js-assert-断言模块"><a href="#Node-js-assert-断言模块" class="headerlink" title="Node.js assert 断言模块"></a>Node.js assert 断言模块</h2><p>Node.js <code>assert</code> 模块提供了简单的断言测试功能，<strong>但是只能提示出错信息，正确不会提示</strong></p>
+<ul>
+<li><p><strong>assert.ok(value[, message]) / assert(value[, message])</strong><br>如果 value 值为 true，则什么也不会发生；否则抛出一个 message 的错误</p>
+</li>
+<li><p><strong>assert.equal(actual, expected[, message])</strong><br>判断实际值 <code>actual</code> 与期望徝 <code>expected</code> 是否相等(==)，如果不相等，则抛出一个 message 的错误。</p>
+</li>
+<li><p><strong>assert.notEqual(actual, expected[, message])</strong><br>…</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; add, mul &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"></span><br><span class="line">assert.equal(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">assert.ok(add(<span class="number">2</span>, <span class="number">3</span>) === <span class="number">5</span>, <span class="string">'equal'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="chai"><a href="#chai" class="headerlink" title="chai"></a>chai</h2><p><code>chai</code> 是一个类似 Node.js <code>assert</code> 模块的断言库，但是提供更多 api</p>
+<h3 id="assert"><a href="#assert" class="headerlink" title="assert"></a>assert</h3><p><code>chai</code> 的 TDD 风格的 <code>assert</code> 类似 Node.js 的 <code>assert</code> 模块, <strong>同样会只能提示出错信息</strong></p>
+<ul>
+<li><strong>assert.typeOf(1, ‘number’)</strong></li>
+<li><strong>assert.equal(1, 1)</strong></li>
+<li><strong>assert.lengthOf(‘str’, 3)</strong></li>
+<li><strong>assert.property(tea, ‘flavors’)</strong><br>…</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; assert &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; add, mul &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"></span><br><span class="line">assert.equal(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="should"><a href="#should" class="headerlink" title="should"></a>should</h3><p><code>chai</code> 提供了 BDD 风格的 <code>should</code>，<strong>使用前需要先调用 should()</strong></p>
+<ul>
+<li><strong>foo.should.be.a(‘string’)</strong></li>
+<li><strong>foo.should.equal(‘bar’)</strong></li>
+<li><strong>foo.should.have.lengthOf(3)</strong></li>
+<li><strong>tea.should.have.property(‘flavors’).with.lengthOf(3)</strong><br>…</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; should &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; add, mul &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line">should()</span><br><span class="line"></span><br><span class="line"> add(<span class="number">2</span>, <span class="number">3</span>).should.equal(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="expect"><a href="#expect" class="headerlink" title="expect"></a>expect</h3><p>相比 <code>chai</code> 的 <code>should</code>， <code>chai</code> 的 BDD 风格的 <code>expect</code> 更偏向自然语言</p>
+<ul>
+<li><strong>expect(foo).to.be.a(‘string’)</strong></li>
+<li><strong>expect(foo).to.equal(‘bar’)</strong></li>
+<li><strong>expect(foo).to.have.lengthOf(3)</strong></li>
+<li><strong>expect(tea).to.have.property(‘flavors’).with.lengthOf(3)</strong><br>…</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; expect &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; add, mul &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"></span><br><span class="line">expect(add(<span class="number">2</span>,<span class="number">3</span>)).to.equal(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="mocha"><a href="#mocha" class="headerlink" title="mocha"></a>mocha</h2><p><code>mocha</code> 是一个可以运行在浏览器端和 Node.js 上的<strong>测试框架</strong>, 支持任何一个可以抛出错误的断言库, <strong>可以提示正确信息</strong></p>
+<h3 id="安装运行"><a href="#安装运行" class="headerlink" title="安装运行"></a>安装运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">npm i mocha -g</span><br><span class="line">npm i mocha -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line">mocha xxx/xxx</span><br></pre></td></tr></table></figure>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><ul>
+<li><p><strong>describe(message, callback)</strong><br><code>describe</code> 方法的第一个参数会被输出在控制台，作为一个用例集合的描述，第二个参数是用例集合定义函数<br><strong>可以无限嵌套</strong></p>
+</li>
+<li><p><strong>it(message, callback)</strong><br><code>it</code> 方法的第一个参数会输出在控制台上，作为一个用例的描述，第二个参数是函数，用来编写测试用例，用断言模块来判断结果正确<br><strong>可以无限嵌套</strong></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  mul: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre * cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; add, mul &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; assert &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it(<span class="string">'should return -1 when 2 + (-3)'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">-3</span>), <span class="number">-1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Math</span></span><br><span class="line">  add</span><br><span class="line">    ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line">    ✓ should <span class="built_in">return</span> -1 when 2 + (-3)</span><br><span class="line">  mul</span><br><span class="line">    ✓ should <span class="built_in">return</span> 6 when 2 * 3</span><br><span class="line"></span><br><span class="line">3 passing (6ms)</span><br></pre></td></tr></table></figure>
+<h4 id="仅执行一个用例集-用例函数"><a href="#仅执行一个用例集-用例函数" class="headerlink" title="仅执行一个用例集/用例函数"></a>仅执行一个用例集/用例函数</h4><ul>
+<li>在 <code>describe</code> 或 <code>it</code> 之后添加 <strong><code>.only()</code></strong>, 可以让 <code>mocha</code> 只执行此用例集/用例函数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it.only(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it(<span class="string">'should return -1 when 2 + (-3)'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">-3</span>), <span class="number">-1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Math</span></span><br><span class="line">   add</span><br><span class="line">     ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line"></span><br><span class="line"> 1 passing (5ms)</span><br></pre></td></tr></table></figure>
+<h4 id="跳过用例集-用例函数"><a href="#跳过用例集-用例函数" class="headerlink" title="跳过用例集/用例函数"></a>跳过用例集/用例函数</h4><ul>
+<li>在 <code>describe</code> 或 <code>it</code> 之后添加 <strong><code>.skip()</code></strong>, 可以让 <code>mocha</code> 跳过这些用例集/用例函数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it.skip(<span class="string">'should return -1 when 2 + (-3)'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">-3</span>), <span class="number">-1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Math</span></span><br><span class="line">    add</span><br><span class="line">      ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line">      - should <span class="built_in">return</span> -1 when 2 + (-3)</span><br><span class="line">    mul</span><br><span class="line">      ✓ should <span class="built_in">return</span> 6 when 2 * 3</span><br><span class="line"></span><br><span class="line">  2 passing (6ms)</span><br><span class="line">  1 pending</span><br></pre></td></tr></table></figure>
+<h4 id="钩子函数"><a href="#钩子函数" class="headerlink" title="钩子函数"></a>钩子函数</h4><p><code>mocha</code> 提供四种钩子函数：<code>before()</code> <code>after()</code> <code>beforeEach()</code> <code>afterEach()</code>, 这些钩子函数可以让 <code>mocha</code> 在用例集/用例函数开始执行前、执行结束后做一些环境准备或环境清理的工作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    before(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'before all task'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">this</span>.beforeEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'before every task'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    after(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'after all task'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">this</span>.afterEach(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'after every task'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it.skip(<span class="string">'should return -1 when 2 + (-3)'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">-3</span>), <span class="number">-1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Math</span></span><br><span class="line">    add</span><br><span class="line">before all task</span><br><span class="line">before every task</span><br><span class="line">      ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line">after every task</span><br><span class="line">      - should <span class="built_in">return</span> -1 when 2 + (-3)</span><br><span class="line">after all task</span><br><span class="line">    mul</span><br><span class="line">      ✓ should <span class="built_in">return</span> 6 when 2 * 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  2 passing (6ms)</span><br><span class="line">  1 pending</span><br></pre></td></tr></table></figure>
+<h4 id="异步代码测试"><a href="#异步代码测试" class="headerlink" title="异步代码测试"></a>异步代码测试</h4><ul>
+<li>用例集/用例函数的参数 传入 <code>done</code>，并在异步代码调用结束后执行 <code>done()</code>, 相当于通知 <code>mocha</code> 可以执行下一个用例</li>
+<li><strong><code>mocha</code> 进入一个计时器，等待异步函数来完成 - 这时要么调用done()函数，或者超过 2秒 导致超时</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'test'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> foo = <span class="literal">false</span></span><br><span class="line">  beforeEach(<span class="function"><span class="keyword">function</span>(<span class="params">done</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      foo = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// complete the async beforeEach</span></span><br><span class="line">      done()</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  it(<span class="string">'should pass'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    assert.equal(foo, <span class="literal">true</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Math</span></span><br><span class="line">  <span class="built_in">test</span></span><br><span class="line">    ✓ should pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1 passing (1s)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'test'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> foo = <span class="literal">false</span></span><br><span class="line">  beforeEach(<span class="function"><span class="keyword">function</span>(<span class="params">done</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      foo = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// complete the async beforeEach</span></span><br><span class="line">      done()</span><br><span class="line">    &#125;, <span class="number">3000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  it(<span class="string">'should pass'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    assert.equal(foo, <span class="literal">true</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Math</span></span><br><span class="line">  <span class="built_in">test</span></span><br><span class="line">    1) <span class="string">"before each"</span> hook <span class="keyword">for</span> <span class="string">"should pass"</span></span><br><span class="line"></span><br><span class="line">0 passing (2s)</span><br><span class="line">1 failing</span><br><span class="line"></span><br><span class="line">1) <span class="comment">#Math test "before each" hook for "should pass":</span></span><br><span class="line">   Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure <span class="string">"done()"</span> is called; <span class="keyword">if</span> returning a Promise, ensure it resolves.</span><br></pre></td></tr></table></figure>
+<h2 id="istanbul"><a href="#istanbul" class="headerlink" title="istanbul"></a>istanbul</h2><p>当代码较多以及分支较多时，为保证测试代码覆盖率，需要使用 <code>istanbul</code>, 可以结合 <code>mocha</code></p>
+<p>主要是判断 <strong>statement</strong> <strong>branches</strong> <strong>function</strong> <strong>lines</strong></p>
+<h3 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">npm i istanbul -g</span><br><span class="line">npm i istanbul -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line">istanbul cover xx/xxx</span><br><span class="line"><span class="comment"># 将 mocha 进行测试，并通过 istanbul 进行覆盖率测试（_mocha 使得 istanbul 中拿到 mocha 的实例）</span></span><br><span class="line">istanbul cover _mocha xx/xxx</span><br></pre></td></tr></table></figure>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li><strong>statements</strong> 声明（包括函数、变量等）</li>
+<li><strong>branches</strong> 分支（包括 if-else 等语句）</li>
+<li><strong>function</strong> 函数</li>
+<li><strong>lines</strong> 行数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// assert.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">min</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.min(a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  add: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre + cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  mul: <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> args.reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> pre * cur</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  cover: <span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">      <span class="keyword">return</span> a - b</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> min(a, b)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; add, mul, cover &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; assert &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>istanbul cover _mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">#Math</span></span><br><span class="line">    add</span><br><span class="line">      ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line">    mul</span><br><span class="line">      ✓ should <span class="built_in">return</span> 6 when 2 * 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  2 passing (7ms)</span><br><span class="line"></span><br><span class="line">=============================================================================</span><br><span class="line">Writing coverage object [/Users/jackzhang/workspace/code/<span class="built_in">test</span>/assert/coverage/coverage.json]</span><br><span class="line">Writing coverage reports at [/Users/jackzhang/workspace/code/<span class="built_in">test</span>/assert/coverage]</span><br><span class="line">=============================================================================</span><br><span class="line"></span><br><span class="line">=============================== Coverage summary ===============================</span><br><span class="line">Statements   : 60% ( 6/10 )</span><br><span class="line">Branches     : 0% ( 0/2 )</span><br><span class="line">Functions    : 0% ( 0/1 )</span><br><span class="line">Lines        : 60% ( 6/10 )</span><br><span class="line">================================================================================</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; add, mul, cover &#125; = <span class="built_in">require</span>(<span class="string">'../assert'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; assert &#125; = <span class="built_in">require</span>(<span class="string">'chai'</span>)</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'#Math'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  describe(<span class="string">'add'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 5 when 2 + 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(add(<span class="number">2</span>, <span class="number">3</span>), <span class="number">5</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'mul'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 6 when 2 * 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(mul(<span class="number">2</span>, <span class="number">3</span>), <span class="number">6</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'cover'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'should return 1 when 3 &gt; 2'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(cover(<span class="number">3</span>, <span class="number">2</span>), <span class="number">1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'should return 2 when 2 &gt; 3'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      assert(cover(<span class="number">2</span>, <span class="number">3</span>), <span class="number">2</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>istanbul cover _mocha index.js</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">#Math</span></span><br><span class="line">    add</span><br><span class="line">      ✓ should <span class="built_in">return</span> 5 when 2 + 3</span><br><span class="line">    mul</span><br><span class="line">      ✓ should <span class="built_in">return</span> 6 when 2 * 3</span><br><span class="line">    cover</span><br><span class="line">      ✓ should <span class="built_in">return</span> 1 when 3 &gt; 2</span><br><span class="line">      ✓ should <span class="built_in">return</span> 2 when 2 &gt; 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  4 passing (14ms)</span><br><span class="line"></span><br><span class="line">=============================================================================</span><br><span class="line">Writing coverage object [/Users/jackzhang/workspace/code/<span class="built_in">test</span>/assert/coverage/coverage.json]</span><br><span class="line">Writing coverage reports at [/Users/jackzhang/workspace/code/<span class="built_in">test</span>/assert/coverage]</span><br><span class="line">=============================================================================</span><br><span class="line"></span><br><span class="line">=============================== Coverage summary ===============================</span><br><span class="line">Statements   : 100% ( 10/10 )</span><br><span class="line">Branches     : 100% ( 2/2 )</span><br><span class="line">Functions    : 100% ( 1/1 )</span><br><span class="line">Lines        : 100% ( 10/10 )</span><br><span class="line">================================================================================</span><br></pre></td></tr></table></figure>
+<h2 id="travis-ci-持续集成"><a href="#travis-ci-持续集成" class="headerlink" title="travis-ci 持续集成"></a>travis-ci 持续集成</h2><blockquote>
+<p>Travis CI 是在软件开发领域中的一个在线的，分布式的持续集成服务，用来构建及测试在 GitHub 托管的代码</p>
+</blockquote>
+<p>为了尽早发现错误，防止分支大幅度偏离主干，对于频繁将代码提交远程仓库，可以进行持续集成。在提交代码时让 travis-ci 跑一些任务</p>
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><ul>
+<li>travis-ci 官网对 github 项目开启</li>
+<li>项目本地编写 <code>.travis.yml</code> 配置文件</li>
+<li>提交代码到远程</li>
+</ul>
+<h3 id="travis-yml-配置"><a href="#travis-yml-配置" class="headerlink" title=".travis.yml 配置"></a>.travis.yml 配置</h3><p>项目仓库中的 <code>.travis.yml</code> 文件，一旦代码仓库中有新的 commit，<code>travis</code> 会找到这个配置文件并执行里面的命令</p>
+<ul>
+<li><strong>language</strong> 指定了默认运行环境</li>
+<li><strong>install</strong> 安装，一般用于执行安装项目依赖命令</li>
+<li><strong>before_script</strong> 指定运行的脚本命令之前的操作</li>
+<li><strong>script</strong> 指定要运行的脚本，<code>script: true</code> 表示不执行任何脚本，状态直接设为成功</li>
+<li><strong>after_script</strong> 指定运行的脚本命令之后的操作</li>
+<li><strong>branch</strong> 指定分支，只有指定的分支提交时才会运行脚本</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">language: node_js</span><br><span class="line"><span class="comment"># nodejs版本</span></span><br><span class="line">node_js:</span><br><span class="line">    - <span class="string">'6'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Travis-CI Caching</span></span><br><span class="line">cache:</span><br><span class="line">  directories:</span><br><span class="line">    - node_modules</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># S: Build Lifecycle</span></span><br><span class="line">install:</span><br><span class="line">  - npm install</span><br><span class="line"></span><br><span class="line">before_script:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 无其他依赖项所以执行npm run build 构建就行了</span></span><br><span class="line">script:</span><br><span class="line">  - npm run build</span><br><span class="line"></span><br><span class="line">after_script:</span><br><span class="line">  - <span class="built_in">cd</span> ./dist</span><br><span class="line">  - git init</span><br><span class="line">  - git config user.name <span class="string">"<span class="variable">$&#123;U_NAME&#125;</span>"</span></span><br><span class="line">  - git config user.email <span class="string">"<span class="variable">$&#123;U_EMAIL&#125;</span>"</span></span><br><span class="line">  - git add .</span><br><span class="line">  - git commit -m <span class="string">"Update tools"</span></span><br><span class="line">  - git push --force --quiet <span class="string">"https://<span class="variable">$&#123;GH_TOKEN&#125;</span>@<span class="variable">$&#123;GH_REF&#125;</span>"</span> master:<span class="variable">$&#123;P_BRANCH&#125;</span></span><br><span class="line"><span class="comment"># E: Build LifeCycle</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#指定分支，只有指定的分支提交时才会运行脚本</span></span><br><span class="line">branches:</span><br><span class="line">  only:</span><br><span class="line">    - master</span><br><span class="line">env:</span><br><span class="line"> global:</span><br></pre></td></tr></table></figure>
+<h3 id="应用：github-pages-coding-pages-博客持续集成"><a href="#应用：github-pages-coding-pages-博客持续集成" class="headerlink" title="应用：github pages / coding pages 博客持续集成"></a>应用：github pages / coding pages 博客持续集成</h3><p>笔者之前已经通过 github pages 搭建了 hexo 主题的博客，部署需要执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清空 public 文件夹</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># hexo generate 将文章编译到 public 文件夹</span></span><br><span class="line">hexo g</span><br><span class="line"></span><br><span class="line"><span class="comment"># hexo deploy 将 public 内容部署到 jhgrrewq.github.io 仓库</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>jhgrrewq.github.io 仓库下 master 分支是 public 文件夹内容，也就是博客的静态内容，为了使用 travis 持续集成，需要将博客源代码提交到一个新分支如 <code>hexo</code></p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ul>
+<li>在 travis 官网启动应用</li>
+<li>在 travis 对应项目（笔者的是 jhgrrewq.github.io）下进入 <code>setting</code></li>
+<li>在 <code>Environment Variables</code> 选项下添加 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener"><code>github token</code></a></li>
+</ul>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-8-15/90889324.jpg" alt=""></p>
+<h4 id="travis-yml-配置文件"><a href="#travis-yml-配置文件" class="headerlink" title=".travis.yml 配置文件"></a>.travis.yml 配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">language: node_js</span><br><span class="line">node_js: stable</span><br><span class="line"></span><br><span class="line">addons: <span class="comment"># Travis CI建议加的，自动更新api</span></span><br><span class="line">  apt:</span><br><span class="line">    update: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">cache:</span><br><span class="line">  directories:</span><br><span class="line">  - node_modules <span class="comment"># 缓存 node_modules</span></span><br><span class="line"></span><br><span class="line">install:</span><br><span class="line">- npm install <span class="comment"># 初次安装，在CI环境中，执行安装npm依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># before_script:</span></span><br><span class="line"></span><br><span class="line">script:</span><br><span class="line">- hexo g <span class="comment"># 执行 hexo generate，把文章编译到 public</span></span><br><span class="line"></span><br><span class="line">after_success: <span class="comment"># 执行 script 成功后，进入到 public</span></span><br><span class="line">- <span class="built_in">cd</span> ./public</span><br><span class="line">- git init</span><br><span class="line">- git config user.name <span class="string">"jhgrrewq"</span></span><br><span class="line">- git config user.email <span class="string">"52792521@163.com"</span></span><br><span class="line">- git add .</span><br><span class="line">- git commit -m <span class="string">"Update site"</span></span><br><span class="line">- git push --force --quiet <span class="string">"https://<span class="variable">$&#123;GH_TOKEN&#125;</span>@<span class="variable">$&#123;GH_REF&#125;</span>"</span> master:master</span><br><span class="line">- git push --force --quiet <span class="string">"https://qwerrghj:<span class="variable">$&#123;CO_TOKEN&#125;</span>@<span class="variable">$&#123;CO_REF&#125;</span>"</span> master:master</span><br><span class="line"><span class="comment"># 分别推送到 github coding.net 需要使用到 token 登录</span></span><br><span class="line"></span><br><span class="line">branches:</span><br><span class="line">  only:</span><br><span class="line">  - hexo <span class="comment"># CI 只针对分支 hexo</span></span><br><span class="line"></span><br><span class="line">env:</span><br><span class="line">  global: <span class="comment"># 全局变量，上面的提交到github的命令有用到</span></span><br><span class="line">  - GH_REF: github.com/jhgrrewq/jhgrrewq.github.io.git</span><br><span class="line">  - CO_REF: git.coding.net/qwerrghj/qwerrghj.coding.me.git</span><br><span class="line">  - secure:</span><br><span class="line"><span class="comment"># secure是自动生成的，执行`travis encrypt 'GH_TOKEN=$&#123;your_github_personal_access_token&#125;' --add`</span></span><br></pre></td></tr></table></figure>
+<p>编写好 .travis.yml 文件后，以后分支下文件修改提交到远程，会自动持续集成</p>
+<h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><ul>
+<li>本地页面正常，推送后页面空白</li>
+</ul>
+<p>一般 next 主题文件缺少导致，查看远程仓库分支下 themes/next 一般是空的。只需要将 themes/next 全部内容添加进 git 版本依赖即可</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/单元测试/" rel="tag"># 单元测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/29/webpack 热更新原理/" rel="next" title="webpack 热更新原理">
+                <i class="fa fa-chevron-left"></i> webpack 热更新原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/31/Nginx/" rel="prev" title="Nginx">
+                Nginx <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BDD-vs-TDD"><span class="nav-number">1.</span> <span class="nav-text">BDD vs TDD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BDD-行为驱动开发-偏向自然语言"><span class="nav-number">1.1.</span> <span class="nav-text">BDD 行为驱动开发(偏向自然语言)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TDD-测试驱动开发"><span class="nav-number">1.2.</span> <span class="nav-text">TDD 测试驱动开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-assert-断言模块"><span class="nav-number">2.</span> <span class="nav-text">Node.js assert 断言模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chai"><span class="nav-number">3.</span> <span class="nav-text">chai</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#assert"><span class="nav-number">3.1.</span> <span class="nav-text">assert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#should"><span class="nav-number">3.2.</span> <span class="nav-text">should</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expect"><span class="nav-number">3.3.</span> <span class="nav-text">expect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mocha"><span class="nav-number">4.</span> <span class="nav-text">mocha</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装运行"><span class="nav-number">4.1.</span> <span class="nav-text">安装运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#api"><span class="nav-number">4.2.</span> <span class="nav-text">api</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#仅执行一个用例集-用例函数"><span class="nav-number">4.2.1.</span> <span class="nav-text">仅执行一个用例集/用例函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跳过用例集-用例函数"><span class="nav-number">4.2.2.</span> <span class="nav-text">跳过用例集/用例函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#钩子函数"><span class="nav-number">4.2.3.</span> <span class="nav-text">钩子函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步代码测试"><span class="nav-number">4.2.4.</span> <span class="nav-text">异步代码测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#istanbul"><span class="nav-number">5.</span> <span class="nav-text">istanbul</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装使用"><span class="nav-number">5.1.</span> <span class="nav-text">安装使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">5.2.</span> <span class="nav-text">基本概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#travis-ci-持续集成"><span class="nav-number">6.</span> <span class="nav-text">travis-ci 持续集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">6.1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#travis-yml-配置"><span class="nav-number">6.2.</span> <span class="nav-text">.travis.yml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用：github-pages-coding-pages-博客持续集成"><span class="nav-number">6.3.</span> <span class="nav-text">应用：github pages / coding pages 博客持续集成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤"><span class="nav-number">6.3.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#travis-yml-配置文件"><span class="nav-number">6.3.2.</span> <span class="nav-text">.travis.yml 配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见问题"><span class="nav-number">6.3.3.</span> <span class="nav-text">常见问题</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

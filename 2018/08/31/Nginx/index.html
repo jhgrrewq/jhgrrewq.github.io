@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nginx," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考:Nginx基本配置备忘 、nginx中location详解  常用命令 更新包列表  1sudo apt-get update  安装 nginx  1sudo apt-get install nginx  停掉 nginx  123456789# 快速停止 nginxnginx -s stop# 完整有序停止 nginxnginx -s quit# 查看当前 nginx 进程 pid,">
+<meta name="keywords" content="Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/08/31/Nginx/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考:Nginx基本配置备忘 、nginx中location详解  常用命令 更新包列表  1sudo apt-get update  安装 nginx  1sudo apt-get install nginx  停掉 nginx  123456789# 快速停止 nginxnginx -s stop# 完整有序停止 nginxnginx -s quit# 查看当前 nginx 进程 pid,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-31T08:37:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx">
+<meta name="twitter:description" content="参考:Nginx基本配置备忘 、nginx中location详解  常用命令 更新包列表  1sudo apt-get update  安装 nginx  1sudo apt-get install nginx  停掉 nginx  123456789# 快速停止 nginxnginx -s stop# 完整有序停止 nginxnginx -s quit# 查看当前 nginx 进程 pid,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/08/31/Nginx/"/>
+
+
+
+
+
+  <title>Nginx | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/08/31/Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nginx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-31T16:37:51+08:00">
+                2018-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考:<a href="https://zhuanlan.zhihu.com/p/24524057?refer=wxyyxc1992" target="_blank" rel="noopener">Nginx基本配置备忘
+</a>、<a href="https://blog.csdn.net/chlinwei/article/details/67631830" target="_blank" rel="noopener">nginx中location详解</a></p>
+</blockquote>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li>更新包列表</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装 nginx</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nginx</span><br></pre></td></tr></table></figure>
+<ul>
+<li>停掉 nginx</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 快速停止 nginx</span></span><br><span class="line">nginx -s stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完整有序停止 nginx</span></span><br><span class="line">nginx -s quit</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 nginx 进程 pid, 强制杀死进程</span></span><br><span class="line">ps -ef | grep nginx</span><br><span class="line">pkill -9 nginx</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动 nginx</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx 安装目录 -c nginx 配置文件</span></span><br><span class="line">nginx -c /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重启 nginx (热启动，修改配置重启不影响线上)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入 nginx 安装目录</span></span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试 nginx 配置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入 nginx 安装目录</span></span><br><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="Nginx-配置-每个指令必须有分号结束"><a href="#Nginx-配置-每个指令必须有分号结束" class="headerlink" title="Nginx 配置 (每个指令必须有分号结束)"></a>Nginx 配置 (每个指令必须有分号结束)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局块</span></span><br><span class="line">...</span><br><span class="line"><span class="comment"># events 块</span></span><br><span class="line">events &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># http 块</span></span><br><span class="line">http &#123;</span><br><span class="line">	<span class="comment"># http 全局块</span></span><br><span class="line">	...</span><br><span class="line">	<span class="comment"># 虚拟主机 server 块</span></span><br><span class="line">	server &#123;</span><br><span class="line">		<span class="comment"># server 全局块</span></span><br><span class="line">		...</span><br><span class="line">		<span class="comment"># location 全局块</span></span><br><span class="line">		location [PATTERN]&#123;</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line">		location [PATTERN]&#123;</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	server &#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment"># http 全局块</span></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Nginx 配置文件由如下几部分组成：</p>
+<ul>
+<li><p><strong>全局块</strong> 配置影响 nginx 全局的指令。一般有运行 nginx 服务器的用户组，nginx 进程 pid 存放路径、日志存放路径，配置文件引入，允许生成 <code>work process</code> 数等</p>
+</li>
+<li><p><strong>events 块</strong> 配置影响 nginx 服务器或用户的网络连接。有每个进程的最大连接数，选取哪种事件驱动模型处理连接请求，是否允许同时连接多个网络请求，开启多个网络连接序列化等</p>
+</li>
+<li><p><strong>http 块</strong> 可嵌套多个 <code>server</code>，配置代理，缓存，日志定义等大多数功能和第三方模块的配置。如文件引入、mime-type 定义、日志自定义、连接超时时间、单链接请求数等</p>
+</li>
+<li><p><strong>server 块</strong> 配置虚拟主机相关参数，一个 http 中可有多个 server</p>
+</li>
+<li><p><strong>location 块</strong> 配置请求路由以及各种页面的处理情况</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">################### 每个指令必须有分号结束 ####################</span></span><br><span class="line"><span class="comment"># user administrator administrators; # 配置用户或组，默认 nobody nobody</span></span><br><span class="line"><span class="comment"># worker_processes 2; #允许生成的进程数，默认为 1</span></span><br><span class="line"><span class="comment"># pid /nginx/pid/nginx.pid; # 指定 nginx 进程运行文件存放地址</span></span><br><span class="line">error_log <span class="built_in">log</span>/error.log debug; <span class="comment"># 指定日志路径，级别。该设置可放入全局块、http 块、server 块， 级别依次为 debug|info|notice|warn|error|crit|alert|emerg</span></span><br><span class="line">events &#123;</span><br><span class="line">	accept_mutex on; <span class="comment"># 设置网络连接序列化，防止惊群现象发生，默认为 on</span></span><br><span class="line">	multi_accept on; <span class="comment"># 设置一个进程是否同时接受多个网络连接，默认为 off</span></span><br><span class="line">	<span class="comment"># use epoll; # 事件驱动模型，select|poll|kqueue|epoll|resig|/dev/poll|eventport</span></span><br><span class="line">	worker_connections 1024; <span class="comment"># 最大连接数，默认为 512</span></span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">	include mime.types; <span class="comment"># 文件扩展名和文件类型映射表</span></span><br><span class="line">	default_type application/octet-stream; <span class="comment"># 默认文件类型，默认为 text/plain</span></span><br><span class="line">	<span class="comment"># access_log off; # 取消服务日志</span></span><br><span class="line">	log_format myFormat <span class="string">'$remote_addr–$remote_user [$time_local] $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_forwarded_for'</span>; <span class="comment"># 自定义格式</span></span><br><span class="line">	access_log <span class="built_in">log</span>/access.log myFormat;  <span class="comment"># combined 为日志格式的默认值</span></span><br><span class="line">	sendfile on;   <span class="comment"># 允许 sendfile 方式传输文件，默认为 off，可以在 http 块，server 块，location 块</span></span><br><span class="line">	sendfile_max_chunk 100k;  <span class="comment"># 每个进程每次调用传输数量不能大于设定的值，默认为 0，即不设上限</span></span><br><span class="line">	keepalive_timeout 65;  <span class="comment"># 连接超时时间，默认为 75s，可以在 http，server，location块</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 定义常量</span></span><br><span class="line">	upstream mysvr &#123;</span><br><span class="line">		server 127.0.0.1:8081;</span><br><span class="line">		server 192.168.10.121:3333 backup; <span class="comment"># 热备</span></span><br><span class="line">	&#125;</span><br><span class="line">	error_page 404 https://www.baidu.com; <span class="comment"># 错误页</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 定义某个负载均衡服务器</span></span><br><span class="line">	server &#123;</span><br><span class="line">		keepalive_requests 120; <span class="comment"># 单连接请求上线次数</span></span><br><span class="line">		listen 4545; <span class="comment"># 监听端口</span></span><br><span class="line">		server_name 127.0.0.1; <span class="comment"># 监听地址</span></span><br><span class="line">		location ~*^.+$ &#123; <span class="comment"># 请求的 url 过滤，正则匹配，~ 为区分大小写，~* 为不区分大小写</span></span><br><span class="line">			<span class="comment"># root path; 根目录</span></span><br><span class="line">			<span class="comment"># index index.html; # 设置默认页</span></span><br><span class="line">			proxy_pass http://mysvr; <span class="comment"># 请求转到 mysvr 定义的服务器列表</span></span><br><span class="line">			deny 127.0.0.1; <span class="comment"># 拒绝的 ip</span></span><br><span class="line">			allow 127.18.5.54; <span class="comment"># 允许的 ip</span></span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态站点"><a href="#静态站点" class="headerlink" title="静态站点"></a>静态站点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name www.domain1.com;</span><br><span class="line">		location / &#123;</span><br><span class="line">			index index.html</span><br><span class="line">			root /var/www/domain1.com/htdocs;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name www.domain2.com</span><br><span class="line">		location / &#123;</span><br><span class="line">			index index.html;</span><br><span class="line">			root /var/www/domain2.com/htdocs;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="主机和端口配置"><a href="#主机和端口配置" class="headerlink" title="主机和端口配置"></a>主机和端口配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">listen 127.0.0.1:8080;</span><br><span class="line">listen *:8080;</span><br><span class="line">listen localhost:8080;</span><br><span class="line"><span class="comment"># IPV6</span></span><br><span class="line">listen [::]:8080;</span><br><span class="line"><span class="comment"># other params</span></span><br><span class="line">listen 443 default_server ssl;</span><br><span class="line">listen 127.0.0.1 default_server accept_filter=dataready backlog=1024</span><br></pre></td></tr></table></figure>
+<h3 id="服务器域名配置"><a href="#服务器域名配置" class="headerlink" title="服务器域名配置"></a>服务器域名配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 支持多域名配置</span></span><br><span class="line">server_name www.domain.com domain.com</span><br><span class="line"><span class="comment"># 支持泛域名解析</span></span><br><span class="line">server_name *.domain.com</span><br><span class="line"><span class="comment"># 支持对于域名的正则匹配</span></span><br><span class="line">server_name ~^\.domain\.com$;</span><br></pre></td></tr></table></figure>
+<h3 id="URL-匹配"><a href="#URL-匹配" class="headerlink" title="URL 匹配"></a>URL 匹配</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">	<span class="comment"># 完全匹配 =</span></span><br><span class="line">	<span class="comment"># 大小写敏感 ~</span></span><br><span class="line">	<span class="comment"># 忽略大小写 ~*</span></span><br><span class="line">&#125;</span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">	<span class="comment"># 前半部分匹配 ^~</span></span><br><span class="line">	<span class="comment"># 可使用正则 如 location ~* \.(gif|jpg|png)$ &#123;&#125;</span></span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">	<span class="comment"># 如果以上都未匹配，进入这里</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件路径配置"><a href="#文件路径配置" class="headerlink" title="文件路径配置"></a>文件路径配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">	root /home/domain/<span class="built_in">test</span>/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="首页配置"><a href="#首页配置" class="headerlink" title="首页配置"></a>首页配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index /html/index.html /php/index.php;</span><br></pre></td></tr></table></figure>
+<h3 id="别名配置"><a href="#别名配置" class="headerlink" title="别名配置"></a>别名配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location /blog &#123;</span><br><span class="line">	<span class="built_in">alias</span> /home/domain/blog/;</span><br><span class="line">&#125;</span><br><span class="line">location ~ ^/blog/(\d+)/([\w-]+)$ &#123;</span><br><span class="line">	<span class="comment"># /blog/20141202/article-name  </span></span><br><span class="line">  <span class="comment"># -&gt; /blog/20141202-article-name.md</span></span><br><span class="line">  <span class="built_in">alias</span> /home/domain/blog/<span class="variable">$1</span>-<span class="variable">$2</span>.md;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="重定向配置"><a href="#重定向配置" class="headerlink" title="重定向配置"></a>重定向配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">error_page 404 /404.html;</span><br><span class="line">error_page 502 503 /50x.html;</span><br><span class="line">error_page 404 =200 /1x1.gif;</span><br><span class="line">location / &#123;</span><br><span class="line">	error_page 404 @fallback;</span><br><span class="line">&#125;</span><br><span class="line">location @fallback &#123;</span><br><span class="line">	<span class="comment"># 将请求反向代理到上游服务器处理</span></span><br><span class="line">	proxy_pass http://localhost:9000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="try-files"><a href="#try-files" class="headerlink" title="try_files"></a>try_files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try_files <span class="variable">$uri</span> <span class="variable">$uri</span>.html <span class="variable">$uri</span>/index.html @other;</span><br><span class="line">location @ther &#123;</span><br><span class="line">	<span class="comment"># 尝试寻找匹配 uri 文件，失败会转到上游处理</span></span><br><span class="line">	proxy_pass http://localhost:9000;</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">	<span class="comment"># 尝试寻找匹配 uri 文件，没找到直接返回 502</span></span><br><span class="line">	try_files <span class="variable">$uri</span> <span class="variable">$uri</span>.html =502</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><blockquote>
+<p>反向代理方式是指用代理服务器来接受网络上的连接请求，然后将请求转发给内部网络的上游服务器，并将上游服务器得到的结果返回给网络上请求连接的客户端，此时代理服务器对外表现就是一个 web 服务器</p>
+</blockquote>
+<h3 id="负载均衡配置"><a href="#负载均衡配置" class="headerlink" title="负载均衡配置"></a>负载均衡配置</h3><p><code>upstream</code> 定义一个上游服务器集群</p>
+<p><code>proxy_pass</code> 将请求转发到有处理能力的端上，默认不会转发请求中的 Host 头部</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">	upstream jack &#123;</span><br><span class="line">		server 127.0.0.1:8080;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment"># 80 端口，可配置多个虚拟主机</span></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line">		server_name www.jhgrrewq.com</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			<span class="comment"># 将请求转发到有处理能力的端上</span></span><br><span class="line">			proxy_pass http://jack;</span><br><span class="line"></span><br><span class="line">			<span class="comment">### 下面都是次要项</span></span><br><span class="line">			proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">			proxy_method POST;</span><br><span class="line">			<span class="comment"># 指定不转发的头部字段</span></span><br><span class="line">			proxy_hide_header Cache-Control;</span><br><span class="line">			<span class="comment"># 指定转发的头部字段</span></span><br><span class="line">			proxy_pass_header Server-IP;</span><br><span class="line">			<span class="comment"># 是否转发包体</span></span><br><span class="line">			proxy_pass_request_body on|off;</span><br><span class="line">			<span class="comment"># 是否转发头部</span></span><br><span class="line">			proxy_pass_request_headers on|off;</span><br><span class="line">			<span class="comment"># 显形/隐形 URI，上游发生重定向时，nginx 是否同步更改 uri</span></span><br><span class="line">			proxy_redirect on|off;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>处理请求，如果是静态文件， Nginx 直接返回，否则交给 Node 服务器处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.end(<span class="string">'hello world'</span>);</span><br><span class="line">&#125;).listen(<span class="number">9000</span>)</span><br></pre></td></tr></table></figure>
+<p>任何请求归来都会返回 ‘hello world’</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx</span></span><br><span class="line">events &#123;</span><br><span class="line">	<span class="comment"># ...</span></span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">	server &#123;</span><br><span class="line">		listen 127.0.0.1:8080;</span><br><span class="line">		<span class="comment"># 如果请求路径和文件路径按照如下方式匹配找到，直接返回</span></span><br><span class="line">		try_file <span class="variable">$url</span> <span class="variable">$url</span>/index.html;</span><br><span class="line">		location ~* ^/(js|css|image|font)/$ &#123;</span><br><span class="line">			<span class="comment"># 静态资源都在 static 文件夹下</span></span><br><span class="line">			root /home/jhgrrewq/www/static/;</span><br><span class="line">		&#125;</span><br><span class="line">		location /app &#123;</span><br><span class="line">			<span class="comment"># Node.js 在 9000 开了一个监听端口</span></span><br><span class="line">			proxy_pass http://127.0.0.1:9000;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment"># 上面处理出错或者找不到，返回对应状态码文件</span></span><br><span class="line">		error_page 404 /404/html;</span><br><span class="line">		error_page 502 503 504 /50x.html;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先 <code>try_files</code>, 尝试直接匹配文件；没找到就匹配静态资源；还没找到就交给 Node 处理，否则就返回 4xx/5xx 状态码</p>
+<h2 id="基本-https-配置"><a href="#基本-https-配置" class="headerlink" title="基本 https 配置"></a>基本 https 配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen 192.168.1.11:443; <span class="comment"># ssl 端口</span></span><br><span class="line">	server_name test.com;</span><br><span class="line">	<span class="comment"># 为一个 server 开启 ssl 支持</span></span><br><span class="line">	ssl on;</span><br><span class="line">	<span class="comment"># 指定 pem 格式证书文件</span></span><br><span class="line">	ssl_certificate /etc/nginx/test.pem;</span><br><span class="line">	<span class="comment"># 指定 pem 格式私钥文件</span></span><br><span class="line">	ssl_certificate_key /etc/nginx/test.key;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Nginx-location-匹配"><a href="#Nginx-location-匹配" class="headerlink" title="Nginx location 匹配"></a>Nginx location 匹配</h2><p><code>location block</code> 的基本语法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location [=|~|~*|^~|@] patten &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p><code>[=|~|~*|^~|@]</code> 为 <code>location modifier</code>, 定义 Nginx 如何匹配之后的 <code>pattern</code>, 以及 <code>pattern</code> 的最基本属性（简单字符串或者正则表达式） </p>
+<h3 id="location"><a href="#location" class="headerlink" title="location ="></a>location =</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	server_name www.domain.com;</span><br><span class="line">	location = /abcd &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配情况：</p>
+<ul>
+<li><a href="http://www.domain.com/abcd" target="_blank" rel="noopener">http://www.domain.com/abcd</a> # 完全匹配</li>
+<li><a href="http://www.domain.com/ABCD" target="_blank" rel="noopener">http://www.domain.com/ABCD</a> # 如果运行 Nginx 的系统本身忽略大小写也匹配，如 windows</li>
+<li><a href="http://www.domain.com/abcd?params1" target="_blank" rel="noopener">http://www.domain.com/abcd?params1</a> # 忽略查询字符串参数，也就是 ？后面的内容</li>
+<li><a href="http://www.domain.com/abcd/" target="_blank" rel="noopener">http://www.domain.com/abcd/</a> # 不匹配，末尾存在反斜杠，Nginx 不认为完全匹配</li>
+<li><a href="http://www.domain.com/abcde" target="_blank" rel="noopener">http://www.domain.com/abcde</a> # 不匹配</li>
+</ul>
+<h3 id="location-none"><a href="#location-none" class="headerlink" title="location (none)"></a>location (none)</h3><p>可以不写 <code>location modifier</code>, Nginx 仍然能去匹配 <code>pattern</code>。这种情况下，<strong>匹配指定 <code>pattern</code> 开头的 url（只能是普通字符串，不能是正则）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	server_name www.domain.com;</span><br><span class="line">	location /abcd &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配情况：</p>
+<ul>
+<li><a href="http://www.domain.com/abcd" target="_blank" rel="noopener">http://www.domain.com/abcd</a> # 完全匹配</li>
+<li><a href="http://www.domain.com/ABCD" target="_blank" rel="noopener">http://www.domain.com/ABCD</a> # 如果运行 Nginx 的系统本身忽略大小写也匹配，如 windows</li>
+<li><a href="http://www.domain.com/abcd?params1" target="_blank" rel="noopener">http://www.domain.com/abcd?params1</a> # 忽略查询字符串参数，也就是 ？后面的内容</li>
+<li><a href="http://www.domain.com/abcd/" target="_blank" rel="noopener">http://www.domain.com/abcd/</a> # 末尾存在反斜杠也属于匹配</li>
+<li><a href="http://www.domain.com/abcde" target="_blank" rel="noopener">http://www.domain.com/abcde</a> # 不匹配</li>
+</ul>
+<h3 id="location-1"><a href="#location-1" class="headerlink" title="location ~"></a>location ~</h3><p><strong>对大小写敏感（不能忽略大小写） <code>pattern</code> 只能为正则</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	server_name www.domain.com;</span><br><span class="line">	location ~ ^/abcd$ &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配情况：</p>
+<ul>
+<li><a href="http://www.domain.com/abcd" target="_blank" rel="noopener">http://www.domain.com/abcd</a> # 完全匹配</li>
+<li><a href="http://www.domain.com/ABCD" target="_blank" rel="noopener">http://www.domain.com/ABCD</a> # 不匹配，不能忽略大小写（但是如 window 等大小写不敏感系统，~ 和 ~* 不起作用）</li>
+<li><a href="http://www.domain.com/abcd?params1" target="_blank" rel="noopener">http://www.domain.com/abcd?params1</a> # 忽略查询字符串参数，也就是 ？后面的内容</li>
+<li><a href="http://www.domain.com/abcd/" target="_blank" rel="noopener">http://www.domain.com/abcd/</a> # 不匹配，末尾存在反斜杠，不匹配正则表达式 ^/abcd$</li>
+<li><a href="http://www.domain.com/abcde" target="_blank" rel="noopener">http://www.domain.com/abcde</a> # 不匹配</li>
+</ul>
+<h3 id="location-2"><a href="#location-2" class="headerlink" title="location ~*"></a>location ~*</h3><p><strong>对大小写不敏感（忽略大小写） <code>pattern</code> 只能为正则</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	server_name www.domain.com;</span><br><span class="line">	location ~* ^/abcd$ &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配情况：</p>
+<ul>
+<li><a href="http://www.domain.com/abcd" target="_blank" rel="noopener">http://www.domain.com/abcd</a> # 完全匹配</li>
+<li><a href="http://www.domain.com/ABCD" target="_blank" rel="noopener">http://www.domain.com/ABCD</a> # 匹配，忽略大小写（但是如 window 等大小写不敏感系统，~ 和 ~* 不起作用）</li>
+<li><a href="http://www.domain.com/abcd?params1" target="_blank" rel="noopener">http://www.domain.com/abcd?params1</a> # 忽略查询字符串参数，也就是 ？后面的内容</li>
+<li><a href="http://www.domain.com/abcd/" target="_blank" rel="noopener">http://www.domain.com/abcd/</a> # 不匹配，末尾存在反斜杠，不匹配正则表达式 ^/abcd$</li>
+<li><a href="http://www.domain.com/abcde" target="_blank" rel="noopener">http://www.domain.com/abcde</a> # 不匹配</li>
+</ul>
+<h3 id="location-3"><a href="#location-3" class="headerlink" title="location ^~"></a>location ^~</h3><p>匹配情况类似 <code>location (none)</code> 情况，以指定匹配模式开头的 uri 被匹配，不同的是，<strong>一旦匹配成功， Nginx 就停止寻找其他的 location 块进行匹配</strong></p>
+<h3 id="location-4"><a href="#location-4" class="headerlink" title="location @"></a>location @</h3><p>定义一个 location 块，不能被外部 client 访问，只能被 Nginx 内部配置指令访问，如 <code>try_file</code> <code>error_page</code></p>
+<h3 id="搜索顺序和生效优先级"><a href="#搜索顺序和生效优先级" class="headerlink" title="搜索顺序和生效优先级"></a>搜索顺序和生效优先级</h3><p><strong><code>Server</code> 块中的 <code>location</code> 块的次序是不重要的，Nginx 会根据 <code>location modifier</code> 优先级依次用 uri 匹配 <code>pattern</code>:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. =</span><br><span class="line">2. (none) <span class="comment"># 如果 pattern 完全匹配 uri（不是只匹配 uri 头部）</span></span><br><span class="line">3. ^~</span><br><span class="line">4. ~ 或 ~*</span><br><span class="line">5. （none）<span class="comment"># pattern 匹配 uri 头部</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">	<span class="comment"># 精确匹配 /，主机名后面不能带任何字符串</span></span><br><span class="line">	[ config a ]</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">	<span class="comment"># 所有地址都以为 / 开头，因此该规则会匹配到全部请求</span></span><br><span class="line">	<span class="comment"># 正则和最长字符串会优先匹配</span></span><br><span class="line">	[ config b ]</span><br><span class="line">&#125;</span><br><span class="line">location /documents/ &#123;</span><br><span class="line">	<span class="comment"># 匹配到任何 /documents/ 开头的地址，匹配符合后还要继续往下搜索</span></span><br><span class="line">	<span class="comment"># 只有后面的正则表达式没有匹配，才会采用这一条</span></span><br><span class="line">	[ config c ]</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">	<span class="comment"># 匹配到任何 /images/ 开头的地址，匹配符合，停止往下搜索正则，采用这一条</span></span><br><span class="line">	[ config d ]</span><br><span class="line">&#125;</span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">	<span class="comment"># 匹配全部 gif、jpg 或 jpeg 结尾的请求</span></span><br><span class="line">	<span class="comment"># 但是请求 /images/ 下的图片会被 config d 处理，因为 ^~ 到达不了这一条正则</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实际使用建议"><a href="#实际使用建议" class="headerlink" title="实际使用建议"></a>实际使用建议</h3><p>一般至少有三个匹配规则：</p>
+<ul>
+<li><strong>直接匹配网站根，通过域名访问网站比较频繁</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以转发给后端服务器，也可以是一个静态站点首页</span></span><br><span class="line">location = / &#123;</span><br><span class="line">	proxy_pass http://www.domain.com/index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>处理静态文件请求</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般两种模式，目录匹配 或 后缀匹配</span></span><br><span class="line">location ^~ /static/ &#123;</span><br><span class="line">	root /htocs/static/;</span><br><span class="line">&#125;</span><br><span class="line">location ~* \.(gif|jpg|jpeg|png|css|js|ico)$ &#123;</span><br><span class="line">	root /htocs/res/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>一般用来转发动态(可认为是非静态文件)请求到后端应用服务器，如代理等</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">	proxy_pass http://www.domain.com/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/17/Node.js 测试/" rel="next" title="单元测试">
+                <i class="fa fa-chevron-left"></i> 单元测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/13/Mac terminal 自定义快捷键/" rel="prev" title="Mac terminal 自定义快捷键">
+                Mac terminal 自定义快捷键 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-配置-每个指令必须有分号结束"><span class="nav-number">2.</span> <span class="nav-text">Nginx 配置 (每个指令必须有分号结束)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态站点"><span class="nav-number">3.</span> <span class="nav-text">静态站点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主机和端口配置"><span class="nav-number">3.1.</span> <span class="nav-text">主机和端口配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器域名配置"><span class="nav-number">3.2.</span> <span class="nav-text">服务器域名配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL-匹配"><span class="nav-number">3.3.</span> <span class="nav-text">URL 匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件路径配置"><span class="nav-number">3.4.</span> <span class="nav-text">文件路径配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页配置"><span class="nav-number">3.5.</span> <span class="nav-text">首页配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#别名配置"><span class="nav-number">3.6.</span> <span class="nav-text">别名配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向配置"><span class="nav-number">3.7.</span> <span class="nav-text">重定向配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-files"><span class="nav-number">3.8.</span> <span class="nav-text">try_files</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理"><span class="nav-number">4.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡配置"><span class="nav-number">4.1.</span> <span class="nav-text">负载均衡配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本-https-配置"><span class="nav-number">5.</span> <span class="nav-text">基本 https 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-location-匹配"><span class="nav-number">6.</span> <span class="nav-text">Nginx location 匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#location"><span class="nav-number">6.1.</span> <span class="nav-text">location =</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location-none"><span class="nav-number">6.2.</span> <span class="nav-text">location (none)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location-1"><span class="nav-number">6.3.</span> <span class="nav-text">location ~</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location-2"><span class="nav-number">6.4.</span> <span class="nav-text">location ~*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location-3"><span class="nav-number">6.5.</span> <span class="nav-text">location ^~</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location-4"><span class="nav-number">6.6.</span> <span class="nav-text">location @</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索顺序和生效优先级"><span class="nav-number">6.7.</span> <span class="nav-text">搜索顺序和生效优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际使用建议"><span class="nav-number">6.8.</span> <span class="nav-text">实际使用建议</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
