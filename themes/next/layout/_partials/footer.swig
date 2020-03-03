@@ -43,5 +43,8 @@
 {% if theme.footer.custom_text %}
   <div class="footer-custom">{#
   #}{{ theme.footer.custom_text }}{#
-#}</div>
+#}
+</div>
 {% endif %}
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
