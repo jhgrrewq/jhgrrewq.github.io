@@ -402,13 +402,19 @@ nrm del <registry-name>
 
 - 安装常用 Node.js 模块
 
-```bash
+``` bash
 npm i pm2 webpack gulp grunt-cli -g
 ```
 
 ## pm2 管理 node 进程
 
 pm2 是一个带有负载均衡功能的 Node 应用的进程管理器, 括守护进程，监控，日志的一整套完整的功能
+
+- 进程守护，系统崩溃自动重启
+- 启动多进程，充分利用 CPU 和内存
+- 自带日志记录功能
+
+### 命令行
 
 ```bash
 # 启动
@@ -417,35 +423,39 @@ pm2 start app.js --name my-api   # 启动进程并命名为 my-api
 pm2 start app.js -i 4           # 根据 CPU 核数启动进程个数, 这个 4 个应用会自动负载均衡
 pm2 start app.js --watch   # 实时监控 app.js 的方式启动，当app.js文件有变动时，pm2 会自动 reload；更复杂的监听最好通过配置文件
 
-# 查看进程
-pm2 list
-pm2 show 0 # pm2 info 0  #查看进程详细信息，0 为 PM2 进程 id
-pm2 show app  #查看进程详细信息，app 为 PM2 进程 name, 下同
-
-# 监控
-pm2 monit
-
 # 停止
 pm2 stop all  # 停止 PM2 列表中所有的进程
 pm2 stop 0    # 停止 PM2 列表中进程为 0 的进程
 pm2 stop app
-
-# 重载
-pm2 reload all    # 重载 PM2 列表中所有的进程
-pm2 reload 0     # 重载 PM2 列表中进程为 0 的进程
-pm2 reload app
-
-# 重启
-pm2 restart all     # 重启 PM2 列表中所有的进程
-pm2 restart 0      # 重启 PM2 列表中进程为 0 的进程
-pm2 restart app
 
 # 删除 PM2 进程
 pm2 delete 0     #删除 PM2 列表中进程为 0 的进程
 pm2 delete all   #删除 PM2 列表中所有的进程
 pm2 delete app
 
+# 重启
+pm2 restart all     # 重启 PM2 列表中所有的进程
+pm2 restart 0      # 重启 PM2 列表中进程为 0 的进程
+pm2 restart app
+
+# 重载
+pm2 reload all    # 重载 PM2 列表中所有的进程
+pm2 reload 0     # 重载 PM2 列表中进程为 0 的进程
+pm2 reload app
+
+# 查看进程
+pm2 list
+pm2 show 0 # pm2 info 0  #查看进程详细信息，0 为 PM2 进程 id
+pm2 show app  #查看进程详细信息，app 为 PM2 进程 name, 下同
+
+# 进程信息
+pm2 info app
+
+# 监控
+pm2 monit
+
 # 日志操作
+pm2 log app
 pm2 logs [--raw]   # Display all processes logs in streaming
 pm2 flush          # Empty all log file
 pm2 reloadLogs    # Reload all logs
@@ -456,6 +466,51 @@ pm2 updatePM2                # 升级pm2
 
 # 更多命令参数请查看帮助
 pm2 --help
+```
+
+### 配置文件
+
+```js
+# 执行pm2 start pm2.config.js
+module.exports = {
+  "apps": {
+        "name": "wuwu",                             // 进程名          
+        "script": "./bin/www",                      // 执行文件，如果是 node 项目就是入口文件
+        "cwd": "./",                                // 根目录
+        "args": "",                                 // 传递给脚本的参数，可以数组
+        "watch": true,                              // 是否监听文件变动然后重启
+        "ignore_watch": [                           // 不用监听的文件
+            "node_modules",
+            "logs"
+        ],
+        "exec_mode": "cluster_mode",                // 应用启动模式，支持fork和cluster模式
+        "instances": 4,                             // 应用启动实例个数，仅在cluster模式有效 默认为fork；或者 max
+        "max_memory_restart": 8,                    // 最大内存限制数，超出自动重启
+        "error_file": "./logs/app-err.log",         // 错误日志文件
+        "out_file": "./logs/app-out.log",           // 正常日志文件
+        "merge_logs": true,                         // 设置追加日志而不是新建日志
+        "log_date_format": "YYYY-MM-DD HH:mm:ss",   // 指定日志文件的时间格式
+        "min_uptime": "60s",                        // 应用运行少于时间被认为是异常启动
+        "max_restarts": 30,                         // 最大异常重启次数，即小于min_uptime运行时间重启次数；
+        "restart_delay": "60s"                      // 异常重启情况下，延时重启时间
+        "env": {
+           "NODE_ENV": "development",                // 环境参数，当前指定为开发环境 process.env.NODEPORT
+           "PORT": 9091                              // process.env.PORT
+        },
+        "env_development": {
+            "NODE_ENV": "development",              // 环境参数，当前指定为开发环境 pm2 start app.js --env development
+            "PORT": 9091                             
+        },
+        "env_test": {                               // 环境参数，当前指定为测试环境 pm2 start app.js --env test
+            "NODE_ENV": "test",
+            "PORT": 9091                              
+        },
+  			"env_production": {                         // 环境参数，当前指定为生产环境 pm2 start app.js --env production
+            "NODE_ENV": "production",
+            "PORT": 9091                              
+        }
+    }
+}
 ```
 
 ## 配置 nginx

@@ -45,7 +45,7 @@ function genIterator(arr) {
 }
 ```
 
-## 默认 iterator 接口
+## 默认 iterator 接口 
 
 **es6 默认的 iterator 结构部署在数据结构的 Symbol.iterator 属性**，或者说一个数据结构只要具有 Symbol.iterator 属性，就可认为是可遍历的。
 
