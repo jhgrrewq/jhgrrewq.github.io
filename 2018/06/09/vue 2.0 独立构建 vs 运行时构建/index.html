@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue,构建," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: Vue.js 官网 对不同构建版本解释、从一个奇怪的错误出发理解 Vue 基本概念  基础知识在 NPM 包的 dist/ 目录下有多个 Vue.js 构建版本     UMD CommonJS ES Module     完整版 vue.js vue.common.js vue.esm.js   只含运行时版 vue.runtime.js vue.runtime.common.js">
+<meta name="keywords" content="vue,构建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 2.0 独立构建 vs 运行时构建">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/06/09/vue 2.0 独立构建 vs 运行时构建/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: Vue.js 官网 对不同构建版本解释、从一个奇怪的错误出发理解 Vue 基本概念  基础知识在 NPM 包的 dist/ 目录下有多个 Vue.js 构建版本     UMD CommonJS ES Module     完整版 vue.js vue.common.js vue.esm.js   只含运行时版 vue.runtime.js vue.runtime.common.js">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-09T08:11:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 2.0 独立构建 vs 运行时构建">
+<meta name="twitter:description" content="参考: Vue.js 官网 对不同构建版本解释、从一个奇怪的错误出发理解 Vue 基本概念  基础知识在 NPM 包的 dist/ 目录下有多个 Vue.js 构建版本     UMD CommonJS ES Module     完整版 vue.js vue.common.js vue.esm.js   只含运行时版 vue.runtime.js vue.runtime.common.js">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/09/vue 2.0 独立构建 vs 运行时构建/"/>
+
+
+
+
+
+  <title>vue 2.0 独立构建 vs 运行时构建 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/09/vue 2.0 独立构建 vs 运行时构建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue 2.0 独立构建 vs 运行时构建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T16:11:49+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考: <a href="https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A" target="_blank" rel="noopener">Vue.js 官网 对不同构建版本解释</a>、<a href="https://zhuanlan.zhihu.com/p/25486761" target="_blank" rel="noopener">从一个奇怪的错误出发理解 Vue 基本概念</a></p>
+</blockquote>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>在 NPM 包的 <code>dist/</code> 目录下有多个 Vue.js 构建版本</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:left">UMD</th>
+<th style="text-align:left">CommonJS</th>
+<th style="text-align:left">ES Module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>完整版</strong></td>
+<td style="text-align:left">vue.js</td>
+<td style="text-align:left">vue.common.js</td>
+<td style="text-align:left">vue.esm.js</td>
+</tr>
+<tr>
+<td><strong>只含运行时版</strong></td>
+<td style="text-align:left">vue.runtime.js</td>
+<td style="text-align:left">vue.runtime.common.js</td>
+<td style="text-align:left">vue.runtime.esm.js</td>
+</tr>
+<tr>
+<td><strong>完整版（生产环境）</strong></td>
+<td style="text-align:left">vue.min.js</td>
+<td style="text-align:left">-</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td><strong>只含运行时版（生产环境)</strong></td>
+<td style="text-align:left">vue.runtime.min.js</td>
+<td style="text-align:left">-</td>
+<td style="text-align:left">-</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><ul>
+<li><p><strong>完整版</strong> 同时包含编译器和运行时的版本</p>
+</li>
+<li><p><strong>编译器</strong> 用来将模板字符串编译为 javascript 渲染函数（render 函数）的代码</p>
+</li>
+<li><p><strong>运行时</strong> 用来创建 vue 实例、渲染并处理虚拟 dom 等的代码。<strong>基本就是去除编译器的其他一切</strong></p>
+</li>
+<li><p><strong>UMD</strong> 该版本可以通过 <code>script</code> 标签直接用于浏览器中，<strong>一般 cdn 中的版本默认是 运行时 + 编译器的 UMD 版本</strong></p>
+</li>
+<li><p><strong>CommonJS</strong> 该版本用来配合老的打包工具如 Browserif 或 webpack1，<strong>这些打包工具的默认文件（pkg.main）是只包含运行时的 CommonJS 版本（vue.runtime.common.js）</strong></p>
+</li>
+<li><p><strong>ES Module</strong> 该版本用来配合现代打包工具如 webpack2 或 rollup，<strong>这些打包工具的默认文件（pkg.main）是只包含运行时的 ES Module 版本（vue.runtime.esm.js）</strong></p>
+</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>从上可知，Vue 有两种不同的构建————独立构建和运行时构建。<strong>运行时构建删除了模板编译功能，因此无法支持带 <code>template</code> 属性的 Vue 实例选项</strong></p>
+<ul>
+<li>如果在 html 文件使用 script 标签引入独立构建的 Vue 文件（ umd 版本），可以使用带 <code>template</code> 属性的 Vue 实例选项</li>
+<li>一般 webpack 打包的项目中 <code>node_modules/vue/package.json</code> 文件中，默认已经通过 <code>main</code> 字段指定了通过 <code>import Vue from &#39;vue&#39;</code> 或 <code>require(&#39;vue&#39;)</code> 所引入的文件是 <code>dist/vue.runtime.common.js</code>, 也就是运行时构建的 Vue 文件, 因此使用带 <code>template</code> 属性的 Vue 实例选项会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	resolve: &#123;</span><br><span class="line">		extensions: [<span class="string">'.js'</span>, <span class="string">'.vue'</span>],</span><br><span class="line">		alias: &#123;</span><br><span class="line">			<span class="comment">// 精确匹配</span></span><br><span class="line">			<span class="string">'vue$'</span>: <span class="string">'vue/dist/vue.common.js'</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决上面 webpack 项目中的问题需要在 webpack 配置中 <code>resolve</code> 属性添加 <code>alias</code> 设置</p>
+<h2 id="vue-选项对象中-el-属性、template-属性和-render-渲染函数-（需要渲染-dom）"><a href="#vue-选项对象中-el-属性、template-属性和-render-渲染函数-（需要渲染-dom）" class="headerlink" title="vue 选项对象中 el 属性、template 属性和 render 渲染函数 （需要渲染 dom）"></a>vue 选项对象中 el 属性、template 属性和 render 渲染函数 （需要渲染 dom）</h2><blockquote>
+<p>当 Vue 选项对象中有 render 渲染函数，Vue 构造函数会直接使用渲染函数渲染 dom （忽略 template 属性和 el 属性）；当选项对象中没有 render 渲染函数时，Vue 构造函数首先将 template 模板编译成渲染函数，然后在渲染 dom；而当 Vue 实例选项中既没有 render 渲染函数，又没有 template 模板，会通过 el 属性获取挂载元素的 outerHTML 作为模板，并编译生成函数</p>
+</blockquote>
+<ul>
+<li>总之，渲染 dom 时，render 渲染函数优先级最高，template 次之并且需编译成渲染函数，而挂载点 el 属性对应元素存在并且前两者都不存在，其 outerHTML 才会用于编译并渲染</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.html</span></span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"app1"</span>&gt;&#123;&#123;msg&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	&lt;div class="app2"&gt;&#123;&#123;msg&#125;&#125;&lt;/</span>div&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"app2"</span>&gt;&#123;&#123;msg&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">	el: <span class="string">'.app1'</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		msg: <span class="string">'el'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	template: <span class="string">`&lt;div&gt;template&lt;/div&gt;`</span>,</span><br><span class="line">	render: <span class="function"><span class="params">h</span> =&gt;</span> h(<span class="string">'div'</span>, &#123;&#125;, <span class="string">'render'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">	el: <span class="string">'.app2'</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		msg: <span class="string">'el'</span></span><br><span class="line">	&#125;,</span><br><span class="line">	template: <span class="string">`&lt;div&gt;template&lt;/div&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">	el: <span class="string">'.app3'</span>,</span><br><span class="line">	data: &#123;</span><br><span class="line">		msg: <span class="string">'el'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当然创建 Vue 实例时候可以不包含 el 属性、template 属性和 render 渲染函数。<strong>实际上，如果 Vue 实例选项中没有设置 el 属性也没有显示调用 $mount 方法，是不会触发对 render 渲染函数（无论是手动编写还是编译生成）的检查</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常见场景是 eventBus</span></span><br><span class="line"><span class="comment">// event-bus.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> EventBus = <span class="keyword">new</span> Vue()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中使用</span></span><br><span class="line"><span class="keyword">import</span> EventBus <span class="keyword">from</span> <span class="string">'event-bus.js'</span></span><br><span class="line">EventBus.$on(<span class="string">'event1'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="什么时候使用独立构建，什么时候使用运行时构建"><a href="#什么时候使用独立构建，什么时候使用运行时构建" class="headerlink" title="什么时候使用独立构建，什么时候使用运行时构建"></a>什么时候使用独立构建，什么时候使用运行时构建</h2><ul>
+<li>在单文件组件中仍然可以使用 template 模板，是因为webpack 在打包时候已经将单文件组件的模板预编译为 render 函数，因此一般情况使用运行时构建 Vue 版本文件</li>
+<li>如果使用 <code>new Vue</code> 创建 Vue 实例时，模板是从 el 挂载元素提取或使用 template 属性，需要使用独立构建 Vue 版本文件</li>
+<li>在 script 标签中引入 Vue.js 项目中，任意实例选项或组件选项中包含了 template 模板属性或从 el 挂载元素提取模板时，均需要使用独立构建的 Vue 库</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/构建/" rel="tag"># 构建</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/08/iView 按需引入/" rel="next" title="iView 按需引入">
+                <i class="fa fa-chevron-left"></i> iView 按需引入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/12/css 布局/" rel="prev" title="css 布局">
+                css 布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#术语"><span class="nav-number">2.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-选项对象中-el-属性、template-属性和-render-渲染函数-（需要渲染-dom）"><span class="nav-number">4.</span> <span class="nav-text">vue 选项对象中 el 属性、template 属性和 render 渲染函数 （需要渲染 dom）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候使用独立构建，什么时候使用运行时构建"><span class="nav-number">5.</span> <span class="nav-text">什么时候使用独立构建，什么时候使用运行时构建</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

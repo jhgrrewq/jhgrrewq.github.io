@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深拷贝," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概念 深拷贝和浅拷贝  对于基本数值类型，浅拷贝就是对值的复制；对于引用类型，js中存储对象都是存储地址，浅拷贝(变量赋值)都是指向同一个内存区域，深拷贝则是另外开辟一个内存区域  为什么需要深拷贝  一个简单的使用是vue父组件通过props传值给子组件，而有时子组件需要修改父组件的值。由于vue不建议直接修改父组件的值，对传入引用类型的值，往往需要拿到一个引用类型的副本。">
+<meta name="keywords" content="深拷贝">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js 深拷贝">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/04/03/js 深拷贝/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="概念 深拷贝和浅拷贝  对于基本数值类型，浅拷贝就是对值的复制；对于引用类型，js中存储对象都是存储地址，浅拷贝(变量赋值)都是指向同一个内存区域，深拷贝则是另外开辟一个内存区域  为什么需要深拷贝  一个简单的使用是vue父组件通过props传值给子组件，而有时子组件需要修改父组件的值。由于vue不建议直接修改父组件的值，对传入引用类型的值，往往需要拿到一个引用类型的副本。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-03T02:31:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js 深拷贝">
+<meta name="twitter:description" content="概念 深拷贝和浅拷贝  对于基本数值类型，浅拷贝就是对值的复制；对于引用类型，js中存储对象都是存储地址，浅拷贝(变量赋值)都是指向同一个内存区域，深拷贝则是另外开辟一个内存区域  为什么需要深拷贝  一个简单的使用是vue父组件通过props传值给子组件，而有时子组件需要修改父组件的值。由于vue不建议直接修改父组件的值，对传入引用类型的值，往往需要拿到一个引用类型的副本。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/04/03/js 深拷贝/"/>
+
+
+
+
+
+  <title>js 深拷贝 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/03/js 深拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js 深拷贝</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T10:31:48+08:00">
+                2018-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>深拷贝和浅拷贝</li>
+</ul>
+<p>对于基本数值类型，浅拷贝就是对值的复制；对于引用类型，js中存储对象都是存储地址，浅拷贝(变量赋值)都是指向同一个内存区域，深拷贝则是另外开辟一个内存区域</p>
+<ul>
+<li>为什么需要深拷贝</li>
+</ul>
+<p>一个简单的使用是vue父组件通过props传值给子组件，而有时子组件需要修改父组件的值。由于vue不建议直接修改父组件的值，对传入引用类型的值，往往需要拿到一个引用类型的副本。</p>
+<a id="more"></a>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><blockquote>
+<p>对于非引用类型，直接复制；对于引用类型还要继续遍历，递归拷贝</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> copy</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (value == <span class="literal">null</span> || typepf value !== <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="comment">// 直接返回赋值</span></span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理 时间类型对象</span></span><br><span class="line">    <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="built_in">Date</span>) &#123;</span><br><span class="line">        copy = <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">        copy.setTime(value.getTime())</span><br><span class="line">        <span class="keyword">return</span> copy</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理 数组</span></span><br><span class="line">    <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><br><span class="line">        copy = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; value.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 数组元素可能还是引用类型，递归调用</span></span><br><span class="line">            copy[i] = deepClone(value[i])</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> copy</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理对象</span></span><br><span class="line">    <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="built_in">Object</span>) &#123;</span><br><span class="line">        copy = &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> value) &#123;</span><br><span class="line">            <span class="keyword">if</span>(value.hasOwnProperty(key)) &#123;</span><br><span class="line">                <span class="comment">// 对象的属性是自己的属性，而不会继承的属性</span></span><br><span class="line">                <span class="comment">// 对象的属性可能还是引用类型，递归调用</span></span><br><span class="line">                copy[key] = deepClone(value[key])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> copy</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Unable to copy value! Its type isn'</span>t supported<span class="string">')</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里判断数据类型用instanceof，更好的判断方法是用Object.prototype.toString,可封装一个判断数据类型的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">type</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> toString = <span class="built_in">Object</span>.prototype.toString</span><br><span class="line">    <span class="keyword">var</span> map = &#123;</span><br><span class="line">        <span class="string">'[object Boolean]'</span> : <span class="string">'boolean'</span>, </span><br><span class="line">        <span class="string">'[object Number]'</span>  : <span class="string">'number'</span>, </span><br><span class="line">        <span class="string">'[object String]'</span>  : <span class="string">'string'</span>, </span><br><span class="line">        <span class="string">'[object Function]'</span> : <span class="string">'function'</span>, </span><br><span class="line">        <span class="string">'[object Array]'</span>  : <span class="string">'array'</span>, </span><br><span class="line">        <span class="string">'[object Date]'</span>   : <span class="string">'date'</span>, </span><br><span class="line">        <span class="string">'[object RegExp]'</span>  : <span class="string">'regExp'</span>, </span><br><span class="line">        <span class="string">'[object Undefined]'</span>: <span class="string">'undefined'</span>,</span><br><span class="line">        <span class="string">'[object Null]'</span>   : <span class="string">'null'</span>, </span><br><span class="line">        <span class="string">'[object Object]'</span>  : <span class="string">'object'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> map[toString.call(obj)]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="其他方法实现"><a href="#其他方法实现" class="headerlink" title="其他方法实现"></a>其他方法实现</h2><h3 id="Object-assign-obj1-…"><a href="#Object-assign-obj1-…" class="headerlink" title="Object.assign({}, obj1, …)"></a>Object.assign({}, obj1, …)</h3><p>只是实现浅拷贝</p>
+<h3 id="JSON-parse-JSON-stringify-obj"><a href="#JSON-parse-JSON-stringify-obj" class="headerlink" title="JSON.parse(JSON.stringify(obj))"></a>JSON.parse(JSON.stringify(obj))</h3><p>深拷贝数据类型只支持基本数值类型，序列化时函数和原型成员会被忽略</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    num: <span class="number">1</span>,</span><br><span class="line">    fn: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.num)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// JSON.stringify 就已经把function给过滤掉了</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(obj) <span class="comment">// &#123;num: 1&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="lodash"><a href="#lodash" class="headerlink" title="lodash"></a>lodash</h3><p>浅拷贝</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.clone(obj)</span><br></pre></td></tr></table></figure>
+<p>深拷贝</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.cloneDeep(obj)</span><br></pre></td></tr></table></figure>
+<h3 id="jquery-extend-或者-fn-extend"><a href="#jquery-extend-或者-fn-extend" class="headerlink" title="jquery $.extend() 或者 $.fn.extend()"></a>jquery $.extend() 或者 $.fn.extend()</h3><p>浅拷贝</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.extend(&#123;&#125;, obj1, ...)</span><br></pre></td></tr></table></figure>
+<p>深拷贝</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.extend(<span class="literal">true</span>, &#123;&#125;, obj1, ...)</span><br></pre></td></tr></table></figure>
+<p>源码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">$.extend(target, obj1, ....)</span><br><span class="line"></span><br><span class="line">jQuery.extend = jQuery.fn.extend = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> src, copyIsArray, copy, name, options, clone,</span><br><span class="line">        target = <span class="built_in">arguments</span>[<span class="number">0</span>] || &#123;&#125;</span><br><span class="line">        i = <span class="number">1</span></span><br><span class="line">        length = <span class="built_in">arguments</span>.length </span><br><span class="line">        deep = <span class="literal">false</span> <span class="comment">// 默认浅拷贝</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理 拷贝情况</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> target === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">            <span class="comment">// 第一个参数是布尔值，目标对象从第二个参数开始</span></span><br><span class="line">            deep = target</span><br><span class="line"></span><br><span class="line">            target = <span class="built_in">arguments</span>[<span class="number">1</span>] || &#123;&#125;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理 target 是字符串或者其他的情况</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> target !== <span class="string">'object'</span> &amp;&amp; !jQuery.isFunction(target)) &#123;</span><br><span class="line">            target = &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 只有一个参数则是扩展jQuery对象</span></span><br><span class="line">        <span class="keyword">if</span> (i === length) &#123;</span><br><span class="line">            target = <span class="keyword">this</span> <span class="comment">// 目标对象是jQuery对象</span></span><br><span class="line">            i--</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(;i &lt; lenght; i++)&#123;</span><br><span class="line">            <span class="comment">// 只处理 非null或undefined数据</span></span><br><span class="line">            <span class="keyword">if</span> ((options = <span class="built_in">arguments</span>[i]) != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 扩展基本对象</span></span><br><span class="line">                <span class="keyword">for</span>（name <span class="keyword">in</span> options）&#123;</span><br><span class="line">                    src = target[name]</span><br><span class="line">                    copy = options[name]</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 防止死循环</span></span><br><span class="line">                    <span class="keyword">if</span> (target === copy) &#123;</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (deep &amp;&amp; copy &amp;&amp; (jQuey.isPlainObject(copy) || copyIsArray = jQuey.isArray(copy)) ) &#123;</span><br><span class="line">                        <span class="comment">// 拷贝对象子属性是数组</span></span><br><span class="line">                        <span class="comment">// 目标对象子属性需要也同样要是数组</span></span><br><span class="line">                        <span class="keyword">if</span> (copyIsArray) &#123;</span><br><span class="line">                            copyIsArray = <span class="literal">false</span></span><br><span class="line">                            clone = src &amp;&amp; jQuey.isArray(src) ? src : []</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="comment">// 拷贝对象子属性还是对象</span></span><br><span class="line">                            <span class="comment">// 目标对象子属性需要也同样要是对象</span></span><br><span class="line">                            clone = src &amp;&amp; jQuey.isPlainObject(src) ? src : &#123;&#125;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 递归深拷贝</span></span><br><span class="line">                        target[name] = jQuery.extend(deep, clone, copy)</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (copy !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">                        <span class="comment">// 不为undeined的基本数据类型直接赋值</span></span><br><span class="line">                        target[name] = copy</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回修改后的target</span></span><br><span class="line">        <span class="keyword">return</span> target</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深拷贝/" rel="tag"># 深拷贝</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/03/webpack plugin 编写/" rel="next" title="webpack plugin 编写">
+                <i class="fa fa-chevron-left"></i> webpack plugin 编写
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/03/vue 分页组件/" rel="prev" title="vue 分页组件">
+                vue 分页组件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法实现"><span class="nav-number">3.</span> <span class="nav-text">其他方法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-assign-obj1-…"><span class="nav-number">3.1.</span> <span class="nav-text">Object.assign({}, obj1, …)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-parse-JSON-stringify-obj"><span class="nav-number">3.2.</span> <span class="nav-text">JSON.parse(JSON.stringify(obj))</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lodash"><span class="nav-number">3.3.</span> <span class="nav-text">lodash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery-extend-或者-fn-extend"><span class="nav-number">3.4.</span> <span class="nav-text">jquery $.extend() 或者 $.fn.extend()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

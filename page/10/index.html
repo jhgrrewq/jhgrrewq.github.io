@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/16/jquery 插件编写/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/03/js call apply bind/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/16/jquery 插件编写/" itemprop="url">jquery 插件编写</a></h1>
+                <a class="post-title-link" href="/2018/04/03/js call apply bind/" itemprop="url">js call apply bind</a></h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T13:45:45+08:00">
-                2018-01-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T10:10:38+08:00">
+                2018-04-03
               </time>
             
 
@@ -350,10 +350,19 @@
 
       
         
-          <h2 id="jquery-源码总体结构分析"><a href="#jquery-源码总体结构分析" class="headerlink" title="jquery 源码总体结构分析"></a>jquery 源码总体结构分析</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, undefined</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 通常创建一个对象或实例是通过new 一个构造函数，但是如果构造函数有返回值，new创建的对象会被丢弃，返回值将作为new表达式的值。这里jQuery()内部new创建并返回另一个构造函数的实例，省去了构造函数jQuery()前面的new，也就是可以直接省略new写jQuery()</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> jQuery.fn.init(selector, context, rootjQuery)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 一些局部变量声明</span></span><br><span class="line"></span><br><span class="line">    jQuery.fn = jQuery.prototype = &#123;</span><br><span class="line">        <span class="comment">// jQuery对象是类数组</span></span><br><span class="line">        construtor: jQuery,</span><br><span class="line">        init: <span class="function"><span class="keyword">function</span>(<span class="params">selector, context, rootjQuery</span>) </span>&#123;...&#125;</span><br><span class="line">        <span class="comment">// 一堆原型属性和方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关键 jQuery.fn.init实例化对象能拥有 jQuery 原型上的属性和方法</span></span><br><span class="line">    jQuery.fn.init.prototype = jQuery.fn</span><br><span class="line">    <span class="comment">// 多个对象合并</span></span><br><span class="line">    jQuery.extend = jQuery.fn.extend = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当只有一个参数是扩展jQuery全局对象</span></span><br><span class="line">    jQuery.extend(&#123;</span><br><span class="line">        <span class="comment">// 一堆静态属性和方法</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br></pre></td></tr></table></figure>
+          <blockquote>
+<p>参考: <a href="https://github.com/mqyqingfeng/Blog/issues/12" target="_blank" rel="noopener">JavaScript深入之bind的模拟实现</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="call-apply-bind-方法的异同："><a href="#call-apply-bind-方法的异同：" class="headerlink" title="call apply bind 方法的异同："></a>call apply bind 方法的异同：</h2><ul>
+<li>三者都是改变函数 this 对象指向的</li>
+<li><strong>三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式）</strong></li>
+<li>三者都可以使用后续参数传参</li>
+<li><strong>call apply 是立即调用，bind 是返回对应函数，延迟调用</strong></li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/16/jquery 插件编写/#more" rel="contents">
+            <a class="btn" href="/2018/04/03/js call apply bind/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -404,7 +413,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/01/11/vue 父组件修改子组件样式/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/02/js 事件循环/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -423,7 +432,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/11/vue 父组件修改子组件样式/" itemprop="url">vue 父组件修改子组件样式</a></h1>
+                <a class="post-title-link" href="/2018/04/02/js 事件循环/" itemprop="url">js 事件循环</a></h1>
         
 
         <div class="post-meta">
@@ -435,8 +444,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-11T09:55:36+08:00">
-                2018-01-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T15:40:34+08:00">
+                2018-04-02
               </time>
             
 
@@ -474,14 +483,535 @@
 
       
         
-          <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>父组件添加 scoped 后无法覆盖修改子组件样式， 而去除 scoped 属性虽然可以修改，但是会污染全局样式</p>
+          <!-- markdownlint-disable MD010 -->
+<h2 id="同步-异步-（关注消息通信机制）"><a href="#同步-异步-（关注消息通信机制）" class="headerlink" title="同步 异步 （关注消息通信机制）"></a>同步 异步 （关注消息通信机制）</h2><p>同步是<strong>指发出一个“调用”时候，在没有的结果的时候，该“调用”就不返回。但是一旦返回就得到了返回值</strong>。这是由“调用者”主动等待这个“调用结果”</p>
+<p>异步是<strong>在“调用”发出后就立即返回。当一个异步过程调用发出后，调用者不会立即得到结果。而是在“调用”发出后，“被调用者”通过状态、通知来通知调用者，或通过回调函数处理这个调用</strong></p>
+<p>同步和异步的区别在于关注消息通信机制，同步会等待最终的调用结果，异步不会返回调用结果，而是之后通过事件、通知等来通知调用者</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/02/js 事件循环/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/栅格布局的原理和简单实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/栅格布局的原理和简单实现/" itemprop="url">栅格布局的原理和简单实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T20:57:54+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>栅格系统的实现，通常是将<strong>容器（container）均分为12等分</strong>（12列可以被1、2、3、4、6等分，有更大灵活性，因此通常划分为12等分），再通过一系列行（row）和列（column）的组合创建页面布局，并调整<strong>内外边距</strong>， 结合<strong>css的媒体查询</strong>可以实现一个响应式的栅格布局<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/30/栅格布局的原理和简单实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/es6 class 继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/es6 class 继承/" itemprop="url">es6 class 继承</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T19:35:10+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/class-extends" target="_blank" rel="noopener">ECMAScript 6 入门 class 继承部分</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 原型继承是采用 <strong>父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链</strong></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/30/es6 class 继承/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/koa2 源码解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/koa2 源码解读/" itemprop="url">koa2 源码解读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T19:35:10+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>koa 是由 Express 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。 使用 koa 编写 web 应用，通过组合<strong>不同的 generator(koa2 用 async/await)</strong>，可以免除重复繁琐的回调函数嵌套， 并极大地提升错误处理的效率。<strong>koa 不在内核方法中绑定任何中间件</strong>， 它仅仅提供了一个轻量优雅的函数库，使得编写 Web 应用变得得心应手</p>
+</blockquote>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// res.writeHead(statusCode, [reason], [headers])</span></span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html;charset=UTF-8'</span>&#125;)</span><br><span class="line">  <span class="comment">// res.statusCode = 200</span></span><br><span class="line">  <span class="comment">// res.setHead('Content-Type', 'text/html;charset=UTF-8')</span></span><br><span class="line">  res.end(<span class="string">'hi'</span>)</span><br><span class="line">&#125;).listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'listen at port 3000'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>使用 Node.js 原生创建一个 http 服务器的代码, 实际上是调用 http.createServer(requestListener), 创建一个 http.Server 的实例，http.Server 继承于 EventEmitter 类。传入的 requestListener 是一个函数，会自动添加到 ‘request’ 事件，最后将 http.Server 的实例绑定到 3000 端口，开始监听来自 3000 端口的请求</p>
+<p>requestListener 函数接受两个参数 req 和 res，req 是一个可读流，res 是一个可写流。通过 req 获取该 http 请求的所有信息，同时将数据写入 res 来对请求做出响应</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Node.js 源码 http.js</span></span><br><span class="line"><span class="keyword">const</span> server = <span class="built_in">require</span>(<span class="string">'_http_server'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; Server &#125; = server;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createServer</span>(<span class="params">requestListener</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Server(requestListener);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Node.js 源码 _http_server.js</span></span><br><span class="line"><span class="comment">// Server 构造函数 传入 requestListener，如果 requestListener 存在会被添加到 'request' 事件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Server</span>(<span class="params">requestListener</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Server)) <span class="keyword">return</span> <span class="keyword">new</span> Server(requestListener);</span><br><span class="line">  net.Server.call(<span class="keyword">this</span>, &#123; <span class="attr">allowHalfOpen</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (requestListener) &#123;</span><br><span class="line">    <span class="keyword">this</span>.on(<span class="string">'request'</span>, requestListener);</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="常见中间件操作"><a href="#常见中间件操作" class="headerlink" title="常见中间件操作"></a>常见中间件操作</h3><ul>
+<li><p>静态服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</span><br><span class="line">router.get(<span class="string">'/string'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'koa2 string'</span></span><br><span class="line">&#125;)</span><br><span class="line">router.get(<span class="string">'/json'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    title: <span class="string">'koa2 json'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">app.use(router.routes())</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>日志</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="keyword">async</span> (ctx,next) =&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime()</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`start: <span class="subst">$&#123;ctx.url&#125;</span>`</span>);</span><br><span class="line">	<span class="keyword">await</span> next();</span><br><span class="line">	<span class="keyword">const</span> end = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime() <span class="built_in">console</span>.log(<span class="string">`请求<span class="subst">$&#123;ctx.url&#125;</span>, 耗时<span class="subst">$&#123;<span class="built_in">parseInt</span>(end-start)&#125;</span>ms`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- lib/</span><br><span class="line">-- application.js <span class="comment">// 入口文件</span></span><br><span class="line">-- context.js</span><br><span class="line">-- request.js</span><br><span class="line">-- response.js</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/30/koa2 源码解读/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/vue-router 知识点梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/vue-router 知识点梳理/" itemprop="url">vue-router 知识点梳理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T19:35:10+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
 <blockquote>
-<p>vue 父组件样式中使用 /deep/ 或 &gt;&gt;&gt;<br><strong>常用 /deep/, 一些css预编译器不能识别 &gt;&gt;&gt;</strong></p>
+<p>参考: <a href="https://router.vuejs.org/zh-cn/" target="_blank" rel="noopener">vue-router 官方文档</a></p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">子组件根选择器名 /deep/ 子组件后代选择器名 &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 覆盖的样式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/11/vue 父组件修改子组件样式/#more" rel="contents">
+            <a class="btn" href="/2018/03/30/vue-router 知识点梳理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -532,7 +1062,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/27/js 多行文本省略/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/浏览器回流和重回/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -551,7 +1081,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/27/js 多行文本省略/" itemprop="url">js 多行文本省略</a></h1>
+                <a class="post-title-link" href="/2018/03/30/浏览器回流和重回/" itemprop="url">浏览器回流和重绘</a></h1>
         
 
         <div class="post-meta">
@@ -563,8 +1093,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T16:03:47+08:00">
-                2017-12-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T19:35:10+08:00">
+                2018-03-30
               </time>
             
 
@@ -602,268 +1132,23 @@
 
       
         
-          <h2 id="单行文本省略"><a href="#单行文本省略" class="headerlink" title="单行文本省略"></a>单行文本省略</h2><blockquote>
-<p>设定宽度，不折行，超出宽度隐藏，超出部分用省略号表示</p>
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考: <a href="https://juejin.im/post/5a9923e9518825558251c96a?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="noopener">浏览器的回流与重绘 (Reflow &amp; Repaint)
+</a></p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p &#123;</span><br><span class="line">    width: <span class="number">80</span>%;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    white-space: nowrap;</span><br><span class="line">    text-overflow: ellipsis;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/js 多行文本省略/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/27/webpack plugin 编写/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/27/webpack plugin 编写/" itemprop="url">webpack plugin 编写</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T15:29:28+08:00">
-                2017-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="官网案例"><a href="#官网案例" class="headerlink" title="官网案例"></a>官网案例</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyPlugin.js</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPlugin</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 定义一个构造函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyPlugin.prototype.apply = <span class="function"><span class="keyword">function</span>(<span class="params">compiler</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 操作 compiler 实例方法</span></span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"compile"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compiler is starting to compile..."</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"compilation"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compilation</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compiler is starting a new compilation..."</span>);</span><br><span class="line"></span><br><span class="line">    compilation.plugin(<span class="string">"optimize"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"The compilation is starting to optimize files..."</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"emit"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compilation, callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compilation is going to emit files..."</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MyPlugin;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/webpack plugin 编写/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/26/js 深拷贝/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/26/js 深拷贝/" itemprop="url">js 深拷贝</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T18:25:05+08:00">
-                2017-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
-<li>深拷贝和浅拷贝</li>
-</ul>
-<p>对于基本数值类型，浅拷贝就是对值的复制；对于引用类型，js中存储对象都是存储地址，浅拷贝(变量赋值)都是指向同一个内存区域，深拷贝则是另外开辟一个内存区域</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><blockquote>
+<p><strong>回流必引起重绘，重绘不一定会引起回流</strong></p>
+</blockquote>
 <ul>
-<li>为什么需要深拷贝</li>
+<li>浏览器使用流式布局模型</li>
+<li><strong>浏览器会把 html 解析成 DOM，把 css 解析成 CSSOM, DOM 和 CSSOM 合并产生 render tree</strong></li>
+<li>有了 render tree 就<strong>知道所有节点的样式，然后计算他们在页面的大小和位置，最后把节点绘制在页面上</strong></li>
+<li>由于浏览器使用流式布局，<strong>对 render tree 的计算通常只需要遍历一次就可以完成，但是 table 和其内部元素除外，他们可能需要多次计算，通常要花 3 倍于同等元素的时间，这是为什么要避免使用 table 布局的原因之一</strong></li>
 </ul>
-<p>一个简单的使用是vue父组件通过props传值给子组件，而有时子组件需要修改父组件的值。由于vue不建议直接修改父组件的值，对传入引用类型的值，往往需要拿到一个引用类型的副本。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/26/js 深拷贝/#more" rel="contents">
+            <a class="btn" href="/2018/03/30/浏览器回流和重回/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -914,7 +1199,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/26/vue 分页组件/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/30/axios 知识点梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -933,7 +1218,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/26/vue 分页组件/" itemprop="url">vue 分页组件</a></h1>
+                <a class="post-title-link" href="/2018/03/30/axios 知识点梳理/" itemprop="url">axios 知识点梳理</a></h1>
         
 
         <div class="post-meta">
@@ -945,8 +1230,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T18:21:57+08:00">
-                2017-12-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T19:35:10+08:00">
+                2018-03-30
               </time>
             
 
@@ -984,14 +1269,14 @@
 
       
         
-          <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ul>
-<li>通过配置显示一定数量的页数</li>
-<li>点击切换当前页码高亮</li>
-<li>点击切换触发其他操作</li>
-</ul>
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>参考: <a href="https://www.kancloud.cn/yunye/axios/234845" target="_blank" rel="noopener">Axios 中文说明</a></p>
+</blockquote>
+<p>axios 是一个基于 promise 的 http 库，可以用在浏览器和 Node.js 中 （可以对比 jquery 的 ajax 学习）</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/26/vue 分页组件/#more" rel="contents">
+            <a class="btn" href="/2018/03/30/axios 知识点梳理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1042,7 +1327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/20/vue 搭建多页面脚手架/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/29/js call apply 模拟实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1061,7 +1346,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/20/vue 搭建多页面脚手架/" itemprop="url">vue 搭建多页面脚手架</a></h1>
+                <a class="post-title-link" href="/2018/03/29/js call apply 模拟实现/" itemprop="url">js call apply 模拟实现</a></h1>
         
 
         <div class="post-meta">
@@ -1073,8 +1358,143 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T14:36:44+08:00">
-                2017-12-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T14:12:10+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>参考:<a href="https://github.com/mqyqingfeng/Blog/issues/11" target="_blank" rel="noopener">JavaScript深入之call和apply的模拟实现</a></p>
+</blockquote>
+<!-- narkdownlint-disable MD010 -->
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数也是可以有返回值</span></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2,name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+<p>当前对象没有某个方法，借用 call 和 apply 其他对象的方法，改变函数 this 指向传入的对象，使当前对象也能调用该方法</p>
+<p>模拟实现需要三个步骤：</p>
+<ul>
+<li><strong>将借用的方法设为当前对象的属性</strong></li>
+<li><strong>当前对象调用该方法</strong></li>
+<li><strong>删除该属性</strong></li>
+<li><strong>有函数返回值就返回</strong></li>
+</ul>
+<h2 id="call-模拟实现"><a href="#call-模拟实现" class="headerlink" title="call 模拟实现"></a>call 模拟实现</h2><p>该方法能被函数调用，需要挂载在 Function 原型上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newCall = <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 取出需要传入的参数 从第二个参数开始</span></span><br><span class="line">  <span class="keyword">let</span> args = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">    args[i - <span class="number">1</span>] = <span class="built_in">arguments</span>[i]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// let args = Array.prototype.slice.call(arguments, 1)</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (args &amp;&amp; args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...args)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="apply-模拟实现"><a href="#apply-模拟实现" class="headerlink" title="apply 模拟实现"></a>apply 模拟实现</h2><p>apply 的实现类似 call，第二个参数是参数数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newApply = <span class="function"><span class="keyword">function</span> (<span class="params">ctx, arr</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (arr &amp;&amp; arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...arr)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/23/es6 iterator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/23/es6 iterator/" itemprop="url">es6 iterator</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T16:50:42+08:00">
+                2018-03-23
               </time>
             
 
@@ -1113,387 +1533,17 @@
       
         
           <blockquote>
-<p>使用 vue-cli 改造多页面脚手架，实质是改造成多入口和多页面输出。遍历读取入口文件，并通过HtmlWebpackPlugin对入口文件产出对应html</p>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="noopener">ECMAScript 6 入门 iterator 部分</a></p>
 </blockquote>
-<h2 id="改造-vue-cli-目录结构"><a href="#改造-vue-cli-目录结构" class="headerlink" title="改造 vue-cli 目录结构"></a>改造 vue-cli 目录结构</h2><p>在 src 目录下新建文件夹如 module 存放页面，页面也按照文件夹存放，每个页面相关的资源放在对应的页面文件夹下</p>
+<!-- markdownlint-disable MD010 -->
+<p>iterator 遍历器是一种机制、一种接口，它为各种不同的数据结构提供统一的访问机制。<strong>任何数据结构只要部署 iterator 接口，就可以完成遍历（依次处理该数据结构中的所有成员）。es6 中提供的遍历方法 </strong>for…of 便是自动寻找该对象的 iterator 接口**</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/20/vue 搭建多页面脚手架/#more" rel="contents">
+            <a class="btn" href="/2018/03/23/es6 iterator/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/20/解决 mac 下 git 拉取提交代码输入用户名密码/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/20/解决 mac 下 git 拉取提交代码输入用户名密码/" itemprop="url">解决 mac 下 git 拉取提交代码输入用户名密码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T11:32:37+08:00">
-                2017-12-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>需要使用 credential-osxkeychain helper 在 Mac OSX keychain 中存储 git 密码</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/20/解决 mac 下 git 拉取提交代码输入用户名密码/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/19/短网址算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/19/短网址算法/" itemprop="url">短网址算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T19:10:12+08:00">
-                2017-12-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><blockquote>
-<p>要把长链接对应到一个唯一自增ID，通过把唯一的ID转化为62位的字符串(26个小写字母，26个大写字母加0-9十个数字)【可自定义进制和长度】<br><strong>唯一的ID按照62求余，求余数对应的62进制的字符，再把每个对应的字符连起来</strong>. 短链接一般6位，这样就可以表示62的6次方个url, 500亿左右。再把生成的<strong>唯一自增ID，短连接，和长链接</strong>，存储在mysql或者nosql中。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/19/短网址算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2017/12/19/webpack 优化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/19/webpack 优化/" itemprop="url">webpack 优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T10:58:05+08:00">
-                2017-12-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
         
       
     </div>
@@ -1594,7 +1644,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

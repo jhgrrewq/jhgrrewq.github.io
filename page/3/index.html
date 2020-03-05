@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/26/Cookie 和 Session/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/29/webpack 热更新原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/26/Cookie 和 Session/" itemprop="url">Cookie 和 Session</a></h1>
+                <a class="post-title-link" href="/2018/06/29/webpack 热更新原理/" itemprop="url">webpack 热更新原理</a></h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,381 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T14:50:40+08:00">
-                2018-06-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T15:12:39+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/29/webpack 配置总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/29/webpack 配置总结/" itemprop="url">webpack 配置总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T09:45:40+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>参考: <a href="https://webpack.docschina.org/configuration/" target="_blank" rel="noopener">webpack 官网 配置选项部分</a></p>
+<!-- markdownlint-disable MD010 -->
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// "production" | "development" | "none"</span></span><br><span class="line">  mode: <span class="string">'production'</span>, <span class="comment">// 提供生产环境构建优化</span></span><br><span class="line">  mode: <span class="string">'development'</span>, <span class="comment">// 提供开发环境有用的工具</span></span><br><span class="line">  mode: <span class="string">'none'</span>, <span class="comment">// 不设置默认模式</span></span><br><span class="line">  <span class="comment">// 特定模式告诉 webpack 使用该模式下内置的优化配置</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// string | array | object</span></span><br><span class="line">  entry: <span class="string">'./app/entry'</span>,</span><br><span class="line">  entry: [<span class="string">'./app/entry1'</span>, <span class="string">'./app/entry2'</span>],</span><br><span class="line">  entry: &#123;</span><br><span class="line">    a: <span class="string">'./app/entry-a'</span>,</span><br><span class="line">    b: [<span class="string">'./app/entry-b1'</span>, <span class="string">'./app/entry-b2'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 应用程序从 entry 开始执行，webpack 开始打包</span></span><br><span class="line"></span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// webpack 如何输出结果的相关选项</span></span><br><span class="line"></span><br><span class="line">    path: path.resolve(_dirname, <span class="string">'dist'</span>), <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 所有输出文件的目标路径</span></span><br><span class="line">    <span class="comment">// 必须是绝对路径（使用 Node.js 的 path 模块）</span></span><br><span class="line"></span><br><span class="line">    filename: <span class="string">'bundle.js'</span>, <span class="comment">// string</span></span><br><span class="line">    filename: <span class="string">'[name].js'</span>, <span class="comment">// 用于多个入口点（entry point）（出口点？）</span></span><br><span class="line">    filename: <span class="string">'[chunkhash].js'</span>, <span class="comment">// 用于长效缓存</span></span><br><span class="line">    <span class="comment">// 入口模块（entry chunk）的文件名模板（出口分块？）</span></span><br><span class="line"></span><br><span class="line">    publicPath: <span class="string">'/assets'</span>, <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 输出解析文件的目录，url 相对 html 页面</span></span><br><span class="line"></span><br><span class="line">    library: <span class="string">'MyLibrary'</span>, <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 导出库的名称</span></span><br><span class="line"></span><br><span class="line">    libraryTarget: <span class="string">'umd'</span>, <span class="comment">// 通用模块定义</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs2'</span>, <span class="comment">// exported with module.exports</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs-module'</span>, <span class="comment">// 使用 module.exports 导出</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs'</span>, <span class="comment">// 使用 exports 的属性导出</span></span><br><span class="line">    libraryTarget: <span class="string">'amd'</span>, <span class="comment">// 使用 amd 定义方法来定义</span></span><br><span class="line">    libraryTarget: <span class="string">'this'</span>, <span class="comment">// 在 this 上设置属性</span></span><br><span class="line">    libraryTarget: <span class="string">'var'</span>, <span class="comment">// 变量定义于根作用域下</span></span><br><span class="line">    libraryTarget: <span class="string">'window'</span>, <span class="comment">// 在 window 对象上设置属性</span></span><br><span class="line">    libraryTarget: <span class="string">'global'</span>, <span class="comment">// 在 globel 对象上设置属性</span></span><br><span class="line">    <span class="comment">// 导出库的类型</span></span><br><span class="line"></span><br><span class="line">    chunkFileName: <span class="string">'[id].js'</span>,</span><br><span class="line">    chunkFileName: <span class="string">'[chunkhash].js'</span>, <span class="comment">// 长效缓存</span></span><br><span class="line">    <span class="comment">// 附加分块的文件名模板</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    <span class="comment">// 关于模块配置</span></span><br><span class="line"></span><br><span class="line">    rules: &#123;</span><br><span class="line">      <span class="comment">// 模块规则（配置 loader、解析器等选项）</span></span><br><span class="line"></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="string">'/\.jsx?$/'</span>,</span><br><span class="line">        include: [path.resolve(__dirname, <span class="string">'app'</span>)],</span><br><span class="line">        exclude: [path.resolve(__dirname, <span class="string">'app/demo-files'</span>)],</span><br><span class="line">        <span class="comment">// 这里是匹配条件，每个选项都接受一个正则表或字符串</span></span><br><span class="line">        <span class="comment">// test 和 include 具有相同作用，都是必须匹配选项，exclude 是不匹配选项（优先于 test 和 include）</span></span><br><span class="line">        <span class="comment">// 最佳实践：</span></span><br><span class="line">        <span class="comment">// 只在 test 和 文件名匹配 中使用正则表达式</span></span><br><span class="line">        <span class="comment">// 在 include 和 exclude 中使用绝对路径</span></span><br><span class="line">        <span class="comment">// 尽量避免使用 exclude，更倾向于使用 include</span></span><br><span class="line"></span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        <span class="comment">// 使用的 loader，它相对上下文解析</span></span><br><span class="line">        <span class="comment">// webpack 2 后 '-loader' 后缀不再是可选</span></span><br><span class="line"></span><br><span class="line">        options: &#123;</span><br><span class="line">          presets: [<span class="string">'es2015'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// loader 的可选项</span></span><br><span class="line">        <span class="comment">// webpack 2 后尽量是用 options 替代 query</span></span><br><span class="line"></span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="string">'/\.html$/'</span>,</span><br><span class="line">        test: <span class="string">'\.html$'</span>,</span><br><span class="line"></span><br><span class="line">        use: [</span><br><span class="line">          <span class="comment">// 应用多个 loader 和选项</span></span><br><span class="line">          <span class="string">'htmllint-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'html-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    resolve: &#123;</span><br><span class="line">      <span class="comment">// 解析模块请求的选项</span></span><br><span class="line">      <span class="comment">// 不适用于对 loader 解析</span></span><br><span class="line"></span><br><span class="line">      modules: [</span><br><span class="line">        <span class="string">"node_modules"</span>,</span><br><span class="line">        path.resolve(__dirname, <span class="string">'app'</span>)</span><br><span class="line">      ],</span><br><span class="line">      <span class="comment">// 用于查找模块的目录</span></span><br><span class="line"></span><br><span class="line">      extensions: [<span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.jsx'</span>, <span class="string">'.css'</span>],</span><br><span class="line">      <span class="comment">// 使用的扩展名</span></span><br><span class="line"></span><br><span class="line">      alias: &#123;</span><br><span class="line">        <span class="comment">// 模块别名列表</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"module"</span>: <span class="string">"new-module"</span>,</span><br><span class="line">        <span class="comment">// 起别名: 'module' -&gt; 'new-module' 和 'module/path/file' -&gt; 'new-module/path/file'</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"only-module$"</span>: <span class="string">"new-module"</span>,</span><br><span class="line">        <span class="comment">// 起别名: 'only-module' -&gt; 'new-module', 不匹配 'only-module/path/file' -&gt; 'new-module/path/file'</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"module"</span>: path.resolve(__dirname, <span class="string">"app/third/module.js"</span>),</span><br><span class="line">        <span class="comment">// 起别名 "module" -&gt; "./app/third/module.js" 和 "module/file" 会导致错误</span></span><br><span class="line">        <span class="comment">// 模块别名相对于当前上下文导入</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    devtool: <span class="string">'source-map'</span>, <span class="comment">// enum</span></span><br><span class="line">    <span class="comment">// 通过在浏览器调试工具中添加原信息增强调试</span></span><br><span class="line">    <span class="comment">// 牺牲了构建强度的 `source-map` 是最详细的</span></span><br><span class="line"></span><br><span class="line">    context: __dirname, <span class="comment">// string(绝对路径！)</span></span><br><span class="line">    <span class="comment">// webpack 主目录</span></span><br><span class="line">    <span class="comment">// entry 和 module.rules.loader 选项</span></span><br><span class="line">    <span class="comment">// 相对于此目录解析</span></span><br><span class="line"></span><br><span class="line">    externals: [<span class="string">'react'</span>, /^@angular\<span class="comment">//],</span></span><br><span class="line">    <span class="comment">// 不要遵循/打包这些模块，而是在运行环境中从环境中请求他们</span></span><br><span class="line"></span><br><span class="line">    stats: <span class="string">'errors-only'</span>,</span><br><span class="line">    <span class="comment">// 精确控制要显示的 bundle 信息</span></span><br><span class="line"></span><br><span class="line">    devServer: &#123;</span><br><span class="line">      proxy: &#123;</span><br><span class="line">        <span class="comment">// 服务器 proxy URLS</span></span><br><span class="line">        <span class="string">'/api'</span>: <span class="string">'http://localhost: 3000'</span>, <span class="comment">// 'localhost:8080/api/test' -&gt; 'localhost: 3000/api/test'</span></span><br><span class="line">        <span class="string">'/api2'</span>: &#123;</span><br><span class="line">          <span class="comment">// 'localhost:8080/api2/test' -&gt; 'localhost:3000/test'</span></span><br><span class="line">          target: <span class="string">'http://localhost: 3000'</span>,</span><br><span class="line">          changeOrigin: <span class="literal">true</span>,</span><br><span class="line">          pathRewrite: &#123;</span><br><span class="line">            <span class="string">'^/api2'</span>: <span class="string">''</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      contentBase: path.join(__dirname, <span class="string">'public'</span>) <span class="comment">// boolean | string | array, 静态文件目录</span></span><br><span class="line">      compress: <span class="literal">true</span>, <span class="comment">// 开启 gzip 压缩</span></span><br><span class="line">      historyApiFallback: <span class="literal">true</span>, <span class="comment">// 不匹配的路由指向 index.html，不会报错 404</span></span><br><span class="line">      historyApiFallback: &#123;</span><br><span class="line">        <span class="comment">// 多个匹配路径使用对象设置</span></span><br><span class="line">        rewrites: [&#123;</span><br><span class="line">          <span class="keyword">from</span>: <span class="string">'/^\/subpage/'</span>,</span><br><span class="line">          to: <span class="string">'/views/subpage/index.html'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">from</span>: <span class="string">'/^\/hello\/.*$/'</span>,</span><br><span class="line">          to: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'/views/subpage/index.html'</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;,</span><br><span class="line">      hot: <span class="literal">true</span>, <span class="comment">// 热切换，依赖 HotModuleReplacementPlugin</span></span><br><span class="line">      https: <span class="literal">false</span>,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// 插件列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/29/webpack 配置总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/28/Node.js 创建一个静态资源服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/Node.js 创建一个静态资源服务器/" itemprop="url">Node.js 创建一个静态资源服务器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T13:04:26+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>原理就是根据请求 url 的不同进行判断，如果是文件则返回文件内容，如果是目录则列出该目录下的文件列表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">├── README.md</span><br><span class="line">├── bin												// 可执行文件目录</span><br><span class="line">│   └── anywhere							// 可执行文件命令文件</span><br><span class="line">├── package.json</span><br><span class="line">└── src</span><br><span class="line">    ├── app.js								// Server 类</span><br><span class="line">    ├── config								// 参数配置</span><br><span class="line">    │   └── defaultConfig.js</span><br><span class="line">    ├── helper</span><br><span class="line">    │   ├── cache.js					// 缓存</span><br><span class="line">    │   ├── compress.js       // 压缩编码</span><br><span class="line">    │   ├── mime.js           // 获取文件 mimeType</span><br><span class="line">    │   ├── range.js          // 部分内容请求</span><br><span class="line">    │   └── route.js          // 服务器回调处理</span><br><span class="line">    ├── index.js              // 读取命令行参数、实例化 Server 并启动应用</span><br><span class="line">    └── template</span><br><span class="line">        └── dir.html          // 文件列表模板</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/28/Node.js 创建一个静态资源服务器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/28/Cookie 和 Session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/Cookie 和 Session/" itemprop="url">Cookie 和 Session</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T09:07:49+08:00">
+                2018-06-28
               </time>
             
 
@@ -359,7 +732,265 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/26/Cookie 和 Session/#more" rel="contents">
+            <a class="btn" href="/2018/06/28/Cookie 和 Session/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/27/npm publish 发布自己的模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/27/npm publish 发布自己的模块/" itemprop="url">npm publish 发布自己的模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T20:47:47+08:00">
+                2018-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在 npm 官网上发布自己的模块首先需要在 <a href="https://www.npmjs.com" target="_blank" rel="noopener">https://www.npmjs.com</a> 注册账号</p>
+<h2 id="1-编写模块"><a href="#1-编写模块" class="headerlink" title="1 编写模块"></a>1 编写模块</h2><p>一般遵循 umd / amd / commonJS 风格编写模块</p>
+<h2 id="2-初始化包描述文件-package-json"><a href="#2-初始化包描述文件-package-json" class="headerlink" title="2 初始化包描述文件 package.json"></a>2 初始化包描述文件 package.json</h2><p>使用 npm init 命令初始化包描述文件，要注意两点：</p>
+<ul>
+<li><strong>包名不能包含大写字母</strong></li>
+<li><strong>最好先在 npm 官网搜索一下包名是否已被占用，被占用的包名模块是无法发布的</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/27/npm publish 发布自己的模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/27/http 缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/27/http 缓存/" itemprop="url">http 缓存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T11:19:13+08:00">
+                2018-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="https://excaliburhan.com/post/things-you-should-know-about-browser-cache.html" target="_blank" rel="noopener">你应该知道的浏览器缓存知识</a></p>
+</blockquote>
+<h2 id="http-头信息缓存分类"><a href="#http-头信息缓存分类" class="headerlink" title="http 头信息缓存分类"></a>http 头信息缓存分类</h2><p>http 头信息缓存主要有两种：强缓存和协商缓存。强缓存如果命中不需要和服务器发生交互，协商缓存不管是否命中都要和服务器发生交互，强缓存的优先级高于协商缓存</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/27/http 缓存/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -441,7 +1072,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T13:23:44+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T14:22:22+08:00">
                 2018-06-26
               </time>
             
@@ -568,7 +1199,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T09:33:05+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T10:45:14+08:00">
                 2018-06-26
               </time>
             
@@ -696,7 +1327,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T14:05:10+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T14:07:09+08:00">
                 2018-06-25
               </time>
             
@@ -784,7 +1415,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/17/webpack 配置总结/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/25/Node.js 知识点梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -803,7 +1434,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/17/webpack 配置总结/" itemprop="url">webpack 配置总结</a></h1>
+                <a class="post-title-link" href="/2018/06/25/Node.js 知识点梳理/" itemprop="url">Node.js 知识点梳理</a></h1>
         
 
         <div class="post-meta">
@@ -815,390 +1446,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-17T12:59:58+08:00">
-                2018-06-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>参考: <a href="https://webpack.docschina.org/configuration/" target="_blank" rel="noopener">webpack 官网 配置选项部分</a></p>
-<!-- markdownlint-disable MD010 -->
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// "production" | "development" | "none"</span></span><br><span class="line">  mode: <span class="string">'production'</span>, <span class="comment">// 提供生产环境构建优化</span></span><br><span class="line">  mode: <span class="string">'development'</span>, <span class="comment">// 提供开发环境有用的工具</span></span><br><span class="line">  mode: <span class="string">'none'</span>, <span class="comment">// 不设置默认模式</span></span><br><span class="line">  <span class="comment">// 特定模式告诉 webpack 使用该模式下内置的优化配置</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// string | array | object</span></span><br><span class="line">  entry: <span class="string">'./app/entry'</span>,</span><br><span class="line">  entry: [<span class="string">'./app/entry1'</span>, <span class="string">'./app/entry2'</span>],</span><br><span class="line">  entry: &#123;</span><br><span class="line">    a: <span class="string">'./app/entry-a'</span>,</span><br><span class="line">    b: [<span class="string">'./app/entry-b1'</span>, <span class="string">'./app/entry-b2'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 应用程序从 entry 开始执行，webpack 开始打包</span></span><br><span class="line"></span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// webpack 如何输出结果的相关选项</span></span><br><span class="line"></span><br><span class="line">    path: path.resolve(_dirname, <span class="string">'dist'</span>), <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 所有输出文件的目标路径</span></span><br><span class="line">    <span class="comment">// 必须是绝对路径（使用 Node.js 的 path 模块）</span></span><br><span class="line"></span><br><span class="line">    filename: <span class="string">'bundle.js'</span>, <span class="comment">// string</span></span><br><span class="line">    filename: <span class="string">'[name].js'</span>, <span class="comment">// 用于多个入口点（entry point）（出口点？）</span></span><br><span class="line">    filename: <span class="string">'[chunkhash].js'</span>, <span class="comment">// 用于长效缓存</span></span><br><span class="line">    <span class="comment">// 入口模块（entry chunk）的文件名模板（出口分块？）</span></span><br><span class="line"></span><br><span class="line">    publicPath: <span class="string">'/assets'</span>, <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 输出解析文件的目录，url 相对 html 页面</span></span><br><span class="line"></span><br><span class="line">    library: <span class="string">'MyLibrary'</span>, <span class="comment">// string</span></span><br><span class="line">    <span class="comment">// 导出库的名称</span></span><br><span class="line"></span><br><span class="line">    libraryTarget: <span class="string">'umd'</span>, <span class="comment">// 通用模块定义</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs2'</span>, <span class="comment">// exported with module.exports</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs-module'</span>, <span class="comment">// 使用 module.exports 导出</span></span><br><span class="line">    libraryTarget: <span class="string">'commonjs'</span>, <span class="comment">// 使用 exports 的属性导出</span></span><br><span class="line">    libraryTarget: <span class="string">'amd'</span>, <span class="comment">// 使用 amd 定义方法来定义</span></span><br><span class="line">    libraryTarget: <span class="string">'this'</span>, <span class="comment">// 在 this 上设置属性</span></span><br><span class="line">    libraryTarget: <span class="string">'var'</span>, <span class="comment">// 变量定义于根作用域下</span></span><br><span class="line">    libraryTarget: <span class="string">'window'</span>, <span class="comment">// 在 window 对象上设置属性</span></span><br><span class="line">    libraryTarget: <span class="string">'global'</span>, <span class="comment">// 在 globel 对象上设置属性</span></span><br><span class="line">    <span class="comment">// 导出库的类型</span></span><br><span class="line"></span><br><span class="line">    chunkFileName: <span class="string">'[id].js'</span>,</span><br><span class="line">    chunkFileName: <span class="string">'[chunkhash].js'</span>, <span class="comment">// 长效缓存</span></span><br><span class="line">    <span class="comment">// 附加分块的文件名模板</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    <span class="comment">// 关于模块配置</span></span><br><span class="line"></span><br><span class="line">    rules: &#123;</span><br><span class="line">      <span class="comment">// 模块规则（配置 loader、解析器等选项）</span></span><br><span class="line"></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="string">'/\.jsx?$/'</span>,</span><br><span class="line">        include: [path.resolve(__dirname, <span class="string">'app'</span>)],</span><br><span class="line">        exclude: [path.resolve(__dirname, <span class="string">'app/demo-files'</span>)],</span><br><span class="line">        <span class="comment">// 这里是匹配条件，每个选项都接受一个正则表或字符串</span></span><br><span class="line">        <span class="comment">// test 和 include 具有相同作用，都是必须匹配选项，exclude 是不匹配选项（优先于 test 和 include）</span></span><br><span class="line">        <span class="comment">// 最佳实践：</span></span><br><span class="line">        <span class="comment">// 只在 test 和 文件名匹配 中使用正则表达式</span></span><br><span class="line">        <span class="comment">// 在 include 和 exclude 中使用绝对路径</span></span><br><span class="line">        <span class="comment">// 尽量避免使用 exclude，更倾向于使用 include</span></span><br><span class="line"></span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        <span class="comment">// 使用的 loader，它相对上下文解析</span></span><br><span class="line">        <span class="comment">// webpack 2 后 '-loader' 后缀不再是可选</span></span><br><span class="line"></span><br><span class="line">        options: &#123;</span><br><span class="line">          presets: [<span class="string">'es2015'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// loader 的可选项</span></span><br><span class="line">        <span class="comment">// webpack 2 后尽量是用 options 替代 query</span></span><br><span class="line"></span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="string">'/\.html$/'</span>,</span><br><span class="line">        test: <span class="string">'\.html$'</span>,</span><br><span class="line"></span><br><span class="line">        use: [</span><br><span class="line">          <span class="comment">// 应用多个 loader 和选项</span></span><br><span class="line">          <span class="string">'htmllint-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'html-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    resolve: &#123;</span><br><span class="line">      <span class="comment">// 解析模块请求的选项</span></span><br><span class="line">      <span class="comment">// 不适用于对 loader 解析</span></span><br><span class="line"></span><br><span class="line">      modules: [</span><br><span class="line">        <span class="string">"node_modules"</span>,</span><br><span class="line">        path.resolve(__dirname, <span class="string">'app'</span>)</span><br><span class="line">      ],</span><br><span class="line">      <span class="comment">// 用于查找模块的目录</span></span><br><span class="line"></span><br><span class="line">      extensions: [<span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.jsx'</span>, <span class="string">'.css'</span>],</span><br><span class="line">      <span class="comment">// 使用的扩展名</span></span><br><span class="line"></span><br><span class="line">      alias: &#123;</span><br><span class="line">        <span class="comment">// 模块别名列表</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"module"</span>: <span class="string">"new-module"</span>,</span><br><span class="line">        <span class="comment">// 起别名: 'module' -&gt; 'new-module' 和 'module/path/file' -&gt; 'new-module/path/file'</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"only-module$"</span>: <span class="string">"new-module"</span>,</span><br><span class="line">        <span class="comment">// 起别名: 'only-module' -&gt; 'new-module', 不匹配 'only-module/path/file' -&gt; 'new-module/path/file'</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"module"</span>: path.resolve(__dirname, <span class="string">"app/third/module.js"</span>),</span><br><span class="line">        <span class="comment">// 起别名 "module" -&gt; "./app/third/module.js" 和 "module/file" 会导致错误</span></span><br><span class="line">        <span class="comment">// 模块别名相对于当前上下文导入</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    devtool: <span class="string">'source-map'</span>, <span class="comment">// enum</span></span><br><span class="line">    <span class="comment">// 通过在浏览器调试工具中添加原信息增强调试</span></span><br><span class="line">    <span class="comment">// 牺牲了构建强度的 `source-map` 是最详细的</span></span><br><span class="line"></span><br><span class="line">    context: __dirname, <span class="comment">// string(绝对路径！)</span></span><br><span class="line">    <span class="comment">// webpack 主目录</span></span><br><span class="line">    <span class="comment">// entry 和 module.rules.loader 选项</span></span><br><span class="line">    <span class="comment">// 相对于此目录解析</span></span><br><span class="line"></span><br><span class="line">    externals: [<span class="string">'react'</span>, /^@angular\<span class="comment">//],</span></span><br><span class="line">    <span class="comment">// 不要遵循/打包这些模块，而是在运行环境中从环境中请求他们</span></span><br><span class="line"></span><br><span class="line">    stats: <span class="string">'errors-only'</span>,</span><br><span class="line">    <span class="comment">// 精确控制要显示的 bundle 信息</span></span><br><span class="line"></span><br><span class="line">    devServer: &#123;</span><br><span class="line">      proxy: &#123;</span><br><span class="line">        <span class="comment">// 服务器 proxy URLS</span></span><br><span class="line">        <span class="string">'/api'</span>: <span class="string">'http://localhost: 3000'</span>, <span class="comment">// 'localhost:8080/api/test' -&gt; 'localhost: 3000/api/test'</span></span><br><span class="line">        <span class="string">'/api2'</span>: &#123;</span><br><span class="line">          <span class="comment">// 'localhost:8080/api2/test' -&gt; 'localhost:3000/test'</span></span><br><span class="line">          target: <span class="string">'http://localhost: 3000'</span>,</span><br><span class="line">          changeOrigin: <span class="literal">true</span>,</span><br><span class="line">          pathRewrite: &#123;</span><br><span class="line">            <span class="string">'^/api2'</span>: <span class="string">''</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      contentBase: path.join(__dirname, <span class="string">'public'</span>) <span class="comment">// boolean | string | array, 静态文件目录</span></span><br><span class="line">      compress: <span class="literal">true</span>, <span class="comment">// 开启 gzip 压缩</span></span><br><span class="line">      historyApiFallback: <span class="literal">true</span>, <span class="comment">// 不匹配的路由指向 index.html，不会报错 404</span></span><br><span class="line">      historyApiFallback: &#123;</span><br><span class="line">        <span class="comment">// 多个匹配路径使用对象设置</span></span><br><span class="line">        rewrites: [&#123;</span><br><span class="line">          <span class="keyword">from</span>: <span class="string">'/^\/subpage/'</span>,</span><br><span class="line">          to: <span class="string">'/views/subpage/index.html'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">from</span>: <span class="string">'/^\/hello\/.*$/'</span>,</span><br><span class="line">          to: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'/views/subpage/index.html'</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;,</span><br><span class="line">      hot: <span class="literal">true</span>, <span class="comment">// 热切换，依赖 HotModuleReplacementPlugin</span></span><br><span class="line">      https: <span class="literal">false</span>,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// 插件列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/17/webpack 配置总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/17/vue-cli webpack 配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/17/vue-cli webpack 配置/" itemprop="url">vue-cli webpack 配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-17T09:12:04+08:00">
-                2018-06-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://blog.csdn.net/hongchh/article/details/55113751" target="_blank" rel="noopener">vue-cli的webpack模板项目配置文件分析</a></p>
-</blockquote>
-<!-- markdownlint-disable MD010 -->
-<p>vue-cli 提供了很多的模板，通常我们初始化一个 vue 单页面项目都会使用 <a href="https://github.com/vuejs-templates/webpack" target="_blank" rel="noopener">webpack 的模板</a>。然而 webpack 的模板在 1.1.3 版本之后也就是 1.2.0 版本开始，webpack 配置不在使用自定义的服务器，而是引入 webpack-dev-server。想要使用之前的 webpack 模板初始化需要使用命令 <code>vue init webpack#1.1.3 &lt;project-name&gt;</code></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/17/vue-cli webpack 配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/13/vue 2.0 源码学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/13/vue 2.0 源码学习/" itemprop="url">vue 2.0 源码学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T09:50:56+08:00">
-                2018-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://github.com/tsy77/blog/issues/1" target="_blank" rel="noopener">Vue全家桶实现原理简要梳理</a>、<a href="https://github.com/DDFE/DDFE-blog/issues/18" target="_blank" rel="noopener">Vue 2.0 的 virtual-dom 实现简析</a>、<a href="http://developer.51cto.com/art/201707/545802.htm" target="_blank" rel="noopener">深入Vue2.0底层思想–模板渲染</a>、<a href="https://ustbhuangyi.github.io/vue-analysis" target="_blank" rel="noopener">Vue.js 技术揭秘</a>、<a href="https://juejin.im/post/59c7b25a5188257a125d7a98#heading-4" target="_blank" rel="noopener">从Vue.js源码看异步更新DOM策略及nextTick</a>、<a href="https://github.com/DDFE/DDFE-blog/issues/18" target="_blank" rel="noopener">Vue 2.0 的 virtual-dom 实现简析</a></p>
-</blockquote>
-<p>本文 <a href="mailto:vue@2.0.0" target="_blank" rel="noopener">vue@2.0.0</a></p>
-<h2 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">├── compiler/               <span class="comment">// 解析 template，生成 render 函数和 ast</span></span><br><span class="line">│   ├── codegen/                    <span class="comment">// 根据 ast 生成 render 函数</span></span><br><span class="line">│   ├── directives/                 <span class="comment">// 解析 ast 中指令，生成对应 render 函数</span></span><br><span class="line">│   └── parser/                     <span class="comment">// 正则遍历 template 字符串，通过栈记录元素关系，生成 ast</span></span><br><span class="line">├── core                    <span class="comment">// Vue 实例相关，vue 源码核心</span></span><br><span class="line">│   ├── components/                 <span class="comment">// 通用组件，keep-alive 组件</span></span><br><span class="line">│   ├── global-api/                 <span class="comment">// 注册 Vue 构造函数上的静态方法，如 Vue.install、Vue.set...</span></span><br><span class="line">│   ├── instance/                   <span class="comment">// 注册 Vue.prototype，以及构造函数</span></span><br><span class="line">│   ├── observer/                   <span class="comment">// 数据双向绑定相关，主要有 watcher observer dep</span></span><br><span class="line">│   ├── util/                       <span class="comment">// 工具</span></span><br><span class="line">│   └── vdom/                       <span class="comment">// vnode 相关，包含 createVnode， patchNode 等</span></span><br><span class="line">├── platforms               <span class="comment">// core 基础上扩展</span></span><br><span class="line">│   └── web/                        <span class="comment">// 将 core 中代码包装成 web 平台所需要的方法，如 Vue.prototype.$mount 实际包装了 core 中的 $mount</span></span><br><span class="line">│       ├── compiler/</span><br><span class="line">│       ├── runtime/</span><br><span class="line">│       ├── server/</span><br><span class="line">│       └── util/</span><br><span class="line">├── server/                 <span class="comment">// ssr 相关，执行 Vue 代码，生成 Vue 实例；输出流或字符串，传递给 renderNode，renderNode 通过 vnode 生成各种 HTML 标签</span></span><br><span class="line">├── sfc</span><br><span class="line">│   └── parser.js</span><br><span class="line">└── shared                  <span class="comment">// 上述公共工具</span></span><br><span class="line">    └── util.js</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/13/vue 2.0 源码学习/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/12/vue 2.0 生命周期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/12/vue 2.0 生命周期/" itemprop="url">vue 2.0 生命周期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T17:11:05+08:00">
-                2018-06-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T13:56:33+08:00">
+                2018-06-25
               </time>
             
 
@@ -1237,322 +1486,12 @@
       
         
           <!-- markdownlint-disable MD010 -->
-<h2 id="vue2-0-生命周期"><a href="#vue2-0-生命周期" class="headerlink" title="vue2.0 生命周期"></a>vue2.0 生命周期</h2><p>vue生命周期钩子函数可以在组件特定阶段进行相关操作</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">vue2.0 钩子</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">beforeCreate</td>
-<td style="text-align:center"><strong>实例刚被创建，数据观测 (data observer) 和 event/watcher 事件配置前</strong>。$el，data属性等不存在</td>
-</tr>
-<tr>
-<td style="text-align:center">created</td>
-<td style="text-align:center">实例已完成：<strong>数据观测 (data observer)，属性和方法的运算，watch/event 事件回调</strong>。 挂载阶段未开始， $el属性不存在</td>
-</tr>
-<tr>
-<td style="text-align:center">beforeMount</td>
-<td style="text-align:center">模板编译/挂载前</td>
-</tr>
-<tr>
-<td style="text-align:center">mounted</td>
-<td style="text-align:center">模板编译/挂载后，dom已经挂载。<strong>不保证全部子组件挂载，如果需要整个视图完全渲染，需要用$nextTick 替换 mounted</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">beforeUpdate</td>
-<td style="text-align:center">组件更新前</td>
-</tr>
-<tr>
-<td style="text-align:center">updated</td>
-<td style="text-align:center">组件更新后</td>
-</tr>
-<tr>
-<td style="text-align:center">deactivated</td>
-<td style="text-align:center">针对 keep-alive，组件停用时调用</td>
-</tr>
-<tr>
-<td style="text-align:center">activated</td>
-<td style="text-align:center">针对 keep-alive，组件激活时调用</td>
-</tr>
-<tr>
-<td style="text-align:center">beforeDestroy</td>
-<td style="text-align:center">实例被销毁前调用，<strong>实例仍然可用</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">destroyed</td>
-<td style="text-align:center">实例被销毁后调用</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/12/vue 2.0 生命周期/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/12/vue-router 源码初学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/12/vue-router 源码初学/" itemprop="url">vue-router 源码初步学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T16:43:13+08:00">
-                2018-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://github.com/DDFE/DDFE-blog/issues/9" target="_blank" rel="noopener">vue-router源码分析-整体流程</a>、<a href="https://www.cnblogs.com/caizhenbo/p/7297730.html" target="_blank" rel="noopener">vue-router源码分析</a></p>
+<h2 id="概念和原理"><a href="#概念和原理" class="headerlink" title="概念和原理"></a>概念和原理</h2><blockquote>
+<p><strong>Node.js 是基于chrome v8 引擎运行在服务器端的运行时（可理解为类似java的jre）</strong></p>
 </blockquote>
-<p>本文分析 <a href="mailto:vue-router@2.0.3" target="_blank" rel="noopener">vue-router@2.0.3</a></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>先看一下 vue-router 官网的 demo</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue-router/dist/vue-router.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello App!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用 router-link 组件来导航. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通过传入 `to` 属性指定链接. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/foo"</span>&gt;</span>Go to Foo<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/bar"</span>&gt;</span>Go to Bar<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由出口 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由匹配到的组件将渲染在这里 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/12/vue-router 源码初学/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/12/前端路由/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/12/前端路由/" itemprop="url">前端路由</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T13:15:19+08:00">
-                2018-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://juejin.im/post/5ac61da66fb9a028c71eae1b" target="_blank" rel="noopener">面试官系列(3): 前端路由的实现</a></p>
-</blockquote>
-<p><strong>路由的作用就是根据不同的路径映射到不同的视图。前端路由两种模式，<code>hash</code> 模式和 <code>history</code> 模式</strong>，目前前端框架对前端路由的实现无非就是对这些前端模式进行相应的封装</p>
-<h2 id="hash-路由"><a href="#hash-路由" class="headerlink" title="hash 路由"></a>hash 路由</h2><p>hash 路由带有 <code>#</code>，不够美观，但是浏览器兼容性较好。并且 <strong>hash 变化的 url 都会被记录为浏览器历史记录，并且可以被浏览器前进后退访问</strong></p>
-<ul>
-<li>url hash 变化会<strong>触发 <code>hashchange</code> 事件</strong></li>
-<li>将路由 hash 和对应 cb 函数存储</li>
-<li><strong>监听 url 中 hash 变化，执行对应 cb 函数来进行路由跳转</strong></li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/12/前端路由/#more" rel="contents">
+            <a class="btn" href="/2018/06/25/Node.js 知识点梳理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1657,7 +1596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

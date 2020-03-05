@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/21/js arguments/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/11/zepto 源码初步学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/21/js arguments/" itemprop="url">js arguments</a></h1>
+                <a class="post-title-link" href="/2018/05/11/zepto 源码初步学习/" itemprop="url">zepto 源码初步学习</a></h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T15:47:22+08:00">
-                2018-03-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T11:17:40+08:00">
+                2018-05-11
               </time>
             
 
@@ -350,14 +350,11 @@
 
       
         
-          <blockquote>
-<p>参考: <a href="">Javascript 高级程序设计（第三版）</a>、<a href="https://github.com/mqyqingfeng/Blog/issues/14" target="_blank" rel="noopener">JavaScript深入之类数组对象与arguments</a></p>
-</blockquote>
-<!-- markdownlint-disable MD010 -->
-<p>在函数体内能通过 arguments 对象访问参数数组，从而获取传递给参数的每一个函数。arguments 是一个类数组（不是 Array 实例），可以使用方括号语法访问它的每一个元素，使用 length 属性确定传递进来实参参数。arguments 对象还有一个 callee 属性，该属性是一个指针，指向拥有这个 arguments 对象的函数</p>
+          <h2 id="zepto-对象设计-如-‘span’"><a href="#zepto-对象设计-如-‘span’" class="headerlink" title="zepto 对象设计 如 $(‘span’)"></a>zepto 对象设计 如 $(‘span’)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.__proto__ = &#123;</span><br><span class="line">    addClass: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">123</span>);</span><br><span class="line">    &#125;，</span><br><span class="line">    …<span class="comment">// 更多自定义工具函数</span></span><br><span class="line">    push: <span class="built_in">Array</span>.prototype.push,</span><br><span class="line">    ….</span><br><span class="line">&#125;;</span><br><span class="line">arr.addClass();</span><br></pre></td></tr></table></figure>
+<p>实例对象的隐式原型原指向Array.prototype, 但这里重新赋值后已不再指向Array.prototype，不再继承Array，因此不是数组<br><strong>zepto对象是一个类似数组的非数组，拥有一些数组的方法而已</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/21/js arguments/#more" rel="contents">
+            <a class="btn" href="/2018/05/11/zepto 源码初步学习/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -408,7 +405,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/15/js call apply 模拟实现/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/08/axios 二次封装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -427,7 +424,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/15/js call apply 模拟实现/" itemprop="url">js call apply 模拟实现</a></h1>
+                <a class="post-title-link" href="/2018/05/08/axios 二次封装/" itemprop="url">axios 二次封装</a></h1>
         
 
         <div class="post-meta">
@@ -439,8 +436,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:52:32+08:00">
-                2018-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-08T17:59:15+08:00">
+                2018-05-08
               </time>
             
 
@@ -478,25 +475,15 @@
 
       
         
-          
-            <blockquote>
-<p>参考:<a href="https://github.com/mqyqingfeng/Blog/issues/11" target="_blank" rel="noopener">JavaScript深入之call和apply的模拟实现</a></p>
-</blockquote>
-<!-- narkdownlint-disable MD010 -->
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数也是可以有返回值</span></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.call(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.call(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2,name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
-<p>当前对象没有某个方法，借用 call 和 apply 其他对象的方法，改变函数 this 指向传入的对象，使当前对象也能调用该方法</p>
-<p>模拟实现需要三个步骤：</p>
-<ul>
-<li><strong>将借用的方法设为当前对象的属性</strong></li>
-<li><strong>当前对象调用该方法</strong></li>
-<li><strong>删除该属性</strong></li>
-<li><strong>有函数返回值就返回</strong></li>
-</ul>
-<h2 id="call-模拟实现"><a href="#call-模拟实现" class="headerlink" title="call 模拟实现"></a>call 模拟实现</h2><p>该方法能被函数调用，需要挂载在 Function 原型上</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newCall = <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 取出需要传入的参数 从第二个参数开始</span></span><br><span class="line">  <span class="keyword">let</span> args = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">    args[i - <span class="number">1</span>] = <span class="built_in">arguments</span>[i]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// let args = Array.prototype.slice.call(arguments, 1)</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (args &amp;&amp; args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...args)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newCall(foo, <span class="string">'jack'</span>) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newCall(<span class="literal">null</span>, <span class="string">'kevin'</span>) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="apply-模拟实现"><a href="#apply-模拟实现" class="headerlink" title="apply 模拟实现"></a>apply 模拟实现</h2><p>apply 的实现类似 call，第二个参数是参数数组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法必须是挂载在 Function 原型上，才能被所有函数实例调用</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.newApply = <span class="function"><span class="keyword">function</span> (<span class="params">ctx, arr</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ctx 为传入的当前对象 ctx 不传或者传 undefined null 则为 window</span></span><br><span class="line">  ctx = ctx || <span class="built_in">window</span></span><br><span class="line">  <span class="comment">// 通过 this 拿到该借用的方法</span></span><br><span class="line">  <span class="comment">// 1 首先该方法设为当前对象的属性</span></span><br><span class="line">  ctx.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="comment">// 2 调用该方法 使用 es6 解构传入参数</span></span><br><span class="line">  <span class="keyword">var</span> ret</span><br><span class="line">  <span class="keyword">if</span> (arr &amp;&amp; arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    ret = ctx.fn(...arr)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ret = ctx.fn()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 3 删除该属性</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.fn</span><br><span class="line">  <span class="comment">// 返回函数返回值</span></span><br><span class="line">  <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  <span class="built_in">console</span>.log(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// 1 'jack'</span></span><br><span class="line">bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// 2 'kevin'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    a: <span class="keyword">this</span>.a,</span><br><span class="line">    name: name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = bar.newApply(foo, [<span class="string">'jack'</span>]) <span class="comment">// &#123;a:1, name:'jack'&#125;</span></span><br><span class="line"><span class="keyword">var</span> p2 = bar.newApply(<span class="literal">null</span>, [<span class="string">'kevin'</span>]) <span class="comment">// &#123;a:2, name:'kevin'&#125;</span></span><br></pre></td></tr></table></figure>
-          
+          <!-- markdownlint-disable MD010 -->
+<p>一般项目往往要对 axios 库进行二次封装，添加一些自定义配置和拦截器等</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/08/axios 二次封装/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -543,7 +530,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/15/js new 的原理和模拟实现/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/08/js new 的原理和模拟实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -562,7 +549,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/15/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
+                <a class="post-title-link" href="/2018/05/08/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
         
 
         <div class="post-meta">
@@ -574,8 +561,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:51:34+08:00">
-                2018-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-08T16:21:50+08:00">
+                2018-05-08
               </time>
             
 
@@ -620,7 +607,7 @@
 <h2 id="new-一个对象的原理"><a href="#new-一个对象的原理" class="headerlink" title="new 一个对象的原理"></a>new 一个对象的原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name</span><br><span class="line">	<span class="keyword">this</span>.age = age</span><br><span class="line">	<span class="keyword">this</span>.job = job</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'jack'</span>, <span class="number">20</span>, <span class="string">'Teacher'</span>)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/15/js new 的原理和模拟实现/#more" rel="contents">
+            <a class="btn" href="/2018/05/08/js new 的原理和模拟实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -671,7 +658,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/14/es6 class 经 babel 编译分析/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/07/jquery 的 deferred/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -690,7 +677,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/14/es6 class 经 babel 编译分析/" itemprop="url">es6 class 经 babel 编译分析</a></h1>
+                <a class="post-title-link" href="/2018/05/07/jquery 的 deferred/" itemprop="url">jquery 的 deferred</a></h1>
         
 
         <div class="post-meta">
@@ -702,136 +689,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T17:59:54+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="https://www.jianshu.com/p/d36fb31f9cff" target="_blank" rel="noopener">揭秘babel的魔法之class魔法处理</a>、<a href="https://www.jianshu.com/p/95901615f322" target="_blank" rel="noopener">揭秘babel的魔法之class继承的处理2</a></p>
-</blockquote>
-<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.type=<span class="string">"person"</span></span><br><span class="line">    &#125;</span><br><span class="line">    hello() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'hello '</span> + <span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> fn() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'static'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/14/es6 class 经 babel 编译分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/14/es6 class 继承/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/es6 class 继承/" itemprop="url">es6 class 继承</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T10:08:23+08:00">
-                2018-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T16:27:08+08:00">
+                2018-05-07
               </time>
             
 
@@ -870,13 +729,12 @@
       
         
           <blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/class-extends" target="_blank" rel="noopener">ECMAScript 6 入门 class 继承部分</a></p>
+<p>参考: <a href="http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object" target="_blank" rel="noopener">jQuery的deferred对象详解</a></p>
 </blockquote>
-<!-- markdownlint-disable MD010 -->
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 原型继承是采用 <strong>父类.call(this,props) 继承父类的属性方法，并通过一个中间构造函数修复原型链</strong></p>
+<h2 id="jquery-1-5-之前"><a href="#jquery-1-5-之前" class="headerlink" title="jquery 1.5 之前"></a>jquery 1.5 之前</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data1.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="comment">// data2.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data1.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">    p2</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p2 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data2.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(p2, <span class="string">'p2'</span>) <span class="comment">// xhr 对象</span></span><br><span class="line"><span class="comment">// &#123;data: 1&#125;</span></span><br><span class="line"><span class="comment">// &#123;data: 2&#125;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/14/es6 class 继承/#more" rel="contents">
+            <a class="btn" href="/2018/05/07/jquery 的 deferred/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -927,7 +785,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/13/es6 常用/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/23/es6 Promise 标准/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -946,7 +804,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/13/es6 常用/" itemprop="url">es6 常用</a></h1>
+                <a class="post-title-link" href="/2018/04/23/es6 Promise 标准/" itemprop="url">es6 Promise 标准</a></h1>
         
 
         <div class="post-meta">
@@ -958,8 +816,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:44:42+08:00">
-                2018-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T09:27:02+08:00">
+                2018-04-23
               </time>
             
 
@@ -997,24 +855,148 @@
 
       
         
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="http://www.cnblogs.com/vicfeel/p/5808277.html" target="_blank" rel="noopener">向 ES6 看齐，用更好的JavaScript（一）</a> <a href="http://www.cnblogs.com/vicfeel/p/5822068.html" target="_blank" rel="noopener">向 ES6 看齐，用更好的JavaScript（二）</a></p>
+          <blockquote>
+<p>参考: <a href="https://juejin.im/post/597724c26fb9a06bb75260e8" target="_blank" rel="noopener">八段代码彻底掌握 Promise</a></p>
 </blockquote>
-<p>es6 常用特性有:</p>
+<!-- markdownlint-disable MD010 -->
+<h2 id="Promise-的立即执行"><a href="#Promise-的立即执行" class="headerlink" title="Promise 的立即执行"></a>Promise 的立即执行</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'create new promise'</span>)</span><br><span class="line">  resolve(<span class="string">'success'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'after new promise'</span>)</span><br><span class="line"></span><br><span class="line">p.then(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(val)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// create new promise</span></span><br><span class="line"><span class="comment">// after new promise</span></span><br><span class="line"><span class="comment">// success</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/23/es6 Promise 标准/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/15/vue-cli 3.0 初体验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/15/vue-cli 3.0 初体验/" itemprop="url">vue-cli 3.0 初体验</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T16:38:43+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">vue-cli 英文官方文档</a>、<a href="https://zcfy.cc/article/the-npm-blog-new-package-moniker-rules" target="_blank" rel="noopener">The npm Blog——新的包名规则</a>、<a href="https://segmentfault.com/a/1190000013090943" target="_blank" rel="noopener">Vue CLI 3.x 简单体验</a>、<a href="https://github.com/vuejs/vue-cli/blob/dev/docs/config.md" target="_blank" rel="noopener">vue.config.js 官方文档</a></p>
+</blockquote>
+<p>vue-cli 3.0 目前仍只是 beta 版本，不建议在生产环境使用</p>
+<p>vue-cli 3.0 尽可能简化配置，零配置让用户能快速搭建项目进行开发，但同时这也会导致缺少灵活性</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
+<p>这里 vue-cli 使用了新的 npm 包的命名方式</p>
 <ul>
-<li><strong>let/const 块级作用域</strong></li>
-<li><strong>解构赋值</strong></li>
-<li><strong>多行字符/模板字符串</strong></li>
-<li><strong>函数默认值</strong></li>
-<li><strong>箭头函数</strong></li>
-<li><strong>class</strong></li>
+<li>为了防止命名的包名和 npm 上的包名重复，可使用作用域，将该包作为你 npm 官网用户名下的<strong>私有模块</strong>，命名规则为 <code>@</code> + <code>npm 官网用户名 / 模块名</code></li>
+<li>最后命令行发布包时添加 <code>--access=public</code> 将该包变成共有包</li>
 </ul>
-<h2 id="let-和-const-引入块级作用域"><a href="#let-和-const-引入块级作用域" class="headerlink" title="let 和 const 引入块级作用域"></a>let 和 const 引入块级作用域</h2><p>以往 js 是不存在块级作用域，只有全局作用域和函数作用域</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  a[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a[<span class="number">1</span>]() <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/es6 常用/#more" rel="contents">
+            <a class="btn" href="/2018/04/15/vue-cli 3.0 初体验/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1065,7 +1047,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/12/for...in、Object.keys()、Object.getPropertyNames() 比较/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/axios 登录拦截/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1084,7 +1066,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/12/for...in、Object.keys()、Object.getPropertyNames() 比较/" itemprop="url">for...in、Object.keys()、Object.getOwnPropertyNames() 比较</a></h1>
+                <a class="post-title-link" href="/2018/04/13/axios 登录拦截/" itemprop="url">axios 登录拦截</a></h1>
         
 
         <div class="post-meta">
@@ -1096,8 +1078,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T09:59:31+08:00">
-                2018-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T18:05:40+08:00">
+                2018-04-13
               </time>
             
 
@@ -1136,14 +1118,19 @@
       
         
           <blockquote>
-<p>参考: <a href="https://www.cnblogs.com/kongxy/p/4618173.html" target="_blank" rel="noopener">JavaScript中的可枚举属性与不可枚举属性</a>、<a href="http://yanhaijing.com/javascript/2015/05/09/diff-between-keys-getOwnPropertyNames-forin/" target="_blank" rel="noopener">详解forin，Object.keys和Object.getOwnPropertyNames的区别</a>、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank" rel="noopener">Object.create() - JavaScript | MDN</a></p>
+<p>项目地址：<a href="https://github.com/jhgrrewq/vue-login.git" target="_blank" rel="noopener">https://github.com/jhgrrewq/vue-login.git</a></p>
 </blockquote>
-<p>在 js 中对象的属性分为可枚举和不可枚举，这是由属性描述符 enumberable 的值 true/false 决定的，可枚举性决定了属性是否能被 for…in 和 Object.keys() 中遍历查找</p>
-<p>js 基本包装数据类型的原型属性是不可枚举的，如 Object、Number、String 等</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="keyword">new</span> <span class="built_in">Number</span>()</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> prop <span class="keyword">in</span> num) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'prop: '</span> + num[prop]) <span class="comment">// 输出为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该项目是利用了 github 的 personal token 来替代 用户名密码 访问 github 的仓库列表</p>
+<ul>
+<li><p>需要先在 github <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">生成 token</a></p>
+</li>
+<li><p>之后可以通过 <strong>设置请求 header 中的 Authorization 字段</strong> 发起请求</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求用户的仓库列表</span></span><br><span class="line">curl -v -H <span class="string">"Authorization: token TOKEN"</span> https:<span class="comment">//api.github.com/user/repos</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/12/for...in、Object.keys()、Object.getPropertyNames() 比较/#more" rel="contents">
+            <a class="btn" href="/2018/04/13/axios 登录拦截/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1194,7 +1181,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/08/es6 class/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/webpack loader 编写/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1213,7 +1200,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/08/es6 class/" itemprop="url">es6 class</a></h1>
+                <a class="post-title-link" href="/2018/04/13/webpack loader 编写/" itemprop="url">webpack loader 编写</a></h1>
         
 
         <div class="post-meta">
@@ -1225,8 +1212,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T16:25:54+08:00">
-                2018-03-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T15:49:46+08:00">
+                2018-04-13
               </time>
             
 
@@ -1264,14 +1251,19 @@
 
       
         
-          <blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">ECMAScript 6 入门 class 部分</a></p>
+          <!-- markdownlint-disable MD010 -->
+<blockquote>
+<p>编写的 webpack 扩展如果是想对一个个单独文件进行转换就编写 loader，否则编写 plugin</p>
 </blockquote>
-<!-- markdownlint-disable MD010 -->
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>js 中生成实例对象的传统方法是通过构造函数结合原型</p>
+<ul>
+<li><p><strong>一个 loader 的职责是单一的，只需要完成一种转换</strong> 如果一个源文件需要进行经过多种转换才能正常使用，就通过多个 loader 转换。调用多个 loader 转换一个文件时，每个 loader 会链式顺序执行，第一个 loader 将会拿到需要处理的原内容，上一个 loader 处理后的结果会传给下一个接着处理，最后的 loader 将处理后的最终结果返回给 webpack</p>
+</li>
+<li><p>开发 loader 时请保持其职责的单一性，只需关心输入和输出</p>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/08/es6 class/#more" rel="contents">
+            <a class="btn" href="/2018/04/13/webpack loader 编写/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1322,7 +1314,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/es6 Set Map/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/es6 Set Map/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1341,7 +1333,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/es6 Set Map/" itemprop="url">es6 Set Map</a></h1>
+                <a class="post-title-link" href="/2018/04/13/es6 Set Map/" itemprop="url">es6 Set Map</a></h1>
         
 
         <div class="post-meta">
@@ -1353,8 +1345,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T13:29:10+08:00">
-                2018-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T15:20:46+08:00">
+                2018-04-13
               </time>
             
 
@@ -1406,7 +1398,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/es6 Set Map/#more" rel="contents">
+            <a class="btn" href="/2018/04/13/es6 Set Map/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1457,7 +1449,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/03/06/es6 Symbol/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/js 数组方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1476,7 +1468,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/es6 Symbol/" itemprop="url">es6 Symbol</a></h1>
+                <a class="post-title-link" href="/2018/04/13/js 数组方法/" itemprop="url">js 数组方法</a></h1>
         
 
         <div class="post-meta">
@@ -1488,8 +1480,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T11:01:07+08:00">
-                2018-03-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T09:25:35+08:00">
+                2018-04-13
               </time>
             
 
@@ -1527,15 +1519,12 @@
 
       
         
-          <!-- markdownlint-disable MD010 -->
-<blockquote>
-<p>参考: <a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ECMAScript 6 入门 Symbol 部分</a></p>
-</blockquote>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>es5 对象的属性名都是字符串，容易造成属性名的冲突，可能会被重写。<strong>es6 引入一种新的原始数据类型 Symbol，表示独一无二的值</strong></p>
-<p>因此<strong>基本数据类型就有 6 种：Undefined Null Boolean String Number Symbol 再加上引用类型 Object</strong></p>
+          <p>js 提供了很多数组操作方法，有些会影响原来的数组，有些则不会，而是返回操作后的新数组</p>
+<h2 id="新增：影响原数组"><a href="#新增：影响原数组" class="headerlink" title="新增：影响原数组"></a>新增：影响原数组</h2><p><strong>Array.prototype.push() 从尾部新增元素，返回数组长度</strong><br><strong>Array.prototype.unshift() 从头部新增元素, 返回数组长度</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> add = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>]</span><br><span class="line">add.push(<span class="string">'f'</span>) <span class="comment">// 6 ['a', 'b', 'c', 'd', 'e', 'f']</span></span><br><span class="line">add.unshift(<span class="string">'z'</span>) <span class="comment">// 7 ['z', 'a', 'b', 'c', 'd', 'e' 'f']</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/es6 Symbol/#more" rel="contents">
+            <a class="btn" href="/2018/04/13/js 数组方法/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1640,7 +1629,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

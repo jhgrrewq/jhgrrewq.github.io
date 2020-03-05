@@ -1499,7 +1499,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/29/webpack 热更新原理/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/08/10/js 数据结构和算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1518,7 +1518,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/29/webpack 热更新原理/" itemprop="url">webpack 热更新原理</a></h1>
+                <a class="post-title-link" href="/2018/08/10/js 数据结构和算法/" itemprop="url">js 数据结构和算法</a></h1>
         
 
         <div class="post-meta">
@@ -1530,8 +1530,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T15:12:17+08:00">
-                2018-06-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T11:06:54+08:00">
+                2018-08-10
               </time>
             
 
@@ -1569,9 +1569,16 @@
 
       
         
-          
-            
-          
+          <blockquote>
+<p>参考: <a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（二）——链表</a>、<a href="https://github.com/wengjq/Blog/issues/5" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/6" target="_blank" rel="noopener">javaScript的数据结构与算法（三）——集合 数据结构与算法</a>、<a href="https://github.com/wengjq/Blog/issues/7" target="_blank" rel="noopener">javaScript的数据结构与算法（四）——字典和散列表</a>、<a href="https://github.com/wengjq/Blog/issues/8" target="_blank" rel="noopener">javaScript的数据结构与算法（五）——树</a>、<a href="https://github.com/wengjq/Blog/issues/9" target="_blank" rel="noopener">javaScript的数据结构与算法（六）——图</a></p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/10/js 数据结构和算法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1618,7 +1625,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/06/26/http 缓存/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/07/01/vue-router 源码初学/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1637,7 +1644,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/26/http 缓存/" itemprop="url">http 缓存</a></h1>
+                <a class="post-title-link" href="/2018/07/01/vue-router 源码初学/" itemprop="url">vue-router 源码初步学习</a></h1>
         
 
         <div class="post-meta">
@@ -1649,8 +1656,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T16:42:59+08:00">
-                2018-06-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T10:26:42+08:00">
+                2018-07-01
               </time>
             
 
@@ -1689,12 +1696,14 @@
       
         
           <blockquote>
-<p>参考: <a href="https://excaliburhan.com/post/things-you-should-know-about-browser-cache.html" target="_blank" rel="noopener">你应该知道的浏览器缓存知识</a></p>
+<p>参考: <a href="https://github.com/DDFE/DDFE-blog/issues/9" target="_blank" rel="noopener">vue-router源码分析-整体流程</a>、<a href="https://www.cnblogs.com/caizhenbo/p/7297730.html" target="_blank" rel="noopener">vue-router源码分析</a></p>
 </blockquote>
-<h2 id="http-头信息缓存分类"><a href="#http-头信息缓存分类" class="headerlink" title="http 头信息缓存分类"></a>http 头信息缓存分类</h2><p>http 头信息缓存主要有两种：强缓存和协商缓存。强缓存如果命中不需要和服务器发生交互，协商缓存不管是否命中都要和服务器发生交互，强缓存的优先级高于协商缓存</p>
+<p>本文分析 <a href="mailto:vue-router@2.0.3" target="_blank" rel="noopener">vue-router@2.0.3</a></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>先看一下 vue-router 官网的 demo</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue-router/dist/vue-router.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello App!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用 router-link 组件来导航. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通过传入 `to` 属性指定链接. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/foo"</span>&gt;</span>Go to Foo<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/bar"</span>&gt;</span>Go to Bar<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由出口 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由匹配到的组件将渲染在这里 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/26/http 缓存/#more" rel="contents">
+            <a class="btn" href="/2018/07/01/vue-router 源码初学/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1799,7 +1808,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: JavaScript深入之bind的模拟实现   call apply bind 方法的异同： 三者都是改变函数 this 对象指向的 三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式） 三者都可以使用后续参数传参 call apply 是立即调用，bind 是返回对应函数，延迟调用">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js call apply bind">
+<meta property="og:url" content="http://jhgrrewq.github.io/2018/04/03/js call apply bind/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: JavaScript深入之bind的模拟实现   call apply bind 方法的异同： 三者都是改变函数 this 对象指向的 三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式） 三者都可以使用后续参数传参 call apply 是立即调用，bind 是返回对应函数，延迟调用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-03T02:10:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js call apply bind">
+<meta name="twitter:description" content="参考: JavaScript深入之bind的模拟实现   call apply bind 方法的异同： 三者都是改变函数 this 对象指向的 三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式） 三者都可以使用后续参数传参 call apply 是立即调用，bind 是返回对应函数，延迟调用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/04/03/js call apply bind/"/>
+
+
+
+
+
+  <title>js call apply bind | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/03/js call apply bind/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js call apply bind</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T10:10:38+08:00">
+                2018-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="https://github.com/mqyqingfeng/Blog/issues/12" target="_blank" rel="noopener">JavaScript深入之bind的模拟实现</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="call-apply-bind-方法的异同："><a href="#call-apply-bind-方法的异同：" class="headerlink" title="call apply bind 方法的异同："></a>call apply bind 方法的异同：</h2><ul>
+<li>三者都是改变函数 this 对象指向的</li>
+<li><strong>三者第一个参数都是 this 要指向的对象（第一个参数不传或者传 null undefined, this 指向 window，非严格模式）</strong></li>
+<li>三者都可以使用后续参数传参</li>
+<li><strong>call apply 是立即调用，bind 是返回对应函数，延迟调用</strong></li>
+</ul>
+<a id="more"></a>
+<h2 id="call-和-apply"><a href="#call-和-apply" class="headerlink" title="call 和 apply"></a>call 和 apply</h2><p>当前对象无某个方法，借 call 和 apply 其他对象的方法，改变函数 this 指向当前传入的对象，使当前对象也能调用这个方法</p>
+<blockquote>
+<p>两者作用相同，接受参数的形式不同:</p>
+<ul>
+<li>call <strong>将参数按顺序传递</strong></li>
+<li>apply <strong>将参数作为数组传递</strong></li>
+</ul>
+</blockquote>
+<p>对于 js 中参数数量明确时用 call，对于参数数量不确定时使用 apply，将参数 push 进数组传递进去，也可以在函数内部使用 arguments 遍历参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数组合并</span></span><br><span class="line"><span class="keyword">let</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> arr2 = [<span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>.prototype.concat.apply(arr1, arr2)) <span class="comment">// [1, 2, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 求最值 Math.min(1, 2, 3, 4, 5) Math.max(1, 2, 3, 4, 5)</span></span><br><span class="line"><span class="keyword">let</span> num = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Math</span>.min.call(<span class="built_in">Math</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Math</span>.min.apply(<span class="built_in">Math</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将伪数组转化为数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arg = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(arg <span class="keyword">instanceof</span> <span class="built_in">Array</span>)</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">1</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><blockquote>
+<p>bind()方法会创建<strong>返回一个新函数</strong>，称为绑定函数，当调用该绑定函数时，绑定函数会以创建它时传入 <strong>bind()方法的第一个参数作为 this，传入 bind() 方法的第二个以及以后的参数加上绑定函数运行时本身的参数</strong>按顺序作为原函数的参数来调用原函数。</p>
+</blockquote>
+<p>重点在于 bind() 会返回一个新的绑定函数，不会立即执行</p>
+<h3 id="bind-简单实现"><a href="#bind-简单实现" class="headerlink" title="bind 简单实现"></a>bind 简单实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// fn.bind() 这里 this 为 fn</span></span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="comment">// 获取 bind 方法第二个之后参数</span></span><br><span class="line">    <span class="keyword">var</span> bindArg = <span class="built_in">Array</span>.prototype.slice(<span class="built_in">arguments</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="comment">// 返回一个新的绑定函数，该函数返回 绑定后函数的调用</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 获取绑定函数运行时的参数</span></span><br><span class="line">        <span class="keyword">var</span> arg = <span class="built_in">Array</span>.prototype.slice(<span class="built_in">arguments</span>)</span><br><span class="line">        <span class="keyword">return</span> self.apply(ctx, bindArg.concat(arg))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数-bind-实现"><a href="#构造函数-bind-实现" class="headerlink" title="构造函数 bind 实现"></a>构造函数 bind 实现</h3><p>bind 返回的函数作用在构造函数上，绑定的 this 会失效，但是传入的参数依然有效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">    <span class="built_in">console</span>.log(name)</span><br><span class="line">    <span class="built_in">console</span>.log(age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Bar.prototype.test = <span class="string">'test'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bindBar = Bar.bind(foo, <span class="string">'jack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> bindBar(<span class="number">20</span>)</span><br><span class="line"><span class="comment">// undefined 这是 this 指向 bar 对象</span></span><br><span class="line"><span class="comment">// 'jack'</span></span><br><span class="line"><span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+<p>改进一下之前的 bind 方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// fn.bind() 这里 this 为 fn</span></span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="comment">// 获取 bind 方法第二个之后参数</span></span><br><span class="line">    <span class="keyword">var</span> bindArg = <span class="built_in">Array</span>.prototype.slice(<span class="built_in">arguments</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fNOP = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 返回一个新的绑定函数，该函数返回 绑定后函数的调用</span></span><br><span class="line">    <span class="keyword">var</span> fBound =  <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 获取绑定函数运行时的参数</span></span><br><span class="line">        <span class="keyword">var</span> arg = <span class="built_in">Array</span>.prototype.slice(<span class="built_in">arguments</span>)</span><br><span class="line">        <span class="comment">// 当该绑定函数作为普通函数调用，this 为 window，this instanceof fNOP 为 false，应该将 this 指向 ctx（传入的对象）</span></span><br><span class="line">        <span class="comment">// 当该绑定函数作为构造函数调用时，this 为函数实例，this instanceof fNOP 为 true，将 this 指向该函数实例</span></span><br><span class="line">        <span class="keyword">return</span> self.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> fNOP ? <span class="keyword">this</span> : ctx || <span class="built_in">window</span>, bindArg.concat(arg))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 继承 返回的新绑定函数 fnBound 就拥有了原有对象函数的所有属性方法 （也就是 fn.bind() 的 fn）</span></span><br><span class="line">    fNOP.prototype = self.prototype</span><br><span class="line">    fnBound.prototype = <span class="keyword">new</span> fNOP()</span><br><span class="line">    <span class="keyword">return</span> fBound</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MDN-上-bind-实现"><a href="#MDN-上-bind-实现" class="headerlink" title="MDN 上 bind 实现"></a>MDN 上 bind 实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">Function</span>.prototype.bind) &#123;</span><br><span class="line">    <span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">oThis</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// fn.bind() 这里的 this 为 fn, fn 必须为函数，否则报错</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) &#123;</span><br><span class="line">            <span class="comment">// closest thing possible to the ECMAScript 5 internal IsCallable function</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Function.prototype.bind - what is trying to be bound is not callable"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// fn.bind() 传入的除去第一个参数（改变 this 指向）的参数，作为参数数组</span></span><br><span class="line">        <span class="keyword">let</span> arg = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">let</span> fnOp = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">        <span class="keyword">let</span> fnToBind = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> fnBound = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 新创建一个绑定函数，第一个参数是 bind() 的第一个参数, arg.concat(Array.prototype.slice.call(arguments)) 是将 bind() 的第二个参数以及之后的参数和绑定函数运行时本身的参数传入</span></span><br><span class="line">            <span class="keyword">return</span> fnToBind.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> fnOp &amp;&amp; oThis ? <span class="keyword">this</span> : oThis || <span class="built_in">window</span>,</span><br><span class="line">                arg.concat(<span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>)))</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继承 返回的新绑定函数 fnBound 就拥有了原有对象函数的所有属性方法 （也就是 fn.bind() 的 fn）</span></span><br><span class="line">        fnOp.prototype = <span class="keyword">this</span>.prototype</span><br><span class="line">        fnBound.prototype = <span class="keyword">new</span> fnOp()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> fnBound</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> first = <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x, a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> sec = &#123;</span><br><span class="line">    x:<span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> third = &#123;</span><br><span class="line">    x:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> func1 = first.bind(sec,<span class="number">1</span>);</span><br><span class="line">func1()</span><br><span class="line"><span class="comment">// &#123;x: 1&#125; [1]</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="keyword">var</span> func2 = first.bind(sec,<span class="number">1</span>).bind(third,<span class="number">2</span>);</span><br><span class="line">func2();</span><br><span class="line"><span class="comment">// &#123;x: 2&#125; [2]</span></span><br><span class="line"><span class="comment">// &#123;x: 1&#125; [1, 2]</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>通过源码分析，bind() 返回新绑定函数，多次绑定，bind(this) this 最终覆盖指向为第一个 bind() 的第一个参数， 而多次 bind() 除去第一个参数的参数会合并成参数数组</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/02/js 事件循环/" rel="next" title="js 事件循环">
+                <i class="fa fa-chevron-left"></i> js 事件循环
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/03/vuex 项目应用/" rel="prev" title="vuex 多页项目应用">
+                vuex 多页项目应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#call-apply-bind-方法的异同："><span class="nav-number">1.</span> <span class="nav-text">call apply bind 方法的异同：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-和-apply"><span class="nav-number">2.</span> <span class="nav-text">call 和 apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind"><span class="nav-number">3.</span> <span class="nav-text">bind</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bind-简单实现"><span class="nav-number">3.1.</span> <span class="nav-text">bind 简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数-bind-实现"><span class="nav-number">3.2.</span> <span class="nav-text">构造函数 bind 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MDN-上-bind-实现"><span class="nav-number">3.3.</span> <span class="nav-text">MDN 上 bind 实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
