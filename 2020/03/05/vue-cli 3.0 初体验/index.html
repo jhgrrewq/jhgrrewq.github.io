@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考: vue-cli 英文官方文档、The npm Blog——新的包名规则、Vue CLI 3.x 简单体验、vue.config.js 官方文档  vue-cli 3.0 目前仍只是 beta 版本，不建议在生产环境使用 vue-cli 3.0 尽可能简化配置，零配置让用户能快速搭建项目进行开发，但同时这也会导致缺少灵活性 安装1npm install -g @vue/cli 这里 vue">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli 3.0 初体验">
+<meta property="og:url" content="http://jhgrrewq.github.io/2020/03/05/vue-cli 3.0 初体验/index.html">
+<meta property="og:site_name" content="jhgrrewq 前端小站">
+<meta property="og:description" content="参考: vue-cli 英文官方文档、The npm Blog——新的包名规则、Vue CLI 3.x 简单体验、vue.config.js 官方文档  vue-cli 3.0 目前仍只是 beta 版本，不建议在生产环境使用 vue-cli 3.0 尽可能简化配置，零配置让用户能快速搭建项目进行开发，但同时这也会导致缺少灵活性 安装1npm install -g @vue/cli 这里 vue">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ony85apla.bkt.clouddn.com/18-4-15/4364696.jpg">
+<meta property="og:updated_time" content="2020-03-05T08:09:12.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-cli 3.0 初体验">
+<meta name="twitter:description" content="参考: vue-cli 英文官方文档、The npm Blog——新的包名规则、Vue CLI 3.x 简单体验、vue.config.js 官方文档  vue-cli 3.0 目前仍只是 beta 版本，不建议在生产环境使用 vue-cli 3.0 尽可能简化配置，零配置让用户能快速搭建项目进行开发，但同时这也会导致缺少灵活性 安装1npm install -g @vue/cli 这里 vue">
+<meta name="twitter:image" content="http://ony85apla.bkt.clouddn.com/18-4-15/4364696.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O0AP0FGXSX',
+      apiKey: 'ab7c2224e88a925feeea82c8902add9d',
+      indexName: 'jhgrrewq',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://jhgrrewq.github.io/2020/03/05/vue-cli 3.0 初体验/"/>
+
+
+
+
+
+  <title>vue-cli 3.0 初体验 | jhgrrewq 前端小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jhgrrewq 前端小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">置我于死地者 必将赐我以后生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2020/03/05/vue-cli 3.0 初体验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue-cli 3.0 初体验</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-05T08:09:12+00:00">
+                2020-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参考: <a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">vue-cli 英文官方文档</a>、<a href="https://zcfy.cc/article/the-npm-blog-new-package-moniker-rules" target="_blank" rel="noopener">The npm Blog——新的包名规则</a>、<a href="https://segmentfault.com/a/1190000013090943" target="_blank" rel="noopener">Vue CLI 3.x 简单体验</a>、<a href="https://github.com/vuejs/vue-cli/blob/dev/docs/config.md" target="_blank" rel="noopener">vue.config.js 官方文档</a></p>
+</blockquote>
+<p>vue-cli 3.0 目前仍只是 beta 版本，不建议在生产环境使用</p>
+<p>vue-cli 3.0 尽可能简化配置，零配置让用户能快速搭建项目进行开发，但同时这也会导致缺少灵活性</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
+<p>这里 vue-cli 使用了新的 npm 包的命名方式</p>
+<ul>
+<li>为了防止命名的包名和 npm 上的包名重复，可使用作用域，将该包作为你 npm 官网用户名下的<strong>私有模块</strong>，命名规则为 <code>@</code> + <code>npm 官网用户名 / 模块名</code></li>
+<li>最后命令行发布包时添加 <code>--access=public</code> 将该包变成共有包</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如 package.json 包命名使用作用域，该包变成私有包</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"@qwerrghj/vue"</span></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 命令行发布添加 --access=public 变成公有包</span></span><br><span class="line">npm publish --access=public</span><br></pre></td></tr></table></figure>
+<h2 id="vue-cli-命令"><a href="#vue-cli-命令" class="headerlink" title="vue-cli 命令"></a>vue-cli 命令</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vue -V, vue --version               输出版本号</span><br><span class="line">vue -h, vue --help                  输出使用信息</span><br><span class="line"></span><br><span class="line">vue create [options] &lt;app-name&gt;                  使用 &lt;app-name&gt; 创建一个项目，无需选择模板</span><br><span class="line"></span><br><span class="line">vue-cli-service add &lt;plugin&gt; [pluginOptions]     在已创建项目中安装插件</span><br><span class="line">vue-cli-service invoke &lt;plugin&gt; [pluginOptions]  在已创建项目中添加插件</span><br><span class="line">vue-cli-service inspect [options] [paths...]     检查 webpack config 配置</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vue-cli-service serve [options] [entry]          开发模式下零配置运行一个 js or vue 文件</span><br><span class="line">vue-cli-service build [options] [entry]          生产模式下零配置运行一个 js or vue 文件</span><br><span class="line"></span><br><span class="line">vue init &lt;template&gt; <span class="xml"><span class="tag">&lt;<span class="name">app-name</span>&gt;</span>                   同旧版 api 使用模板创建项目，但是需要安装 @vue/cli-init</span></span><br></pre></td></tr></table></figure>
+<p>这里 vue-cli-service 应该是包含了生产和开发环境的配置文件并起了一个 http 服务器</p>
+<p><code>vue-cli-service serve</code> 相当于 <code>npm run dev</code>, 类似 webpack-dev-server 跑 webpack.dev.config.js<br><code>vue-cli-service build</code> 相当于 <code>npm run build</code>, 类似使用 webpack.prod.config.js 对文件进行 webpack 打包</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>使用 <code>vue create &lt;app-name&gt;</code> 创建项目会出现提示面板，提供了两种选择，分别是 <strong>default 默认</strong> 和 <strong>Manually 手动模式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Vue CLI v3<span class="number">.0</span><span class="number">.0</span>-beta<span class="number">.6</span></span><br><span class="line">? Please pick a preset: (Use arrow keys)</span><br><span class="line">❯ <span class="keyword">default</span> (babel, eslint)</span><br><span class="line">  Manually select features</span><br></pre></td></tr></table></figure>
+<h3 id="default"><a href="#default" class="headerlink" title="default"></a>default</h3><p>选择默认模式会自动在执行目录下使用设置的项目名创建项目、初始化 git 仓库、安装 cli 插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">✨  Creating project <span class="keyword">in</span> /Users/jackzhang/Desktop/@qwerrghj:vue/myProject.</span><br><span class="line">🗃  Initializing git repository...</span><br><span class="line">⚙  Installing CLI plugins. This might take a <span class="keyword">while</span>...</span><br></pre></td></tr></table></figure>
+<h3 id="Manually"><a href="#Manually" class="headerlink" title="Manually"></a>Manually</h3><p>手动模式会继续出现一些选择面板，提示可选择安装一些模块，使用 空格 选中或取消， a 全选，i 反选</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Vue CLI v3<span class="number">.0</span><span class="number">.0</span>-beta<span class="number">.6</span></span><br><span class="line">? Please pick a preset: Manually select features</span><br><span class="line">? Check the features needed <span class="keyword">for</span> your project: (Press &lt;space&gt; to select, &lt;a&gt; to t</span><br><span class="line">oggle all, &lt;i&gt; to invert selection)</span><br><span class="line">❯◯ TypeScript</span><br><span class="line"> ◯ Progressive Web App (PWA) Support</span><br><span class="line"> ◯ Router</span><br><span class="line"> ◯ Vuex</span><br><span class="line"> ◯ CSS Pre-processors</span><br><span class="line"> ◯ Linter / Formatter</span><br><span class="line"> ◯ Unit Testing</span><br><span class="line"> ◯ E2E Testing,</span><br></pre></td></tr></table></figure>
+<p>对于选择安装的模块还会有一些后续选择安装提示，如对于要安装 css 预处理器，会提示选择 sass/scss、less 或 stylus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">? Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported </span><br><span class="line">by <span class="keyword">default</span>): (Use arrow keys)</span><br><span class="line">❯ SCSS/SASS </span><br><span class="line">  LESS </span><br><span class="line">  Stylus</span><br></pre></td></tr></table></figure>
+<p>可以设置将配置是单独放置成配置文件还是作为 package.json 的字段</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">? Where <span class="keyword">do</span> you prefer placing config <span class="keyword">for</span> Babel, PostCSS, ESLint, etc.? (Use arro</span><br><span class="line">w keys)</span><br><span class="line">❯ In dedicated config files </span><br><span class="line">  In package.json</span><br></pre></td></tr></table></figure>
+<p>甚至还可以将配置保存作为以后项目的配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? Save <span class="keyword">this</span> <span class="keyword">as</span> a preset <span class="keyword">for</span> future projects? (Y/n)</span><br></pre></td></tr></table></figure>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>使用 default 模式创建的项目结构如下，manually 模式的结构类似，src 源码可以看出这依然是一个单页面项目</p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-4-15/4364696.jpg" alt=""></p>
+<h2 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h2><p>package.json 中 script 字段配置了一些常用命令，发现 <code>npm run serve</code> 其实就是 <code>vue-cli-service serve --open</code>, 相当于之前 <code>npm run dev</code>；对应的 <code>npm run build</code> 其实就是 <code>vue-cli-service build</code>, 相当于之前 <code>npm run build</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"serve"</span>: <span class="string">"vue-cli-service serve --open"</span>,</span><br><span class="line">  <span class="string">"build"</span>: <span class="string">"vue-cli-service build"</span>,</span><br><span class="line">  <span class="string">"lint"</span>: <span class="string">"vue-cli-service lint"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="项目自定义配置"><a href="#项目自定义配置" class="headerlink" title="项目自定义配置"></a>项目自定义配置</h2><p>项目中需要自定义配置可在根目录下创建 vue.config.js 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// Project deployment base</span></span><br><span class="line">  <span class="comment">// By default we assume your app will be deployed at the root of a domain,</span></span><br><span class="line">  <span class="comment">// e.g. https://www.my-app.com/</span></span><br><span class="line">  <span class="comment">// If your app is deployed at a sub-path, you will need to specify that</span></span><br><span class="line">  <span class="comment">// sub-path here. For example, if your app is deployed at</span></span><br><span class="line">  <span class="comment">// https://www.foobar.com/my-app/</span></span><br><span class="line">  <span class="comment">// then change this to '/my-app/'</span></span><br><span class="line">  baseUrl: <span class="string">'/'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// where to output built files</span></span><br><span class="line">  outputDir: <span class="string">'dist'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// whether to use eslint-loader for lint on save.</span></span><br><span class="line">  <span class="comment">// valid values: true | false | 'error'</span></span><br><span class="line">  <span class="comment">// when set to 'error', lint errors will cause compilation to fail.</span></span><br><span class="line">  lintOnSave: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// use the full build with in-browser compiler?</span></span><br><span class="line">  <span class="comment">// https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only</span></span><br><span class="line">  compiler: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// tweak internal webpack configuration.</span></span><br><span class="line">  <span class="comment">// see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md</span></span><br><span class="line">  <span class="comment">// webpack 配置</span></span><br><span class="line">  chainWebpack: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line">  configureWebpack: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// vue-loader options</span></span><br><span class="line">  <span class="comment">// https://vue-loader.vuejs.org/en/options.html</span></span><br><span class="line">  <span class="comment">// vue-loader 配置</span></span><br><span class="line">  vueLoader: &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// generate sourceMap for production build?</span></span><br><span class="line">  productionSourceMap: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// CSS related options</span></span><br><span class="line">  css: &#123;</span><br><span class="line">    <span class="comment">// extract CSS in components into a single CSS file (only in production)</span></span><br><span class="line">    extract: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// enable CSS source maps?</span></span><br><span class="line">    sourceMap: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// pass custom options to pre-processor loaders. e.g. to pass options to</span></span><br><span class="line">    <span class="comment">// sass-loader, use &#123; sass: &#123; ... &#125; &#125;</span></span><br><span class="line">    loaderOptions: &#123;&#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enable CSS modules for all css / pre-processor files.</span></span><br><span class="line">    <span class="comment">// This option does not affect *.vue files.</span></span><br><span class="line">    modules: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// use thread-loader for babel &amp; TS in production build</span></span><br><span class="line">  <span class="comment">// enabled by default if the machine has more than 1 cores</span></span><br><span class="line">  <span class="comment">// 是否使用多线程</span></span><br><span class="line">  parallel: <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length &gt; <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// split vendors using autoDLLPlugin?</span></span><br><span class="line">  <span class="comment">// can also be an explicit Array of dependencies to include in the DLL chunk.</span></span><br><span class="line">  <span class="comment">// See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#dll-mode</span></span><br><span class="line">  <span class="comment">// 是否使用 autoDLLPlugin</span></span><br><span class="line">  dll: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// options for the PWA plugin.</span></span><br><span class="line">  <span class="comment">// see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa</span></span><br><span class="line">  pwa: &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// configure webpack-dev-server behavior</span></span><br><span class="line">  <span class="comment">// Webpack dev server</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    open: process.platform === <span class="string">'darwin'</span>,</span><br><span class="line">    host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">    port: <span class="number">8080</span>,</span><br><span class="line">    https: <span class="literal">false</span>,</span><br><span class="line">    hotOnly: <span class="literal">false</span>,</span><br><span class="line">    <span class="comment">// See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy</span></span><br><span class="line">    proxy: <span class="literal">null</span>, <span class="comment">// string | Object</span></span><br><span class="line">    before: <span class="function"><span class="params">app</span> =&gt;</span> &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// options for 3rd party plugins</span></span><br><span class="line">  pluginOptions: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下是一个 vue.config.js 的案例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> webpackConfig = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    <span class="comment">// extensions: ['.js', '.json'],</span></span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">"@src"</span>: path.resolve(__dirname,<span class="string">'src/'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins:[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">//configureWebpack 可以是 function 或 Object</span></span><br><span class="line">  configureWebpack:webpackConfig,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    open: process.platform === <span class="string">'darwin'</span>,</span><br><span class="line">    host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">    <span class="comment">// port: 8080,</span></span><br><span class="line">    https: <span class="literal">false</span>,</span><br><span class="line">    hotOnly: <span class="literal">false</span>,</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      <span class="string">'/api'</span>:&#123;<span class="attr">target</span>:<span class="string">'http://localhost:3030'</span>&#125;</span><br><span class="line">    &#125;, <span class="comment">// string | Object</span></span><br><span class="line">    <span class="comment">// before: app =&gt; &#123;</span></span><br><span class="line">    <span class="comment">//   // app is an express instance</span></span><br><span class="line">    <span class="comment">//   // console.log(Object.keys(app))</span></span><br><span class="line">    <span class="comment">//   fn(app)</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/05/vue ssr/" rel="next" title="vue 服务端渲染">
+                <i class="fa fa-chevron-left"></i> vue 服务端渲染
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/05/js 数据结构和算法/" rel="prev" title="js 数据结构和算法">
+                js 数据结构和算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
+                alt="jhgrrewq" />
+            
+              <p class="site-author-name" itemprop="name">jhgrrewq</p>
+              <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jhgrrewq" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-cli-命令"><span class="nav-number">2.</span> <span class="nav-text">vue-cli 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">3.</span> <span class="nav-text">创建项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#default"><span class="nav-number">3.1.</span> <span class="nav-text">default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manually"><span class="nav-number">3.2.</span> <span class="nav-text">Manually</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目结构"><span class="nav-number">3.3.</span> <span class="nav-text">项目结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动项目"><span class="nav-number">4.</span> <span class="nav-text">启动项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目自定义配置"><span class="nav-number">5.</span> <span class="nav-text">项目自定义配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jhgrrewq</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div>备案号 <a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">浙ICP备18011306号-1</a></div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
