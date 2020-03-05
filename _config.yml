@@ -83,7 +83,7 @@ deploy:
   type: git
   repo:
       github: git@github.com:jhgrrewq/jhgrrewq.github.io.git
-      coding: git@git.coding.net:qwerrghj/qwerrghj.git
+      coding: git@e.coding.net:qwerrghj/qwerrghj.git
   branch: master
 
 # 设置头像
