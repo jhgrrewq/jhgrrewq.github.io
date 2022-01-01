@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -95,7 +95,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
+    root: '/blog/',
     scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -153,7 +153,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -181,7 +181,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/blog/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
@@ -191,7 +191,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/blog/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
@@ -201,7 +201,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/blog/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/16/js 无限嵌套树状结构/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/16/js 无限嵌套树状结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -299,7 +299,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/16/js 无限嵌套树状结构/" itemprop="url">js 无限嵌套树状结构</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/16/js 无限嵌套树状结构/" itemprop="url">js 无限嵌套树状结构</a></h1>
         
 
         <div class="post-meta">
@@ -401,7 +401,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/15/es6 Promise 实现/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/15/es6 Promise 实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -420,7 +420,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/15/es6 Promise 实现/" itemprop="url">es6 Promise 实现</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/15/es6 Promise 实现/" itemprop="url">es6 Promise 实现</a></h1>
         
 
         <div class="post-meta">
@@ -479,7 +479,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">doSomething(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">  doSomethingElse(result, <span class="function"><span class="keyword">function</span>(<span class="params">newResult</span>) </span>&#123;</span><br><span class="line">    doThirdThing(newResult, <span class="function"><span class="keyword">function</span>(<span class="params">finalResult</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Got the final result: '</span> + finalResult);</span><br><span class="line">    &#125;, failureCallback);</span><br><span class="line">  &#125;, failureCallback);</span><br><span class="line">&#125;, failureCallback);</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/15/es6 Promise 实现/#more" rel="contents">
+            <a class="btn" href="/blog/2018/05/15/es6 Promise 实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -530,7 +530,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/11/zepto 源码初步学习/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/11/zepto 源码初步学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -549,7 +549,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/11/zepto 源码初步学习/" itemprop="url">zepto 源码初步学习</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/11/zepto 源码初步学习/" itemprop="url">zepto 源码初步学习</a></h1>
         
 
         <div class="post-meta">
@@ -604,7 +604,7 @@
 <p>实例对象的隐式原型原指向Array.prototype, 但这里重新赋值后已不再指向Array.prototype，不再继承Array，因此不是数组<br><strong>zepto对象是一个类似数组的非数组，拥有一些数组的方法而已</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/11/zepto 源码初步学习/#more" rel="contents">
+            <a class="btn" href="/blog/2018/05/11/zepto 源码初步学习/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -655,7 +655,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/08/axios 二次封装/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/08/axios 二次封装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -674,7 +674,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/08/axios 二次封装/" itemprop="url">axios 二次封装</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/08/axios 二次封装/" itemprop="url">axios 二次封装</a></h1>
         
 
         <div class="post-meta">
@@ -729,7 +729,7 @@
 <p>一般项目往往要对 axios 库进行二次封装，添加一些自定义配置和拦截器等</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/08/axios 二次封装/#more" rel="contents">
+            <a class="btn" href="/blog/2018/05/08/axios 二次封装/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -780,7 +780,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/08/js new 的原理和模拟实现/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/08/js new 的原理和模拟实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -799,7 +799,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/08/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/08/js new 的原理和模拟实现/" itemprop="url">js new 的原理和模拟实现</a></h1>
         
 
         <div class="post-meta">
@@ -857,7 +857,7 @@
 <h2 id="new-一个对象的原理"><a href="#new-一个对象的原理" class="headerlink" title="new 一个对象的原理"></a>new 一个对象的原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name</span><br><span class="line">	<span class="keyword">this</span>.age = age</span><br><span class="line">	<span class="keyword">this</span>.job = job</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'jack'</span>, <span class="number">20</span>, <span class="string">'Teacher'</span>)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/08/js new 的原理和模拟实现/#more" rel="contents">
+            <a class="btn" href="/blog/2018/05/08/js new 的原理和模拟实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -908,7 +908,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/05/07/jquery 的 deferred/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/05/07/jquery 的 deferred/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -927,7 +927,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/07/jquery 的 deferred/" itemprop="url">jquery 的 deferred</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/07/jquery 的 deferred/" itemprop="url">jquery 的 deferred</a></h1>
         
 
         <div class="post-meta">
@@ -984,7 +984,7 @@
 <h2 id="jquery-1-5-之前"><a href="#jquery-1-5-之前" class="headerlink" title="jquery 1.5 之前"></a>jquery 1.5 之前</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data1.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="comment">// data2.json</span></span><br><span class="line">&#123;<span class="string">"data"</span>: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data1.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">    p2</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> p2 = $.ajax(&#123;</span><br><span class="line">  url: <span class="string">'./data2.json'</span>,</span><br><span class="line">  success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(p2, <span class="string">'p2'</span>) <span class="comment">// xhr 对象</span></span><br><span class="line"><span class="comment">// &#123;data: 1&#125;</span></span><br><span class="line"><span class="comment">// &#123;data: 2&#125;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/07/jquery 的 deferred/#more" rel="contents">
+            <a class="btn" href="/blog/2018/05/07/jquery 的 deferred/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1035,7 +1035,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/23/es6 Promise 标准/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/04/23/es6 Promise 标准/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1054,7 +1054,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/23/es6 Promise 标准/" itemprop="url">es6 Promise 标准</a></h1>
+                <a class="post-title-link" href="/blog/2018/04/23/es6 Promise 标准/" itemprop="url">es6 Promise 标准</a></h1>
         
 
         <div class="post-meta">
@@ -1112,7 +1112,7 @@
 <h2 id="Promise-的立即执行"><a href="#Promise-的立即执行" class="headerlink" title="Promise 的立即执行"></a>Promise 的立即执行</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'create new promise'</span>)</span><br><span class="line">  resolve(<span class="string">'success'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'after new promise'</span>)</span><br><span class="line"></span><br><span class="line">p.then(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(val)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// create new promise</span></span><br><span class="line"><span class="comment">// after new promise</span></span><br><span class="line"><span class="comment">// success</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/23/es6 Promise 标准/#more" rel="contents">
+            <a class="btn" href="/blog/2018/04/23/es6 Promise 标准/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1163,7 +1163,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/15/vue-cli 3.0 初体验/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/04/15/vue-cli 3.0 初体验/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1182,7 +1182,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/15/vue-cli 3.0 初体验/" itemprop="url">vue-cli 3.0 初体验</a></h1>
+                <a class="post-title-link" href="/blog/2018/04/15/vue-cli 3.0 初体验/" itemprop="url">vue-cli 3.0 初体验</a></h1>
         
 
         <div class="post-meta">
@@ -1246,7 +1246,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/15/vue-cli 3.0 初体验/#more" rel="contents">
+            <a class="btn" href="/blog/2018/04/15/vue-cli 3.0 初体验/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1297,7 +1297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/axios 登录拦截/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/04/13/axios 登录拦截/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1316,7 +1316,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/13/axios 登录拦截/" itemprop="url">axios 登录拦截</a></h1>
+                <a class="post-title-link" href="/blog/2018/04/13/axios 登录拦截/" itemprop="url">axios 登录拦截</a></h1>
         
 
         <div class="post-meta">
@@ -1380,7 +1380,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求用户的仓库列表</span></span><br><span class="line">curl -v -H <span class="string">"Authorization: token TOKEN"</span> https:<span class="comment">//api.github.com/user/repos</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/13/axios 登录拦截/#more" rel="contents">
+            <a class="btn" href="/blog/2018/04/13/axios 登录拦截/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1431,7 +1431,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/04/13/webpack loader 编写/">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/blog/2018/04/13/webpack loader 编写/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
@@ -1450,7 +1450,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/13/webpack loader 编写/" itemprop="url">webpack loader 编写</a></h1>
+                <a class="post-title-link" href="/blog/2018/04/13/webpack loader 编写/" itemprop="url">webpack loader 编写</a></h1>
         
 
         <div class="post-meta">
@@ -1513,7 +1513,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/13/webpack loader 编写/#more" rel="contents">
+            <a class="btn" href="/blog/2018/04/13/webpack loader 编写/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1555,7 +1555,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/blog/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/12/">12</a><a class="extend next" rel="next" href="/blog/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1601,7 +1601,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/blog/archives/">
               
                   <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
@@ -1615,7 +1615,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
+                <a href="/blog/tags/index.html">
                   <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -1742,53 +1742,53 @@
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -1833,14 +1833,14 @@
   
   
   
-  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+  <link rel="stylesheet" href="/blog/lib/algolia-instant-search/instantsearch.min.css">
 
   
   
-  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  <script src="/blog/lib/algolia-instant-search/instantsearch.min.js"></script>
   
 
-  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+  <script src="/blog/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 
