@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="es6," />
+  <meta name="keywords" content="es6,">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/2018/03/23/es6 iterator/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/03/23/es6 iterator/">
 
 
 
@@ -154,7 +154,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,7 +194,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -204,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -217,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -285,7 +285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -372,14 +372,14 @@
 <li><strong>generator 对象</strong></li>
 <li><strong>字符串</strong></li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]()</span><br><span class="line">iter.next() <span class="comment">// &#123;value: 1, done: false&#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123;value: 2, done: false&#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// for of 遍历遍历器，直接将值取出来，值就是对应 next() 返回的 value</span></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>(arr)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> set) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[arr, <span class="number">1</span>], [b, <span class="number">2</span>]])</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> map) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// [[1, 2], 1]</span></span><br><span class="line">	<span class="comment">// [[2, 1]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(item)</span><br><span class="line">		<span class="comment">// 1</span></span><br><span class="line">		<span class="comment">// 2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">test(...arr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'str'</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> str) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// s</span></span><br><span class="line">	<span class="comment">// t</span></span><br><span class="line">	<span class="comment">// r</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对比 for...in 一般用来以任意顺序遍历一个对象的可枚举属性</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">in</span> str) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 0</span></span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]()</span><br><span class="line">iter.next() <span class="comment">// &#123;value: 1, done: false&#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123;value: 2, done: false&#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// for of 遍历遍历器，直接将值取出来，值就是对应 next() 返回的 value</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set(arr)</span><br><span class="line">for (let item of <span class="keyword">set</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[arr, <span class="number">1</span>], [b, <span class="number">2</span>]])</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> map) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// [[1, 2], 1]</span></span><br><span class="line">	<span class="comment">// [[2, 1]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(item)</span><br><span class="line">		<span class="comment">// 1</span></span><br><span class="line">		<span class="comment">// 2</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">test(...arr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'str'</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> str) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// s</span></span><br><span class="line">	<span class="comment">// t</span></span><br><span class="line">	<span class="comment">// r</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对比 for...in 一般用来以任意顺序遍历一个对象的可枚举属性</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">in</span> str) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 0</span></span><br><span class="line">	<span class="comment">// 1</span></span><br><span class="line">	<span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对于没有部署 iterator 接口的结构（如对象 Object）想要使用 for…of 遍历可以自己部署。定义 iterator 接口实际上是 <strong>用 Symbol.iterator 作为函数名定义一个函数，该函数调用时会返回一个 iterator 对象，该 iterator 对象具有 next() 方法。next() 方法每次调用会返回一个具有 value 和 done 属性的对象，done 属性是布尔值，表示遍历是否结束</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">	data: [<span class="string">'yes'</span>, <span class="string">'no'</span>],</span><br><span class="line">	[<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">		<span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">		<span class="comment">// index 作为遍历的下标</span></span><br><span class="line">		<span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			<span class="comment">// Iterator 接口通过 next() 函数进行遍历，直到 next 函数返回的 done 值为 true</span></span><br><span class="line">			next() &#123;</span><br><span class="line">				<span class="keyword">if</span> (index &lt; self.data.length) &#123;</span><br><span class="line">					<span class="keyword">return</span> &#123;</span><br><span class="line">						value: self.data[index++],</span><br><span class="line">						done: <span class="literal">false</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> &#123;</span><br><span class="line">						value: <span class="literal">undefined</span>,</span><br><span class="line">						done: <span class="literal">true</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> obj) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item)</span><br><span class="line">	<span class="comment">// 'hello'</span></span><br><span class="line">	<span class="comment">// 'world'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="默认调用-iterator-接口的场合"><a href="#默认调用-iterator-接口的场合" class="headerlink" title="默认调用 iterator 接口的场合"></a>默认调用 iterator 接口的场合</h2><ul>
 <li>解构赋值</li>
 </ul>
 <p>对数组和 Set 结构进行解构赋值会默认调用 Symbol.iterator 方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>().add(<span class="number">1</span>).add(<span class="number">2</span>).add(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">let</span> [x, y, z] = set <span class="comment">// x = 1; y = 2; z = 3</span></span><br><span class="line"><span class="keyword">let</span> [first, ...rest] = set <span class="comment">// first = 1; rest = [2, 3]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set().add(1).add(2).add(3)</span><br><span class="line">let [x, y, z] = <span class="keyword">set</span> // x = 1; y = 2; z = 3</span><br><span class="line">let [first, ...rest] = <span class="keyword">set</span> // first = 1; rest = [2, 3]</span><br></pre></td></tr></table></figure>
 <ul>
 <li>扩展运算符</li>
 </ul>
@@ -521,9 +521,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -536,7 +534,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -612,7 +610,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/page/2/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/page/2/">
 
 
 
@@ -153,7 +153,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -183,7 +183,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -193,7 +193,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -203,7 +203,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -216,7 +216,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -280,11 +280,580 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/11/18/es6 reflect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/18/es6 reflect/" itemprop="url">es6 proxy</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T17:22:33+08:00">
+                2019-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/reflect" target="_blank" rel="noopener">ECMAScript 6 入门 reflect 部分</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Reflect 对象的设计有如下目的：</p>
+<ul>
+<li>将 Object 对象的一些明显属于语言内部方法放到 Reflect 对象上（如 Object.defineProperty）。目前某些方法同时在 Object 对象和 Reflect 对象上部署，未来的新方法将只在 Reflect 对象上部署</li>
+<li>修改某些 Object 方法的返回结果变得合理。如 Object.defineProperty(obj, name, desc) 在无法定义属性时会抛出错误，Reflect.defineProperty(obj, name, desc) 则返回 false</li>
+<li>让 Object 操作都变成函数行为。某些 Object 操作是命令式如 name in obj 和 delete obj[name], 而 Reflect.has(obj, name) 和 Reflect.deleteProperty(obj, name) 变成函数行为</li>
+<li>Reflect 对象和 Proxy 对象方法一一对应。因此 Proxy 对象可以方便调用对应的 Reflect 方法，完成默认行为，作为修改行为的基础</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不使用 Reflect 对象</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">get</span>(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name)</span><br><span class="line">    <span class="keyword">return</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name)</span><br><span class="line">    <span class="keyword">delete</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name)</span><br><span class="line">    <span class="keyword">return</span> has(obj, name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 使用 Reflect 对象，操作更易读</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">get</span>(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.deleteProperty(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.has(obj, name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Reflect-对象静态方法"><a href="#Reflect-对象静态方法" class="headerlink" title="Reflect 对象静态方法"></a>Reflect 对象静态方法</h2><p>Reflect 对象一共有 13 种静态方法：</p>
+<ul>
+<li><code>Reflect.get(obj, name, receiver)</code>:  <strong>查找并返回 obj 对象的 name 属性，没有则返回 undefined</strong></li>
+<li><code>Reflect.set(obj, name, value, receiver)</code>: <strong>设置 obj 对象 name 属性等于 value</strong></li>
+<li><code>Reflect.has(obj, name)</code>:  <strong>对应 name in obj 操作</strong> in 运算符</li>
+<li>Reflect.deleteProperty(obj, name)` : 等同 <strong>delete obj[name] 操作</strong>, 返回一个布尔值</li>
+<li><code>Reflect.ownKeys(obj)</code>: 基本等同 <strong>Object.getOwnPropertyNames(obj) 和 Object.getOwnPropertySymbols(obj) 之和</strong></li>
+<li><code>Reflect.getOwnPropertyDescriptor(obj, name)</code>: 基本等同 <strong>Object.getOwnPropertyDescriptor(obj, name)，返回属性的描述对象</strong></li>
+<li>Reflect.defineProperty(obj, name, attributes)`: 基本等同 <strong>Object.defineProperty</strong></li>
+<li><code>Reflect.preventExtensions(obj)</code>:  对应<strong> Object.preventExtensions(obj), 让一个对象不可扩展，返回一个布尔值，表示是否操作成功</strong></li>
+<li><code>Reflect.getPrototypeOf(obj)</code>:  <strong>用于读取对象的 <code>__proto__</code> 属性，对应 Object.getPrototypeOf(proxy)</strong></li>
+<li><code>Reflect.isExtensible(obj)</code>: 对应 <strong>Object.isExtensible(obj), 返回一个布尔值, 表示当前对象是否扩展</strong></li>
+<li><code>Reflect.setPrototypeOf(obj, proto)</code>:  <strong>用于设置目标对象原型，对应 Object.setPrototypeOf(obj, newProto), 返回一个布尔值表示是否设置成功</strong></li>
+<li>Reflect.apply(func, thisArg, args)`: <strong>等同于 Function.prototype.apply.call(obj, args)，用于绑定 this 对象后执行给定函数</strong></li>
+<li><code>Reflect.construct(obj, args)</code>：<strong>等同 new obj(…args), 提供一种不适用 new 调用构造函数的方法</strong></li>
+</ul>
+<h3 id="Reflect-get-obj-name-receiver"><a href="#Reflect-get-obj-name-receiver" class="headerlink" title="Reflect.get(obj, name, receiver)"></a><code>Reflect.get(obj, name, receiver)</code></h3><p><code>Reflect.get</code> 方法查找并返回 obj 对象 name 属性，如果没有该属性返回 undefined</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">get</span> baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'foo'</span>) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'bar'</span>) <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 name 属性部署了读取函数 getter, 读取函数 this 绑定 receiver</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">get</span> baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiveObj = &#123;</span><br><span class="line">	foo: <span class="number">4</span>,</span><br><span class="line">  bar: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>, myReceiveObj) <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象，Reflect.get 方法报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.get(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-set-obj-name-value-receiver"><a href="#Reflect-set-obj-name-value-receiver" class="headerlink" title="Reflect.set(obj, name, value, receiver)"></a><code>Reflect.set(obj, name, value, receiver)</code></h3><p><code>Reflect.set</code> 方法设置 obj 对象 name 属性等于 value</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  <span class="keyword">set</span> bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">myObj.foo <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'foo'</span>, <span class="number">2</span>)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">3</span>)</span><br><span class="line">myObj.foo <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象, <code>Reflect.set</code> 会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.set(<span class="number">1</span>, <span class="string">'foo'</span>, &#123;&#125;) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 name 属性设置了赋值函数，则赋值函数的 this 绑定 receiver</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">set</span> bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiver = &#123;</span><br><span class="line">  foo: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">1</span>, myReceiver)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line">myReceiver.foo <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-has-obj-name"><a href="#Reflect-has-obj-name" class="headerlink" title="Reflect.has(obj, name)"></a><code>Reflect.has(obj, name)</code></h3><p><code>Reflect.has</code> 方法对应 name in obj 里面 in 运算符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="string">'foo'</span> <span class="keyword">in</span> myObj <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.has(myObj, <span class="string">'foo'</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 <code>Reflect.has</code> 方法第一个参数不是对象，会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.has(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// Reflect.has called on non-object</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-deleteProperty-obj-name"><a href="#Reflect-deleteProperty-obj-name" class="headerlink" title="Reflect.deleteProperty(obj, name)"></a><code>Reflect.deleteProperty(obj, name)</code></h3><p><code>Reflect.deleteProperty</code> 方法等同于 delete obj[name], 用于删除对象的属性，返回一个布尔值：如果删除成功，或者被删除属性不存在返回 true; 删除失败，被删除属性依然存在返回 false</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="string">'bar'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="keyword">delete</span> myObj[<span class="string">'foo'</span>]</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.deleteProperty(myObj, <span class="string">'foo'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象则报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.deleteProperty(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// Reflect.deleteProperty called on non-object</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-apply-func-thisArg-args"><a href="#Reflect-apply-func-thisArg-args" class="headerlink" title="Reflect.apply(func, thisArg, args)"></a><code>Reflect.apply(func, thisArg, args)</code></h3><p><code>Reflect.apply</code> 方法等同 Function.prototype.apply.call(func, thisArg, args)，用于绑定 this 对象后执行给定函数</p>
+<p>一般如果绑定一个函数的 this 对象，可写成 fn.apply(obj, args), 但如果函数定义了自己的 apply 方法，只能写 Function.prototype.apply.call(fn, obj, args), 使用 Reflect 对象能简化操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> args = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(args)</span><br><span class="line"><span class="built_in">Math</span>.min.call(<span class="built_in">Math</span>, args)</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.apply(<span class="built_in">Object</span>.prototype.toString, args, [])</span><br><span class="line"><span class="built_in">Reflect</span>.apply(<span class="built_in">Math</span>.min, <span class="built_in">Math</span>, args)</span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-contruct-obj-args"><a href="#Reflect-contruct-obj-args" class="headerlink" title="Reflect.contruct(obj, args)"></a><code>Reflect.contruct(obj, args)</code></h3><p><code>Reflect.contruct</code> 方法等同 new obj(…args), 这提供一种不用 new 来调用构造函数的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Greeting</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// new 的写法</span></span><br><span class="line"><span class="keyword">const</span> instance = <span class="keyword">new</span> Greeting(<span class="string">'jack'</span>)</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="keyword">const</span> instance = <span class="built_in">Reflect</span>.construct(Greeting, [<span class="string">'jack'</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是函数会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.construct(&#123;&#125;, <span class="string">'jack'</span>) <span class="comment">// #&lt;Object&gt; is not a constructor</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-getPrototypeOf-obj"><a href="#Reflect-getPrototypeOf-obj" class="headerlink" title="Reflect.getPrototypeOf(obj)"></a><code>Reflect.getPrototypeOf(obj)</code></h3><p><code>Reflect.getPrototypeOf</code> 用于读取对象 <code>__proto__</code>, 对应 Object.getPrototypeOf(obj)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(myObj) === <span class="built_in">Object</span>.prototype</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.getPrototypeOf(myObj) === <span class="built_in">Object</span>.prototype</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Reflect.getPrototypeOf 和 Object.getPrototypeOf 的一个区别是，如果参数不是对象，Object.getPrototypeOf 会将这个对象转为对象，再运行，而 Reflect.getPrototypeOf 会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf(<span class="number">1</span>) <span class="comment">// Number &#123;[[PrimitiveValue]]: 0&#125;</span></span><br><span class="line"><span class="built_in">Reflect</span>.getPrototypeOf(<span class="number">1</span>) <span class="comment">// Reflect.getPrototypeOf called on non-object</span></span><br></pre></td></tr></table></figure>
+<h3 id="Relect-setPrototypeOf-obj-newProto"><a href="#Relect-setPrototypeOf-obj-newProto" class="headerlink" title="Relect.setPrototypeOf(obj, newProto)"></a><code>Relect.setPrototypeOf(obj, newProto)</code></h3><p><code>Reflect.setPrototypeOf</code> 方法用于设置目标对象的原型，对应 Object.setPrototypeOf(obj, newProto), 返回一个布尔值表示是否设置成功</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(myObj, <span class="built_in">Array</span>.prototype)</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.setPrototytpeOf(myObj, <span class="built_in">Array</span>.prototype)</span><br><span class="line">myObj.length <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果无法设置目标对象原型（如目标对象禁止扩展），Reflect.setPrototypeOf 返回 false</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(myObj) <span class="comment">// Object.freeze(myObj)</span></span><br><span class="line"><span class="built_in">Reflect</span>.setPrototypeOf(myObj, <span class="literal">null</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象，Object.setPrototypeOf 返回第一个参数本身，Reflect.setPrototypeOf 报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.setPrototypeOf(<span class="number">1</span>, &#123;&#125;) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.setPrototypeOf(<span class="number">1</span>, &#123;&#125;) <span class="comment">// Reflect.setPrototypeOf called on non-object</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数是 undefined 或 null，Reflect.setPrototypeOf 和 Object.setPrototypeOf 都会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.setPrototypeOf(<span class="literal">null</span>, &#123;&#125;) <span class="comment">// Object.setPrototypeOf called on null or undefined</span></span><br><span class="line"><span class="built_in">Reflect</span>.setPrototypeOf(<span class="literal">null</span>, &#123;&#125;) <span class="comment">// Reflect.setPrototypeOf called on non-object</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-defineProperty-target-name-attributes"><a href="#Reflect-defineProperty-target-name-attributes" class="headerlink" title="Reflect.defineProperty(target, name, attributes)"></a><code>Reflect.defineProperty(target, name, attributes)</code></h3><p><code>Reflect.defineProperty</code> 方法等同 Object.defineProperty, 用于为对象定义属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(fn, <span class="string">'foo'</span>, &#123;</span><br><span class="line">  value: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.defineProperty(fn, <span class="string">'foo'</span>, &#123;</span><br><span class="line">  value； <span class="number">1</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.defineProperty(<span class="number">1</span>, <span class="string">'foo'</span>, &#123;</span><br><span class="line">  value: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// Reflect.defineProperty called on non-object</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>结合 Proxy.defineProperty 配合使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(&#123;&#125;, &#123;</span><br><span class="line">  defineProperty(target, name, attibutes) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.defineProperty(target, name, attibutes)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">proxy.foo = <span class="number">1</span></span><br><span class="line">proxy.foo <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-getOwnPropetyDescriptor-target-name"><a href="#Reflect-getOwnPropetyDescriptor-target-name" class="headerlink" title="Reflect.getOwnPropetyDescriptor(target, name)"></a><code>Reflect.getOwnPropetyDescriptor(target, name)</code></h3><p><code></code>Reflect.getOwnPropetyDescriptor` 基本等同 Object.getOwnPropertyDescriptor, 用于得到指定属性的描述对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(myObj, <span class="string">'hidden'</span>, &#123;</span><br><span class="line">  value: <span class="literal">true</span>,</span><br><span class="line">  enumrable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyDescriptor(myObj, <span class="string">'hidden'</span>)</span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.getOwnPropertyDescriptor(myObj, <span class="string">'hidden'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数不是对象， Reflect.getOwnPropertyDescriptor 报错， Object.getOwnPropertyDescriptor 会返回 undefined</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getOwnPropertyDescriptor(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">Reflect</span>.getOwnPropertyDescriptor(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// Reflect.getOwnPropertyDescriptor called on non-object</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-isExtensible-target"><a href="#Reflect-isExtensible-target" class="headerlink" title="Reflect.isExtensible(target)"></a><code>Reflect.isExtensible(target)</code></h3><p><code>Reflect.isExtensible</code> 对应 Object.isExtensible, 返回一个布尔值，表示当前对象是否可扩展</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.isExtensible(myObj) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Reflect</span>.isExtensible(myObj) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果参数不是对象，Object.isExtensible 返回 false，因为非对象本身不可扩展，Reflect.isExtensible 报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.isExtensible(<span class="number">1</span>) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Reflect</span>.isExtensible(<span class="number">1</span>) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-preventExtensions-target"><a href="#Reflect-preventExtensions-target" class="headerlink" title="Reflect.preventExtensions(target)"></a><code>Reflect.preventExtensions(target)</code></h3><p><code>Reflect.preventExtensions</code> 对应 Object.preventExtensions 方法，用于让一个对象变为不可扩展，返回一个布尔值，表示是否操作成功</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(myObj) <span class="comment">// &#123;&#125;</span></span><br><span class="line"><span class="built_in">Reflect</span>.preventExtensions(myObj) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果参数不是对象，Object.preventExtensions 在 es5 环境报错，es6 环境返回传入参数，Reflect.preventExtensions 报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// es5</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(<span class="number">1</span>) <span class="comment">// 报错</span></span><br><span class="line"><span class="comment">// ES6 环境</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(<span class="number">1</span>) <span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.preventExtensions(<span class="number">1</span>) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h3 id="Reflect-ownKeys-target"><a href="#Reflect-ownKeys-target" class="headerlink" title="Reflect.ownKeys(target)"></a><code>Reflect.ownKeys(target)</code></h3><p><code>Reflect.ownKeys</code> 方法返回对象的所有属性，基本等同 Object.getOwnPropertyNames 和 Object.getOwnPropertySymbols 之和</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  [<span class="built_in">Symbol</span>.for(<span class="string">'bar'</span>)]: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyNames(myObj) <span class="comment">// ['foo']</span></span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertySymbols(myObj) <span class="comment">// [Symbol(baz)]</span></span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.ownKeys(myObj)</span><br><span class="line"><span class="comment">// ['foo', Symbol(baz)]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果第一个参数不是对象会报错</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.ownKeys(<span class="number">1</span>) <span class="comment">// Reflect.ownKeys called on non-object</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用-Proxy-实现观察者模式"><a href="#使用-Proxy-实现观察者模式" class="headerlink" title="使用 Proxy 实现观察者模式"></a>使用 Proxy 实现观察者模式</h2><p>这里简易使用函数自动观察数据对象，一旦对象有变化，函数自动执行</p>
+<ul>
+<li>定义一个 Set 集合，所有观察者函数放入这个集合</li>
+<li>函数返回对原始对象的代理，拦击赋值操作</li>
+<li>拦截 set 操作中会自动执行所有观察者</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> queuedObservers = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line"><span class="keyword">const</span> observe = <span class="function"><span class="params">fn</span> =&gt;</span> queuedObservers.add(fn)</span><br><span class="line"><span class="keyword">const</span> observable = <span class="function"><span class="params">obj</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">set</span>(target, name, value, receiver) &#123;</span><br><span class="line">		<span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target, name, value, receiver)</span><br><span class="line">    queuedObservers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> observer())</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = observable(&#123;</span><br><span class="line">	name: <span class="string">'jack'</span>,</span><br><span class="line">  age: <span class="number">20</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;person.name&#125;</span>, <span class="subst">$&#123;person.age&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line">observe(print)</span><br><span class="line">person.name = <span class="string">'jake'</span> <span class="comment">// jake, 20</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/11/18/es6 proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/18/es6 proxy/" itemprop="url">es6 proxy</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T10:11:41+08:00">
+                2019-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>参考: <a href="http://es6.ruanyifeng.com/#docs/proxy" target="_blank" rel="noopener">ECMAScript 6 入门 proxy 部分</a></p>
+</blockquote>
+<!-- markdownlint-disable MD010 -->
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Proxy 用于修改某些操作的默认行为，等同于在语言层变进行修改，属于“元编程”，即对编程语言进行编程</p>
+<p>oxy 可理解为在目标对象之前进行一层拦截，外界对该对象的访问，必须先通过这层拦截，因此提供一种机制可以对外界的访问进行过滤和改写</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/18/es6 proxy/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/08/22/jwt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jhgrrewq">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jhgrrewq 前端小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/22/jwt/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-22T14:41:03+08:00">
+                2019-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="跨域认证问题"><a href="#跨域认证问题" class="headerlink" title="跨域认证问题"></a>跨域认证问题</h2><p>互联万服务用户认证一般流程如下</p>
+<ul>
+<li>用户向服务器发送用户名密码</li>
+<li>服务器验证通过后，在当前对话 session 中保存相关数据，如用户角色、登录时间等</li>
+<li>服务器向用户返回一个 session_id，写入用户 cookie</li>
+<li>用户随后每个请求，都会通过 cookie，将 session_id 传回服务器</li>
+<li>服务器收到 session_id，找到前期保存数据</li>
+</ul>
+<p>这种模式的问题在于扩展性不好，对于服务器集群或是跨域的服务导向架构，要求 session 数据共享。一般有两种解决方法：</p>
+<ul>
+<li>session 数据持久化，写入数据库或别的持久层</li>
+<li>服务器不保存 session 数据，所有数据保存在客户端，每次请求都发回服务器。JWT 方法就是其中代表</li>
+</ul>
+<h2 id="JWT-原理"><a href="#JWT-原理" class="headerlink" title="JWT 原理"></a>JWT 原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"姓名"</span>: <span class="string">"张三"</span>,</span><br><span class="line">  <span class="string">"角色"</span>: <span class="string">"管理员"</span>,</span><br><span class="line">  <span class="string">"到期时间"</span>: <span class="string">"2018年7月1日0点0分"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JWT 原理是服务器认证后生成一个 json 对象 (类似上面这个 json 对象) 发回给用户，之后用户和服务器通信都要发回这个 json 对象。服务器完全只靠这个对象认定用户身份。为防止用户出篡改数据，服务器在生成这个对象时会加上签名</p>
+<h2 id="JWT-数据结构"><a href="#JWT-数据结构" class="headerlink" title="JWT 数据结构"></a>JWT 数据结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<p>JWT 是一字符串，中间用点<code>.</code> 分割成了三部分：</p>
+<ul>
+<li>Header (头部)</li>
+<li>Payload (负载)</li>
+<li>Signature (签名）</li>
+</ul>
+<p>写成一行就是 <code>Header.Payload.Signature</code></p>
+<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header 部分是一个 json 对象，描述 JWT 的元数据， 一般如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">  <span class="string">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>alg</code> 属性表示签名算法，默认是 HMAC SHA256（写成 HS256）</p>
+</li>
+<li><p><code>typ</code> 属性表示令牌的类型，JWT 令牌统一为 <code>JWT</code></p>
+</li>
+</ul>
+<p>最终要将上述 json 对象使用 <code>Base64URL</code>算法转成字符串</p>
+<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><p>Payload 部分也是一个 json 对象，用来存放实际需要传输的数据。JWT 规定了 7 个官方字段供选用</p>
+<ul>
+<li>iss(issuser)  发送人</li>
+<li>exp(expiration time) 过期时间</li>
+<li>sub(subject) 主题</li>
+<li>aud(audience) 受众</li>
+<li>nbf(Not Before) 生效时间</li>
+<li>iat(Issued At) 签发时间</li>
+<li>jti(JWT ID) 编号</li>
+</ul>
+<p>除了官方字段，还可以在这部分定义私有字段,  如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">  <span class="string">"admin"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JWT 默认是不加密的，任何人都可以读取</p>
+<p>Payload 部分也要使用 <code>Base64URL</code>算法转成字符串</p>
+<h3 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h3><p>Signature 部分是对前两部分的签名，防止篡改</p>
+<p>首先需要指定一个<code>密钥（secret）</code>。 该密钥只能服务器知道，不能泄露给用户。然后使用 Header 指定的签名算法（默认是HMAC SHA256），按照下面公司是产生签名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(base64UrlEncode(header)+<span class="string">'.'</span>+base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名后，把 Header Payload Signature 三部分使用 <code>.</code>  拼接成字符串，返回给用户</p>
+<h3 id="base64UrlEncode"><a href="#base64UrlEncode" class="headerlink" title="base64UrlEncode"></a>base64UrlEncode</h3><p>之前提到 Header 和 Payload 串形算法是 base64URL 这个算法类似 base64. 因为 JWT 作为令牌有时候可能会放到 url 中（如 <a href="http://xxx.xx.com/?token=xx）。base64" target="_blank" rel="noopener">http://xxx.xx.com/?token=xx）。base64</a> 中有三个字符 <code>+</code> <code>/</code> <code>=</code></p>
+<p>在 url 中有特殊含义，因此要替换掉，<code>=</code> 省略、<code>+</code> 替换成 <code>-</code>、<code>/</code> 体替换成<code>_</code>， 这就是base64URL 算法</p>
+<h2 id="JWT-使用方式"><a href="#JWT-使用方式" class="headerlink" title="JWT 使用方式"></a>JWT 使用方式</h2><p>客户端收到服务器发的 JWT，可以存储在 cookie 中，也可以存储在 localStorage 中。此后客户端每次与服务器通信都要带上这个 JWT。可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息<code>Authorization</code>字段里面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JWT-特点"><a href="#JWT-特点" class="headerlink" title="JWT 特点"></a>JWT 特点</h2><ul>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输</li>
+</ul>
+<h2 id="jwt-simple-源码"><a href="#jwt-simple-源码" class="headerlink" title="jwt-simple 源码"></a>jwt-simple 源码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * module dependencies</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * support algorithm mapping</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> algorithmMap = &#123;</span><br><span class="line">  HS256: <span class="string">'sha256'</span>,</span><br><span class="line">  HS384: <span class="string">'sha384'</span>,</span><br><span class="line">  HS512: <span class="string">'sha512'</span>,</span><br><span class="line">  RS256: <span class="string">'RSA-SHA256'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Map algorithm to hmac or sign type, to determine which crypto function to use</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> typeMap = &#123;</span><br><span class="line">  HS256: <span class="string">'hmac'</span>,</span><br><span class="line">  HS384: <span class="string">'hmac'</span>,</span><br><span class="line">  HS512: <span class="string">'hmac'</span>,</span><br><span class="line">  RS256: <span class="string">'sign'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * expose object</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> jwt = <span class="built_in">module</span>.exports;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * version</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jwt.version = <span class="string">'0.5.6'</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Decode jwt</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">token</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">key</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Boolean&#125;</span> </span>[noVerify]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>[algorithm]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;Object&#125;</span> <span class="variable">payload</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@api <span class="variable">public</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jwt.decode = <span class="function"><span class="keyword">function</span> <span class="title">jwt_decode</span>(<span class="params">token, key, noVerify, algorithm</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// check token</span></span><br><span class="line">  <span class="keyword">if</span> (!token) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'No token supplied'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// check segments</span></span><br><span class="line">  <span class="keyword">var</span> segments = token.split(<span class="string">'.'</span>);</span><br><span class="line">  <span class="keyword">if</span> (segments.length !== <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Not enough or too many segments'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// All segment should be base64</span></span><br><span class="line">  <span class="keyword">var</span> headerSeg = segments[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">var</span> payloadSeg = segments[<span class="number">1</span>];</span><br><span class="line">  <span class="keyword">var</span> signatureSeg = segments[<span class="number">2</span>];</span><br><span class="line">  <span class="comment">// base64 decode and parse JSON</span></span><br><span class="line">  <span class="keyword">var</span> header = <span class="built_in">JSON</span>.parse(base64urlDecode(headerSeg));</span><br><span class="line">  <span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(base64urlDecode(payloadSeg));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!noVerify) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!algorithm &amp;&amp; <span class="regexp">/BEGIN( RSA)? PUBLIC KEY/</span>.test(key.toString())) &#123;</span><br><span class="line">      algorithm = <span class="string">'RS256'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> signingMethod = algorithmMap[algorithm || header.alg];</span><br><span class="line">    <span class="keyword">var</span> signingType = typeMap[algorithm || header.alg];</span><br><span class="line">    <span class="keyword">if</span> (!signingMethod || !signingType) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm not supported'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// verify signature. `sign` will return base64 string.</span></span><br><span class="line">    <span class="comment">// 将 Header 和 Payload 重新生成签名，和已有的签名比对</span></span><br><span class="line">    <span class="keyword">var</span> signingInput = [headerSeg, payloadSeg].join(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">if</span> (!verify(signingInput, key, signingMethod, signingType, signatureSeg)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Signature verification failed'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Support for nbf and exp claims.</span></span><br><span class="line">    <span class="comment">// According to the RFC, they should be in seconds.</span></span><br><span class="line">    <span class="keyword">if</span> (payload.nbf &amp;&amp; <span class="built_in">Date</span>.now() &lt; payload.nbf*<span class="number">1000</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Token not yet active'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (payload.exp &amp;&amp; <span class="built_in">Date</span>.now() &gt; payload.exp*<span class="number">1000</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Token expired'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> payload;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Encode jwt</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">payload</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">key</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;String&#125;</span> <span class="variable">algorithm</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">options</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;String&#125;</span> <span class="variable">token</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@api <span class="variable">public</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 一般用法 jwt.encode(payload, secret)</span></span><br><span class="line">jwt.encode = <span class="function"><span class="keyword">function</span> <span class="title">jwt_encode</span>(<span class="params">payload, key, algorithm, options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查 key 密钥</span></span><br><span class="line">  <span class="keyword">if</span> (!key) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Require key'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 检查 algorithm, default is HS256</span></span><br><span class="line">  <span class="keyword">if</span> (!algorithm) &#123;</span><br><span class="line">    algorithm = <span class="string">'HS256'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> signingMethod = algorithmMap[algorithm];</span><br><span class="line">  <span class="keyword">var</span> signingType = typeMap[algorithm];</span><br><span class="line">  <span class="keyword">if</span> (!signingMethod || !signingType) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm not supported'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// header, typ is fixed value.</span></span><br><span class="line">  <span class="keyword">var</span> header = &#123; <span class="attr">typ</span>: <span class="string">'JWT'</span>, <span class="attr">alg</span>: algorithm &#125;;</span><br><span class="line">  <span class="keyword">if</span> (options &amp;&amp; options.header) &#123;</span><br><span class="line">    assignProperties(header, options.header);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// create segments, all segments should be base64 string</span></span><br><span class="line">  <span class="keyword">var</span> segments = [];</span><br><span class="line">  segments.push(base64urlEncode(<span class="built_in">JSON</span>.stringify(header)));</span><br><span class="line">  segments.push(base64urlEncode(<span class="built_in">JSON</span>.stringify(payload)));</span><br><span class="line">  segments.push(sign(segments.join(<span class="string">'.'</span>), key, signingMethod, signingType));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> segments.join(<span class="string">'.'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * private util functions</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">assignProperties</span>(<span class="params">dest, source</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> attr <span class="keyword">in</span> source) &#123;</span><br><span class="line">    <span class="keyword">if</span> (source.hasOwnProperty(attr)) &#123;</span><br><span class="line">      dest[attr] = source[attr];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">verify</span>(<span class="params">input, key, method, type, signature</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(type === <span class="string">"hmac"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (signature === sign(input, key, method, type));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">"sign"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> crypto.createVerify(method)</span><br><span class="line">                 .update(input)</span><br><span class="line">                 .verify(key, base64urlUnescape(signature), <span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm type not recognized'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sign</span>(<span class="params">input, key, method, type</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// HMACSHA256(base64UrlEncode(header)+'.'+base64UrlEncode(payload),secret)</span></span><br><span class="line">  <span class="comment">// sign(input, key)</span></span><br><span class="line">  <span class="keyword">var</span> base64str;</span><br><span class="line">  <span class="keyword">if</span>(type === <span class="string">"hmac"</span>) &#123;</span><br><span class="line">    <span class="comment">// hmc 签名算法</span></span><br><span class="line">    base64str = crypto.createHmac(method, key).update(input).digest(<span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">"sign"</span>) &#123;</span><br><span class="line">    base64str = crypto.createSign(method).update(input).sign(key, <span class="string">'base64'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Algorithm type not recognized'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> base64urlEscape(base64str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlDecode</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Buffer.from(base64urlUnescape(str), <span class="string">'base64'</span>).toString();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlUnescape</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  str += <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5</span> - str.length % <span class="number">4</span>).join(<span class="string">'='</span>);</span><br><span class="line">  <span class="keyword">return</span> str.replace(<span class="regexp">/\-/g</span>, <span class="string">'+'</span>).replace(<span class="regexp">/_/g</span>, <span class="string">'/'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlEncode</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// str 转为 Buffer 二进制数据，再转为 base64 串</span></span><br><span class="line">  <span class="keyword">return</span> base64urlEscape(Buffer.from(str).toString(<span class="string">'base64'</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base64urlEscape</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//base64 中有三个字符 + / = 在 url 中有特殊含义，因此要替换掉，= 省略、+ 替换成 -、/ 替换成_， 这就是base64URL 算法</span></span><br><span class="line">  <span class="keyword">return</span> str.replace(<span class="regexp">/\+/g</span>, <span class="string">'-'</span>).replace(<span class="regexp">/\//g</span>, <span class="string">'_'</span>).replace(<span class="regexp">/=/g</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Node-crypto-模块"><a href="#Node-crypto-模块" class="headerlink" title="Node crypto 模块"></a>Node crypto 模块</h3><p>HMAC 散列运算消息认证码：</p>
+<ul>
+<li>运算使用散列算法，以一个密钥 (secret)和一个消息为输入，生成一个消息摘要作为输出</li>
+<li>HMAC运算可以用来验证两段数据是否匹配，以确认该数据没有被篡改</li>
+</ul>
+<p>在使用 HMAC 算法前，使用 createHmac 方法创建一个 hmac 对象</p>
+<h4 id="crypto-createHmac-params-key"><a href="#crypto-createHmac-params-key" class="headerlink" title="crypto.createHmac(params, key)"></a><strong>crypto.createHmac(params, key)</strong></h4><p>该方法中使用两个参数，第一个参数含义是在Node.js中使用的<strong>算法</strong>，比如’sha1’, ‘md5’, ‘sha256’, ‘sha512’等等，该方法返回的是<strong>hmac对象</strong>。第二个参数 key 参数值为一个字符串，用于指定一个PEM格式的<strong>密钥</strong>。</p>
+<h4 id="hmac-update-data"><a href="#hmac-update-data" class="headerlink" title="hmac.update(data)"></a><strong>hmac.update(data)</strong></h4><p>在该方法中，使用一个参数，其参数值为一个<strong>Buffer对象或一个字符串</strong>，用于<strong>指定摘要内容</strong>。也是一样可以在被输出之前使用多次update方法来添加摘要内容。</p>
+<p><strong>最后一步就是使用 hmac 对象的 digest 方法来输出摘要内容了；使用了digest方法作为输出后，因此是不能向hmac对象中追加内容</strong></p>
+<p>####<strong>hmac.digest([encoding])</strong></p>
+<p>该方法有一个参数，该参数是一个可选值，表示的意思是 用于<strong>指定输出摘要的编码格式</strong>，可指定参数值为 ‘hex’, ‘binary’, 及 ‘base64’. 如果不使用该参数，那么digest方法返回一个是<strong>Buffer对象</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2019/08/15/vue ssr/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -358,7 +927,7 @@
 <h3 id="服务端渲染不同环境"><a href="#服务端渲染不同环境" class="headerlink" title="服务端渲染不同环境"></a>服务端渲染不同环境</h3><p>开发环境</p>
 <p><img src="/Users/jack/Desktop/ssr/屏幕快照 2019-08-15 下午5.04.16.png" alt="屏幕快照 2019-08-15 下午5.04.16"></p>
 <p>生产环境</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/Users/jack/Desktop/ssr/屏幕快照 2019-08-15 下午5.04.48.png" alt=""></h2><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 <code>webpack</code> 入口文件，一个用于浏览器端渲染 <code>webpack.config.client.js</code>, 一个用于服务器端渲染 <code>webpack.config.server.js</code>, 将它们的公有部分抽取作为 <code>webpack.config.base.js</code>, 之后通过<code>webpack-merge</code> 合并。同时需要一个 server 提供 http 服务，这里用的 koa</p>
+<h2 id><a href="#" class="headerlink" title></a><img src="/Users/jack/Desktop/ssr/屏幕快照 2019-08-15 下午5.04.48.png" alt></h2><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>服务端渲染 ssr 最终要让一份代码既可以在服务端运行，也可以在客户端运行。需要有两个 <code>webpack</code> 入口文件，一个用于浏览器端渲染 <code>webpack.config.client.js</code>, 一个用于服务器端渲染 <code>webpack.config.server.js</code>, 将它们的公有部分抽取作为 <code>webpack.config.base.js</code>, 之后通过<code>webpack-merge</code> 合并。同时需要一个 server 提供 http 服务，这里用的 koa</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简化的目录</span></span><br><span class="line">- build // 打包</span><br><span class="line">    - webpack.config.base..js</span><br><span class="line">    - webpack.config.client.js</span><br><span class="line">    - webpack.config.server.js</span><br><span class="line">- src</span><br><span class="line">    - </span><br><span class="line">    - app.vue</span><br><span class="line">    - index.js</span><br><span class="line">    - client-entry.js   </span><br><span class="line">    - server-entry.js   </span><br><span class="line">    - create-app.js   </span><br><span class="line">- server</span><br><span class="line">		- index.js</span><br></pre></td></tr></table></figure>
 <h3 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h3><p>在纯客户端应用中，每个用户会在各自浏览器中使用新的应用程序实例。对于服务端渲染，每个请求都应该是全新独立的应用程序实例，以便不会有交叉请求造成的状态污染。因此需要 create-app.js 中对 app.js 修改，包装成一个工厂函数，每次调用会返回一个全新根组件</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./app.vue'</span></span><br><span class="line"><span class="keyword">import</span> createRouter <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> createStore <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./styles/global.scss'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端每次请求都会渲染返回一个新的 app router store 实例，避免状态污染</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> router = createRouter()</span><br><span class="line">  <span class="keyword">const</span> store = createStore()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; app, router, store &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -435,7 +1004,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -708,7 +1277,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -827,7 +1396,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -970,7 +1539,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -1099,7 +1668,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -1226,7 +1795,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -1361,386 +1930,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/08/17/Node.js 测试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/17/Node.js 测试/" itemprop="url">单元测试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T08:42:03+08:00">
-                2018-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="BDD-vs-TDD"><a href="#BDD-vs-TDD" class="headerlink" title="BDD vs TDD"></a>BDD vs TDD</h2><h3 id="BDD-行为驱动开发-偏向自然语言"><a href="#BDD-行为驱动开发-偏向自然语言" class="headerlink" title="BDD 行为驱动开发(偏向自然语言)"></a>BDD 行为驱动开发(偏向自然语言)</h3><p>先写需求功能点描述，这种描述是客户、产品经理、开发、测试都能看懂的，且基于文本的；实质是让开发的产品符合客户需求</p>
-<h3 id="TDD-测试驱动开发"><a href="#TDD-测试驱动开发" class="headerlink" title="TDD 测试驱动开发"></a>TDD 测试驱动开发</h3><p>先写测试，再写实现代码，并不断进行迭代重构，主要是给开发人员，让开发的程序没有出错</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/17/Node.js 测试/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/08/10/js 数据结构和算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/js 数据结构和算法/" itemprop="url">js 数据结构和算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T11:06:54+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/4" target="_blank" rel="noopener">javaScript的数据结构与算法（二）——链表</a>、<a href="https://github.com/wengjq/Blog/issues/5" target="_blank" rel="noopener">javaScript的数据结构与算法（一）——栈和队列</a>、<a href="https://github.com/wengjq/Blog/issues/6" target="_blank" rel="noopener">javaScript的数据结构与算法（三）——集合 数据结构与算法</a>、<a href="https://github.com/wengjq/Blog/issues/7" target="_blank" rel="noopener">javaScript的数据结构与算法（四）——字典和散列表</a>、<a href="https://github.com/wengjq/Blog/issues/8" target="_blank" rel="noopener">javaScript的数据结构与算法（五）——树</a>、<a href="https://github.com/wengjq/Blog/issues/9" target="_blank" rel="noopener">javaScript的数据结构与算法（六）——图</a></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/10/js 数据结构和算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jhgrrewq.github.io/2018/07/01/vue-router 源码初学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jhgrrewq 前端小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/01/vue-router 源码初学/" itemprop="url">vue-router 源码初步学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T10:26:42+08:00">
-                2018-07-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>参考: <a href="https://github.com/DDFE/DDFE-blog/issues/9" target="_blank" rel="noopener">vue-router源码分析-整体流程</a>、<a href="https://www.cnblogs.com/caizhenbo/p/7297730.html" target="_blank" rel="noopener">vue-router源码分析</a></p>
-</blockquote>
-<p>本文分析 <a href="mailto:vue-router@2.0.3" target="_blank" rel="noopener">vue-router@2.0.3</a></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>先看一下 vue-router 官网的 demo</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/vue-router/dist/vue-router.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello App!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用 router-link 组件来导航. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通过传入 `to` 属性指定链接. --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/foo"</span>&gt;</span>Go to Foo<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/bar"</span>&gt;</span>Go to Bar<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由出口 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 路由匹配到的组件将渲染在这里 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/01/vue-router 源码初学/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1780,9 +1969,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -1795,7 +1982,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1855,7 +2042,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

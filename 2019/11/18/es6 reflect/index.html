@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="es6," />
+  <meta name="keywords" content="es6,">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/2019/11/18/es6 reflect/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2019/11/18/es6 reflect/">
 
 
 
@@ -154,7 +154,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,7 +194,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -204,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -217,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -285,7 +285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -359,7 +359,7 @@
 <li>让 Object 操作都变成函数行为。某些 Object 操作是命令式如 name in obj 和 delete obj[name], 而 Reflect.has(obj, name) 和 Reflect.deleteProperty(obj, name) 变成函数行为</li>
 <li>Reflect 对象和 Proxy 对象方法一一对应。因此 Proxy 对象可以方便调用对应的 Reflect 方法，完成默认行为，作为修改行为的基础</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不使用 Reflect 对象</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  get(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name)</span><br><span class="line">    <span class="keyword">return</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name)</span><br><span class="line">    <span class="keyword">delete</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name)</span><br><span class="line">    <span class="keyword">return</span> has(obj, name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 使用 Reflect 对象，操作更易读</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  get(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.deleteProperty(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.has(obj, name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不使用 Reflect 对象</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">get</span>(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name)</span><br><span class="line">    <span class="keyword">return</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name)</span><br><span class="line">    <span class="keyword">delete</span> obj[name]</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name)</span><br><span class="line">    <span class="keyword">return</span> has(obj, name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 使用 Reflect 对象，操作更易读</span></span><br><span class="line"><span class="keyword">var</span> loggedObj = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">get</span>(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'get'</span>, obj, name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'delete'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.deleteProperty(obj, name);</span><br><span class="line">  &#125;,</span><br><span class="line">  has(obj, name) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'has'</span> + name);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.has(obj, name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="Reflect-对象静态方法"><a href="#Reflect-对象静态方法" class="headerlink" title="Reflect 对象静态方法"></a>Reflect 对象静态方法</h2><p>Reflect 对象一共有 13 种静态方法：</p>
 <ul>
 <li><code>Reflect.get(obj, name, receiver)</code>:  <strong>查找并返回 obj 对象的 name 属性，没有则返回 undefined</strong></li>
@@ -377,17 +377,17 @@
 <li><code>Reflect.construct(obj, args)</code>：<strong>等同 new obj(…args), 提供一种不适用 new 调用构造函数的方法</strong></li>
 </ul>
 <h3 id="Reflect-get-obj-name-receiver"><a href="#Reflect-get-obj-name-receiver" class="headerlink" title="Reflect.get(obj, name, receiver)"></a><code>Reflect.get(obj, name, receiver)</code></h3><p><code>Reflect.get</code> 方法查找并返回 obj 对象 name 属性，如果没有该属性返回 undefined</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  get baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'foo'</span>) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'bar'</span>) <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">get</span> baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'foo'</span>) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'bar'</span>) <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果 name 属性部署了读取函数 getter, 读取函数 this 绑定 receiver</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  get baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiveObj = &#123;</span><br><span class="line">	foo: <span class="number">4</span>,</span><br><span class="line">  bar: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>, myReceiveObj) <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">get</span> baz() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo + <span class="keyword">this</span>.bar</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiveObj = &#123;</span><br><span class="line">	foo: <span class="number">4</span>,</span><br><span class="line">  bar: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.get(myObj, <span class="string">'baz'</span>, myReceiveObj) <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果第一个参数不是对象，Reflect.get 方法报错</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Reflect</span>.get(<span class="number">1</span>, <span class="string">'foo'</span>) <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
 <h3 id="Reflect-set-obj-name-value-receiver"><a href="#Reflect-set-obj-name-value-receiver" class="headerlink" title="Reflect.set(obj, name, value, receiver)"></a><code>Reflect.set(obj, name, value, receiver)</code></h3><p><code>Reflect.set</code> 方法设置 obj 对象 name 属性等于 value</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  set bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">myObj.foo <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'foo'</span>, <span class="number">2</span>)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">3</span>)</span><br><span class="line">myObj.foo <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span>,</span><br><span class="line">  <span class="keyword">set</span> bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">myObj.foo <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'foo'</span>, <span class="number">2</span>)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">3</span>)</span><br><span class="line">myObj.foo <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果第一个参数不是对象, <code>Reflect.set</code> 会报错</li>
 </ul>
@@ -395,7 +395,7 @@
 <ul>
 <li>如果 name 属性设置了赋值函数，则赋值函数的 this 绑定 receiver</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">2</span>,</span><br><span class="line">  set bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiver = &#123;</span><br><span class="line">  foo: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">1</span>, myReceiver)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line">myReceiver.foo <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">2</span>,</span><br><span class="line">  <span class="keyword">set</span> bar(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.foo = value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myReceiver = &#123;</span><br><span class="line">  foo: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Reflect</span>.set(myObj, <span class="string">'bar'</span>, <span class="number">1</span>, myReceiver)</span><br><span class="line">myObj.foo <span class="comment">// 2</span></span><br><span class="line">myReceiver.foo <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
 <h3 id="Reflect-has-obj-name"><a href="#Reflect-has-obj-name" class="headerlink" title="Reflect.has(obj, name)"></a><code>Reflect.has(obj, name)</code></h3><p><code>Reflect.has</code> 方法对应 name in obj 里面 in 运算符</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;</span><br><span class="line">  foo: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 旧写法</span></span><br><span class="line"><span class="string">'foo'</span> <span class="keyword">in</span> myObj <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 新写法</span></span><br><span class="line"><span class="built_in">Reflect</span>.has(myObj, <span class="string">'foo'</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -477,7 +477,7 @@
 <li>函数返回对原始对象的代理，拦击赋值操作</li>
 <li>拦截 set 操作中会自动执行所有观察者</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> queuedObservers = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line"><span class="keyword">const</span> observe = <span class="function"><span class="params">fn</span> =&gt;</span> queuedObservers.add(fn)</span><br><span class="line"><span class="keyword">const</span> observable = <span class="function"><span class="params">obj</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  set(target, name, value, receiver) &#123;</span><br><span class="line">		<span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target, name, value, receiver)</span><br><span class="line">    queuedObservers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> observer())</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = observable(&#123;</span><br><span class="line">	name: <span class="string">'jack'</span>,</span><br><span class="line">  age: <span class="number">20</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;person.name&#125;</span>, <span class="subst">$&#123;person.age&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line">observe(print)</span><br><span class="line">person.name = <span class="string">'jake'</span> <span class="comment">// jake, 20</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> queuedObservers = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line"><span class="keyword">const</span> observe = <span class="function"><span class="params">fn</span> =&gt;</span> queuedObservers.add(fn)</span><br><span class="line"><span class="keyword">const</span> observable = <span class="function"><span class="params">obj</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">set</span>(target, name, value, receiver) &#123;</span><br><span class="line">		<span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target, name, value, receiver)</span><br><span class="line">    queuedObservers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> observer())</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = observable(&#123;</span><br><span class="line">	name: <span class="string">'jack'</span>,</span><br><span class="line">  age: <span class="number">20</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;person.name&#125;</span>, <span class="subst">$&#123;person.age&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line">observe(print)</span><br><span class="line">person.name = <span class="string">'jake'</span> <span class="comment">// jake, 20</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -586,9 +586,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -601,7 +599,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -677,7 +675,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

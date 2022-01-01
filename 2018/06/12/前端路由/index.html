@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="前端路由," />
+  <meta name="keywords" content="前端路由,">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/12/前端路由/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/12/前端路由/">
 
 
 
@@ -154,7 +154,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,7 +194,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -204,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -217,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -285,7 +285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -360,7 +360,7 @@
 </ul>
 <a id="more"></a>
 <h3 id="hash-路由简易实现"><a href="#hash-路由简易实现" class="headerlink" title="hash 路由简易实现"></a>hash 路由简易实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听 url 中 hash 变化进行路由跳转 #/xxx</span></span><br><span class="line"><span class="comment">// hash 兼容性好，但是不美观</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 以键值对形式存储路由</span></span><br><span class="line">    <span class="keyword">this</span>.routes = &#123;&#125;</span><br><span class="line">    <span class="comment">// 当前路由</span></span><br><span class="line">    <span class="keyword">this</span>.currentUrl = <span class="string">''</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="keyword">this</span>.refresh.bind(<span class="keyword">this</span>), <span class="literal">false</span>)</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="keyword">this</span>.refresh.bind(<span class="keyword">this</span>), <span class="literal">false</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 将 path 和对应 cb 存储</span></span><br><span class="line">  route(path, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.routes[path] = cb || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  refresh() &#123;</span><br><span class="line">    <span class="keyword">this</span>.currentUrl = location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span></span><br><span class="line">    <span class="comment">// 执行当前 hash 对应的回调</span></span><br><span class="line">    <span class="keyword">this</span>.routes[<span class="keyword">this</span>.currentUrl]()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/red"</span>&gt;</span>turn red<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/yellow"</span>&gt;</span>turn yellow<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/"</span>&gt;</span>turn gray<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">window</span>.router = <span class="keyword">new</span> Router()</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params">color</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.querySelector(<span class="string">'body'</span>).style.backgroundColor = color</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'gray'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/yellow'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'yellow'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/red'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'red'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/red"</span>&gt;</span>turn red<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/yellow"</span>&gt;</span>turn yellow<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#/"</span>&gt;</span>turn gray<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="built_in">window</span>.router = <span class="keyword">new</span> Router()</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params">color</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.querySelector(<span class="string">'body'</span>).style.backgroundColor = color</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'gray'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/yellow'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'yellow'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/red'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'red'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="html5-history-模式"><a href="#html5-history-模式" class="headerlink" title="html5 history 模式"></a>html5 history 模式</h2><p>html5 history api 可以分为两类， 切换和修改</p>
 <h3 id="切换历史状态"><a href="#切换历史状态" class="headerlink" title="切换历史状态"></a>切换历史状态</h3><p><code>back</code> <code>forward</code> <code>go</code> 三种方法对应浏览器的前进、后退和跳转</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">history.back() <span class="comment">// 后退</span></span><br><span class="line">history.forward() <span class="comment">// 前进</span></span><br><span class="line">history.go(<span class="number">2</span>) <span class="comment">// 前进两次</span></span><br><span class="line">history.go(<span class="number">-2</span>) <span class="comment">// 后退两次</span></span><br></pre></td></tr></table></figure>
@@ -374,7 +374,7 @@
 </blockquote>
 <p>注意：仅仅调用 <code>popState</code> 和 <code>replaceState</code> 方法不会触发 <code>popstate</code> 事件，不是同一个文档也不会触发，<strong>只有点击浏览器前进后退，或者 js 调用 <code>back</code> <code>forward</code> <code>go</code> 方法才会触发 <code>popstate</code> 事件</strong></p>
 <h3 id="history-路由简易实现"><a href="#history-路由简易实现" class="headerlink" title="history 路由简易实现"></a>history 路由简易实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.routes = &#123;&#125;</span><br><span class="line">    <span class="comment">// 初始化监听 popstate 事件</span></span><br><span class="line">    <span class="keyword">this</span>._bindPopState()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 初始化</span></span><br><span class="line">  init(path) &#123;</span><br><span class="line">    <span class="comment">// history.replaceState(null, null, path)</span></span><br><span class="line">    history.replaceState(&#123;<span class="attr">path</span>: path&#125;, <span class="literal">null</span>, path)</span><br><span class="line">    <span class="keyword">this</span>.routes[path] &amp;&amp; <span class="keyword">this</span>.routes[path]()</span><br><span class="line">  &#125;</span><br><span class="line">  route(path, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.routes[path] = cb || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  go(path) &#123;</span><br><span class="line">    <span class="comment">// history.pushState(null, null, path)</span></span><br><span class="line">    history.pushState(&#123;<span class="attr">path</span>: path&#125;, <span class="literal">null</span>, path)</span><br><span class="line">    <span class="keyword">this</span>.routes[path] &amp;&amp; <span class="keyword">this</span>.routes[path]()</span><br><span class="line">  &#125;</span><br><span class="line">  _bindPopState() &#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, (e) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> path = e.state &amp;&amp; e.state.path</span><br><span class="line">      <span class="keyword">this</span>.routes[path] &amp;&amp; <span class="keyword">this</span>.routes[path]()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/red"</span>&gt;</span>turn red<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/yellow"</span>&gt;</span>turn yellow<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>turn gray<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">window</span>.router = <span class="keyword">new</span> Router()</span></span><br><span class="line"><span class="undefined">router.init(location.pathname)</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params">color</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.querySelector(<span class="string">'body'</span>).style.backgroundColor = color</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'gray'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/yellow'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'yellow'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="javascript">router.route(<span class="string">'/red'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'red'</span>)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.querySelector(<span class="string">'ul'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">if</span> (e.target.tagName === <span class="string">'A'</span>) &#123;</span></span><br><span class="line"><span class="undefined">    e.preventDefault()</span></span><br><span class="line"><span class="javascript">    router.go(e.target.getAttribute(<span class="string">'href'</span>))</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;, <span class="literal">false</span>)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/red"</span>&gt;</span>turn red<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/yellow"</span>&gt;</span>turn yellow<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>turn gray<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="built_in">window</span>.router = <span class="keyword">new</span> Router()</span></span><br><span class="line">router.init(location.pathname)</span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params">color</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.querySelector(<span class="string">'body'</span>).style.backgroundColor = color</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'gray'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/yellow'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'yellow'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="javascript">router.route(<span class="string">'/red'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  changeColor(<span class="string">'red'</span>)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.querySelector(<span class="string">'ul'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">if</span> (e.target.tagName === <span class="string">'A'</span>) &#123;</span></span><br><span class="line">    e.preventDefault()</span><br><span class="line"><span class="javascript">    router.go(e.target.getAttribute(<span class="string">'href'</span>))</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="javascript">&#125;, <span class="literal">false</span>)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="history-模式缺陷"><a href="#history-模式缺陷" class="headerlink" title="history 模式缺陷"></a>history 模式缺陷</h3><p>history 模式下刷新会向服务器发起请求，如果后台没有进行配置，会报 404</p>
 <p>hash 模式下前端路由修改的是 # 中的信息，不会发送请求，但是在 history 模式下，可以自由修改 path，刷新时如果服务器没有响应的响应或资源，会报 404</p>
 <p><strong>解决方案是在后端增加一个覆盖所有情况的候选资源：当 url 匹配不到任何静态资源，应该返回同一个 <code>index.html</code>, 也就是你 app 依赖的页面</strong></p>
@@ -494,9 +494,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -509,7 +507,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -585,7 +583,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

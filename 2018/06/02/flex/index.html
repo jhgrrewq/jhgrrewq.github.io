@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="css3,flex," />
+  <meta name="keywords" content="css3,flex,">
 
 
 
@@ -151,7 +151,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/02/flex/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/06/02/flex/">
 
 
 
@@ -185,7 +185,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -215,7 +215,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -225,7 +225,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -235,7 +235,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -248,7 +248,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -316,7 +316,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -383,14 +383,14 @@
 <p>参考: <a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">Flex 布局教程：语法篇</a></p>
 </blockquote>
 <!-- markdownlint-disable MD010 -->
-<h2 id="flex-弹性布局"><a href="#flex-弹性布局" class="headerlink" title="flex 弹性布局"></a>flex 弹性布局</h2><p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/9723494.jpg" alt=""></p>
+<h2 id="flex-弹性布局"><a href="#flex-弹性布局" class="headerlink" title="flex 弹性布局"></a>flex 弹性布局</h2><p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/9723494.jpg" alt></p>
 <a id="more"></a>
 <p>任何容器都可设置弹性布局，行内元素也可。webkit 内核浏览器要加上 <code>-webkit</code> 前缀</p>
 <ul>
 <li><strong>设置 flex 布局后，子元素的 float clear vertical-align 属性失效</strong></li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">	// display: inline-flex;</span><br><span class="line">	display: -webkit-flex; // safari</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/94929667.jpg" alt=""></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/94929667.jpg" alt></p>
 <ul>
 <li><code>flex 容器（flex container）</code> 采用 flex 布局的元素</li>
 <li><code>flex 项目（flex item）</code> 所有子元素自动成为容器成员</li>
@@ -410,103 +410,103 @@
 <ul>
 <li><code>flex-direction: row 和**不设置（默认）**</code> 横向从左到右</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/91973021.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/91973021.jpg" alt></p>
 <ul>
 <li><code>flex-direction: row-reverse</code> 横向从右到左</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/41872058.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/41872058.jpg" alt></p>
 <ul>
 <li><code>flex-direction: column</code> 纵向从上到下</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/30643464.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/30643464.jpg" alt></p>
 <ul>
 <li><code>flex-direction: column</code> 纵向从下到上</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/85540885.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/85540885.jpg" alt></p>
 <h3 id="flex-wrap-定义一条轴线排列不下，超出如何换行"><a href="#flex-wrap-定义一条轴线排列不下，超出如何换行" class="headerlink" title="flex-wrap (定义一条轴线排列不下，超出如何换行)"></a>flex-wrap (定义一条轴线排列不下，超出如何换行)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>flex-wrap: nowrap</code> <strong>默认不换行</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/89652330.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/89652330.jpg" alt></p>
 <ul>
 <li><code>flex-wrap: wrap</code> 换行</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/2977256.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/2977256.jpg" alt></p>
 <ul>
 <li><code>flex-wrap: wrap-reverse</code> 换行相反方向</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60761591.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60761591.jpg" alt></p>
 <h3 id="flex-flow（flex-direction-和-flex-wrap-简写，默认-row-nowrap）"><a href="#flex-flow（flex-direction-和-flex-wrap-简写，默认-row-nowrap）" class="headerlink" title="flex-flow（flex-direction 和 flex-wrap 简写，默认 row nowrap）"></a>flex-flow（flex-direction 和 flex-wrap 简写，默认 row nowrap）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">flex-flow</span>: &lt;flex-direction&gt; || &lt;flex-wrap&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="justify-content（定义项目在主轴上的对齐方式）"><a href="#justify-content（定义项目在主轴上的对齐方式）" class="headerlink" title="justify-content（定义项目在主轴上的对齐方式）"></a>justify-content（定义项目在主轴上的对齐方式）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>假设主轴从左到右</p>
 <ul>
 <li><code>justify-content: flex-start</code> <strong>默认左对齐</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/12496932.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/12496932.jpg" alt></p>
 <ul>
 <li><code>justify-content: flex-end</code> 右对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/43709152.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/43709152.jpg" alt></p>
 <ul>
 <li><code>justify-content: center</code> 居中</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/75426758.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/75426758.jpg" alt></p>
 <ul>
 <li><code>justify-content: space-between</code> <strong>两端对齐，项目之间间隔相等</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/72218223.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/72218223.jpg" alt></p>
 <ul>
 <li><code>justify-content: space-around</code> <strong>项目两侧间隔相等</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/84745699.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/84745699.jpg" alt></p>
 <h3 id="align-items-定义项目在交叉轴上的对齐方式"><a href="#align-items-定义项目在交叉轴上的对齐方式" class="headerlink" title="align-items (定义项目在交叉轴上的对齐方式)"></a>align-items (定义项目在交叉轴上的对齐方式)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">align-items</span>: flex-start | flex-end | center | baseline | stretch</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>假设交叉轴从上到下</p>
 <ul>
 <li><code>align-items: flex-start</code> 交叉轴起点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/41368961.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/41368961.jpg" alt></p>
 <ul>
 <li><code>align-items: center</code> 交叉轴中点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/64584779.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/64584779.jpg" alt></p>
 <ul>
 <li><code>align-items: flex-end</code> 交叉轴终点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60046906.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60046906.jpg" alt></p>
 <ul>
 <li><code>align-items: baseline</code> 交叉轴第一行文字基线对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/5947862.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/5947862.jpg" alt></p>
 <ul>
 <li><code>align-items: stretch</code> 如果项目没有设置高度或者设为 <code>auto</code>，将占据整个容器高度</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/12165396.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/12165396.jpg" alt></p>
 <h3 id="align-content-定义对根轴线的对齐方式，如果项目只有一根轴线则不起作用"><a href="#align-content-定义对根轴线的对齐方式，如果项目只有一根轴线则不起作用" class="headerlink" title="align-content (定义对根轴线的对齐方式，如果项目只有一根轴线则不起作用)"></a>align-content (定义对根轴线的对齐方式，如果项目只有一根轴线则不起作用)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">	<span class="attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>假设交叉轴从上到下</p>
 <ul>
 <li><code>align-content: flex-start</code> 交叉轴起点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/93159124.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/93159124.jpg" alt></p>
 <ul>
 <li><code>align-content: center</code> 交叉轴中点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/48709014.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/48709014.jpg" alt></p>
 <ul>
 <li><code>align-content: flex-end</code> 交叉轴终点对齐</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/79772444.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/79772444.jpg" alt></p>
 <ul>
 <li><code>align-content: space-between</code> 交叉轴两端能对齐，轴线之间间隔平均分布</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/87105794.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/87105794.jpg" alt></p>
 <ul>
 <li><code>align-content: space-around</code> 每条轴线两侧间隔都相等</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/93742673.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/93742673.jpg" alt></p>
 <ul>
 <li><code>align-content: stretch</code> 轴线占满整个交叉轴</li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/96242810.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/96242810.jpg" alt></p>
 <h2 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h2><p>项目有 6 个属性</p>
 <ul>
 <li><code>order</code></li>
@@ -517,16 +517,16 @@
 <li><code>align-self</code></li>
 </ul>
 <h3 id="order-定义项目的排列顺序，数值越小越靠前，默认为-0"><a href="#order-定义项目的排列顺序，数值越小越靠前，默认为-0" class="headerlink" title="order (定义项目的排列顺序，数值越小越靠前，默认为 0)"></a>order (定义项目的排列顺序，数值越小越靠前，默认为 0)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">	<span class="attribute">order</span>: &lt;interger&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/91731496.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/91731496.jpg" alt></p>
 <h3 id="flex-grow-定义项目的放大比例，默认为-0，即如果存在剩余空间也不放大"><a href="#flex-grow-定义项目的放大比例，默认为-0，即如果存在剩余空间也不放大" class="headerlink" title="flex-grow (定义项目的放大比例，默认为 0，即如果存在剩余空间也不放大)"></a>flex-grow (定义项目的放大比例，默认为 0，即如果存在剩余空间也不放大)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">	<span class="attribute">flex-grow</span>: &lt;interger&gt; // default: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>如果所有项目的 <code>flex-grow</code> 为 1, 等分剩余空间</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/50544174.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/50544174.jpg" alt></p>
 <ul>
 <li><strong>如果一个项目的 <code>flex-grow</code> 为 2, 其他为 1，前者占据的剩余空间将比其他的多一半，其他情况一次类推</strong></li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/30099558.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/30099558.jpg" alt></p>
 <h3 id="flex-shrink-定义项目的缩小比例，默认为-1，即如果空间不足将缩小"><a href="#flex-shrink-定义项目的缩小比例，默认为-1，即如果空间不足将缩小" class="headerlink" title="flex-shrink (定义项目的缩小比例，默认为 1，即如果空间不足将缩小)"></a>flex-shrink (定义项目的缩小比例，默认为 1，即如果空间不足将缩小)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">	<span class="attribute">flex-shrink</span>: &lt;interger&gt; // default: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><strong>如果所有项目的 <code>flex-shrink</code> 为 1, 当空间不足将等比缩小</strong></p>
@@ -534,7 +534,7 @@
 <li><p><strong>如果一个项目的 <code>flex-shrink</code> 为 0, 其他为 1，如果空间不足，前者不缩小</strong></p>
 </li>
 </ul>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60049657.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/60049657.jpg" alt></p>
 <h3 id="flex-basis-分配多余空间之前项目占据株洲空间，默认值-auto，也就是项目的本来大小"><a href="#flex-basis-分配多余空间之前项目占据株洲空间，默认值-auto，也就是项目的本来大小" class="headerlink" title="flex-basis (分配多余空间之前项目占据株洲空间，默认值 auto，也就是项目的本来大小)"></a>flex-basis (分配多余空间之前项目占据株洲空间，默认值 auto，也就是项目的本来大小)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">	<span class="attribute">flex-basis</span>: &lt;interger&gt; | auto // default: auto</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>可设置 <code>width</code> <code>height</code> 属性一样的值（如 350px）,则项目将占据固定空间</strong></li>
@@ -545,7 +545,7 @@
 <li><strong><code>flex: none</code> 等同于 0 0 auto</strong></li>
 </ul>
 <h3 id="align-self-允许单个项目和其他项目不同的对齐方式，可覆盖容器设置的-align-items-默认为-auto，表示继承父元素的-align-items-若没有父元素等同-stretch"><a href="#align-self-允许单个项目和其他项目不同的对齐方式，可覆盖容器设置的-align-items-默认为-auto，表示继承父元素的-align-items-若没有父元素等同-stretch" class="headerlink" title="align-self (允许单个项目和其他项目不同的对齐方式，可覆盖容器设置的 align-items, 默认为 auto，表示继承父元素的 align-items, 若没有父元素等同 stretch)"></a>align-self (允许单个项目和其他项目不同的对齐方式，可覆盖容器设置的 <code>align-items</code>, 默认为 auto，表示继承父元素的 <code>align-items</code>, 若没有父元素等同 <code>stretch</code>)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">	<span class="attribute">align-self</span>: auto | flex-start | flex-end | center | baseline | stretch</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/92816364.jpg" alt=""></p>
+<p><img src="http://ony85apla.bkt.clouddn.com/18-6-2/92816364.jpg" alt></p>
 
       
     </div>
@@ -656,9 +656,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -671,7 +669,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -747,7 +745,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

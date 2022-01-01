@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="vue,svg - 组件," />
+  <meta name="keywords" content="vue,svg - 组件,">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://jhgrrewq.github.io/2018/01/19/vue 圆形进度条组件/"/>
+  <link rel="canonical" href="http://jhgrrewq.github.io/2018/01/19/vue 圆形进度条组件/">
 
 
 
@@ -154,7 +154,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">jhgrrewq 前端小站</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,7 +194,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -204,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -217,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -285,7 +285,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jhgrrewq">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4">
     </span>
 
@@ -355,7 +355,7 @@
 <a id="more"></a>
 <p>circle 标签用于创建圆，cx 和 cy 属性定义圆点的 x 和 y 坐标。如果省略 cx 和 cy，圆的中心会被设置为 (0, 0)；r属性定义圆的半径。</p>
 <p>svg的 fill 属性定义填充的颜色，stroke 属性定义描边颜色，stroke-width 定义描边宽度，<strong>stroke-dasharray 定义描边虚线长度，stroke-dashoffset 定义描边的偏移。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg width=&quot;83&quot; height=&quot;83&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 100 100&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;</span><br><span class="line">    &lt;circle r=50 cx=50 cy=50</span><br><span class="line">            stroke-width=&quot;50&quot;</span><br><span class="line">            stroke=&quot;#D1D3D7&quot;</span><br><span class="line">            fill=&quot;transparent&quot;&gt;&lt;/circle&gt;</span><br><span class="line">    &lt;!-- 基于stroke-dasharray和stroke-dashoffset属性圆形进度条 --&gt;</span><br><span class="line">    &lt;!-- stroke-dasharray 定义描边的虚线长度 --&gt;</span><br><span class="line">    &lt;!-- stroke-dashoffset 定义描边的偏移 --&gt;</span><br><span class="line">    &lt;circle r=50 cx=50 cy=50</span><br><span class="line">            stroke-width=&quot;50&quot;</span><br><span class="line">            stroke=&quot;#00A5E0&quot;</span><br><span class="line">            fill=&quot;transparent&quot;</span><br><span class="line">            stroke-dasharray=&quot;314&quot;</span><br><span class="line">            stroke-dashoffset=&quot;160&quot;&gt;&lt;/circle&gt;</span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight svg"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">"83"</span> <span class="attr">height</span>=<span class="string">"83"</span> <span class="attr">version</span>=<span class="string">"1.1"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 100 100"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">r</span>=<span class="string">50</span> <span class="attr">cx</span>=<span class="string">50</span> <span class="attr">cy</span>=<span class="string">50</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke-width</span>=<span class="string">"50"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke</span>=<span class="string">"#D1D3D7"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">fill</span>=<span class="string">"transparent"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 基于stroke-dasharray和stroke-dashoffset属性圆形进度条 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- stroke-dasharray 定义描边的虚线长度 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- stroke-dashoffset 定义描边的偏移 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">r</span>=<span class="string">50</span> <span class="attr">cx</span>=<span class="string">50</span> <span class="attr">cy</span>=<span class="string">50</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke-width</span>=<span class="string">"50"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke</span>=<span class="string">"#00A5E0"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">fill</span>=<span class="string">"transparent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke-dasharray</span>=<span class="string">"314"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">stroke-dashoffset</span>=<span class="string">"160"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>原理就是基于 svg 的 stroke-dasharray 和 stroke-dashoffset，stroke-dasharray 等于圆的周长，stroke-dashoffset 定义描边的偏移，百分比的值通过外部计算传入。</strong></p>
 </blockquote>
@@ -461,9 +461,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4"
-                alt="jhgrrewq" />
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/8380737?s=460&v=4" alt="jhgrrewq">
             
               <p class="site-author-name" itemprop="name">jhgrrewq</p>
               <p class="site-description motion-element" itemprop="description">爱好电影，更爱女神阿佳妮；爱网球，更爱罗杰费德勒。网易云音乐深度用户</p>
@@ -476,7 +474,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">117</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -536,7 +534,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
